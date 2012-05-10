@@ -23,7 +23,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'ApplicationPortal.urls'
+ROOT_URLCONF = 'Shaastra-2013-Website.urls'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
