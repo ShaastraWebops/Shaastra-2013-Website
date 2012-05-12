@@ -9,6 +9,19 @@ USE_L10N = True
 
 ADMIN_MEDIA_PREFIX = '/media/'
 
+FACEBOOK_APP_ID = '291744470918252'
+FACEBOOK_APP_SECRET = '599f13aad496d3acc8ea887a0e889b92'
+FACEBOOK_SCOPE = 'email'
+
+AUTH_PROFILE_MODULE = 'users.UserProfile'
+
+AUTHENTICATION_BACKENDS = (
+    'facebook.backend.FacebookBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_REDIRECT_URL="/login"
+
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
@@ -31,6 +44,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'Shaastra-2013-Website.users',
+    'facebook',
     
     
     # Uncomment the next line to enable the admin:
