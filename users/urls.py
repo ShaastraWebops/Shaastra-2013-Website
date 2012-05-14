@@ -8,14 +8,14 @@ import django.contrib.auth.views
 
 urlpatterns = patterns('',  
         
-#      (r'^register/user/?$', 'Shaastra-2013-Website.users.views.user_registration'),
+      (r'^register/user/?$', 'Shaastra-2013-Website.users.views.user_registration'),
 #      (r'^edit/user/?$', 'Shaastra-2013-Website.users.views.edit_profile'),
 #      (r'^register/college/?$', 'Shaastra-2013-Website.users.views.college_registration'),
 #      (r'^register/activate/(?P<a_key>[\w]+)/?$', 'Shaastra-2013-Website.users.views.activate'),
     (r'^login/?$', 'Shaastra-2013-Website.users.views.login'),
     (r'^logout/?$', 'Shaastra-2013-Website.users.views.logout'),
-    url(r'^facebook/login$', 'facebook.views.login'),
-    url(r'^facebook/authentication_callback$', 'facebook.views.authentication_callback'),
+    (r'^facebook/login$', 'facebook.views.login'),
+    (r'^facebook/authentication_callback$', 'facebook.views.authentication_callback'),
 #      (r'^feedback/?$', 'Shaastra-2013-Website.users.views.feedback'),
 #      (r'^view_feedback/?$', 'Shaastra-2013-Website.users.views.view_feedback'),
 #      (r'^password_change/$', 'django.contrib.auth.views.password_change'),

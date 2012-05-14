@@ -1,4 +1,3 @@
-
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 #from django.core.exceptions import ObjectDoesNotExist
 #from django.contrib import auth
@@ -33,15 +32,6 @@ def login (request):
         If normal users login, he/she is redirected to the previous url. If this fails, he/she is 
         redirected to the home page.
     """    
-    '''
-    if 'logged_in' in request.session and request.session['logged_in'] == True and request.user.get_profile().is_coord == True and request.user.username != 'cores' and request.user.username != 'spons':
-        return HttpResponseRedirect("%sevents/dashboard/" % settings.SITE_URL)
-    if 'logged_in' in request.session and request.session['logged_in'] == True:
-        try:
-            return HttpResponseRedirect(request.session['from_url'])
-        except:
-            return HttpResponseRedirect("%shome/" % settings.SITE_URL)    
-    '''
     form=forms.LoginForm()
     if(request.method=='POST'):
         form = forms.LoginForm(request.POST)
@@ -62,50 +52,7 @@ def login (request):
     return render_to_response('login.html',locals(), context_instance=RequestContext(request))
 
 
-
-
-
-'''                
-    if request.method == 'POST':
-        data = request.POST.copy()
-        form = forms.LoginForm(data)
-        if form.is_valid():
-            user = auth.authenticate(username=form.cleaned_data['username'], password=form.cleaned_data["password"])
-
-            if user is not None and user.is_active == True:
-                auth.login (request, user)
-                request.session['logged_in'] = True
-	        if_profile = UserProfile.objects.filter(user=user).count()
-		if not if_profile :
-		    return HttpResponseRedirect("%stechslam/" %settings.SITE_URL)
-                if user.username == 'cores':
-                    return HttpResponseRedirect("%sevents/cores/" % settings.SITE_URL)
-                elif user.username == 'spons':
-                    return HttpResponseRedirect("%sspons/" % settings.SITE_URL)
-                elif user.get_profile().is_coord: 
-                    return HttpResponseRedirect("%sevents/dashboard/" % settings.SITE_URL)
-                elif not user.first_name and not user.last_name:
-                    return HttpResponseRedirect("%smyshaastra/edit_profile" % settings.SITE_URL)
-                else:
-                    try:
-                        redirect_to = request.session['from_url']
-                        return HttpResponseRedirect(redirect_to)
-                    except:
-                        return HttpResponseRedirect("%shome/" % settings.SITE_URL)        
-            else:
-                request.session['invalid_login'] = True
-                request.session['logged_in'] = False
-                errors=[]
-                errors.append("Incorrect username and password combination!")
-                return render_to_response('users/login.html', locals(), context_instance= global_context(request))
-                 
-        else:                       
-            invalid_login = session_get(request, "invalid_login")
-            form = forms.LoginForm () 
-    
-
-
-
+'''
 @needs_authentication
 def spons_dashboard(request):
     if request.user.username == 'spons':
@@ -135,7 +82,7 @@ def logout(request):
     log_out(request)
     return HttpResponseRedirect('/login')       
 
-'''    
+    
 def user_registration(request):
     """ 
         If the user is already logged it, set logged_in to true. He/she won't be allowed to register.
@@ -155,14 +102,14 @@ def user_registration(request):
         The userprofile object is created with the foreign key set the user object previously created.
         
     """ 
-    if request.user.is_authenticated():
-        logged_in = True
-    colls = models.College.objects.all()
-    collnames = list()
-    for coll in colls:
-        collnames.append(coll.name + "," + coll.city)
-    js_data = simplejson.dumps(collnames)
+#    colls = models.College.objects.all()
+#    collnames = list()
+#    for coll in colls:
+#        collnames.append(coll.name + "," + coll.city)
+#    js_data = simplejson.dumps(collnames)
+
     if request.method=='POST':
+       '''    
         data = request.POST.copy()
         form = forms.AddUserForm(data)
   
@@ -184,7 +131,7 @@ def user_registration(request):
                     age = form.cleaned_data['age'],
                     branch = form.cleaned_data['branch'],
                     mobile_number = form.cleaned_data['mobile_number'],
-                    college =form.cleaned_data['college'],
+#                    college =form.cleaned_data['college'],
                     college_roll = form.cleaned_data['college_roll'],
                     shaastra_id  = user.id , # is this right
                     activation_key = activation_key,
@@ -197,15 +144,18 @@ def user_registration(request):
 							 'activationkey':userprofile.activation_key }))
             send_mail('Your new Shaastra2011 account confirmation', body,'noreply@shaastra.org', [user.email,], fail_silently=False)
             request.session['registered_user'] = True
-
+        '''
     else:
-        form = forms.AddUserForm()
-        coll_form = forms.AddCollegeForm(prefix="identifier")
+        if request.user.get_profile().facebook_id :
+            form = forms.AddUserForm(initial={'first_name':request.user.first_name,'last_name':request.user.last_name,'gender':request.user.get_profile().gender,'email':request.user.email,'username':request.user.get_profile().get_facebook_profile()['username'],})
+        else:
+             form = forms.AddUserForm()
+#        coll_form = forms.AddCollegeForm(prefix="identifier")
     
-    registered_user = session_get(request,'registered_user')
-    return render_to_response('users/register_user.html', locals(), context_instance= global_context(request))    
+#    registered_user = session_get(request,'registered_user')
+    return render_to_response('register.html', locals(), context_instance= RequestContext(request))    
 
-                           
+'''                           
 def college_registration (request):
     if request.method == 'GET':
         data = request.GET.copy()

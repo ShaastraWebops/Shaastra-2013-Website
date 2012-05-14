@@ -40,9 +40,9 @@ class LoginForm(forms.Form):
     username=forms.CharField(help_text='Your Shaastra 2011 username')
     password=forms.CharField(widget=forms.PasswordInput, help_text='Your password')
     
-'''
-class AddUserForm(ModelForm):
 
+class AddUserForm(ModelForm):
+    
     first_name      = forms.CharField  (max_length=30,
                                        help_text='Enter your first name here.')
     last_name       = forms.CharField  (max_length=30,
@@ -60,17 +60,18 @@ class AddUserForm(ModelForm):
 #    college        = forms.CharField  (max_length=120,
 #                                       widget=forms.TextInput(attrs={'id':'coll_input'}),
 #                                       help_text='Select your college from the list. If it is not there, use the link below')
-#    college_roll   = forms.CharField  (max_length=25,
-#                                       help_text='Enter your college ID / roll number here.')
+    college_roll   = forms.CharField  (max_length=25,
+                                       help_text='Enter your college ID / roll number here.')
     branch         = forms.CharField  (max_length=50,
                                        widget=forms.TextInput(attrs={'id':'branch_input'}),
                                        help_text='Select your branch from the list. If it does not show up, please select the "Other" option.')
 #    recaptcha      = recaptcha_fields.ReCaptchaField (label='Show us that you are not a bot!',
 #                                                      help_text='Enter the words shown in the space provided')
+    
     class Meta:
         model = models.UserProfile
-        fields=('first_name','last_name','username','password','password_again','email','age','gender','college','college_roll','branch','mobile_number')
-        #except = ('is_coord','coord_event')        
+        fields={'first_name','last_name','username','password','password_again','email','age','gender','college_roll','branch','mobile_number'}
+        #exclude = {'is_coord','coord_event','shaastra_id','activation_key','facebook_id','access_token','key_expires',}
     
     def clean_username(self):
         if not alnum_re.search(self.cleaned_data['username']):
@@ -127,7 +128,7 @@ class AddUserForm(ModelForm):
             raise forms.ValidationError ("The entered passwords do not match.")
         else:
             return self.data[field_name1]
-    
+    '''    
     def clean_college(self):
         coll_input = self.cleaned_data['college']
         try:
@@ -139,7 +140,7 @@ class AddUserForm(ModelForm):
             return collchk
         else :
             raise forms.ValidationError ("The College that you entered Does not exist or was Not Right")
-               
+    '''           
     def clean_college_roll(self):
         if (not alphanumric.search(self.cleaned_data['college_roll'])) or self.cleaned_data['college_roll'].isalpha():
            raise forms.ValidationError(u'Enter a valid roll number.')
@@ -147,7 +148,7 @@ class AddUserForm(ModelForm):
            return self.cleaned_data['college_roll']
          
          
-     
+'''     
 class EditUserForm(ModelForm):
 
     first_name = forms.CharField(max_length=50, help_text="Your first name")

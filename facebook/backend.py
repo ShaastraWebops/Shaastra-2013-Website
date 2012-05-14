@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import User, AnonymousUser
 from django.db import IntegrityError
 
-from users.models import UserProfile as FacebookProfile
+from users.models import UserProfile 
 
 class FacebookBackend:
     def authenticate(self, token=None, request=None):
@@ -27,49 +27,54 @@ class FacebookBackend:
 
         try:
             # Try and find existing user
-            fb_user = FacebookProfile.objects.get(facebook_id=fb_profile['id'])
+            fb_user = UserProfile.objects.get(facebook_id=fb_profile['id'])
             user = fb_user.user
 
             # Update access_token
             fb_user.access_token = access_token
             fb_user.save()
+            
+            settings.LOGIN_REDIRECT_URL="/login"
 
-        except FacebookProfile.DoesNotExist:
+        except UserProfile.DoesNotExist:
             # No existing user
 
             # Not all users have usernames
             username = fb_profile.get('username', fb_profile['email'].split('@')[0])
-
+            
+            settings.LOGIN_REDIRECT_URL="/register/user"            
+            '''
             if getattr(settings, 'FACEBOOK_FORCE_SIGNUP', False):
                 # No existing user, use anonymous
                 user = AnonymousUser()
                 user.username = username
                 user.first_name = fb_profile['first_name']
                 user.last_name = fb_profile['last_name']
-                fb_user = FacebookProfile(
+                fb_user = UserProfile(
                         facebook_id=fb_profile['id'],
                         access_token=access_token
                 )
                 user.facebookprofile = fb_user
 
             else:
-                # No existing user, create one
+            '''
+            # No existing user, create one
 
-                try:
-                    user = User.objects.create_user(username, fb_profile['email'])
-                except IntegrityError:
-                    # Username already exists, make it unique
-                    user = User.objects.create_user(username + fb_profile['id'], fb_profile['email'])
-                user.first_name = fb_profile['first_name']
-                user.last_name = fb_profile['last_name']
-                user.save()
-                # Create the FacebookProfile
-                fb_user = FacebookProfile(user=user, facebook_id=fb_profile['id'], access_token=access_token)
-                if fb_profile['gender'] == "female" :
-                    fb_user['gender']='F'
-                else:
-                    fb_user['gender']='M'
-                fb_user.save()
+            try:
+                user = User.objects.create_user(username, fb_profile['email'])
+            except IntegrityError:
+                # Username already exists, make it unique
+                user = User.objects.create_user(username + fb_profile['id'], fb_profile['email'])
+            user.first_name = fb_profile['first_name']
+            user.last_name = fb_profile['last_name']
+            user.save()
+            # Create the FacebookProfile
+            fb_user = UserProfile(user=user, facebook_id=fb_profile['id'], access_token=access_token)
+            if fb_profile['gender'] == "female" :
+                fb_user.gender='F'
+            else:
+                fb_user.gender='M'
+            fb_user.save()
 
         return user
 

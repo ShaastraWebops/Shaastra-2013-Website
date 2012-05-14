@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Shaastra 2013</title>
+    </head>
+    <body>
+        Register<br/>
+        <form action="" method="POST">
+        <table>
+            {% csrf_token %}
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Register" />
+        </form>
+    </body>
+</html>
