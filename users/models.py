@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-import urllib,json
 #from main_test.events.models import Event
 
 GENDER_CHOICES = (
@@ -76,7 +75,7 @@ class UserProfile(models.Model):
 #    registered      = models.ManyToManyField(Event, null=True, related_name='registered_users')        #Events which this user has registered for
     facebook_id = models.BigIntegerField()
     access_token = models.CharField(max_length=150)
-
+    
     def get_facebook_profile(self):
         fb_profile = urllib.urlopen('https://graph.facebook.com/me?access_token=%s' % self.access_token)
         return json.load(fb_profile)

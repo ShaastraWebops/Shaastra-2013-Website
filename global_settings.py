@@ -13,10 +13,14 @@ FACEBOOK_APP_ID = '291744470918252'
 FACEBOOK_APP_SECRET = '599f13aad496d3acc8ea887a0e889b92'
 FACEBOOK_SCOPE = 'email'
 
+TWITTER_KEY    = 'WxWjGWYhx5eOATvnjI7Q'
+TWITTER_SECRET = 'OuSEYWqAgHZyLQ7kfwTvAcGq2H55o2YH078S94e60'
+
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 AUTHENTICATION_BACKENDS = (
     'facebook.backend.FacebookBackend',
+    'twitter_users.backends.TwitterBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -46,6 +50,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'Shaastra-2013-Website.users',
     'facebook',
+    'twitter_users',
     
     
     # Uncomment the next line to enable the admin:

@@ -16,6 +16,7 @@
         {% else %}
         <form action="" method="POST">
         <a href="/facebook/login">Login via Facebook</a>
+        <a href="/twitter/login">Login via Twitter</a>
         <table>
             {% csrf_token %}
             {{form.as_table}}

@@ -47,7 +47,11 @@ def login (request):
     try:
         facebook_profile = request.user.get_profile().get_facebook_profile()
     except:
-        form = forms.LoginForm()
+        try:
+            twitter_profile = request.user.get_profile().get_twitter_profile()
+        except:
+            form = forms.LoginForm()
+            return render_to_response('login.html',locals(), context_instance=RequestContext(request))
         return render_to_response('login.html',locals(), context_instance=RequestContext(request))
     return render_to_response('login.html',locals(), context_instance=RequestContext(request))
 
