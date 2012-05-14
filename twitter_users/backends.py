@@ -14,12 +14,14 @@ class TwitterBackend(object):
                 info.name = username
                 info.save()
             user = info.user
+            settings.LOGIN_REDIRECT_URL="/login"
         except TwitterInfo.DoesNotExist:
             email    = "%s@twitter.com" % username
             user     = User.objects.create_user(settings.USERS_FORMAT % username, email)
             user.save()
             info = TwitterInfo(user=user, name=username, id=twitter_id, token=token, secret=secret)
             info.save()
+            settings.LOGIN_REDIRECT_URL="/register/user" 
         return user
     
     def get_user(self, user_id):
