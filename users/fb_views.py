@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate
 from django.core.urlresolvers import reverse
-from users.forms import AddUserForm
+from users.forms import AddUserForm, UserRegisterForm
 from users.models import UserProfile
 
 def login(request):
@@ -46,7 +46,9 @@ def authentication_callback(request):
     try:
         # Try and find existing user
         fb_user = UserProfile.objects.get(UID="FB_"+str(fb_profile['id']))
-        auth_login(request,fb_user.user)
+        user=authenticate(username=fb_user.user.email,password="default")
+        if user is not None:
+            auth_login(request,user)
         return HttpResponseRedirect("/login")
 
     except UserProfile.DoesNotExist:
@@ -57,11 +59,13 @@ def authentication_callback(request):
         first_name = fb_profile['first_name']
         last_name = fb_profile['last_name']
         UID="FB_" + str(fb_profile['id'])
+        password="default"
+        password_again="default"
         if fb_profile['gender'] == "female" :
             gender='F'
         else:
             gender='M'
-        form = AddUserForm(initial=locals())
+        form = UserRegisterForm(initial=locals())
     return render_to_response('register.html',locals(), context_instance=RequestContext(request))    
 
 

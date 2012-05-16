@@ -37,8 +37,8 @@ def login (request):
         form = forms.LoginForm(request.POST)
         if form.is_valid():
             inputs = form.cleaned_data
-            user = authenticate(username=inputs['username'],password=inputs['password'])
-            if user is not None:
+            user = authenticate(username=inputs['email'],password=inputs['password'])
+            if user is not None :
                 log_in(request, user)
                 return HttpResponseRedirect("/login")
             else:                
@@ -102,11 +102,21 @@ def user_registration(request):
 #        collnames.append(coll.name + "," + coll.city)
 #    js_data = simplejson.dumps(collnames)
 
-    if request.method=='POST':            
-        form = forms.AddUserForm(request.POST)  
-        if form.is_valid():  
-            user = User.objects.create_user(username = form.cleaned_data['email'], email = form.cleaned_data['email'],password = form.cleaned_data['password'],)
-            user.is_active= False
+    if request.method=='POST':
+        if request.POST['UID'] == "" :
+            UID=""
+            password=request.POST['password']
+            form = forms.AddUserForm(request.POST)  
+            active=False
+        else:
+            password="default"
+            UID=request.POST['UID']
+            form = forms.UserRegisterForm(request.POST)
+            active=True
+
+        if form.is_valid():
+            user = User.objects.create_user(username = form.cleaned_data['email'], email = form.cleaned_data['email'],password = password,)            
+            user.is_active= active
             user.save()
 #            salt = sha.new(str(random.random())).hexdigest()[:5]
 #            activation_key = sha.new(salt+user.username).hexdigest()
@@ -117,7 +127,7 @@ def user_registration(request):
             user.save()
             userprofile = UserProfile(
                     user = user,
-                    UID = request.POST['UID'],
+                    UID = UID,
                     gender     = form.cleaned_data['gender'],
                     age = form.cleaned_data['age'],
                     branch = form.cleaned_data['branch'],

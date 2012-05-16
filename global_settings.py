@@ -19,8 +19,8 @@ TWITTER_SECRET = 'OuSEYWqAgHZyLQ7kfwTvAcGq2H55o2YH078S94e60'
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 AUTHENTICATION_BACKENDS = (
-    'twitter_users.backends.TwitterBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'twitter_users.backends.TwitterBackend',
 )
 
 TEMPLATE_LOADERS = (

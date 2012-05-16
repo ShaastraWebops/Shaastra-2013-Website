@@ -128,6 +128,76 @@ class AddUserForm(ModelForm):
             raise forms.ValidationError ("The entered passwords do not match.")
         else:
             return self.data[field_name1]
+
+class UserRegisterForm(ModelForm):
+    
+    first_name      = forms.CharField  (max_length=30,
+                                       help_text='Enter your first name here.')
+    last_name       = forms.CharField  (max_length=30,
+                                       help_text='Enter your last name here.')
+#    username       = forms.CharField  (max_length=30,
+#                                       help_text='30 characters or fewer. Letters, numbers and @/./+/-/_ characters')
+    email          = forms.EmailField (help_text='Enter your e-mail address. eg, someone@gmail.com')
+#    college        = forms.CharField  (max_length=120,
+#                                       widget=forms.TextInput(attrs={'id':'coll_input'}),
+#                                       help_text='Select your college from the list. If it is not there, use the link below')
+#    college_roll   = forms.CharField  (max_length=25,
+#                                       help_text='Enter your college ID / roll number here.')
+#    branch         = forms.CharField  (max_length=50,
+#                                       widget=forms.TextInput(attrs={'id':'branch_input'}),
+#                                       help_text='Select your branch from the list. If it does not show up, please select the "Other" option.')
+#    recaptcha      = recaptcha_fields.ReCaptchaField (label='Show us that you are not a bot!',
+#                                                      help_text='Enter the words shown in the space provided')
+    
+    class Meta:
+        model = models.UserProfile
+        fields={'gender','age','branch','mobile_number','college_roll','want_hospi'}
+        #exclude = {'is_coord','coord_event','shaastra_id','activation_key','key_expires','UID','user',}
+    
+    def clean_username(self):
+        if not alnum_re.search(self.cleaned_data['username']):
+           raise forms.ValidationError(u'Usernames can only contain letters, numbers and underscores')
+        if User.objects.filter(username=self.cleaned_data['username']):
+            pass
+        else:
+            return self.cleaned_data['username']
+        raise forms.ValidationError('This username is already taken. Please choose another.')
+
+    def clean_age(self):
+	if (self.cleaned_data['age']>80 or self.cleaned_data['age']<12):
+	    raise forms.ValidationError(u'Please enter an acceptable age (12 to 80)')
+	else:
+	    return self.cleaned_data['age']
+	    
+    def clean_mobile_number(self):
+	if (len(self.cleaned_data['mobile_number'])!=10 or (self.cleaned_data['mobile_number'][0]!='7' and self.cleaned_data['mobile_number'][0]!='8' and self.cleaned_data['mobile_number'][0]!='9') or (not self.cleaned_data['mobile_number'].isdigit())):
+	    raise forms.ValidationError(u'Enter a valid mobile number')
+	if models.UserProfile.objects.filter(mobile_number=self.cleaned_data['mobile_number']):
+	    pass    
+	else:
+	  return self.cleaned_data['mobile_number']
+	raise forms.ValidationError('This mobile number is already registered')  
+	  
+    def clean_first_name(self):
+	if not self.cleaned_data['first_name'].replace(' ','').isalpha():
+	    raise forms.ValidationError(u'Names cannot contain anything other than alphabets.')
+	else:
+	    return self.cleaned_data['first_name']
+	  
+    def clean_last_name(self):
+	if not self.cleaned_data['last_name'].replace(' ','').isalpha():
+	    raise forms.ValidationError(u'Names cannot contain anything other than alphabets.')
+	else:
+	    return self.cleaned_data['last_name']
+
+    def clean_email(self):
+        if User.objects.filter(email=self.cleaned_data['email']):
+            pass
+        else:
+            return self.cleaned_data['email']
+        raise forms.ValidationError('This email address is already taken. Please choose another.')
+
+
 '''    
     def clean_college(self):
         coll_input = self.cleaned_data['college']
