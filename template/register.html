@@ -4,11 +4,12 @@
     </head>
     <body>
         Register<br/>
-        <form action="" method="POST">
+        <form action="/register/user" method="POST">
         <table>
             {% csrf_token %}
             {{ form.as_table }}
         </table>
+        <input type="hidden" name="UID" value="{{UID}}" />
         <input type="submit" value="Register" />
         </form>
     </body>

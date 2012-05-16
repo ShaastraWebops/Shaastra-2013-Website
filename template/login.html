@@ -8,11 +8,11 @@
         <h2>You are logged in as: {{ user }}</h2>
         <a href="/logout">Logout</a>
         <hr />
-            {% if user.get_profile.facebook_id %}
+            <!--{% if user.get_profile.facebook_id %}
                 <h2>User Details</h2>
                 <img src="http://graph.facebook.com/{{ user.get_profile.facebook_id }}/picture" /><br />
                 {{ name }}
-            {% endif %}
+            {% endif %}-->
         {% else %}
         <form action="" method="POST">
         <a href="/facebook/login">Login via Facebook</a>

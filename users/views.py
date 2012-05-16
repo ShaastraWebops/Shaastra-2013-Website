@@ -43,16 +43,6 @@ def login (request):
                 return HttpResponseRedirect("/login")
             else:                
                 return HttpResponse("Invalid")
-
-    try:
-        facebook_profile = request.user.get_profile().get_facebook_profile()
-    except:
-        try:
-            twitter_profile = request.user.get_profile().get_twitter_profile()
-        except:
-            form = forms.LoginForm()
-            return render_to_response('login.html',locals(), context_instance=RequestContext(request))
-        return render_to_response('login.html',locals(), context_instance=RequestContext(request))
     return render_to_response('login.html',locals(), context_instance=RequestContext(request))
 
 
@@ -112,51 +102,42 @@ def user_registration(request):
 #        collnames.append(coll.name + "," + coll.city)
 #    js_data = simplejson.dumps(collnames)
 
-    if request.method=='POST':
-       '''    
-        data = request.POST.copy()
-        form = forms.AddUserForm(data)
-  
-        if form.is_valid():
-  
-            user = User.objects.create_user(username = form.cleaned_data['username'], email = form.cleaned_data['email'],password = form.cleaned_data['password'],)
+    if request.method=='POST':            
+        form = forms.AddUserForm(request.POST)  
+        if form.is_valid():  
+            user = User.objects.create_user(username = form.cleaned_data['email'], email = form.cleaned_data['email'],password = form.cleaned_data['password'],)
             user.is_active= False
             user.save()
-            salt = sha.new(str(random.random())).hexdigest()[:5]
-            activation_key = sha.new(salt+user.username).hexdigest()
-            key_expires=datetime.datetime.today() + datetime.timedelta(2)
+#            salt = sha.new(str(random.random())).hexdigest()[:5]
+#            activation_key = sha.new(salt+user.username).hexdigest()
+#            key_expires=datetime.datetime.today() + datetime.timedelta(2)
 
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
             user.save()
             userprofile = UserProfile(
                     user = user,
+                    UID = request.POST['UID'],
                     gender     = form.cleaned_data['gender'],
                     age = form.cleaned_data['age'],
                     branch = form.cleaned_data['branch'],
                     mobile_number = form.cleaned_data['mobile_number'],
 #                    college =form.cleaned_data['college'],
                     college_roll = form.cleaned_data['college_roll'],
-                    shaastra_id  = user.id , # is this right
-                    activation_key = activation_key,
-                    key_expires  = key_expires,
+#                    shaastra_id  = user.id , # is this right
+#                    activation_key = activation_key,
+#                    key_expires  = key_expires,
                     )
             userprofile.save()
-            mail_template=get_template('email/activate.html')
-            body = mail_template.render(Context({'username':user.username,
-							 'SITE_URL':settings.SITE_URL,
-							 'activationkey':userprofile.activation_key }))
-            send_mail('Your new Shaastra2011 account confirmation', body,'noreply@shaastra.org', [user.email,], fail_silently=False)
-            request.session['registered_user'] = True
-        '''
+#            mail_template=get_template('email/activate.html')
+#            body = mail_template.render(Context({'username':user.username,
+#							 'SITE_URL':settings.SITE_URL,
+#							 'activationkey':userprofile.activation_key }))
+#            send_mail('Your new Shaastra2011 account confirmation', body,'noreply@shaastra.org', [user.email,], fail_silently=False)
+#            request.session['registered_user'] = True
+            return HttpResponseRedirect("/login")
     else:
-        if request.user.get_profile().facebook_id :
-            form = forms.AddUserForm(initial={'first_name':request.user.first_name,'last_name':request.user.last_name,'gender':request.user.get_profile().gender,'email':request.user.email,'username':request.user.get_profile().get_facebook_profile()['username'],})
-        else:
-             form = forms.AddUserForm()
-#        coll_form = forms.AddCollegeForm(prefix="identifier")
-    
-#    registered_user = session_get(request,'registered_user')
+        form = forms.AddUserForm()
     return render_to_response('register.html', locals(), context_instance= RequestContext(request))    
 
 '''                           
