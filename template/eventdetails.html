@@ -1,0 +1,9 @@
+<html>
+<body>
+<h1>{{ r.name }}</h1>
+This page is a placeholder. Associated tags:<br/>
+{% for x in r.tag.all %}
+{{ x }},
+{% endfor %}
+</body>
+</html>

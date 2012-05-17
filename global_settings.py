@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'django.contrib.staticfiles',
     'search',
     
     
@@ -62,3 +63,5 @@ LOGGING = {
         },
     }
 }
+
+STATIC_URL = '/static/'

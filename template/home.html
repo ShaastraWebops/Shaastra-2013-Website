@@ -1,0 +1,14 @@
+<html>
+<body>
+<a href="main/">Search</a>
+<a href="addevent/">Add Event</a>
+
+<table>
+{% for e in event %}
+<tr><td>
+<a href="event/{{ e.id }}/">{{ e }}</a>
+</td></tr>
+{% endfor %}
+</table>
+</body>
+</html>

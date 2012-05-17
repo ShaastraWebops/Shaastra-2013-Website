@@ -1,0 +1,11 @@
+<html>
+<body>
+{% if result_list %}
+{% for r in result_list %}
+<a href="/eventdetails/{{ r.id }}/">{{ r }}</a><br/>
+{% endfor %}
+{% else %}
+No suggestions.
+{% endif %}
+</body>
+</html>

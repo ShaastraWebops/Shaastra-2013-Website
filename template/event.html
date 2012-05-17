@@ -1,0 +1,78 @@
+<html>
+<body>
+
+{% if tags_added %}
+<font color="red">Tags Added!</font><br/>
+{% if flag %}
+Some tags you tried adding are already associated with this event.
+{% endif %}
+{% endif %}
+
+{% if tag_edited %}
+<font color="red">Tag Edited!</font><br/>
+{% endif %}
+
+{% if tags_notadded %}
+<font color="red">The following tags were not added (Length is less than 3 characters):</font><br/>
+<ul>
+{% for x in not_added %}
+<li>{{ x }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+{% if tags_deleted %}
+<font color="red">Tags Deleted!</font><br/>
+{% endif %}
+
+<form action="" method="post">
+{% csrf_token %}
+
+<a href="?add=1">Add New Tags</a><br/>
+<a href="?existing=1">Add From Existing Tags</a><br/>
+<a href="/">Back</a><br/>
+
+{% if add %}
+Add multiple tags separated by commas<br/>
+<input type="text" name="tags">
+<input type="submit" value="Add" name="add">
+{% endif %}
+
+{% if existing %}
+    <table>
+    {% if all_tags %}
+    {% for t in all_tags %}
+    <tr>
+    <td><input type="checkbox" name="tag_existing" value="{{ t.id }}"/></td>
+    <td>{{ t }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <input type="submit" value="Select" name="select">
+    {% else %}
+    No Additional Tags.
+    {% endif %}
+{% endif %}
+
+<hr/>
+
+<h3>Tags Added:</h3>
+{% if tag_list %}
+Click on a tag to edit.
+<table border="1">
+{% for t in tag_list %}
+<tr>
+<td><input type="checkbox" name="tag_delete" value="{{ t.id }}"/></td>
+<td><a href="{{ t.id }}/">{{ t }}</a></td>
+</tr>
+{% endfor %}
+</table>
+<input type="submit" value="Delete" name="delete">
+
+{% else %}
+No tags added.
+{% endif %}
+
+</form>
+</body>
+</html>

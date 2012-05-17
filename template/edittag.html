@@ -1,0 +1,23 @@
+<html>
+<body>
+
+{% if comma %}
+<font color="red">Only a single tag is allowed!</font><br/>
+{% endif %}
+
+{% if already_present %}
+<font color="red">Tag already associated with this event!</font><br/>
+{% endif %}
+
+{% if not_long %}
+<font color="red">Tag must be 3 characters or longer!</font><br/>
+{% endif %}
+
+    <a href="../">Back</a><br/>
+    <form action="" method="post">
+    {% csrf_token %}
+    <input type="text" value="{{ tag }}" name="tag_edit"><br/>
+    <input type="submit" value="Change" name="edit">
+    </form>
+</body>
+</html>
