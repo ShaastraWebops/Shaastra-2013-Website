@@ -1,13 +1,15 @@
 
 import re
-
+import urllib, cgi,json
 from django.core.urlresolvers import reverse, NoReverseMatch
+from users import oauth
 from django.http import HttpResponseRedirect
-
-from django.contrib.auth import authenticate, login, logout
-
-from twitter_users import oauth
-from twitter_users import settings
+from django.shortcuts import *
+from django.conf import settings
+from django.contrib.auth import login as auth_login, logout as auth_logout
+from django.contrib.auth import authenticate
+from users.forms import AddUserForm, UserRegisterForm
+from users.models import UserProfile
 
 def is_safe_redirect(redirect_to):
     if ' ' in redirect_to:
@@ -29,7 +31,7 @@ def twitter_login(request, redirect_field_name='next'):
         callback_url  = None
     
     # get a request token from Twitter
-    consumer      = oauth.Consumer(settings.KEY, settings.SECRET)
+    consumer      = oauth.Consumer(settings.TWITTER_KEY, settings.TWITTER_SECRET)
     request_token = oauth.RequestToken(consumer, callback_url=callback_url)
     
     # save the redirect destination
@@ -43,25 +45,46 @@ def twitter_callback(request):
     oauth_verifier = request.GET['oauth_verifier']
     
     # get an access token from Twitter
-    consumer           = oauth.Consumer(settings.KEY, settings.SECRET)
+    consumer           = oauth.Consumer(settings.TWITTER_KEY, settings.TWITTER_SECRET)
     access_token       = oauth.AccessToken(consumer, oauth_token, oauth_verifier)
     
     # actually log in
-    user = authenticate(twitter_id  = access_token.user_id,
-                        username    = access_token.username,
-                        token       = access_token.token,
-                        secret      = access_token.secret)
-    login(request, user)
+    user = authenticate(twitter_id    = access_token.user_id,
+                        username      = access_token.username,
+                        token         = access_token.token,
+                        secret        = access_token.secret)
+    
+    # Read the user's profile information
+    tw_profile = urllib.urlopen('https://api.twitter.com/1/users/lookup.json?screen_name=%s,twitter&include_entities=false' % access_token.username)
+    tw_profile = json.load(tw_profile) 
+    
+    try:
+        # Try and find existing user
+        tw_user = UserProfile.objects.get(UID="TW_" + str(access_token.user_id))
+        user=authenticate(username=tw_user.user.email,password="default")
+        if user is not None:
+            auth_login(request,user)
+        return HttpResponseRedirect("/login")
+
+    except UserProfile.DoesNotExist:
+        # No existing user
+        #user.username = access_token.username
+        UID="TW_" + str(access_token.user_id)
+        password="default"
+        password_again="default"
+        form = UserRegisterForm(initial=locals())
+    return render_to_response('register.html',locals(), context_instance=RequestContext(request))    
+
     
     # redirect to the authenticated view
-    redirect_to = request.session['redirect_to']
-    if not redirect_to or not is_safe_redirect(redirect_to):
-        try:
-            redirect_to = reverse(settings.LOGIN_REDIRECT_VIEW, args=[user.id])
-        except NoReverseMatch:
-            redirect_to = settings.LOGIN_REDIRECT_URL
+    #redirect_to = request.session['redirect_to']
+    #if not redirect_to or not is_safe_redirect(redirect_to):
+    #    try:
+    #        redirect_to = reverse(settings.LOGIN_REDIRECT_VIEW, args=[user.id])
+    #    except NoReverseMatch:
+    #        redirect_to = settings.LOGIN_REDIRECT_URL
     
-    return HttpResponseRedirect(redirect_to)
+    #return HttpResponseRedirect(redirect_to)
 
 def twitter_logout(request, redirect_field_name='next'):
     if request.user.is_authenticated():

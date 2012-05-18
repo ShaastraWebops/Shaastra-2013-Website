@@ -20,7 +20,6 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'twitter_users.backends.TwitterBackend',
 )
 
 TEMPLATE_LOADERS = (
@@ -46,8 +45,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'users',
-    'twitter_users',
-    
+       
     
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',

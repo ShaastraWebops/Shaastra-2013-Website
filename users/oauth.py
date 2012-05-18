@@ -2,8 +2,6 @@
 import oauth2
 import urllib
 
-from twitter_users import settings
-
 # not sure why this is necessary, but oauth2 does this, so I'm following its lead
 try:
     from urlparse import parse_qs, parse_qsl
