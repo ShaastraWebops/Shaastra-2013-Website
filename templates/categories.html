@@ -1,0 +1,21 @@
+<html>
+<body>
+<h1> Welcome to Shaastra 2013 Sponsorship Portal </h1>
+<br/>
+The events up for sponsorship fall under these categories. Click 
+on the events for more information.
+<br/><br/>
+{% for i in categories %}
+    {{i.name}} <a href="/category/{{i.url_name}}/">Events</a>
+    --
+    {% for j in photos_list %}
+        {% if j.category == i %}       
+            <img src="{{MEDIA_URL}}{{j.image}}" width="100px" height="100px" />
+        {% endif %}
+    {% endfor %}
+    
+    <br/>
+{% endfor %}
+</body>
+</html>
+

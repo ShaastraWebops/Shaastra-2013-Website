@@ -1,0 +1,13 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+Add images for event under the category {{obj}}<br/>
+<br/>
+<form action="" method="POST">
+
+    {{ form }}
+
+    <input type="hidden" name="action" value="add_photos" />
+    <input type="submit" name="save" value="Save Images" />
+</form>
+<a href="/admin/portal/category/">Done</a><br/>
+{% endblock %}

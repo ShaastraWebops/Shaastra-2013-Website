@@ -1,0 +1,42 @@
+<html>
+<body>
+These events are under {{cleaned_category}}
+<br/><br/><br/>
+<table border="1">
+	<tr>
+	<td>Event</td>
+	<td>About</td>
+	<td>Current Status</td>
+	<td>Image</td></tr>
+	
+{% for i in events_list %}
+
+	<tr>
+	<td>{{i.title}}</td>
+	<td>{{i.about}}</td>
+	<td>
+	{% if i.status == "y" %}
+    	Sponsored
+    {% endif %}
+    {% if i.status == "n"%}
+    	Not Sponsored
+    {% endif %}
+    {% if i.status == "w"%}
+    	Not Sponsored
+    {% endif %}</td>
+    
+    <td>
+    {% for j in photos_list %}
+        {% if j.event == i %}       
+            <img src="{{MEDIA_URL}}{{j.image}}" width="100px" height="100px" />
+        {% endif %}
+    {% endfor %}
+    </td>
+    </tr>
+    
+{% endfor %}
+</table>
+<br/><br/><br/><br/>
+<a href="/category/">Back</a><br/>
+</body>
+</html>
