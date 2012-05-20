@@ -1,1 +1,35 @@
-<a href="/category/">Sponsor Events</a><br/>
+<html>
+<body>
+{% block home %}
+ <h1><center>Welcome to Shaastra 2013 Spons Portal</h1></center>
+{% endblock %}
+{% block index %}
+<table border='1'>
+<tr>
+<td><a href="/category/">Events</a><br/></td>
+<td>  </td>
+<td> </td>
+{% for topic in topics %}
+	<td><a href="/topic/{{topic.url_name}}/">{{topic.title}}</a></td>
+	{% for image in topic_images %}
+		{% if image.topic == topic %}
+			<td><img src="{{MEDIA_URL}}{{image.image}}" width="100px" height="100px" /></td>
+		{% endif %}
+	{% endfor %}
+<td>  </td>
+<td>  </td>
+{% endfor %}
+</tr>
+</table>
+{% endblock %}
+<hr>
+<h2><center>{% block title %} {% endblock %}</center></h2>
+{% block body %}
+
+{% endblock %}
+{% block end%}
+<hr>
+{% endblock %}
+</body>
+</html>
+

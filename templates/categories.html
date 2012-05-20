@@ -1,21 +1,28 @@
-<html>
-<body>
-<h1> Welcome to Shaastra 2013 Sponsorship Portal </h1>
-<br/>
-The events up for sponsorship fall under these categories. Click 
-on the events for more information.
+{% extends "home.html" %}
+<!--<h1> <center>Welcome to Shaastra 2013 Sponsorship Portal </center></h1>-->
+{% block home %} {% endblock %}
+<hr>
+{% block title %}Categories of events {% endblock %}
+<center>The events up for sponsorship fall under these categories. Click 
+on the events for more information.</center>
 <br/><br/>
+{% block body %}
+<table border='1'>
+
 {% for i in categories %}
-    {{i.name}} <a href="/category/{{i.url_name}}/">Events</a>
-    --
+<tr>
+     <td><a href="/category/{{i.url_name}}/">{{i.name}}</a></td>
     {% for j in photos_list %}
         {% if j.category == i %}       
-            <img src="{{MEDIA_URL}}{{j.image}}" width="100px" height="100px" />
+            <td><img src="{{MEDIA_URL}}{{j.image}}" width="100px" height="100px" /></td>
         {% endif %}
     {% endfor %}
-    
-    <br/>
+</tr>   
 {% endfor %}
-</body>
-</html>
+</table>
+{% endblock %}
+{% block end %}
+<hr>
+<a href='/'>back</a>
+{% endblock %}
 

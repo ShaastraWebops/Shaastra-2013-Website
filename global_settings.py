@@ -73,7 +73,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'spons_portal.urls'
+ROOT_URLCONF = 'Shaastra-2013-Website.urls'
 
 
 
@@ -88,7 +88,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'spons_portal.portal',
+    'Shaastra-2013-Website.portal',
+	'Shaastra-2013-Website.topics',
 )
 
 # A sample logging configuration. The only tangible logging
