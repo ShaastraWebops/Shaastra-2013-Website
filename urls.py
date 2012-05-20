@@ -8,9 +8,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'spons_portal.portal.views.home', name='home'),
-    url(r'^category/$', 'spons_portal.portal.views.category', name='category'),
-    url(r'^category/(?P<category>\w+)/$', 'spons_portal.portal.views.events', name='events'),
+    url(r'^$', 'Shaastra-2013-Website.portal.views.home', name='home'),
+    url(r'^category/$', 'Shaastra-2013-Website.portal.views.category', name='category'),
+    url(r'^category/(?P<category>\w+)/$', 'Shaastra-2013-Website.portal.views.events', name='events'),
     # url(r'^spons_portal/', include('spons_portal.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

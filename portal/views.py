@@ -2,8 +2,8 @@
 from django.http import *
 from django.shortcuts import *
 from django.template import *
-from spons_portal.portal.models import *
-from spons_portal.settings import *
+from portal.models import *
+from settings import *
 import os
 from django.core.urlresolvers import reverse
 from django.contrib import admin
