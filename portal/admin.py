@@ -40,7 +40,8 @@ class CategoryImageInline(admin.TabularInline):
     
 class EventInline(admin.TabularInline):
     model = Event
-    extra = 1     
+    extra=1
+        
     
 """
 The corresponding class in Admin is for adding
@@ -104,7 +105,7 @@ class EventAdmin(admin.ModelAdmin):
             message = "1 event was"
         else:
             message = "%s events were" % updated
-        self.message_user(request, "%s successfully marked as sold." % message)
+        self.message_user(request, "%s successfully markedfieldsets as sold." % message)
         
     def make_available(self, request, queryset):
         updated = queryset.update(status='a')

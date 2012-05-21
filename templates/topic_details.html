@@ -1,0 +1,33 @@
+{% extends "home.html" %}
+{% block home %} {% endblock %}
+{% block index %}
+<table border='1'>
+<tr>
+<td><a href='/'>Home</a></td>
+<td> </td>
+<td> </td>
+<td><a href="/category/">Events</a><br/></td>
+<td>  </td>
+<td> </td>
+{% for topic in topics %}
+	<td><a href="/topic/{{topic.url_name}}/">{{topic.title}}</a></td>
+	<td>  </td>
+	<td>  </td>
+{% endfor %}
+</tr>
+</table>
+{% endblock %}
+<hr>
+{% block title %} {{present_topic.title}} {% endblock %}
+<hr>
+{% block body %}
+{% for image in present_topic_images %}
+	<img src='{{MEDIA_URL}}{{image.image}}' width="100px" height="100px">
+{% endfor %}
+<hr>
+<center><p> {{present_topic.information}}</p></center>
+{% endblock %}
+{% block end %}
+<hr>
+<a href='/'>back</a>
+{% endblock %}
