@@ -55,6 +55,7 @@ def event(request, eventid):
     if request.method=='POST':
         if 'add' in request.POST:
             tags=request.POST['tags']
+            tags=tags.lower()
             tags=[x.strip() for x in tags.split(',')]
             for t in tags:
                 if len(t)>=3:
@@ -126,6 +127,7 @@ def edittag(request, eventid, tagid):
     edited=0
     if request.method=='POST':
         t=request.POST['tag_edit']
+        t=t.lower()
         if ',' in t:
             comma=1
             tag=Tag(tag=t)
@@ -187,7 +189,8 @@ def main(request):
     return render_to_response("main.html", locals())
 
 def search(request):
-    query_string = request.GET.get('query_string', None)
+    query_string = request.GET.get('q', None)
+    query_string = query_string.lower()
     results=[]
     query_list=[]
     if query_string==None:
@@ -200,6 +203,7 @@ def search(request):
     for query in query_list:
         if event_tag.sismember("tags", query): #check if such a tag exists
             results+=list(event_tag.smembers(query))
+    results.sort()
     result_list=[]
     for r in results:
         result_list.append(Event.objects.get(name=r))  
