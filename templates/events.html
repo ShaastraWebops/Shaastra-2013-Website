@@ -1,13 +1,31 @@
-<html>
-<body>
-These events are under {{cleaned_category}}
-<br/><br/><br/>
+{% extends "home.html" %}
+{% block home %} {% endblock %}
+{% block index %}
+<table border='1'>
+<tr>
+<td><a href='/'>Home</a></td>
+<td> </td>
+<td> </td>
+<td><a href="/category/">Events</a><br/></td>
+<td>  </td>
+<td> </td>
+{% for topic in topics %}
+	<td><a href="/topic/{{topic.url_name}}/">{{topic.title}}</a></td>
+	<td>  </td>
+	<td>  </td>
+{% endfor %}
+</tr>
+</table>
+{% endblock %}
+<hr>
+{% block title %}Events under {{cleaned_category}}{% endblock %}
+{% block body %}
 <table border="1">
 	<tr>
-	<td>Event</td>
-	<td>About</td>
-	<td>Current Status</td>
-	<td>Image</td></tr>
+	<th>Event</th>
+	<th>Information</th>
+	<th>Current Status</th>
+	<th>Image</th></tr>
 	
 {% for i in events_list %}
 
@@ -15,16 +33,12 @@ These events are under {{cleaned_category}}
 	<td>{{i.title}}</td>
 	<td>{{i.about}}</td>
 	<td>
-	{% if i.status == "y" %}
-    	Sponsored
+	{% if i.status == "s" %}
+    	Sold
     {% endif %}
-    {% if i.status == "n"%}
-    	Not Sponsored
-    {% endif %}
-    {% if i.status == "w"%}
-    	Not Sponsored
-    {% endif %}</td>
-    
+    {% if i.status == "a"%}
+    	Available
+    {% endif %}    
     <td>
     {% for j in photos_list %}
         {% if j.event == i %}       
@@ -33,10 +47,14 @@ These events are under {{cleaned_category}}
     {% endfor %}
     </td>
     </tr>
-    
+<tr> </tr>    
 {% endfor %}
 </table>
-<br/><br/><br/><br/>
+{% endblock %}
+
+
+{% block end %}
+<hr>
 <a href="/category/">Back</a><br/>
-</body>
-</html>
+{% endblock %}
+

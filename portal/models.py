@@ -4,9 +4,8 @@ from django.contrib import admin
 
 #Allows for updating status of event
 STATUS_CHOICES = (
-    ('y', 'Sponsored'),
-    ('n', 'Not Sponsored'),
-    ('w', 'Withdrawn'),
+    ('s', 'Sold'),
+    ('a', 'Available'),
 )
 class Category(models.Model):
     name = models.CharField(max_length=30, unique=True)

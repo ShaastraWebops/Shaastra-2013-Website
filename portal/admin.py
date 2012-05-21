@@ -96,32 +96,32 @@ class EventAdmin(admin.ModelAdmin):
     inlines = [EventImageInline]
     list_display = ['title','category','status']
     search_fields = ['title','category__name']
-    actions = ['make_sponsored', 'make_not_sponsored','count_sponsored']
+    actions = ['make_sold', 'make_available','count_sold']
     
-    def make_sponsored(self, request, queryset):
-        updated = queryset.update(status='y')
+    def make_sold(self, request, queryset):
+        updated = queryset.update(status='s')
         if updated == 1:
             message = "1 event was"
         else:
             message = "%s events were" % updated
-        self.message_user(request, "%s successfully marked as sponsored." % message)
+        self.message_user(request, "%s successfully marked as sold." % message)
         
-    def make_not_sponsored(self, request, queryset):
-        updated = queryset.update(status='n')
+    def make_available(self, request, queryset):
+        updated = queryset.update(status='a')
         if updated == 1:
             message = "1 event was"
         else:
             message = "%s events were" % updated
-        self.message_user(request, "%s successfully marked as not sponsored." % message)
+        self.message_user(request, "%s successfully marked as available." % message)
         
-    def count_sponsored(self, request, queryset):
-        filtered = queryset.filter(status='y')
+    def count_sold(self, request, queryset):
+        filtered = queryset.filter(status='s')
         counted = filtered.count()
         if counted == 1:
             message = "1 event is"
         else:
             message = "%s events are" % counted
-        self.message_user(request, "%s sponsored." % message)       
+        self.message_user(request, "%s sold." % message)       
 """
 Only those classes explicitly registered will
 be displayed.

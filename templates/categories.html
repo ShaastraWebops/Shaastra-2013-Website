@@ -1,6 +1,23 @@
 {% extends "home.html" %}
 <!--<h1> <center>Welcome to Shaastra 2013 Sponsorship Portal </center></h1>-->
 {% block home %} {% endblock %}
+{% block index %}
+<table border='1'>
+<tr>
+<td><a href='/'>Home</a></td>
+<td> </td>
+<td> </td>
+<td><a href="/category/">Events</a><br/></td>
+<td>  </td>
+<td> </td>
+{% for topic in topics %}
+	<td><a href="/topic/{{topic.url_name}}/">{{topic.title}}</a></td>
+	<td>  </td>
+	<td>  </td>
+{% endfor %}
+</tr>
+</table>
+{% endblock %}
 <hr>
 {% block title %}Categories of events {% endblock %}
 <center>The events up for sponsorship fall under these categories. Click 
