@@ -77,8 +77,14 @@ def logout(request):
         return render_to_response('users/logout.html', locals(), context_instance= global_context(request))        
     return HttpResponseRedirect('%slogin/'%settings.SITE_URL) 
     """
-    log_out(request)
-    return HttpResponseRedirect('/login')       
+    if "FB_" in request.user.get_profile().UID:
+        access_token=request.user.get_profile().access_token
+        log_out(request)
+        redirect_to="https://www.facebook.com/logout.php?next=http://127.0.0.1:8000/login&access_token="+str(access_token)
+    else:
+        log_out(request)
+        redirect_to="/login"
+    return HttpResponseRedirect(redirect_to)       
 
     
 def user_registration(request):
@@ -117,6 +123,7 @@ def user_registration(request):
             UID=request.POST['UID']
             form = forms.UserRegisterForm(request.POST)
             active=True
+            access_token=request.POST['access_token']
 
         if form.is_valid():
             user = User.objects.create_user(username = form.cleaned_data['email'], email = form.cleaned_data['email'],password = password,)            
@@ -141,6 +148,7 @@ def user_registration(request):
 #                    shaastra_id  = user.id , # is this right
 #                    activation_key = activation_key,
 #                    key_expires  = key_expires,
+                    access_token = access_token,
                     )
             userprofile.save()
 #            mail_template=get_template('email/activate.html')
@@ -149,7 +157,10 @@ def user_registration(request):
 #							 'activationkey':userprofile.activation_key }))
 #            send_mail('Your new Shaastra2011 account confirmation', body,'noreply@shaastra.org', [user.email,], fail_silently=False)
 #            request.session['registered_user'] = True
-            return HttpResponseRedirect("/login")
+            if "FB_" in UID:
+                return HttpResponseRedirect("/facebook/login")
+            else:
+                return HttpResponseRedirect("/twitter/login")
     else:
         form = forms.AddUserForm()
     return render_to_response('register.html', locals(), context_instance= RequestContext(request))    

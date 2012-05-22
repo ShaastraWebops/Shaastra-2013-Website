@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from users.forms import AddUserForm, UserRegisterForm
 from users.models import UserProfile
 
+
 def login(request):
     """ First step of process, redirects user to facebook, which redirects to authentication_callback. """
 
@@ -67,5 +68,4 @@ def authentication_callback(request):
             gender='M'
         form = UserRegisterForm(initial=locals())
     return render_to_response('register.html',locals(), context_instance=RequestContext(request))    
-
 

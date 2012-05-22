@@ -75,8 +75,8 @@ class UserProfile(models.Model):
     is_coord        = models.BooleanField	(default = False)
 #    coord_event     = models.ForeignKey     (Event, null = True)
 #    registered      = models.ManyToManyField(Event, null=True, related_name='registered_users')        #Events which this user has registered for
-    token   = models.CharField(max_length=100)
-    secret  = models.CharField(max_length=100)    
+    access_token   = models.CharField(max_length=250)
+#    secret  = models.CharField(max_length=100)    
 
     def __unicode__(self):
         return self.user.first_name
