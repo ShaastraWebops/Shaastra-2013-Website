@@ -20,6 +20,7 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 TEMPLATE_LOADERS = (
@@ -45,12 +46,22 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'users',
+    'emailconfirmation',
+    'uni_form',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    #'allauth.twitter',
+    'allauth.openid',
+    #'allauth.facebook',
+    
        
     
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    #s'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -75,3 +86,11 @@ LOGGING = {
         },
     }
 }
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "allauth.context_processors.allauth",
+    "allauth.account.context_processors.account",
+    'django.contrib.auth.context_processors.auth',
+)
+
+

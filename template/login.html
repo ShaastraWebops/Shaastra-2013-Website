@@ -1,9 +1,10 @@
 <html>
+{% load allauth_tags %}
     <head>
         <title>Shaastra 2013</title>
     </head>
     <body>
-        Login<br/>
+        Login<br>
         {% if user.is_authenticated %}
         <h2>You are logged in as: {{ user }}</h2>
         <a href="/logout">Logout</a>
@@ -17,6 +18,8 @@
         <form action="" method="POST">
         <a href="/facebook/login">Login via Facebook</a>
         <a href="/twitter/login">Login via Twitter</a>
+        <li><a title="Google" class="socialaccount_provider google" href="{% openid_login_url openid="https://www.google.com/accounts/o8/id" %}">Google</a></li>
+        <li><a title="Yahoo" class="socialaccount_provider yahoo" href="{% openid_login_url openid="http://me.yahoo.com" %}">Yahoo</a></li>
         <table>
             {% csrf_token %}
             {{form.as_table}}

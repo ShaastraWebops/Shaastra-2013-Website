@@ -22,6 +22,10 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login as log_in, logout as log_out
 
+def home(request):
+    user=str(request.user)
+    return render_to_response('home.html', locals())
+
 def login (request):
     """
         This is the view for logging a user in.

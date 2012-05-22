@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
-
 from django.contrib import admin
 import django.contrib.auth.views
-#admin.autodiscover()
+admin.autodiscover()
 
 urlpatterns = patterns('',  
         
@@ -19,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^twitter/login/?$', 'Shaastra-2013-Website.users.tw_views.twitter_login',name='twitter-login'),
     url(r'^twitter/login/callback/?$', 'Shaastra-2013-Website.users.tw_views.twitter_callback',name='twitter-callback'),
     url(r'^twitter/logout/?$', 'Shaastra-2013-Website.users.tw_views.twitter_logout',name='twitter-logout'),
+    url(r'^home/$', 'Shaastra-2013-Website.users.views.home'),
 #      (r'^feedback/?$', 'Shaastra-2013-Website.users.views.feedback'),
 #      (r'^view_feedback/?$', 'Shaastra-2013-Website.users.views.view_feedback'),
 #      (r'^password_change/$', 'django.contrib.auth.views.password_change'),
