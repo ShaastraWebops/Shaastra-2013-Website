@@ -39,7 +39,7 @@ def delredistag(derived_tag, event_name, main_tag):
                 if event_name in event_tag.smembers(x):
                     flag=1
                     break
-        if flag:
+        if flag==0:
             event_tag.srem(derived_tag, event_name)
                             
 def event(request, eventid):
@@ -187,6 +187,18 @@ def edittag(request, eventid, tagid):
 
 def main(request):
     return render_to_response("main.html", locals())
+
+def main2(request):
+    result_list=[]
+    for t in Tag.objects.all():
+        row=[]
+        row.append(str(t.tag))
+        temp=[]
+        for x in t.event_set.all():
+            temp.append([str(x),str(x.id)])
+        row.append(temp)
+        result_list.append(row)
+    return render_to_response("main2.html", locals())
 
 def search(request):
     query_string = request.GET.get('q', None)

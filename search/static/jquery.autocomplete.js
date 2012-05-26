@@ -279,16 +279,81 @@ jQuery.autocomplete = function(input, options) {
 		return parsed;
 	};
 
+	function sortUnorderedList(ul, url, sortDescending) {
+        if(typeof ul == "string")
+            ul = document.getElementById(ul);
+
+        // Get the list items and setup an array for sorting
+        var lis = ul.getElementsByTagName("LI");
+        var vals = [];
+        var vals2 = [];
+        
+        // Populate the array
+        for(var i = 0, l = lis.length; i < l; i++) {
+        if(lis[i].innerHTML!="") {
+            vals.push(lis[i].innerHTML);
+            vals2.push(lis[i].selectValue);
+        }
+        }
+        
+        // Sort it
+        vals.sort();
+        
+        // If it needs to be sorted in descending order
+        if(sortDescending)
+            vals.reverse();
+        
+        var num=vals.length;
+        for(var i = 0; i < num; i++) {
+            for(var j=0;j<num;j++) {
+                if(vals[j]==lis[i].innerHTML)
+                    vals2[j]=lis[i].selectValue;
+            }
+        }
+        
+        while (ul.firstChild) ul.removeChild(ul.firstChild);
+        
+        var ul = document.createElement("ul");
+		ul.id = "search_results";
+		
+        // Change the list on the page
+        for(var i = 0; i < num; i++) {
+            var li = document.createElement("li");
+            li.innerHTML = vals[i];
+            li.selectValue = vals2[i];
+            var extra = null;
+            if( (typeof url == "string") && (url.length > 0) ){ 
+			    if (data[i].length > 1) {
+				    extra = [];
+				    for (var j=1; j < data[i].length; j++) {
+				    	extra[extra.length] = data[i][j];
+				    }
+			    }
+			}
+			li.extra = extra;
+			ul.appendChild(li);
+			$(li).hover(
+				function() { $("li", ul).removeClass("ac_over"); $(this).addClass("ac_over"); active = $("li", ul).indexOf($(this).get(0)); },
+				function() { $(this).removeClass("ac_over"); }
+			).click(function(e) { e.preventDefault(); e.stopPropagation(); selectItem(this) });
+		}
+		return ul;
+    }
+
 	function dataToDom(data) {
 		var ul = document.createElement("ul");
+		ul.id = "search_results";
 		var num = data.length;
 
 		// limited results to a max number
 		if( (options.maxItemsToShow > 0) && (options.maxItemsToShow < num) ) num = options.maxItemsToShow;
 
-		for (var i=0; i < num; i++) {
+		for (var i=0; i < num; i++)	{
 			var row = data[i];
 			if (!row) continue;
+			var num2=row[1].length;
+			if( (typeof options.url == "string") && (options.url.length > 0) ){ 
+			
 			var li = document.createElement("li");
 			if (options.formatItem) {
 				li.innerHTML = options.formatItem(row, i, num);
@@ -310,6 +375,49 @@ jQuery.autocomplete = function(input, options) {
 				function() { $("li", ul).removeClass("ac_over"); $(this).addClass("ac_over"); active = $("li", ul).indexOf($(this).get(0)); },
 				function() { $(this).removeClass("ac_over"); }
 			).click(function(e) { e.preventDefault(); e.stopPropagation(); selectItem(this) });
+		    }
+			
+			else {
+			
+			for (var x=0; x < num2; x++)
+			{
+			    var li = document.createElement("li");
+			    if (options.formatItem)
+			    {
+				    li.innerHTML = options.formatItem(row, i, num);
+				    li.selectValue = row[0];
+			    }
+			    else
+			    {
+			        var flag=0;
+			        for(var y=0; y<i; y++)
+			        {
+			            for(var z=0; z<(data[y][1].length); z++)
+			            {
+			                if (data[y][1][z][1]==row[1][x][1])
+			                {
+			                    flag=1;
+			                    break;
+			                }
+			            }
+			        }
+			        if(flag==0)
+			        {
+				        li.innerHTML = row[1][x][0];
+				        li.selectValue = row[1][x][1];
+				    }
+			    }
+			    var extra = null;
+			    
+			    li.extra = extra;
+			    ul.appendChild(li);
+			    $(li).hover(
+				    function() { $("li", ul).removeClass("ac_over"); $(this).addClass("ac_over"); active = $("li", ul).indexOf($(this).get(0)); },
+				    function() { $(this).removeClass("ac_over"); }
+			    ).click(function(e) { e.preventDefault(); e.stopPropagation(); selectItem(this) });
+			}
+			ul=sortUnorderedList(ul, options.url);
+			}
 		}
 		return ul;
 	};
@@ -344,6 +452,27 @@ jQuery.autocomplete = function(input, options) {
 	function loadFromCache(q) {
 		if (!q) return null;
 		if (cache.data[q]) return cache.data[q];
+		
+		if( (typeof options.url != "string") || (options.url.length <= 0) ){
+		
+		if (options.matchSubset) {
+			for (var i = q.length - 1; i >= options.minChars; i--) {
+				var qs = q.substr(0, i);
+				var c = cache.data[qs];
+				if (c) {
+					var csub = [];
+					for (var j = 0; j < c.length; j++) {
+						var x = c[j];
+						var x0 = x[0];
+						if (matchSubset(x0, q)) {
+							csub[csub.length] = x;
+						}
+					}
+					return csub;
+				}
+			}
+		}
+		}
 		return null;
 	};
 

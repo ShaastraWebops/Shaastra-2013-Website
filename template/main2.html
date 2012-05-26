@@ -7,7 +7,6 @@
 </head>
 
 <body>
-
 <form action="" onsubmit="return false;">
 		<input type="text" id="search_query" value="" style="width: 200px;" />
 </form>
@@ -33,7 +32,7 @@ function formatItem(row) {
 	return row[0];
 }
 
-function lookupAjax(){
+function lookupLocal(){
 	var oSuggest = $("#search_query")[0].autocompleter;
 
 	oSuggest.findValue();
@@ -42,20 +41,19 @@ function lookupAjax(){
 }
 
 $(document).ready(function() {
-	$("#search_query").autocomplete(
-		"search",
+	$("#search_query").autocompleteArray(
+		{{ result_list|safe }},
 		{
 			delay:10,
-			minChars:3,
-			cacheLength:10,
+			minChars:1,
 			onItemSelect:selectItem,
 			onFindValue:findValue,
-			formatItem:formatItem,
 			autoFill:false
+
 		}
 	);
-
-	});
+});
 </script>
+
 </body>
 </html>
