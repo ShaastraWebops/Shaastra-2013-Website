@@ -1,18 +1,27 @@
-from django.conf.urls.defaults import patterns, include, url
-# Uncomment the next two lines to enable the admin:
+from django.conf.urls.defaults import *
+from django.utils.translation import ugettext as _
+from django.conf import settings
 from django.contrib import admin
+import os
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'shaastra2013.views.home', name='home'),
-    url(r'^', include ('Shaastra-2013-Website.users.urls')),
-#    (r'^accounts/', include('allauth.urls')),
-    # url(r'^shaastra2013/', include('shaastra2013.foo.urls')),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    (r'^osqa/', include('forum.urls')),
+    url(r'^m/(?P<skin>\w+)/media/(?P<path>.*)$', 'forum.views.meta.media' , name='osqa_media'),
+    url(r'^%s(?P<path>.*)$' % _('upfiles/'), 'django.views.static.serve', {'document_root': os.path.join(os.path.dirname(__file__),'forum', 'upfiles').replace('\\', '/')}, name='uploaded_file',),
 
-    # Uncomment the next line to enable the admin:
+    url(r'^', include ('users.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
+
+if 'rosetta' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+        url(r'^rosetta/', include('rosetta.urls')),
+    )
+
+handler404 = 'forum.views.meta.page'
+handler500 = 'forum.views.meta.error_handler'
+
+
