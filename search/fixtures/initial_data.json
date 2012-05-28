@@ -1,0 +1,304 @@
+[
+    {
+        "pk": 1,
+        "model": "search.tag",
+        "fields": {
+            "tag": "apple"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "search.tag",
+        "fields": {
+            "tag": "ajax"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "search.tag",
+        "fields": {
+            "tag": "foo"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "search.tag",
+        "fields": {
+            "tag": "bar"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "search.tag",
+        "fields": {
+            "tag": "jquery"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "search.tag",
+        "fields": {
+            "tag": "qwerty"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "search.tag",
+        "fields": {
+            "tag": "ball"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "search.tag",
+        "fields": {
+            "tag": "javascript"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "search.tag",
+        "fields": {
+            "tag": "django"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "search.tag",
+        "fields": {
+            "tag": "haha"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "search.tag",
+        "fields": {
+            "tag": "shaastra"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "search.tag",
+        "fields": {
+            "tag": "cat"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "search.tag",
+        "fields": {
+            "tag": "kitten"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "search.tag",
+        "fields": {
+            "tag": "mice"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "search.tag",
+        "fields": {
+            "tag": "rice"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "search.tag",
+        "fields": {
+            "tag": "lice"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "search.tag",
+        "fields": {
+            "tag": "dog"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "search.tag",
+        "fields": {
+            "tag": "potato"
+        }
+    },
+    {
+        "pk": 19,
+        "model": "search.tag",
+        "fields": {
+            "tag": "feline"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "search.tag",
+        "fields": {
+            "tag": "napalm"
+        }
+    },
+    {
+        "pk": 21,
+        "model": "search.tag",
+        "fields": {
+            "tag": "agent orange"
+        }
+    },
+    {
+        "pk": 22,
+        "model": "search.tag",
+        "fields": {
+            "tag": "eye"
+        }
+    },
+    {
+        "pk": 23,
+        "model": "search.tag",
+        "fields": {
+            "tag": "poiu"
+        }
+    },
+    {
+        "pk": 24,
+        "model": "search.tag",
+        "fields": {
+            "tag": "asdfg"
+        }
+    },
+    {
+        "pk": 25,
+        "model": "search.tag",
+        "fields": {
+            "tag": "cockroach"
+        }
+    },
+    {
+        "pk": 26,
+        "model": "search.tag",
+        "fields": {
+            "tag": "frost"
+        }
+    },
+    {
+        "pk": 27,
+        "model": "search.tag",
+        "fields": {
+            "tag": "whiterun"
+        }
+    },
+    {
+        "pk": 28,
+        "model": "search.tag",
+        "fields": {
+            "tag": "riften"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "search.event",
+        "fields": {
+            "tag": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            ],
+            "name": "A"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "search.event",
+        "fields": {
+            "tag": [
+                2,
+                3,
+                7,
+                8,
+                9,
+                10,
+                11
+            ],
+            "name": "B"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "search.event",
+        "fields": {
+            "tag": [
+                2,
+                5,
+                8,
+                12,
+                13,
+                14,
+                15,
+                16
+            ],
+            "name": "C"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "search.event",
+        "fields": {
+            "tag": [
+                3,
+                5,
+                8,
+                12,
+                13,
+                14,
+                17,
+                18,
+                19,
+                20,
+                21
+            ],
+            "name": "D"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "search.event",
+        "fields": {
+            "tag": [
+                1,
+                5,
+                10,
+                13,
+                20,
+                22,
+                23,
+                24,
+                25
+            ],
+            "name": "E"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "search.event",
+        "fields": {
+            "tag": [
+                1,
+                5,
+                11,
+                16,
+                18,
+                21,
+                23,
+                25,
+                26,
+                27,
+                28
+            ],
+            "name": "F"
+        }
+    }
+]
