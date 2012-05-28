@@ -37,5 +37,5 @@ class Event(models.Model):
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique = True)
     is_core = models.BooleanField(default = False)
-    is_coord_of = models.ForeignKey(Event, default = None)
+    is_coord_of = models.ManyToManyField(Event, default = None)
     
