@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>Shaastra 2013</title>
+    </head>
+    <body>
+        Register<br/>
+        <form action="/register/user" method="POST">
+        <table>
+            {% csrf_token %}
+            {{ form.as_table }}
+        </table>
+        <input type="hidden" name="UID" value="{{UID}}" />
+        <input type="hidden" name="access_token" value="{{access_token}}" />
+        <input type="submit" value="Register" />
+        </form>
+    </body>
+</html>

@@ -9,6 +9,16 @@ USE_L10N = True
 
 ADMIN_MEDIA_PREFIX = '/media/'
 
+FACEBOOK_APP_ID = '291744470918252'
+FACEBOOK_APP_SECRET = '599f13aad496d3acc8ea887a0e889b92'
+FACEBOOK_SCOPE = 'email'
+
+AUTH_PROFILE_MODULE = 'users.UserProfile'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
@@ -31,12 +41,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    
-    
+    'users',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    #s'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -61,3 +70,9 @@ LOGGING = {
         },
     }
 }
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+)
+
+
