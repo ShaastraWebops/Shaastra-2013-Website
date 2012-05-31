@@ -40,32 +40,8 @@ def authentication_callback(request):
 
 #    access_token = authenticate(token=code, request=request)
 
-    # Read the user's profile information
-    fb_profile = urllib.urlopen('https://graph.facebook.com/me?access_token=%s' % access_token)
-    fb_profile = json.load(fb_profile)
-
-    try:
-        # Try and find existing user
-        fb_user = UserProfile.objects.get(UID="FB_"+str(fb_profile['id']))
-        user=authenticate(username=fb_user.user.email,password="default")
-        if user is not None:
-            auth_login(request,user)
-        return HttpResponseRedirect("/login")
-
-    except UserProfile.DoesNotExist:
-        # No existing user
-        # Not all users have usernames
-#        username = fb_profile.get('username', fb_profile['email'].split('@')[0])
-        email=fb_profile['email']            
-        first_name = fb_profile['first_name']
-        last_name = fb_profile['last_name']
-        UID="FB_" + str(fb_profile['id'])
-        password="default"
-        password_again="default"
-        if fb_profile['gender'] == "female" :
-            gender='F'
-        else:
-            gender='M'
-        form = UserRegisterForm(initial=locals())
-    return render_to_response('register.html',locals(), context_instance=RequestContext(request))    
-
+    # Try and find existing user
+    fb_user=UserProfile.objects.get(user=request.user)
+    fb_user.access_token=access_token
+    fb_user.save()
+    return HttpResponseRedirect("/osqa")

@@ -45,6 +45,8 @@ def login (request):
             if user is not None and 'FB_' not in user.get_profile().UID:
                 log_in(request, user)
                 return HttpResponseRedirect("/login")
+#                a=request.user.is_authenticated()
+#                assert False
             else:                
                 return HttpResponse("Invalid")
     return render_to_response('login.html',locals(), context_instance=RequestContext(request))
@@ -77,13 +79,13 @@ def logout(request):
         return render_to_response('users/logout.html', locals(), context_instance= global_context(request))        
     return HttpResponseRedirect('%slogin/'%settings.SITE_URL) 
     """
-    if "FB_" in request.user.get_profile().UID:
-        access_token=request.user.get_profile().access_token
-        log_out(request)
-        redirect_to="https://www.facebook.com/logout.php?next=http://127.0.0.1:8000/login&access_token="+str(access_token)
-    else:
-        log_out(request)
-        redirect_to="/login"
+#    if "FB_" in request.user.get_profile().UID:
+#        access_token=request.user.get_profile().access_token
+#        log_out(request)
+#        redirect_to="https://www.facebook.com/logout.php?next=http://127.0.0.1:8000/login&access_token="+str(access_token)
+#    else:
+    log_out(request)
+    redirect_to="/login"
     return HttpResponseRedirect(redirect_to)       
 
     

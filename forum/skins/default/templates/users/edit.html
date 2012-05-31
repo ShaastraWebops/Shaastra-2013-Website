@@ -47,7 +47,17 @@
         </div>
         
         <div id="askform" style="float:right;width:750px;text-align:left;">
-            <h2>{% trans "Registered user" %}</h2>
+            {% if request.user.get_profile %}
+            <tr>
+                <th colspan="2" align="left"><h3>{% trans "Registered user" %}</h3>
+                <span>{{ request.user.get_profile.UID }}</span></th>
+            </tr>
+            {% else %}
+            <tr>
+                <th colspan="2" align="left"><h2>{% trans "Unregistered user" %}</h2>
+                <a href="/register/user">Register to get Shaastra id</a></th>
+            </tr>
+            {% endif %}
             <table class="user-details">
                 <tr>
                     <th width="100px"></th>
@@ -97,7 +107,6 @@
             <div style="margin:30px 0 60px 0">
                 <input type="submit" value="{% trans "Update" %}" class="submit" >
                 <input id="cancel" type="button" value="{% trans "Cancel" %}" class="submit" >
-          
             </div>
         </div>
     </form>

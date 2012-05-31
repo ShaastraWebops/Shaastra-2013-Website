@@ -26,8 +26,8 @@ MIDDLEWARE_CLASSES = [
     'forum.middleware.request_utils.RequestUtils',
     'forum.middleware.cancel.CancelActionMiddleware',
     'forum.middleware.admin_messages.AdminMessagesMiddleware',
-    'django.middleware.transaction.TransactionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+#    'django.middleware.transaction.TransactionMiddleware',
+#    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 ]

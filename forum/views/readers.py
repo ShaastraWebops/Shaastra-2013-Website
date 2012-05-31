@@ -81,6 +81,13 @@ def feed(request):
 def index(request):
     paginator_context = QuestionListPaginatorContext()
     paginator_context.base_path = reverse('questions')
+    if request.user.is_authenticated():
+        try:
+            AuthKeyUserAssociation.objects.get(user=request.user,provider="facebook")
+            if not request.user.get_profile.access_token:
+                return HttpResponseRedirect("/facebook/login")
+        except:
+            pass
     return question_list(request,
                          Question.objects.all(),
                          base_path=reverse('questions'),
