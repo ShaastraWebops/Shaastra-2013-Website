@@ -35,7 +35,7 @@ class HorizRadioRenderer(forms.RadioSelect.renderer):
             #Outputs radios
             return mark_safe(u'\n'.join([u'%s\n' % w for w in self]))
 '''
-            
+'''            
 class LoginForm(forms.Form):
     email=forms.EmailField(help_text='Your Shaastra 2011 username')
     password=forms.CharField(widget=forms.PasswordInput, help_text='Your password')
@@ -198,7 +198,7 @@ class UserRegisterForm(ModelForm):
         raise forms.ValidationError('This email address is already taken. Please choose another.')
 
 
-'''    
+    
     def clean_college(self):
         coll_input = self.cleaned_data['college']
         try:
@@ -294,8 +294,9 @@ class UsernameForm(forms.Form):
             except User.DoesNotExist:
                 raise forms.ValidationError('Invalid username')
         return self.cleaned_data['username']
+'''
 class AddCollegeForm (ModelForm):
     class Meta:
         model = models.College
         fields=('name','city','state')
-'''
+

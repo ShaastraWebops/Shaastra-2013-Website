@@ -10,7 +10,7 @@ from django.template.context import Context, RequestContext
 #from django.utils import simplejson
 
 #from  misc.util import *
-from  users.models import UserProfile
+from  users.models import UserProfile, College
 #from  users import models
 from  users import forms
 
@@ -27,7 +27,7 @@ from django.conf import settings
 #def home(request):
 #    user=str(request.user)
 #    return render_to_response('home.html', locals())
-
+'''
 def login (request):
     """
         This is the view for logging a user in.
@@ -54,13 +54,13 @@ def login (request):
     return render_to_response('login.html',locals(), context_instance=RequestContext(request))
 
 
-'''
+
 @needs_authentication
 def spons_dashboard(request):
     if request.user.username == 'spons':
         return render_to_response('users/spons_dashboard.html', locals(), context_instance = global_context(request))
     raise Http404
-'''
+
 
 def logout(request):
     """
@@ -175,9 +175,9 @@ def user_registration(request):
 
 '''                           
 def college_registration (request):
-    if request.method == 'GET':
-        data = request.GET.copy()
-        coll_form = forms.AddCollegeForm(data,prefix="identifier")
+    if request.method == 'POST':
+        #data = request.POST.copy()
+        coll_form = forms.AddCollegeForm(request.POST)
 
         if coll_form.is_valid():
             college=coll_form.cleaned_data['name']
@@ -186,21 +186,28 @@ def college_registration (request):
             city=coll_form.cleaned_data['city']
             state=coll_form.cleaned_data['state']
             
-            if len (College.objects.filter(name=college, city=city, state=state))== 0 :
+            if len(College.objects.filter(name=college, city=city, state=state))== 0 :
                 college=College (name = college, city = city, state = state)
                 college.save()
                 data = college.name+","+college.city
                 #return HttpResponse("created") 
-                return HttpResponse(data, mimetype="text/plain")
+                redirect_to='/register/user/'
+                return HttpResponseRedirect(redirect_to)
             else:
                 return HttpResponse("exists")
         else:
             return HttpResponse("failed")
     #redundant as registration done by ajax call....
+    else:
+        coll_form=forms.AddCollegeForm()    
+    #coll_form=forms.AddCollegeForm()       
+    return render_to_response('college.html', locals(), context_instance= RequestContext(request))  
+
+    #redundant as registration done by ajax call....
     #else:
     #coll_form=forms.AddCollegeForm()        
     #return render_to_response('users/register_user.html', locals(), context_instance= global_context(request))        
-            
+'''            
 def activate (request, a_key = None ): 
     """
        The activation_key (a_key) is trapped from the url. If the key is not empty then the corresponding userprofile object is retrieved. If the object doesn't exist and ObjectDoesNotExist error is flagged.
@@ -282,7 +289,7 @@ def edit_profile(request):
                   'want_hospi' : currentUserProfile.want_hospi}
         editProfileForm = forms.EditUserForm(initial = values)
 
-    return render_to_response('users/profile_update.html', locals(), context_instance = RequestContext(request))
+    return render_to_response('profile_update.html', locals(), context_instance = RequestContext(request))
     
 '''
         form=forms.EditUserForm(initial={'first_name':user.first_name, 'last_name':user.last_name, 'college_roll':userprofile.college_roll,'mobile_number':userprofile.mobile_number})
