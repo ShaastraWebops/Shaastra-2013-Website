@@ -136,11 +136,6 @@ def edit_user(request, id):
     user = get_object_or_404(User, id=id)
     if not (request.user.is_superuser or request.user == user):
         return HttpResponseUnauthorized(request)
-    try:
-        request.user.get_profile()
-        return HttpResponseRedirect("/register/user")
-    except:
-        pass
     if request.method == "POST":
         form = EditUserForm(user, request.POST)
         if form.is_valid():
