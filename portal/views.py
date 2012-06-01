@@ -24,8 +24,7 @@ def category(request):
 def events(request, category):
 	topics=Topic.objects.all()
 	topic_images=TopicImage.objects.all()
-	cleaned_category = category.replace("_"," ")
-	c = get_object_or_404(Category, name = cleaned_category)
+	c = get_object_or_404(Category, url_name = category)
 	events_list = c.events.all()
 	photos_list = EventImage.objects.all()
 	return render_to_response("events.html",locals(),context_instance=RequestContext(request))

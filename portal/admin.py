@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http import *
 from django.shortcuts import *
 from django.template import *
-
+from django.forms.formsets import formset_factory
 
 """
 There is no necessity for Site to be on
@@ -60,39 +60,37 @@ class CategoryAdmin(admin.ModelAdmin):
         This overrides the default save_model available
         in django/contrib/options.py
         """
-        obj.url_name = obj.name.replace(" ","_").replace('!', '').replace('&', '').replace("'", '').replace('-', '')
+        obj.url_name = obj.name.replace(" ","_").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
         obj.save()
         
 """
 The following lines of code was an attempt to ensure
 that event images can be added along with the event
-when adding a category. However there is an error,
-at class AddImageForm. In def __init__ in 
-super(AddImageForm,self), the error displayed is
-global name AddImageForm is not defined.
-"""        
-"""        
+when adding a category. Work in progress.
+""" 
+"""      
     def response_add(self, request, obj, post_url_continue='../%s/'):
         #response_add overrides the predefined one. Works at present only for add category, not change
         super(CategoryAdmin, self).response_add(request, obj, post_url_continue)
         return self.add_photos(request, obj)
         
     def add_photos(self, request, obj):
+        csrfContext = RequestContext(request)
         current_category = Category.objects.get(name = obj)
         if 'save' in request.POST:
-            form = self.AddImageForm(request.POST)
+            form = self.AddImageForm(current_category,request.POST)
         else:
-            form = self.AddImageForm()    
+            form = self.AddImageForm(current_category)    
         return render_to_response('addimages.html',locals(),context_instance=RequestContext(request))
 
     class AddImageForm(forms.Form):
-        event = forms.ModelChoiceField(Event.objects.all())
+        event = forms.ModelChoiceField(queryset=Event.objects.all())
         photo = forms.ImageField(required=False)
 
-        def __init__(self,qs,*args,**kwargs):
-            super(AddImageForm, self).__init__(*args,**kwargs)
-            self.fields['event'].queryset = qs   
-"""    
+        def __init__(self,current_category,*args,**kwargs):
+            super(self.__class__, self).__init__(*args,**kwargs)
+            self.fields['event'].queryset = Event.objects.filter(category=current_category)       
+"""               
 class EventAdmin(admin.ModelAdmin):
     inlines = [EventImageInline]
     list_display = ['title','category','status']

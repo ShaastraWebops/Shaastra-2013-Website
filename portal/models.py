@@ -25,7 +25,7 @@ class Event(models.Model):
     category = models.ForeignKey(Category, related_name = 'events')
     title = models.CharField(max_length=30, unique=True)
     about = models.TextField(null=True)
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='n')
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='a')
  
     def __unicode__(self):
         return self.title

@@ -3,11 +3,12 @@
 Add images for event under the category {{obj}}<br/>
 <br/>
 <form action="" method="POST">
-
     {{ form }}
-
+    {% csrf_token %}
     <input type="hidden" name="action" value="add_photos" />
+    <br/><br/>
     <input type="submit" name="save" value="Save Images" />
 </form>
-<a href="/admin/portal/category/">Done</a><br/>
+<br/>
+<a href="/admin/portal/category/">Back to Categories Home</a><br/>
 {% endblock %}
