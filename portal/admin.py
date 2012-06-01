@@ -60,7 +60,7 @@ class CategoryAdmin(admin.ModelAdmin):
         This overrides the default save_model available
         in django/contrib/options.py
         """
-        obj.url_name = obj.name.replace(" ","_").replace('!', '').replace('&', '').replace("'", '').replace('-', '')
+        obj.url_name = obj.name.replace(" ","_").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
         obj.save()
         
 """
