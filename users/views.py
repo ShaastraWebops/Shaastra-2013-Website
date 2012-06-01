@@ -21,6 +21,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login as log_in, logout as log_out
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 #def home(request):
 #    user=str(request.user)
@@ -238,32 +240,55 @@ def myshaastra(request):
     userprof = user.get_profile()
     events_list = userprof.registered
     return render_to_response('my_shaastra.html', locals(), context_instance = global_context(request))
-    
-@needs_authentication
-def edit_profile(request):
-    user = request.user
-    userprofile = user.get_profile()
-    form = forms.EditUserForm()
-    if request.method=='POST':
-        data=request.POST.copy()
-        form=forms.EditUserForm(data)
-        
-        if form.is_valid():
-            if form.cleaned_data['password']:
-                user.set_password(form.cleaned_data['password'])
-            user.first_name = form.cleaned_data['first_name']
-            user.last_name = form.cleaned_data['last_name']
-            user.save()
-            #userprofile.age = form.cleaned_data['age']
-            userprofile.college_roll=form.cleaned_data['college_roll']
-            userprofile.mobile_number=form.cleaned_data['mobile_number']
-            #userprofile.branch = form.cleaned_data['branch']
-            userprofile.save()
-            return HttpResponseRedirect ("%slogin/"%settings.SITE_URL)
-    else:
-        form=forms.EditUserForm(initial={'first_name':user.first_name, 'last_name':user.last_name, 'college_roll':userprofile.college_roll,'mobile_number':userprofile.mobile_number})
-    return render_to_response('users/profile_update.html', locals(), context_instance= global_context(request))
+'''
 
+@login_required
+def edit_profile(request):
+    """
+    create_or_edit_profile():
+        Edits a user's profile. 
+        If a user does not have a profile, creates a blank profile for that user and then allows editing.
+    """
+    currentUser = request.user
+    try:
+        currentUserProfile = currentUser.get_profile()
+    except:
+        currentUserProfile = UserProfile()
+        currentUserProfile.user = currentUser
+        currentUserProfile.save()
+    if request.method == 'POST':
+        editProfileForm = forms.EditUserForm(request.POST)
+        if editProfileForm.is_valid():
+            newProfileInfo = editProfileForm.cleaned_data
+            currentUser.first_name = newProfileInfo['first_name']
+            currentUser.last_name = newProfileInfo['last_name']
+            currentUserProfile.gender = newProfileInfo['gender']
+            currentUserProfile.age = newProfileInfo['age']
+            currentUserProfile.branch = newProfileInfo['branch']
+            currentUserProfile.mobile_number = newProfileInfo['mobile_number']
+            currentUserProfile.college_roll = newProfileInfo['college_roll']
+            currentUserProfile.want_hospi = newProfileInfo['want_hospi']
+            currentUser.save()
+            currentUserProfile.save()
+            return HttpResponseRedirect ("%sosqa/"%settings.SITE_URL)
+    else:
+        values = {'first_name' : currentUser.first_name, 
+                  'last_name' : currentUser.last_name,
+                  'gender' : currentUserProfile.gender,
+                  'age' : currentUserProfile.age,
+                  'branch' : currentUserProfile.branch,
+                  'mobile_number' : currentUserProfile.mobile_number,                  
+                  'college_roll' : currentUserProfile.college_roll,
+                  'want_hospi' : currentUserProfile.want_hospi}
+        editProfileForm = forms.EditUserForm(initial = values)
+
+    return render_to_response('users/profile_update.html', locals(), context_instance = RequestContext(request))
+    
+'''
+        form=forms.EditUserForm(initial={'first_name':user.first_name, 'last_name':user.last_name, 'college_roll':userprofile.college_roll,'mobile_number':userprofile.mobile_number})
+'''
+
+'''
 def feedback(request):
     name, email = "", ""
     if request.user.is_authenticated():

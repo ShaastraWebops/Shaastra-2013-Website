@@ -23,9 +23,9 @@ urlpatterns = patterns('',
 #      (r'^myshaastra/forgot_password/done/$', direct_to_template, { 'template' : 'users/forgot_password_done.html', } ),
 #      (r'^myshaastra/reset_password/$', 'Shaastra-2013-Website.users.views.reset_password'),
 #      (r'^myshaastra/reset_password/done/$', direct_to_template, { 'template' : 'users/reset_password_done.html', } ),
-#      (r'^myshaastra/edit_profile/$','Shaastra-2013-Website.users.views.edit_profile'),
 #      (r'^spons/$', 'Shaastra-2013-Website.users.views.spons_dashboard'),
 #    url(r'^logout$', 'django.contrib.auth.views.logout'),
+    url(r'^register/edit_profile/$', 'Shaastra-2013-Website.users.views.edit_profile'),
 
 
 )   
