@@ -6,11 +6,11 @@
 {% block index %}
 <table border='1'>
 <tr>
-<td><a href="/category/">Events</a><br/></td>
+<td><a href="{{SITE_URL}}category/">Events</a><br/></td>
 <td>  </td>
 <td> </td>
 {% for topic in topics %}
-	<td><a href="/topic/{{topic.url_name}}/">{{topic.title}}</a></td>
+	<td><a href="{{SITE_URL}}topic/{{topic.url_name}}/">{{topic.title}}</a></td>
 	{% for image in topic_images %}
 		{% if image.topic == topic %}
 			<td><img src="{{MEDIA_URL}}{{image.image}}" width="100px" height="100px" /></td>
@@ -32,4 +32,3 @@
 {% endblock %}
 </body>
 </html>
-

@@ -1,4 +1,4 @@
-from portal.models import *
+from shaastra_events.models import *
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse
 from django.http import *
 from django.shortcuts import *
 from django.template import *
-from django.forms.formsets import formset_factory
 
 """
 There is no necessity for Site to be on
@@ -25,10 +24,15 @@ on the admin site.
 
 """
 """
-Inline is when there is a ForeignKey
-to a certain class, then we must be
-able to add many instances of that
-class efficiently.
+Inline is when there is a ForeignKey to a 
+certain class, then we must be able to add
+many instances of that class efficiently. 
+The Inline will be based on the class
+specified in 'model' and 'extra' specifies
+the number of extra fields that will be
+displayed when you add/edit
+Options for inline editing can be found in
+django.contrib.admin.options
 """
 class EventImageInline(admin.TabularInline):
     model = EventImage
@@ -58,7 +62,9 @@ class CategoryAdmin(admin.ModelAdmin):
         """
         Given a model instance save it to the database.
         This overrides the default save_model available
-        in django/contrib/options.py
+        in django/contrib/admin/options.py
+        This has been added because special characters
+        cannot be passed into url
         """
         obj.url_name = obj.name.replace(" ","_").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
         obj.save()
@@ -97,6 +103,13 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = ['title','category__name']
     actions = ['make_sold', 'make_available','count_sold']
     
+    """
+    The following actions can be found on the admin
+    site. When certain objects are selected by 
+    selecting through checkbox, they form the queryset.
+    Functions like count and filter are avaiilable
+    as usual for the queryset. 
+    """
     def make_sold(self, request, queryset):
         updated = queryset.update(status='s')
         if updated == 1:

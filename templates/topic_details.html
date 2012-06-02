@@ -3,10 +3,10 @@
 {% block index %}
 <table border='1'>
 <tr>
-<td><a href='/'>Home</a></td>
+<td><a href='{{SITE_URL}}'>Home</a></td>
 <td> </td>
 <td> </td>
-<td><a href="/category/">Events</a><br/></td>
+<td><a href="{{SITE_URL}}category/">Events</a><br/></td>
 <td>  </td>
 <td> </td>
 {% for topic in topics %}

@@ -6,11 +6,11 @@
 <td><a href='/'>Home</a></td>
 <td> </td>
 <td> </td>
-<td><a href="/category/">Events</a><br/></td>
+<td><a href="{{SITE_URL}}/category/">Events</a><br/></td>
 <td>  </td>
 <td> </td>
 {% for topic in topics %}
-	<td><a href="/topic/{{topic.url_name}}/">{{topic.title}}</a></td>
+	<td><a href="{{SITE_URL}}topic/{{topic.url_name}}/">{{topic.title}}</a></td>
 	<td>  </td>
 	<td>  </td>
 {% endfor %}
@@ -55,6 +55,6 @@
 
 {% block end %}
 <hr>
-<a href="/category/">Back</a><br/>
+<a href="{{SITE_URL}}category/">Back</a><br/>
 {% endblock %}
 

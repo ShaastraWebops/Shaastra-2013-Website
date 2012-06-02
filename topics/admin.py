@@ -1,6 +1,11 @@
 from django.contrib import admin
 from topics.models import *
 
+"""
+This is similar to the admin.py in the app
+shaastra_events.
+""" 
+
 class TopicImageInline(admin.TabularInline):
 	model=TopicImage
 	extra=1

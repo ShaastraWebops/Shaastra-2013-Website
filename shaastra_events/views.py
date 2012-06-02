@@ -2,8 +2,7 @@
 from django.http import *
 from django.shortcuts import *
 from django.template import *
-from portal.models import *
-from settings import *
+from shaastra_events.models import *
 import os
 from topics.models import *
 from django.core.urlresolvers import reverse
@@ -15,11 +14,11 @@ def home(request):
 	return render_to_response("home.html",locals(),context_instance=RequestContext(request))    
     
 def category(request):
-	topics=Topic.objects.all()
-	topic_images=TopicImage.objects.all()
-	categories = Category.objects.all()
-	photos_list = CategoryImage.objects.all()
-	return render_to_response("categories.html",locals(),context_instance=RequestContext(request))
+    topics=Topic.objects.all()
+    topic_images=TopicImage.objects.all()
+    categories = Category.objects.all()
+    photos_list = CategoryImage.objects.all()
+    return render_to_response("categories.html", locals(),context_instance=RequestContext(request))
     
 def events(request, category):
 	topics=Topic.objects.all()
