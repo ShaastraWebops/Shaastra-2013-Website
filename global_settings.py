@@ -68,8 +68,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'urls'
 
-
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,6 +82,9 @@ INSTALLED_APPS = (
     'shaastra_events',
     'topics',
 )
+
+#Added for implementing user profiles
+AUTH_PROFILE_MODULE = "users.UserProfile"
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
