@@ -58,6 +58,26 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+"""
+context_processor_url.py contains the function
+url where SITE_URL is set and is passed to the 
+templates through a context processor. This is 
+required only for SITE_URL and not MEDIA_URL.
+The reason is that MEDIA_URL is a variable
+defined already in django.conf.global_settings
+but SITE_URL is a variable locally defined in
+settings. See context_processor_url.py for more.
+"""
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",
+    "context_processor_url.url",
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
