@@ -1,23 +1,27 @@
 import shlex
-import redis
+#import redis
 from search.models import * #Needs to be updated with actual class Event
 from django.http import *
 from django.shortcuts import *
 from django.db.models import Q
 
-event_tag=redis.Redis("localhost")
+#event_tag=redis.Redis("localhost")
 
 def home(request):
     event=Event.objects.all()
     return render_to_response("home.html",locals())
     
-def addevent(request): #This function is present for testing search functionality only.
+def addevent(request): #This function is present for testing search functionality only. Functionality to check if event and auto-added tag(Event name itself) is unique needs to be added.
     if request.method == 'POST':
         event=Event(name=request.POST['event_name'])
         event.save()
+        temp=Tag(tag=request.POST['event_name'])
+        temp.save()
+        event.tag.add(temp)
         return HttpResponseRedirect("/")
     return render_to_response("addevent.html", locals(), context_instance=RequestContext(request))
 
+"""
 def addredistag(derived_tag, event_name, main_tag):
     event_tag.sadd(derived_tag, event_name)
     event_tag.sadd("tags", derived_tag)
@@ -41,7 +45,8 @@ def delredistag(derived_tag, event_name, main_tag):
                     break
         if flag==0:
             event_tag.srem(derived_tag, event_name)
-                            
+"""
+
 def event(request, eventid):
     existing = request.GET.get('existing', None)
     add = request.GET.get('add', None)
@@ -67,19 +72,19 @@ def event(request, eventid):
                         event.tag.add(temp)
                         i=len(t)
                         event_name=str(event)
-                        while i>=3:
-                            addredistag(t[0:i], event_name, t)
-                            i-=1
-                        event_tag.save()
+                        #while i>=3:
+                        #    addredistag(t[0:i], event_name, t)
+                        #    i-=1
+                        #event_tag.save()
                     else:
                         if not event in x.event_set.all():
                             event.tag.add(x)
                             i=len(t)
                             event_name=str(event)
-                            while i>=3:
-                                addredistag(t[0:i], event_name, t)
-                                i-=1
-                            event_tag.save()
+                            #while i>=3:
+                            #    addredistag(t[0:i], event_name, t)
+                            #    i-=1
+                            #event_tag.save()
                         else:
                             flag=1
                 else:
@@ -97,10 +102,10 @@ def event(request, eventid):
                 event.tag.add(t)
                 length=len(t_tag)
                 event_name=str(event)
-                while length>=3:
-                    addredistag(t_tag[0:length], event_name, t_tag)
-                    length-=1
-                event_tag.save()
+                #while length>=3:
+                #    addredistag(t_tag[0:length], event_name, t_tag)
+                #    length-=1
+                #event_tag.save()
             tags_added=True
             
         if 'delete' in request.POST:
@@ -112,10 +117,10 @@ def event(request, eventid):
                 flag=0
                 length=len(t_tag)
                 event_name=str(event)
-                while length>=3:
-                    delredistag(t_tag[0:length], event_name, t_tag)
-                    length-=1
-                event_tag.save()
+                #while length>=3:
+                #    delredistag(t_tag[0:length], event_name, t_tag)
+                #    length-=1
+                #event_tag.save()
                 if not t.event_set.all():
                     t.delete()
                 tags_deleted=True
@@ -144,20 +149,20 @@ def edittag(request, eventid, tagid):
                     i=len(t)
                     event_name=str(event)
                     
-                    while i>=3:
-                        addredistag(t[0:i], event_name, t)
-                        i-=1
-                    event_tag.save()
+                    #while i>=3:
+                    #    addredistag(t[0:i], event_name, t)
+                    #    i-=1
+                    #event_tag.save()
                     edited=1
                 else:
                     if not event in x.event_set.all():
                         event.tag.add(x)
                         i=len(t)
                         event_name=str(event)
-                        while i>=3:
-                            addredistag(t[0:i], event_name, t)
-                            i-=1
-                        event_tag.save()
+                        #while i>=3:
+                        #    addredistag(t[0:i], event_name, t)
+                        #    i-=1
+                        #event_tag.save()
                         edited=1
                     else:
                         already_present=1
@@ -173,10 +178,10 @@ def edittag(request, eventid, tagid):
         flag=0
         length=len(t)
         event_name=str(event)
-        while length>=3:
-            delredistag(t[0:length], event_name, t)
-            length-=1
-        event_tag.save()
+        #while length>=3:
+        #    delredistag(t[0:length], event_name, t)
+        #    length-=1
+        #event_tag.save()
         if not tag.event_set.all():
             tag.delete()
         tag=Tag(tag=t)
@@ -212,10 +217,10 @@ def search(request):
         query_list=shlex.split(query_string) #shlex splits 'Hello "how are" you' as ['Hello','how are', 'you']
     query_list.append(query_string) #to check for an exact match as well.
     
-    for query in query_list:
-        if event_tag.sismember("tags", query): #check if such a tag exists
-            results+=list(event_tag.smembers(query))
-    results.sort()
+    #for query in query_list:
+    #    if event_tag.sismember("tags", query): #check if such a tag exists
+    #        results+=list(event_tag.smembers(query))
+    #results.sort()
     result_list=[]
     for r in results:
         result_list.append(Event.objects.get(name=r))  
