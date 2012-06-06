@@ -1,0 +1,9 @@
+upload files for {{tab.title}}
+<form action="" method="POST" id="tab_form" enctype="multipart/form-data" accept-charset="utf-8">
+{% csrf_token %}
+<table>
+    {{f.as_table}}
+</table>
+<input type="button" value="Upload" onclick = "upload_file({{tab.id}});">
+<a href='/events/'>events</a>
+</form>

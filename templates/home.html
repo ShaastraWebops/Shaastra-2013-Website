@@ -1,0 +1,11 @@
+{% if user.is_authenticated %}
+<div>you are logged in as {{user.username}}
+</div><div><a href='/logout/'>Click here to logout</a></div>
+{% else %}
+<div><a href='/login/'>Click here to login</a></div>
+{% endif %}
+
+{% for event in events %}
+{{event.title}}
+{% endfor %}
+
