@@ -273,16 +273,18 @@ def edit_profile(request):
             currentUserProfile.age = newProfileInfo['age']
             currentUserProfile.branch = newProfileInfo['branch']
             currentUserProfile.mobile_number = newProfileInfo['mobile_number']
+            currentUserProfile.college = newProfileInfo['college']
             currentUserProfile.college_roll = newProfileInfo['college_roll']
             currentUserProfile.want_hospi = newProfileInfo['want_hospi']
             currentUser.save()
             currentUserProfile.save()
-            return HttpResponseRedirect ("%sosqa/"%settings.SITE_URL)
+            return HttpResponseRedirect ("/osqa")
     else:
         values = {'first_name' : currentUser.first_name, 
                   'last_name' : currentUser.last_name,
                   'gender' : currentUserProfile.gender,
                   'age' : currentUserProfile.age,
+                  'college' : currentUserProfile.college,
                   'branch' : currentUserProfile.branch,
                   'mobile_number' : currentUserProfile.mobile_number,                  
                   'college_roll' : currentUserProfile.college_roll,

@@ -38,7 +38,8 @@
                 {% if request.user.get_profile %}
                 <tr>
                     <th colspan="2" align="left"><h3>{% trans "Registered user" %}</h3>
-                    Shaastra id: {{ request.user.get_profile.UID }}</th>
+                    Shaastra id: {{ request.user.get_profile.UID }}<br/>
+                    <a href="/register/user">Click to edit Profile Details</a></th>
                 </tr>
                 {% else %}
                 <tr>
