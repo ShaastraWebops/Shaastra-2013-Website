@@ -1,0 +1,5 @@
+<b>Title</b>:{{tab.title}}</br>
+<b>Text</b>:{{tab.text}}</br>
+<div name="edit" id="{{tab.title}}" onclick="Dajaxice.shaastra.events.edit_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">edit</div>
+<div name="delete" id="{{tab.title}}" onclick="Dajaxice.shaastra.events.confirm_delete_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">delete</div>
+<div name="add_file" id="{{tab.title}}" onclick="Dajaxice.shaastra.events.add_file(Dajax.process,{'tab_id':'{{tab.id}}'})">add a file</div>
