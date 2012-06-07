@@ -15,10 +15,10 @@ def addevent(request): #This function is present for testing search functionalit
     if request.method == 'POST':
         event=Event(name=request.POST['event_name'])
         event.save()
-        temp=Tag(tag=request.POST['event_name'])
+        temp=Tag(tag=request.POST['event_name'].lower())
         temp.save()
         event.tag.add(temp)
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect("../")
     return render_to_response("addevent.html", locals(), context_instance=RequestContext(request))
 
 """
@@ -186,7 +186,7 @@ def edittag(request, eventid, tagid):
             tag.delete()
         tag=Tag(tag=t)
         if edited:
-            html='/event/%s/?tag_edited=True' % eventid
+            html='../event/%s/?tag_edited=True' % eventid
             return HttpResponseRedirect(html)
     return render_to_response("edittag.html", locals(), context_instance=RequestContext(request))
 
@@ -203,7 +203,7 @@ def main2(request):
             temp.append([str(x),str(x.id)])
         row.append(temp)
         result_list.append(row)
-    return render_to_response("main2.html", locals())
+    return render_to_response("main2.html", locals(), context_instance=RequestContext(request))
 
 def search(request):
     query_string = request.GET.get('q', None)

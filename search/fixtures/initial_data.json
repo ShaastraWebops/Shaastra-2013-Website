@@ -1,304 +1,639 @@
 [
     {
-        "pk": 1,
-        "model": "search.tag",
+        "pk": 5, 
+        "model": "contenttypes.contenttype", 
         "fields": {
-            "tag": "apple"
+            "model": "contenttype", 
+            "name": "content type", 
+            "app_label": "contenttypes"
         }
-    },
+    }, 
     {
-        "pk": 2,
-        "model": "search.tag",
+        "pk": 9, 
+        "model": "contenttypes.contenttype", 
         "fields": {
-            "tag": "ajax"
+            "model": "event", 
+            "name": "event", 
+            "app_label": "search"
         }
-    },
+    }, 
     {
-        "pk": 3,
-        "model": "search.tag",
+        "pk": 2, 
+        "model": "contenttypes.contenttype", 
         "fields": {
-            "tag": "foo"
+            "model": "group", 
+            "name": "group", 
+            "app_label": "auth"
         }
-    },
+    }, 
     {
-        "pk": 4,
-        "model": "search.tag",
+        "pk": 4, 
+        "model": "contenttypes.contenttype", 
         "fields": {
-            "tag": "bar"
+            "model": "message", 
+            "name": "message", 
+            "app_label": "auth"
         }
-    },
+    }, 
     {
-        "pk": 5,
-        "model": "search.tag",
+        "pk": 1, 
+        "model": "contenttypes.contenttype", 
         "fields": {
-            "tag": "jquery"
+            "model": "permission", 
+            "name": "permission", 
+            "app_label": "auth"
         }
-    },
+    }, 
     {
-        "pk": 6,
-        "model": "search.tag",
+        "pk": 6, 
+        "model": "contenttypes.contenttype", 
         "fields": {
-            "tag": "qwerty"
+            "model": "session", 
+            "name": "session", 
+            "app_label": "sessions"
         }
-    },
+    }, 
     {
-        "pk": 7,
-        "model": "search.tag",
+        "pk": 7, 
+        "model": "contenttypes.contenttype", 
         "fields": {
-            "tag": "ball"
+            "model": "site", 
+            "name": "site", 
+            "app_label": "sites"
         }
-    },
+    }, 
     {
-        "pk": 8,
-        "model": "search.tag",
+        "pk": 8, 
+        "model": "contenttypes.contenttype", 
         "fields": {
-            "tag": "javascript"
+            "model": "tag", 
+            "name": "tag", 
+            "app_label": "search"
         }
-    },
+    }, 
     {
-        "pk": 9,
-        "model": "search.tag",
+        "pk": 3, 
+        "model": "contenttypes.contenttype", 
         "fields": {
-            "tag": "django"
+            "model": "user", 
+            "name": "user", 
+            "app_label": "auth"
         }
-    },
+    }, 
     {
-        "pk": 10,
-        "model": "search.tag",
+        "pk": 1, 
+        "model": "sites.site", 
         "fields": {
-            "tag": "haha"
+            "domain": "example.com", 
+            "name": "example.com"
         }
-    },
+    }, 
     {
-        "pk": 11,
-        "model": "search.tag",
+        "pk": 8, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "shaastra"
+            "tag": "online programming"
         }
-    },
+    }, 
     {
-        "pk": 12,
-        "model": "search.tag",
+        "pk": 11, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "cat"
+            "tag": "simchamp"
         }
-    },
+    }, 
     {
-        "pk": 13,
-        "model": "search.tag",
+        "pk": 13, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "kitten"
+            "tag": "wright design"
         }
-    },
+    }, 
     {
-        "pk": 14,
-        "model": "search.tag",
+        "pk": 17, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "mice"
+            "tag": "kryptx"
         }
-    },
+    }, 
     {
-        "pk": 15,
-        "model": "search.tag",
+        "pk": 21, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "rice"
+            "tag": "fire n ice"
         }
-    },
+    }, 
     {
-        "pk": 16,
-        "model": "search.tag",
+        "pk": 26, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "lice"
+            "tag": "bulls n bears"
         }
-    },
+    }, 
     {
-        "pk": 17,
-        "model": "search.tag",
+        "pk": 7, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "dog"
+            "tag": "coding"
         }
-    },
+    }, 
     {
-        "pk": 18,
-        "model": "search.tag",
+        "pk": 9, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "potato"
+            "tag": "opc"
         }
-    },
+    }, 
     {
-        "pk": 19,
-        "model": "search.tag",
+        "pk": 10, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "feline"
+            "tag": "algorithm"
         }
-    },
+    }, 
     {
-        "pk": 20,
-        "model": "search.tag",
+        "pk": 12, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "napalm"
+            "tag": "simulation"
         }
-    },
+    }, 
     {
-        "pk": 21,
-        "model": "search.tag",
+        "pk": 14, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "agent orange"
+            "tag": "aero"
         }
-    },
+    }, 
     {
-        "pk": 22,
-        "model": "search.tag",
+        "pk": 15, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "eye"
+            "tag": "flagship challenge"
         }
-    },
+    }, 
     {
-        "pk": 23,
-        "model": "search.tag",
+        "pk": 16, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "poiu"
+            "tag": "glider"
         }
-    },
+    }, 
     {
-        "pk": 24,
-        "model": "search.tag",
+        "pk": 18, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "asdfg"
+            "tag": "online"
         }
-    },
+    }, 
     {
-        "pk": 25,
-        "model": "search.tag",
+        "pk": 19, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "cockroach"
+            "tag": "puzzle"
         }
-    },
+    }, 
     {
-        "pk": 26,
-        "model": "search.tag",
+        "pk": 20, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "frost"
+            "tag": "clues"
         }
-    },
+    }, 
     {
-        "pk": 27,
-        "model": "search.tag",
+        "pk": 22, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "whiterun"
+            "tag": "cars"
         }
-    },
+    }, 
     {
-        "pk": 28,
-        "model": "search.tag",
+        "pk": 23, 
+        "model": "search.tag", 
         "fields": {
-            "tag": "riften"
+            "tag": "design"
         }
-    },
+    }, 
     {
-        "pk": 1,
-        "model": "search.event",
+        "pk": 24, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "build"
+        }
+    }, 
+    {
+        "pk": 25, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "rc car"
+        }
+    }, 
+    {
+        "pk": 27, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "share"
+        }
+    }, 
+    {
+        "pk": 28, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "market"
+        }
+    }, 
+    {
+        "pk": 29, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "stock"
+        }
+    }, 
+    {
+        "pk": 30, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "trade"
+        }
+    }, 
+    {
+        "pk": 31, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "robowars"
+        }
+    }, 
+    {
+        "pk": 32, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "combat"
+        }
+    }, 
+    {
+        "pk": 33, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "robotics"
+        }
+    }, 
+    {
+        "pk": 34, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "destruction"
+        }
+    }, 
+    {
+        "pk": 35, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "machine"
+        }
+    }, 
+    {
+        "pk": 36, 
+        "model": "search.tag", 
+        "fields": {
+            "tag": "battle"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "search.event", 
         "fields": {
             "tag": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6
-            ],
-            "name": "A"
+                7, 
+                8, 
+                9, 
+                10
+            ], 
+            "name": "Online Programming"
         }
-    },
+    }, 
     {
-        "pk": 2,
-        "model": "search.event",
+        "pk": 2, 
+        "model": "search.event", 
         "fields": {
             "tag": [
-                2,
-                3,
-                7,
-                8,
-                9,
-                10,
-                11
-            ],
-            "name": "B"
+                7, 
+                10, 
+                11, 
+                12
+            ], 
+            "name": "Simchamp"
         }
-    },
+    }, 
     {
-        "pk": 3,
-        "model": "search.event",
+        "pk": 3, 
+        "model": "search.event", 
         "fields": {
             "tag": [
-                2,
-                5,
-                8,
-                12,
-                13,
-                14,
-                15,
+                13, 
+                14, 
+                15, 
                 16
-            ],
-            "name": "C"
+            ], 
+            "name": "Wright Design"
         }
-    },
+    }, 
     {
-        "pk": 4,
-        "model": "search.event",
+        "pk": 4, 
+        "model": "search.event", 
         "fields": {
             "tag": [
-                3,
-                5,
-                8,
-                12,
-                13,
-                14,
-                17,
-                18,
-                19,
-                20,
-                21
-            ],
-            "name": "D"
+                17, 
+                18, 
+                19, 
+                20
+            ], 
+            "name": "Kryptx"
         }
-    },
+    }, 
     {
-        "pk": 5,
-        "model": "search.event",
+        "pk": 5, 
+        "model": "search.event", 
         "fields": {
             "tag": [
-                1,
-                5,
-                10,
-                13,
-                20,
-                22,
-                23,
-                24,
+                21, 
+                22, 
+                23, 
+                24, 
                 25
-            ],
-            "name": "E"
+            ], 
+            "name": "Fire N Ice"
         }
-    },
+    }, 
     {
-        "pk": 6,
-        "model": "search.event",
+        "pk": 6, 
+        "model": "search.event", 
         "fields": {
             "tag": [
-                1,
-                5,
-                11,
-                16,
-                18,
-                21,
-                23,
-                25,
-                26,
-                27,
-                28
-            ],
-            "name": "F"
+                26, 
+                27, 
+                28, 
+                29, 
+                30
+            ], 
+            "name": "Bulls N Bears"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "search.event", 
+        "fields": {
+            "tag": [
+                31, 
+                32, 
+                33, 
+                34, 
+                35, 
+                36
+            ], 
+            "name": "RoboWars"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "add_group", 
+            "name": "Can add group", 
+            "content_type": 2
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "change_group", 
+            "name": "Can change group", 
+            "content_type": 2
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "delete_group", 
+            "name": "Can delete group", 
+            "content_type": 2
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "add_message", 
+            "name": "Can add message", 
+            "content_type": 4
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "change_message", 
+            "name": "Can change message", 
+            "content_type": 4
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "delete_message", 
+            "name": "Can delete message", 
+            "content_type": 4
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "add_permission", 
+            "name": "Can add permission", 
+            "content_type": 1
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "change_permission", 
+            "name": "Can change permission", 
+            "content_type": 1
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "delete_permission", 
+            "name": "Can delete permission", 
+            "content_type": 1
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "add_user", 
+            "name": "Can add user", 
+            "content_type": 3
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "change_user", 
+            "name": "Can change user", 
+            "content_type": 3
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "delete_user", 
+            "name": "Can delete user", 
+            "content_type": 3
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "add_contenttype", 
+            "name": "Can add content type", 
+            "content_type": 5
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "change_contenttype", 
+            "name": "Can change content type", 
+            "content_type": 5
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "delete_contenttype", 
+            "name": "Can delete content type", 
+            "content_type": 5
+        }
+    }, 
+    {
+        "pk": 25, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "add_event", 
+            "name": "Can add event", 
+            "content_type": 9
+        }
+    }, 
+    {
+        "pk": 26, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "change_event", 
+            "name": "Can change event", 
+            "content_type": 9
+        }
+    }, 
+    {
+        "pk": 27, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "delete_event", 
+            "name": "Can delete event", 
+            "content_type": 9
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "add_tag", 
+            "name": "Can add tag", 
+            "content_type": 8
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "change_tag", 
+            "name": "Can change tag", 
+            "content_type": 8
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "delete_tag", 
+            "name": "Can delete tag", 
+            "content_type": 8
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "add_session", 
+            "name": "Can add session", 
+            "content_type": 6
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "change_session", 
+            "name": "Can change session", 
+            "content_type": 6
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "delete_session", 
+            "name": "Can delete session", 
+            "content_type": 6
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "add_site", 
+            "name": "Can add site", 
+            "content_type": 7
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "change_site", 
+            "name": "Can change site", 
+            "content_type": 7
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "auth.permission", 
+        "fields": {
+            "codename": "delete_site", 
+            "name": "Can delete site", 
+            "content_type": 7
         }
     }
 ]

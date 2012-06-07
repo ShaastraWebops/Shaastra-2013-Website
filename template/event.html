@@ -1,4 +1,12 @@
 <html>
+<head>
+<title>Event Tag Management</title>
+<style type='text/css'>
+body {
+    font: 100%/140% Arial, Helvetica, sans-serif;
+}
+</style>
+</head>
 <body>
 
 {% if tags_added %}
@@ -30,7 +38,7 @@ Some tags you tried adding are already associated with this event.
 
 <a href="?add=1">Add New Tags</a><br/>
 <a href="?existing=1">Add From Existing Tags</a><br/>
-<a href="/">Back</a><br/>
+<a href="../../">Back</a><br/>
 
 {% if add %}
 Add multiple tags separated by commas<br/>

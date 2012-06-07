@@ -1,9 +1,20 @@
 <html>
+<head>
+<title>Home</title>
+<style type='text/css'>
+body {
+    font: 100%/140% Arial, Helvetica, sans-serif;
+}
+</style>
+</head>
 <body>
     <!--<a href="main/">Search (Using jQuery server database search)</a><br/>-->
-<a href="main2/">Search</a><br/>
-<a href="addevent/">Add Event</a><br/>
-
+<table>
+<tr><td><a href="main2/">Search</a><br/></td>
+<td>&nbsp;&nbsp;<a href="addevent/">Add Event</a></td></tr>
+</table>
+<hr/>
+<h3>Events</h3>
 <table>
 {% for e in event %}
 <tr><td>

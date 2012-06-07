@@ -1,16 +1,22 @@
 <html>
 <head>
-	<title>jQuery Autocomplete</title>
-	<script type="text/javascript" src="/static/jquery.js"></script>
-	<script type='text/javascript' src='/static/jquery.autocomplete.js'></script>
-	<link rel="stylesheet" type="text/css" href="/static/jquery.autocomplete.css" />
+	<title>Search Bar</title>
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
+	<script type='text/javascript' src='{{ STATIC_URL }}jquery.autocomplete.js'></script>
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery.autocomplete.css" />
+    <style type='text/css'>
+    body {
+        font: 100%/140% Arial, Helvetica, sans-serif;
+    }
+    </style>
 </head>
 
 <body>
 <form action="" onsubmit="return false;">
-		<input type="text" id="search_query" value="" style="width: 200px;" />
+		<input type="text" id="search_query" value="Search..." style="width: 200px;" onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" />
 </form>
 
+<a href="../">Back</a>
 <script type="text/javascript">
 function findValue(li) {
 	if( li == null ) return alert("No match!");
@@ -21,7 +27,7 @@ function findValue(li) {
 	// otherwise, using EventName
 	else var sValue = li.selectValue;
     	    
-	window.location="/eventdetails/"+sValue;
+	window.location="../eventdetails/"+sValue;
 }
 
 function selectItem(li) {
