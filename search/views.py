@@ -46,6 +46,17 @@ def delredistag(derived_tag, event_name, main_tag):
         if flag==0:
             event_tag.srem(derived_tag, event_name)
 """
+def tags_alphabetical(tags):
+    tag_names=[]
+    temp_tags=[]
+    for x in tags:
+        tag_names.append(x.tag)
+    tag_names.sort()
+    for x in tag_names:
+        for y in tags:
+            if y.tag==x:
+                temp_tags.append(y)
+    return temp_tags
 
 def event(request, eventid):
     existing = request.GET.get('existing', None)
@@ -54,6 +65,10 @@ def event(request, eventid):
     event=Event.objects.get(pk=eventid)
     tag_list=Tag.objects.filter(event=event)
     all_tags=Tag.objects.filter(~Q(event=event))
+    
+    tag_list=tags_alphabetical(tag_list)
+    all_tags=tags_alphabetical(all_tags)
+        
     not_added=[]
     flag=0
     
