@@ -162,7 +162,7 @@ class TopicAdmin(admin.ModelAdmin):
         This has been added because special characters
         cannot be passed into url
         """
-		obj.url_name = obj.title.replace(" ","").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
+        obj.url_name = obj.title.replace(" ","").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
 		obj.save()
 
 """
