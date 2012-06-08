@@ -161,8 +161,7 @@ class TopicAdmin(admin.ModelAdmin):
         in django/contrib/admin/options.py
         This has been added because special characters
         cannot be passed into url
-        
-        """
+		"""
         obj.url_name = obj.name.replace(" ","_").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
         obj.save()
 
