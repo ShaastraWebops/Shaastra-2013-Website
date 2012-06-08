@@ -163,7 +163,7 @@ class TopicAdmin(admin.ModelAdmin):
         cannot be passed into url
         """
         obj.url_name = obj.title.replace(" ","").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
-		obj.save()
+        obj.save()
 
 """
 Only those classes explicitly registered will
