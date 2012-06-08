@@ -11,32 +11,31 @@ class Category(models.Model):
 	"""
 	This model is for storing the name and generating the url name of the various categories 
 	under which events fall.
-
 	"""
-    name = models.CharField(max_length=30, unique=True)
-    url_name = models.CharField(max_length=30, blank=True)
+	name = models.CharField(max_length=30, unique=True)
+	url_name = models.CharField(max_length=30, blank=True)
     
-    class Meta:
-    	verbose_name_plural = "categories"
+	class Meta:
+		verbose_name_plural = "categories"
     	
-    def get_events(self):
-        return self.events.all()
-    get_events.short_description = 'Events'
+	def get_events(self):
+		return self.events.all()
+	get_events.short_description = 'Events'
     
-    def __unicode__(self):
-        return self.name
+	def __unicode__(self):
+		return self.name
     
 class Event(models.Model):
 	"""
 	This model is for storing the information about the events
 	"""
-    category = models.ForeignKey(Category, related_name = 'events')
-    title = models.CharField(max_length=30, unique=True)
-    about = models.TextField(null=True)
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='a')
+	category = models.ForeignKey(Category, related_name = 'events')
+	title = models.CharField(max_length=30, unique=True)
+	about = models.TextField(null=True)
+	status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='a')
  
-    def __unicode__(self):
-        return self.title
+	def __unicode__(self):
+		return self.title
 	"""
 	Image classes to add any number of
 	images for a category/event
