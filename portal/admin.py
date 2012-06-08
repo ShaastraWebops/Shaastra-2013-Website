@@ -1,4 +1,4 @@
-from shaastra_events.models import *
+from portal.models import *
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
@@ -111,6 +111,10 @@ class EventAdmin(admin.ModelAdmin):
     as usual for the queryset. 
     """
     def make_sold(self, request, queryset):
+	"""
+	This enables one to change the status of several events at once
+	by selecting their respective check boxes and performing the action make sold
+	"""
         updated = queryset.update(status='s')
         if updated == 1:
             message = "1 event was"
@@ -119,6 +123,10 @@ class EventAdmin(admin.ModelAdmin):
         self.message_user(request, "%s successfully markedfieldsets as sold." % message)
         
     def make_available(self, request, queryset):
+	"""
+	This enables one to change the status of several events at once
+	by selecting their respective check boxes and performing the action make sold
+	"""
         updated = queryset.update(status='a')
         if updated == 1:
             message = "1 event was"
@@ -127,6 +135,9 @@ class EventAdmin(admin.ModelAdmin):
         self.message_user(request, "%s successfully marked as available." % message)
         
     def count_sold(self, request, queryset):
+	"""
+	This is to count the number of events sold
+	"""
         filtered = queryset.filter(status='s')
         counted = filtered.count()
         if counted == 1:
@@ -134,10 +145,30 @@ class EventAdmin(admin.ModelAdmin):
         else:
             message = "%s events are" % counted
         self.message_user(request, "%s sold." % message)       
+
+
+class TopicImageInline(admin.TabularInline):
+	model=TopicImage
+	extra=1
+
+class TopicAdmin(admin.ModelAdmin):
+	inlines=[TopicImageInline]
+	fields=['title','index_number','information']
+	def save_model(self, request, obj, form, change):
+	    """
+        Given a model instance save it to the database.
+        This overrides the default save_model available
+        in django/contrib/admin/options.py
+        This has been added because special characters
+        cannot be passed into url
+        """
+		obj.url_name = obj.title.replace(" ","").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
+		obj.save()
+
 """
 Only those classes explicitly registered will
 be displayed.
 """
-
+admin.site.register(Topic,TopicAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Event, EventAdmin)

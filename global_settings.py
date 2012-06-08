@@ -99,8 +99,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'shaastra_events',
-    'topics',
+    'portal',
 )
 
 #Added for implementing user profiles

@@ -2,9 +2,8 @@
 from django.http import *
 from django.shortcuts import *
 from django.template import *
-from shaastra_events.models import *
+from portal.models import *
 import os
-from topics.models import *
 from django.core.urlresolvers import reverse
 from django.contrib import admin
 
