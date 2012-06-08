@@ -155,13 +155,7 @@ class TopicAdmin(admin.ModelAdmin):
 	inlines=[TopicImageInline]
 	fields=['title','index_number','information']
 	def save_model(self, request, obj, form, change):
-        """
-        Given a model instance save it to the database.
-        This overrides the default save_model available
-        in django/contrib/admin/options.py
-        This has been added because special characters
-        cannot be passed into url
-		"""
+        
         obj.url_name = obj.name.replace(" ","_").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
         obj.save()
 
