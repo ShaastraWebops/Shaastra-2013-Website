@@ -155,9 +155,8 @@ class TopicAdmin(admin.ModelAdmin):
 	inlines=[TopicImageInline]
 	fields=['title','index_number','information']
 	def save_model(self, request, obj, form, change):
-        
-        obj.url_name = obj.name.replace(" ","_").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
-        obj.save()
+		obj.url_name = obj.name.replace(" ","_").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
+		obj.save()
 
 """
 Only those classes explicitly registered will
