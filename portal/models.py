@@ -8,11 +8,11 @@ STATUS_CHOICES = (
     ('a', 'Available'),
 )
 class Category(models.Model):
-"""
-This model is for storing the name and generating the url name of the various categories 
-under which events fall.
+	"""
+	This model is for storing the name and generating the url name of the various categories 
+	under which events fall.
 
-"""
+	"""
     name = models.CharField(max_length=30, unique=True)
     url_name = models.CharField(max_length=30, blank=True)
     
@@ -27,9 +27,9 @@ under which events fall.
         return self.name
     
 class Event(models.Model):
-"""
-This model is for storing the information about the events
-"""
+	"""
+	This model is for storing the information about the events
+	"""
     category = models.ForeignKey(Category, related_name = 'events')
     title = models.CharField(max_length=30, unique=True)
     about = models.TextField(null=True)
@@ -37,10 +37,10 @@ This model is for storing the information about the events
  
     def __unicode__(self):
         return self.title
-"""
-Image classes to add any number of
-images for a category/event
-"""
+	"""
+	Image classes to add any number of
+	images for a category/event
+	"""
         
 class CategoryImage(models.Model):
     name=models.CharField(max_length=30, blank=True)
@@ -57,9 +57,9 @@ class EventImage(models.Model):
         return self.name
 
 class Topic(models.Model):
-"""
-This model is for the various topics in the index apart from events, info under them
-"""
+	"""
+	This model is for the various topics in the index apart from events, info under them
+	"""
 	title=models.CharField(max_length=500)
 	url_name=models.CharField(max_length=500)
 	information=models.TextField(max_length=2000)
