@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^events/add/$', EventAdd()),
     url(r'^events/edit/$', EventEdit()),
     url(r'^dashboard/$', CoordDashboard()),
+    url(r'^tabfile/$', TabFileSubmit()),
     url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
 )
 
