@@ -19,14 +19,48 @@ function edit_tab(id){
     return false;
 }
 
-function upload_file(id){
-    
+function validateForm() {                   //prevents display name from being empty
+    var x=document.forms["TabFileForm"]["display_name"].value;
+    if (x==null || x=="")
+    {
+    alert("name must be filled out");
+    return false;
+    }
+    // validation for empty file field here. Works even without it for now, an error is shown in firebug.
+    return true;
+}
+
+function File(id){
+    if (validateForm()){
+    var name = document.forms["TabFileForm"]["display_name"].value;
+    var fileInput = document.getElementById('thefile');
+    var file = fileInput.files[0];
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/tabfile/', true);
+    xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+    xhr.setRequestHeader('X-Tab-Id', id);
+    xhr.setRequestHeader("X-File-Name", file.name);
+    xhr.setRequestHeader('X-Name', name);
+    xhr.onreadystatechange = function () {                      // read ajax onreadystatechange responses
+        if ((xhr.readyState == 4) && (xhr.status == 200)){
+            document.getElementById('file_list').innerHTML = xhr.responseText;
+        }
+        if (xhr.readyState == 1){
+        document.getElementById('uploading').innerHTML = "<img src = '/static/js/loading.gif'>";    //loading..loading..
+        }
+        if (xhr.readyState == 4){
+        document.getElementById('uploading').innerHTML = "";    //loading done
+        }
+    }
+    xhr.send(file);                                     // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
+}
 }
 </script>
 
 {% dajaxice_js_import %}
 
 </head>
+<h3>Dashboard for {{request.user.get_profile.is_coord_of.title}}</h3>
 {% csrf_token %}
 <div name="tabs" id = "tabs">
 {% for tab in tabs %}

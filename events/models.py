@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from datetime import datetime
+from django.conf import settings
 import os
 
 # Create your models here.
@@ -44,14 +45,26 @@ class Tab(models.Model):
     title = models.CharField(max_length = 30)
     text = models.TextField()
     pref = models.IntegerField(max_length=2,default = 0, blank=False)
+    
+    def delete(self):
+        file_list = self.tabfile_set.all()
+        for f in file_list:
+            f.delete()
+        super(Tab, self).delete()
+        
     class Meta:
         ordering = ['pref']
-
-#tabfiles is not functional right now        
+       
 class TabFile(models.Model):
-    name = models.CharField(max_length = 30)
-    tabfile = models.FileField(upload_to = upload_handler('Events/TabFiles'))
+    title = models.CharField(max_length = 50)
+    tab_file = models.FileField(upload_to = upload_handler('Events/TabFiles'))
     tab = models.ForeignKey(Tab, blank = True, null = True)
+    url = models.CharField(max_length = 50)
+    
+    def delete(self):
+        os.remove(self.tab_file.name)
+        super(TabFile, self).delete()
+        
     
 #tabfiles is not functional right now 
 class TabFileForm(ModelForm):

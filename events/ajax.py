@@ -7,7 +7,6 @@ from dajaxice.decorators import dajaxice_register
 from django.conf import settings
 import os
 
-
 def get_template(file_name):
     #this is used to get templates from the path /.../shaastra/events/templates/events/ajax      (*in my case)
     #note - a separate folder for ajax templates.
@@ -16,11 +15,27 @@ def get_template(file_name):
     f = open(filepath, mode='r')
     return f.read()
 
+def get_files(tab):
+    try:
+        return tab.tabfile_set.all()
+    except:
+        print 'here too'
+        raise Http404()
+
 def get_tabs(event):
     try:
         return event.tab_set.all()
     except:
+        print 'here'
         raise Http404()
+
+@dajaxice_register
+def save_file(request, form, tab_id):
+    print 'here'
+    print form
+    print tab_id
+    dajax = Dajax()
+    return dajax.json()
         
 @dajaxice_register
 def delete_tab(request, tab_id):
@@ -127,22 +142,40 @@ def edit_tab(request, tab_id):
 def load_tab(request, tab_id):
     #loads the tab details of the tab you clicked on.
     tab = Tab.objects.get(id = tab_id)
+    file_list = get_files(tab)
     template = get_template('tab_detail.html')
     t = Template(template).render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
     return dajax.json()
 
-#working on adding files next. each tab has some files associated with it which need to be displayed in the tab. Eg. Download Problem Statement.    
 @dajaxice_register
 def add_file(request, tab_id):
     f = TabFileForm()
     tab = Tab.objects.get(id = tab_id)
-    template = get_template('add_file.html')
+    file_list = get_files(tab)
+    template = get_template('file_form.html')
     t = Template(template).render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
     return dajax.json()
-        
+    
+@dajaxice_register
+def delete_file(request, tab_id, file_id):
+    f = TabFile.objects.get(id = file_id)
+    f.delete()
+    tab = Tab.objects.get(id = tab_id)
+    file_list = get_files(tab)
+    template = get_template('tab_detail.html')
+    t = Template(template).render(RequestContext(request,locals()))
+    dajax = Dajax()
+    dajax.assign('#detail','innerHTML', t)
+    return dajax.json()
+
+#this needs to be done
+@dajaxice_register
+def rename_file(request, tab_id, file_id):
+    dajax = Dajax()
+    return dajax.json()    
         
         
