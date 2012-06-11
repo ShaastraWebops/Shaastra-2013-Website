@@ -218,20 +218,17 @@ class UserRegisterForm(ModelForm):
            return self.cleaned_data['college_roll']
          
          
-     
+'''     
 class EditUserForm(ModelForm):
 
     first_name = forms.CharField(max_length=50, help_text="Your first name")
     last_name = forms.CharField(max_length=50, help_text="Your last name")
-    password=forms.CharField(min_length=6, max_length=30, widget=forms.PasswordInput,required=False,help_text='Enter a password that you can remember')
-    password_again=forms.CharField(max_length=30, widget=forms.PasswordInput,required=False,help_text='Enter the same password that you entered above')
-    
-    #branch=forms.CharField(max_length=50,widget=forms.TextInput(attrs={'id':'branch_input'}),help_text='Select your branch from the list. If it does not show up, please select the "Other" option.')
 
     class Meta:
         model = models.UserProfile
-        fields=('first_name','last_name','password','password_again','college_roll','mobile_number')
+        #fields=('first_name', 'last_name', 'gender', 'age', 'branch', 'mobile_number', 'college_roll', 'want_hospi', )
         #except = ('is_coord','coord_event')        
+        exclude = ('user', 'UID', 'activation_key', 'key_expires', 'is_coord', 'access_token', )
     
     #Commented out for the saudi arabia issue
 	
@@ -243,10 +240,13 @@ class EditUserForm(ModelForm):
 	
 
     def clean_age(self):
-        if self.age < 12 or self.age > 80:
+        if self.cleaned_data['age'] < 12 or self.cleaned_data['age'] > 80: 
+        # This line was:
+        #     if self.age < 12 or self.age > 80:
+        # For some reason, that was throwing an Attribute Error: 'EditUserForm' object has no attribute 'age'
             raise forms.ValidationError(u'You need to be over 12 and under 80 years of age to participate')
         return self.cleaned_data['age']
-    
+   
     def clean_password(self):
         if self.prefix:
             field_name1 = '%s-password'%self.prefix
@@ -265,7 +265,7 @@ class EditUserForm(ModelForm):
            raise forms.ValidationError(u'Enter a valid roll number.')
         else:
            return self.cleaned_data['college_roll']
-
+'''
 class ResetPasswordForm(forms.Form):
     user = forms.IntegerField(widget = forms.HiddenInput)
     password = forms.CharField(min_length = 6, max_length = 30, widget = forms.PasswordInput, help_text = 'Enter a password that you can remember')

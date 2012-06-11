@@ -8,7 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',  
         
     url(r'^register/user/?$', 'Shaastra-2013-Website.users.views.user_registration'),
-#      (r'^edit/user/?$', 'Shaastra-2013-Website.users.views.edit_profile'),
+    url(r'^register/editprofile/?$', 'Shaastra-2013-Website.users.views.edit_profile'),
     url(r'^register/college/?$', 'Shaastra-2013-Website.users.views.college_registration'),
 #      (r'^register/activate/(?P<a_key>[\w]+)/?$', 'Shaastra-2013-Website.users.views.activate'),
     url(r'^login/?$', 'Shaastra-2013-Website.users.views.login'),
