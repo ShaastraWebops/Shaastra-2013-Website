@@ -1,0 +1,27 @@
+<html>
+
+{% comment %}
+    Page to create / edit user profile
+{% endcomment %}
+
+<body>
+    
+    <p>
+        Edit profile:
+    </p>
+    {% if editProfileForm.errors %}
+        <p style="color: red;">
+            Please correct the error{{ editProfileForm.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ editProfileForm.as_table }}
+        </table>
+        <input type="submit" value="Update Profile">
+    </form>
+    <a href="/register/college/?next={{request.path}}">Register New College</a>
+</body>    
+</html>
