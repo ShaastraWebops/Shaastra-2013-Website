@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     # Examples:
 #    url(r'^$', 'shaastra2013.views.home', name='home'),
     url(r'^', include ('Shaastra-2013-Website.users.urls')),
-    (r'^accounts/', include('allauth.urls')),
+#    (r'^accounts/', include('allauth.urls')),
     # url(r'^shaastra2013/', include('shaastra2013.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

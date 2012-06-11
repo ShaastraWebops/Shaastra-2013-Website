@@ -37,7 +37,7 @@ class HorizRadioRenderer(forms.RadioSelect.renderer):
 '''
             
 class LoginForm(forms.Form):
-    email=forms.EmailField(help_text='Your Shaastra 2011 username')
+    email=forms.EmailField(help_text='Your Shaastra 2013 username')
     password=forms.CharField(widget=forms.PasswordInput, help_text='Your password')
     
 
@@ -70,7 +70,7 @@ class AddUserForm(ModelForm):
     
     class Meta:
         model = models.UserProfile
-        fields={'gender','age','branch','mobile_number','college_roll','want_hospi'}
+        fields={'gender','age','branch','mobile_number','college_roll','want_hospi','college'}
         #exclude = {'is_coord','coord_event','shaastra_id','activation_key','key_expires','UID','user',}
     
     def clean_username(self):
@@ -151,7 +151,7 @@ class UserRegisterForm(ModelForm):
     
     class Meta:
         model = models.UserProfile
-        fields={'gender','age','branch','mobile_number','college_roll','want_hospi'}
+        fields={'gender','age','branch','mobile_number','college_roll','want_hospi','college'}
         #exclude = {'is_coord','coord_event','shaastra_id','activation_key','key_expires','UID','user',}
     
     def clean_username(self):
@@ -294,8 +294,10 @@ class UsernameForm(forms.Form):
             except User.DoesNotExist:
                 raise forms.ValidationError('Invalid username')
         return self.cleaned_data['username']
+'''
+
 class AddCollegeForm (ModelForm):
     class Meta:
         model = models.College
         fields=('name','city','state')
-'''
+

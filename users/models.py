@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 #from main_test.events.models import Event
-import urllib,json
+#import urllib,json
 
 GENDER_CHOICES = (
     ('M','Male'),
@@ -46,7 +46,7 @@ STATE_CHOICES = (
 	("Puducherry" , "Puducherry"),
 	("Outside India" , "Outside India"),
 )
-'''
+
 class College(models.Model):
     name=models.CharField (max_length = 255,help_text  = 'The name of your college. Please refrain from using short forms.')
     city=models.CharField (max_length = 30,help_text  = 'The name of the city where your college is located. Please refrain from using short forms.' )
@@ -57,7 +57,7 @@ class College(models.Model):
 
     class Admin:
         pass
-'''
+
 #User profile common to all users
 class UserProfile(models.Model):
     user 			= models.ForeignKey     (User, unique = True)
@@ -66,7 +66,7 @@ class UserProfile(models.Model):
     age 			= models.IntegerField 	(default = 18 , help_text = 'You need to be over 12 and under 80 years of age to participate')
     branch 			= models.CharField		(max_length = 50, default = 'Enter Branch Here', blank = True, null=True, help_text = 'Your branch of study')
     mobile_number 	= models.CharField		(max_length = 15, null=True , help_text='Please enter your current mobile number')
-#    college 		= models.ForeignKey		(College,null=True,blank=True)
+    college 		= models.ForeignKey		(College,null=True,blank=True)
     college_roll 	= models.CharField		(max_length = 40, null=True)
 #    shaastra_id 	= models.CharField		(max_length = 20, unique = True, null=True)
     activation_key 	= models.CharField		(max_length = 40, null=True)

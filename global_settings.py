@@ -13,14 +13,14 @@ FACEBOOK_APP_ID = '291744470918252'
 FACEBOOK_APP_SECRET = '599f13aad496d3acc8ea887a0e889b92'
 FACEBOOK_SCOPE = 'email'
 
-TWITTER_KEY    = 'WxWjGWYhx5eOATvnjI7Q'
-TWITTER_SECRET = 'OuSEYWqAgHZyLQ7kfwTvAcGq2H55o2YH078S94e60'
+#TWITTER_KEY    = 'WxWjGWYhx5eOATvnjI7Q'
+#TWITTER_SECRET = 'OuSEYWqAgHZyLQ7kfwTvAcGq2H55o2YH078S94e60'
 
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+#    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 TEMPLATE_LOADERS = (
@@ -46,17 +46,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'users',
-    'emailconfirmation',
-    'uni_form',
-
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    #'allauth.twitter',
-    'allauth.openid',
-    #'allauth.facebook',
-    
-       
+         
     
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
@@ -88,8 +78,6 @@ LOGGING = {
 }
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "allauth.context_processors.allauth",
-    "allauth.account.context_processors.account",
     'django.contrib.auth.context_processors.auth',
 )
 
