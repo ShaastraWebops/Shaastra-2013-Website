@@ -276,7 +276,8 @@ def edit_profile(request):
             currentUserProfile.want_hospi = newProfileInfo['want_hospi']
             currentUser.save()
             currentUserProfile.save()
-            return HttpResponseRedirect ("%s"%settings.SITE_URL)
+            redirect_to="/"
+            return HttpResponseRedirect (redirect_to)
     else:
         values = {'first_name' : currentUser.first_name, 
                   'last_name' : currentUser.last_name,
