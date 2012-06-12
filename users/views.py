@@ -42,7 +42,7 @@ def login (request):
             user = authenticate(username=inputs['email'],password=inputs['password'])
             if user is not None :
                 log_in(request, user)
-                return HttpResponseRedirect("/login")
+                return HttpResponseRedirect("/")
             else:                
                 return HttpResponse("Invalid")
     return render_to_response('login.html',locals(), context_instance=RequestContext(request))
@@ -81,7 +81,7 @@ def logout(request):
         redirect_to="https://www.facebook.com/logout.php?next=http://127.0.0.1:8000/login&access_token="+str(access_token)
     else:
         log_out(request)
-        redirect_to="/login"
+        redirect_to="/"
     return HttpResponseRedirect(redirect_to)       
 
     
@@ -162,7 +162,7 @@ def user_registration(request):
                 inputs = form.cleaned_data
                 user = authenticate(username=inputs['email'],password=inputs['password'])
                 log_in(request, user)
-                return HttpResponseRedirect("/login")
+                return HttpResponseRedirect("/")
     else:
         form = forms.AddUserForm()
     return render_to_response('register.html', locals(), context_instance= RequestContext(request))    
@@ -276,14 +276,15 @@ def edit_profile(request):
             currentUserProfile.want_hospi = newProfileInfo['want_hospi']
             currentUser.save()
             currentUserProfile.save()
-            return HttpResponseRedirect ("%slogin/"%settings.SITE_URL)
+            return HttpResponseRedirect ("%s"%settings.SITE_URL)
     else:
         values = {'first_name' : currentUser.first_name, 
                   'last_name' : currentUser.last_name,
                   'gender' : currentUserProfile.gender,
                   'age' : currentUserProfile.age,
                   'branch' : currentUserProfile.branch,
-                  'mobile_number' : currentUserProfile.mobile_number,                  
+                  'mobile_number' : currentUserProfile.mobile_number, 
+                  'college' : currentUserProfile.college,                 
                   'college_roll' : currentUserProfile.college_roll,
                   'want_hospi' : currentUserProfile.want_hospi}
         editProfileForm = forms.EditUserForm(initial = values)
