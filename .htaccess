@@ -1,0 +1,10 @@
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{HTTP_HOST} (.*)\.shaastra\.org$
+RewriteRule ^(.*)$ ./django.fcgi/$1 [QSA,L]
+
+RewriteCond %{HTTP_HOST} ^forums.shaastra.org$
+RewriteRule ^/?$ "http\:\/\/www\.forums\.shaastra\.org\/" [R=301,L]
+
