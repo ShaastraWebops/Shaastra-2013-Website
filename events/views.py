@@ -38,7 +38,7 @@ class BaseView(object):
         except:
             raise Http404()
             
-    def get_files(tab):
+    def get_files(self, tab):
         # returns list of all files of a particular tab
         try:
             return tab.tabfile_set.all()
@@ -46,7 +46,7 @@ class BaseView(object):
             print 'here too'
             raise Http404()
         
-    def get_template(file_name):
+    def get_template(self, file_name):
         #this is used to get templates from the path /.../shaastra/events/templates/events/ajax      (*in my case)
         #note - a separate folder for ajax templates.
         #this function opens files (*.html) and returns them as python string.
@@ -118,7 +118,7 @@ class TabFileSubmit(BaseView):
         a[0].save()
         file_list = self.get_files(tab)
 
-        template = get_template('file_list.html')
+        template = self.get_template('file_list.html')
         t = Template(template).render(RequestContext(request, locals()))
         # the ajax function File() assigns this as the innerHTML of a div after the request has been completed.
         return HttpResponse(t)
