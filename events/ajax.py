@@ -172,10 +172,31 @@ def delete_file(request, tab_id, file_id):
     dajax.assign('#detail','innerHTML', t)
     return dajax.json()
 
-#this needs to be done
 @dajaxice_register
 def rename_file(request, tab_id, file_id):
+    tab = Tab.objects.get(id = tab_id)
+    f = TabFile.objects.get(id = file_id)
+    actual_name = f.tab_file.name.split('/')[-1]
+    file_list = get_files(tab)
+    template = get_template('file_rename.html')
+    t = Template(template).render(RequestContext(request,locals()))
     dajax = Dajax()
+    dajax.assign('#detail','innerHTML', t)
+    return dajax.json()    
+        
+@dajaxice_register
+def rename_file_done(request, form, file_id):
+    print 'here', form
+    f = TabFile.objects.get(id = file_id)
+    if form['display_name']:
+        f.title = form['display_name']
+        f.save()
+    tab = f.tab
+    file_list = get_files(tab)
+    template = get_template('tab_detail.html')
+    t = Template(template).render(RequestContext(request,locals()))
+    dajax = Dajax()
+    dajax.assign('#detail','innerHTML', t)
     return dajax.json()    
         
         

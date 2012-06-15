@@ -19,6 +19,12 @@ function edit_tab(id){
     return false;
 }
 
+function rename_file(id){
+    data = $('#file_rename').serializeObject();
+    Dajaxice.shaastra.events.rename_file_done(Dajax.process, {'form':data,'file_id':id})
+    return false;
+}
+
 function validateForm() {                   //prevents display name from being empty
     var x=document.forms["TabFileForm"]["display_name"].value;
     if (x==null || x=="")
