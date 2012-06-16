@@ -273,9 +273,9 @@
     {% include "subscription_status.html" %}
 </div>
 
-{% markdown_help %}
+<!--{% markdown_help %}-->
 
-{% sidebar_upper %}
+<!--{% sidebar_upper %}-->
 
 {% cache 60 questions_tags settings.APP_URL question.id %}
 <div class="boxC">
@@ -301,7 +301,7 @@
     </p>
 </div>
 {% endcache %}
-{% sidebar_lower %}
+<!--{% sidebar_lower %}-->
 <div class="boxC">
     <h3 class="subtitle">{% trans "Related questions" %}</h3>
     <div class="questions-related">

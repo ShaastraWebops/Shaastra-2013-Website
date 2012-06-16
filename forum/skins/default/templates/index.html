@@ -3,14 +3,14 @@
 {% load general_sidebar_tags %}
 {% load question_list_tags %}
 {% load i18n %}
-{% block fulltitle %}{{ settings.APP_TITLE }}{% endblock %}
+{% block fulltitle %}Shaastra Forums{% endblock %}
 {% block sidebar %}
     {% if not request.user.is_authenticated %}
         {% if settings.SHOW_WELCOME_BOX %}
             <div class="boxA">
-                <h3>{% trans "welcome to " %}{{ settings.APP_SHORT_NAME }}</h3>
+                <h3>{% trans "Welcome to " %}Shaastra forums</h3>
                 <div class="body">
-                  {{ settings.APP_INTRO|safe }}
+                  <p>Ask and answer questions, make the experience better!</p>
                   <div class="more"><a href="{% url about %}">{% trans "about" %} </a></div>
                   <div class="more"><a href="{% url faq %}">{% trans "faq" %} </a></div>
                 </div>
@@ -18,11 +18,11 @@
         {% endif %}
     {% endif %}
     {% include "question_list/count.html" %}
-    {% sidebar_upper %}
+   <!-- {% sidebar_upper %}-->
     {% if request.user.is_authenticated %}
         {% tag_selector %}
     {% endif %}
-    {% sidebar_lower %}
+<!--    {% sidebar_lower %} -->
     {% recent_tags %}
     {% recent_awards %}
 {% endblock %}
