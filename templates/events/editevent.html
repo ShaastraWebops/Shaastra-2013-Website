@@ -1,6 +1,14 @@
 <html>
 <head>
-<b><center>Add</b><br/></center></head>
+<b><center>Add</b><br/></center>
+<link href="/static/css/chosen.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
+<script src="/static/js/chosen.jquery.js"></script>
+<script>
+jQuery(document).ready(function(){
+jQuery(".chzn-select").data("placeholder","Tags...").chosen();
+});
+</script></head>
 <body>
 <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}

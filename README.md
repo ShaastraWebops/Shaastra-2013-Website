@@ -12,3 +12,7 @@ Tab files added. they have add, delete functionality.
 sending file uses ajax. rest can be done by dajax.
 Renaming files has to be done.
 
+15th June, 12 Renaming of files done
+
+16th June, Chosen-JQuery plugin implemented in the form for adding events. 'Tags' for events can now be added in a more presentable way. 
+
