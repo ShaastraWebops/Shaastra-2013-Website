@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from chosen import forms as chosenforms
 from datetime import datetime
 from django.conf import settings
 import os
@@ -18,6 +19,8 @@ class Question(models.Model):
     
 class Tag(models.Model):
     name = models.CharField(max_length = 25)
+    def __unicode__(self,*args,**kwargs):
+        return self.name
 
 class Category(models.Model):
     name = models.CharField(max_length = 25)
@@ -73,6 +76,7 @@ class TabFileForm(ModelForm):
         exclude = ('tab',)
     
 class EventAddForm(ModelForm):
+    tags = chosenforms.ChosenModelMultipleChoiceField(required = False,queryset = Tag.objects.all())
     class Meta:
         model = Event
         fields = ('title','events_logo','tags')
