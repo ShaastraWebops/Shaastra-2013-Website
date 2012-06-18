@@ -1,0 +1,11 @@
+<html>
+    <center><b>Add Core</center></b><br/>      
+    <form action="" method='POST'>
+	<table>
+        {% csrf_token %}
+
+	    {{form.as_table}}
+        </table>
+        <input type ='submit' value='Continue' />
+    </form>   
+</html>

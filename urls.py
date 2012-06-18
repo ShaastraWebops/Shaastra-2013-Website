@@ -1,11 +1,14 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
 from events.urls import urlpatterns as event_urls
-
+from dajaxice.core import dajaxice_autodiscover
+dajaxice_autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'views.home', name = 'home'),
     url(r'^user/', include('users.urls')),
+    url(r'^admin/', include('admin.urls')),
+    url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
 )
 
 urlpatterns += event_urls

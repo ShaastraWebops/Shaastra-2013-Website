@@ -12,7 +12,7 @@ from users.forms import *
 def login_get(request):
     if request.user.is_authenticated() :
         if request.user.is_superuser :
-            return HttpResponseRedirect('/user/admin')
+            return HttpResponseRedirect('/admin')
         else:
             return HttpResponseRedirect('/')
     form = LoginForm()
@@ -25,7 +25,7 @@ def login_post(request):
     if user is not None and user.is_active:
         auth_login(request, user)
         if user.is_superuser :
-            return HttpResponseRedirect('/user/admin')
+            return HttpResponseRedirect('/admin')
     return HttpResponseRedirect('/')
 
 @login_required(login_url='/user/login')    
@@ -61,17 +61,6 @@ def register_post(request):
         auth_login(request, new_user)
         return HttpResponseRedirect('/')
     return render_to_response('users/register.html', locals(), context_instance = RequestContext(request))
-
-@login_required(login_url='/user/login')
-def admin(request):
-    """
-        This is the home page view of the superuser
-    """
-
-    if request.user.is_superuser :
-        return render_to_response('users/admin.html', locals(), context_instance = RequestContext(request))
-    else:
-        return HttpResponseRedirect('/')
 
 @login_required
 def edit_profile(request):

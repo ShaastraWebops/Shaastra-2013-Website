@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 
 def home(request):
     if request.user.is_authenticated() and request.user.is_superuser :
-        return HttpResponseRedirect('/user/admin')
+        return HttpResponseRedirect('/admin')
     else:
     	return render_to_response('home.html',locals(),context_instance = RequestContext(request))
 	

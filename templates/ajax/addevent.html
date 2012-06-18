@@ -1,0 +1,19 @@
+<html>
+<h1>{{ group }}</h1>
+<br/>
+{% if error %}
+		<font color="red">You left the event name blank!</font>
+{% endif %}  
+        <form action="" method="POST">    
+		{% csrf_token %}
+    		EventName:<input type="text" name="eventname"/>
+                
+   		<input type="submit" value="Add Event"/>
+    	</form>
+    	<a href="/core_home/">Back</a>
+{% for i in p %}
+        <tr><td>{{i.name}}</td><td><a href="editevent/{{i.id}}/">Edit</td></tr>
+ {% endfor %}       
+
+
+</html>

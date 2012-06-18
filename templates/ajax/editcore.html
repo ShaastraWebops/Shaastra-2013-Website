@@ -1,0 +1,12 @@
+<html>
+<center><b>Edit Core</center></b><br/>      
+    <form action="" method='POST'>
+	<table>
+        {% csrf_token %}
+        {{form1.as_table}}         
+        {{form.as_table}}         
+        </table>
+        <button type ="submit" name="Submit" value="Save">Save</button>
+        <button type="submit" name="Submit" value="Del">Delete Core</button>
+    </form>   
+</html>
