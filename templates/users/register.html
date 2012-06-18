@@ -1,0 +1,62 @@
+{% load dajaxice_templatetags %}
+<html>
+    <head>
+        <title>Shaastra 2013</title>
+        {% dajaxice_js_import %}
+        <script type="text/javascript" src="/static/js/jquery.js"></script>
+        <script type="text/javascript" src="/static/js/jquery.dajax.core.js"></script>
+        <script language = 'JavaScript' type="text/javascript" src="/static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+        <script type="text/javascript">
+        function college_reg()
+        {
+            data=$("#reg input,#reg select").serializeObject();
+            Dajaxice.users.college_register(Dajax.process,{'form':data});
+        }
+        function reg_done(data)
+        {
+            switch(data)
+            {
+            case 0:
+                alert("Please enter valid details!");
+                break;
+            case 1:
+                alert("Save successful");
+        		var obj = document.getElementById("id_college");
+                obj.options[obj.options.length] = new Option($("#id_name").attr('value')+", "+$("#id_city").attr('value')+", "+$("#id_state").attr('value'), obj.options.length,false,true);
+                $("#reg").html("");
+                $("#msg").show();                
+                break;
+            case 2:
+                alert("Record exists");
+            }
+
+        }
+        </script>
+	    <script type="text/javascript">
+	    $(document).ready(function(){
+            html="<td><div id='msg'>Register New College</div><div id='reg'></div></td>"
+		    $("table tr:eq(3)").append(html);
+	    });
+        $(document).ready(function(){
+           $("#msg").click(function(){
+                $(this).hide();
+                Dajaxice.users.college_register(Dajax.process);            
+           });
+         });
+	    </script>
+    </head>
+    <body>
+        Register<br/>
+        <form id="form_reg" action="{{ site_url }}" method="POST">
+        <table>
+            {% csrf_token %}
+            {{ form.as_table }}
+        </table>
+        <input type="hidden" name="facebook_id" id="facebook_id" value="{{ facebook_id }}" />
+        <input type="hidden" name="access_token" id="access_token" value="{{access_token}}" />
+        <button type="submit" id="register">Register</button>
+        <a href="{{ site_url }}">Home</a>
+    </form>
+    </body>
+</html>
+	 

@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-#from main_test.events.models import Event
-#import urllib,json
 
 GENDER_CHOICES = (
     ('M','Male'),
@@ -61,12 +59,11 @@ class College(models.Model):
 #User profile common to all users
 class UserProfile(models.Model):
     user 			= models.ForeignKey     (User, unique = True)
-    UID             = models.CharField      (max_length=50)
     gender 			= models.CharField		(max_length = 1, choices = GENDER_CHOICES, default = 'F')   #Defaults to 'girl' ;-)
     age 			= models.IntegerField 	(default = 18 , help_text = 'You need to be over 12 and under 80 years of age to participate')
-    branch 			= models.CharField		(max_length = 50, default = 'Enter Branch Here', blank = True, null=True, help_text = 'Your branch of study')
+    branch 			= models.CharField		(max_length = 50, blank = True, null=True, help_text = 'Your branch of study')
     mobile_number 	= models.CharField		(max_length = 15, null=True , help_text='Please enter your current mobile number')
-    college 		= models.ForeignKey		(College,null=True,blank=True)
+    college 		= models.ForeignKey		(College, null=True, blank=True)
     college_roll 	= models.CharField		(max_length = 40, null=True)
 #    shaastra_id 	= models.CharField		(max_length = 20, unique = True, null=True)
     activation_key 	= models.CharField		(max_length = 40, null=True)
@@ -75,8 +72,8 @@ class UserProfile(models.Model):
     is_coord        = models.BooleanField	(default = False)
 #    coord_event     = models.ForeignKey     (Event, null = True)
 #    registered      = models.ManyToManyField(Event, null=True, related_name='registered_users')        #Events which this user has registered for
-    access_token   = models.CharField(max_length=250)
-#    secret  = models.CharField(max_length=100)    
+    facebook_id     = models.CharField      (max_length=20)
+    access_token    = models.CharField      (max_length=250)
 
     def __unicode__(self):
         return self.user.first_name

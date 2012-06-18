@@ -1,38 +1,18 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
-from django.views.generic.simple import direct_to_template
-from django.contrib import admin
-import django.contrib.auth.views
-admin.autodiscover()
+from shaastra.users.views import *
+from dajaxice.core import dajaxice_autodiscover
+dajaxice_autodiscover()
 
 urlpatterns = patterns('',  
-        
-    url(r'^register/user/?$', 'Shaastra-2013-Website.users.views.user_registration'),
-    url(r'^register/editprofile/?$', 'Shaastra-2013-Website.users.views.edit_profile'),
-    url(r'^register/college/?$', 'Shaastra-2013-Website.users.views.college_registration'),
-#      (r'^register/activate/(?P<a_key>[\w]+)/?$', 'Shaastra-2013-Website.users.views.activate'),
-    url(r'^$', 'Shaastra-2013-Website.users.views.login'),
-    url(r'^logout/?$', 'Shaastra-2013-Website.users.views.logout'),
-    url(r'^facebook/login/?$', 'Shaastra-2013-Website.users.fb_views.login'),
-    url(r'^facebook/authentication_callback/?$', 'Shaastra-2013-Website.users.fb_views.authentication_callback'),
-#    url(r'^twitter/login/?$', 'Shaastra-2013-Website.users.tw_views.twitter_login',name='twitter-login'),
-#    url(r'^twitter/login/callback/?$', 'Shaastra-2013-Website.users.tw_views.twitter_callback',name='twitter-callback'),
-#    url(r'^twitter/logout/?$', 'Shaastra-2013-Website.users.tw_views.twitter_logout',name='twitter-logout'),
-#    url(r'^home/$', 'Shaastra-2013-Website.users.views.home'),
-#      (r'^feedback/?$', 'Shaastra-2013-Website.users.views.feedback'),
-#      (r'^view_feedback/?$', 'Shaastra-2013-Website.users.views.view_feedback'),
+    url(r'^login/$', 'views.method_splitter', {'GET': login_get, 'POST': login_post}),
+    url(r'^register/$', 'views.method_splitter', {'GET': register_get, 'POST': register_post}),
+#    url(r'^editprofile/$', 'views.method_splitter', {'GET': editprofile_get, 'POST': editprofile_post}),
+    url(r'^facebook/login/?$', 'users.fb_views.login'),
+    url(r'^facebook/authentication_callback/?$', 'users.fb_views.authentication_callback'),
     url(r'^password_change/$', 'django.contrib.auth.views.password_change'),
     url(r'^password_change/done/$', 'django.contrib.auth.views.password_change_done'),
-#      (r'^myshaastra/forgot_password/$', 'Shaastra-2013-Website.users.views.forgot_password'),
-#      (r'^myshaastra/forgot_password/done/$', direct_to_template, { 'template' : 'users/forgot_password_done.html', } ),
-#      (r'^myshaastra/reset_password/$', 'Shaastra-2013-Website.users.views.reset_password'),
-#      (r'^myshaastra/reset_password/done/$', direct_to_template, { 'template' : 'users/reset_password_done.html', } ),
-#      (r'^myshaastra/edit_profile/$','Shaastra-2013-Website.users.views.edit_profile'),
-#      (r'^spons/$', 'Shaastra-2013-Website.users.views.spons_dashboard'),
-#    url(r'^logout$', 'django.contrib.auth.views.logout'),
-
-
-)   
-
-
-
+    url(r'^logout/$', 'users.views.logout', name = 'logout'),
+    url(r'^admin/$','users.views.admin', name="super-user"),
+    url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
+)
