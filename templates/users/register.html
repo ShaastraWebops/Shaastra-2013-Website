@@ -10,7 +10,7 @@
         function college_reg()
         {
             data=$("#reg input,#reg select").serializeObject();
-            $("#reg").append("<br>Processing please wait..<br><img src='/static/img/loading.gif'>");
+            $("#reg").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
             Dajaxice.users.college_register(Dajax.process,{'form':data});
         }
         function reg_done(data)
@@ -40,6 +40,7 @@
         $(document).ready(function(){
            $("#msg").click(function(){
                 $(this).hide();
+                $("#reg").prepend("Loading please wait..<br><img src='/static/img/loading.gif'>");
                 Dajaxice.users.college_register(Dajax.process);            
            });
          });

@@ -1,26 +1,16 @@
 from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
-from django.template import Template, Context, RequestContext
+from django.template import Template, Context, RequestContext, loader
 from dajax.core import Dajax
-from django.conf import settings
 from users.forms import AddCollegeForm
 from users.models import College
-import os
-
-def get_template(file_name):
-    #this is used to get templates from the path /.../shaastra/events/templates/events/ajax      (*in my case)
-    #note - a separate folder for ajax templates.
-    #this function opens files (*.html) and returns them as python string.
-    filepath = os.path.join(settings.AJAX_TEMPLATE_DIR, file_name)
-    f = open(filepath, mode='r')
-    return f.read()
 
 @dajaxice_register
 def college_register(request, form=""):
     if form == "" :
-        template = get_template('college_register.html')
+        template = loader.get_template('ajax/users/college_register.html')
         coll_form=AddCollegeForm()
-        html=Template(template).render(RequestContext(request,locals()))
+        html=template.render(RequestContext(request,locals()))
         dajax = Dajax()
         dajax.assign('#reg', 'innerHTML', html)
         return dajax.json()

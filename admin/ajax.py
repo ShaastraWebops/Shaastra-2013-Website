@@ -1,32 +1,22 @@
 from dajaxice.decorators import dajaxice_register
 from django.utils import simplejson
-from django.template import Template, Context, RequestContext
+from django.template import Context, RequestContext, loader
 from dajax.core import Dajax
 from admin.forms import *
-from django.conf import settings
-import os
 from django.contrib.auth.models import Group
-
-def get_template(file_name):
-    #this is used to get templates from the path /.../shaastra/events/templates/events/ajax      (*in my case)
-    #note - a separate folder for ajax templates.
-    #this function opens files (*.html) and returns them as python string.
-    filepath = os.path.join(settings.AJAX_TEMPLATE_DIR, file_name)
-    f = open(filepath, mode='r')
-    return f.read()
 
 @dajaxice_register
 def add_edit_group(request,form="",id=0):
     dajax = Dajax()
     if form == "" :
         if id:
-            template = get_template('editgroup.html')
+            template = loader.get_template('ajax/admin/editgroup.html')
             group_form = AddGroupForm(instance=Group.objects.get(id=id))
-            html=Template(template).render(RequestContext(request,locals()))
+            html=template.render(RequestContext(request,locals()))
         else:
-            template = get_template('addgroup.html')
+            template = loader.get_template('ajax/admin/addgroup.html')
             group_form = AddGroupForm()
-            html=Template(template).render(RequestContext(request,locals()))
+            html=template.render(RequestContext(request,locals()))
         dajax.assign('#space', 'innerHTML', html)
         return dajax.json()
     if id:
