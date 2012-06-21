@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from shaastra.events.models import Event
 
 GENDER_CHOICES = (
     ('M','Male'),
@@ -69,8 +70,9 @@ class UserProfile(models.Model):
     activation_key 	= models.CharField		(max_length = 40, null=True)
     key_expires 	= models.DateTimeField	(null=True)
     want_hospi 		= models.BooleanField	(default = False)
+    is_core         = models.BooleanField	(default = False)
     is_coord        = models.BooleanField	(default = False)
-#    coord_event     = models.ForeignKey     (Event, null = True)
+    coord_event     = models.ForeignKey     (Event, null = True)
 #    registered      = models.ManyToManyField(Event, null=True, related_name='registered_users')        #Events which this user has registered for
     facebook_id     = models.CharField      (max_length=20)
     access_token    = models.CharField      (max_length=250)

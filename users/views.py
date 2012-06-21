@@ -11,8 +11,12 @@ from users.forms import *
 
 def login_get(request):
     if request.user.is_authenticated() :
+        currentuser=request.user
+        currentUserProfile=currentuser.get_profile()
         if request.user.is_superuser :
             return HttpResponseRedirect('/admin')
+        elif currentUserProfile.is_core :
+            return HttpResponseRedirect('/core')
         else:
             return HttpResponseRedirect('/')
     form = LoginForm()
@@ -26,6 +30,8 @@ def login_post(request):
         auth_login(request, user)
         if user.is_superuser :
             return HttpResponseRedirect('/admin')
+        elif user.get_profile().is_core :
+            return HttpResponseRedirect('/core')
     return HttpResponseRedirect('/')
 
 @login_required(login_url='/user/login')    

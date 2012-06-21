@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     url(r'^$', 'views.home', name = 'home'),
     url(r'^user/', include('users.urls')),
     url(r'^admin/', include('admin.urls')),
+    url(r'^core/', include('core.urls')),
     url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
 )
 

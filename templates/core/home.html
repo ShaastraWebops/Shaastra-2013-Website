@@ -1,0 +1,66 @@
+{% load dajaxice_templatetags %}
+<html>
+    <head>
+        <title>Shaastra 2013</title>
+        {% dajaxice_js_import %}
+        <script type="text/javascript" src="/static/js/jquery.js"></script>
+        <script type="text/javascript" src="/static/js/jquery.dajax.core.js"></script>
+        <script language = 'JavaScript' type="text/javascript" src="/static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+        <script type="text/javascript">
+        function add_event()
+        {
+            data=$("#space :input").serializeObject();
+            $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
+            Dajaxice.core.add_edit_event(Dajax.process,{'form':data});
+        }
+        function edit_event(id)
+        {
+            data=$("#space :input").serializeObject();
+            $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
+            Dajaxice.core.add_edit_event(Dajax.process,{'form':data,'id':id});
+        }
+        function del_event(id)
+        {
+            var press=confirm("Confirm delete?");
+            if (press==true)
+            {
+                $("#space").append("Processing please wait..<br><img src='/static/img/loading.gif'>");
+                Dajaxice.core.del_event(Dajax.process,{'id':id});
+            }
+        }
+        function updateSummary()
+        {
+            $("#summary").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+            Dajaxice.core.updateSummary(Dajax.process);
+        }
+        function displayevent(id)
+        {
+            $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+            Dajaxice.core.add_edit_event(Dajax.process,{'id':id});
+        }
+        </script>
+	    <script type="text/javascript">
+        $(document).ready(function(){
+            updateSummary();
+           $("#add_event").click(function(){
+                $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+                Dajaxice.core.add_edit_event(Dajax.process);            
+           });
+         });
+	    </script>
+    </head>
+    <body>
+        Welcome {{ request.user }},<br>
+        <a href="/user/logout/">Logout</a>
+        <hr/>
+        <div id="nav">
+            <button id="add_event">Add event</button>
+        </div><br>
+        <div id="container">
+            <div id="space" style="float:right;width:50%;">
+            </div>
+            <div id="summary" style="float:left;width:50%;">
+            </div>
+        </div>
+    </body>
+</html>

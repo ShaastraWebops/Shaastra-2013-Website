@@ -39,7 +39,8 @@ INSTALLED_APPS = (
     'users',
     'events',
     'dajaxice',
-    'dajax',   
+    'dajax', 
+    'core',  
 )
 
 # A sample logging configuration. The only tangible logging

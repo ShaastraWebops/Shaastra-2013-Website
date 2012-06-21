@@ -10,11 +10,6 @@
         <a href="/user/password_change">Change Password</a>
         <a href="/user/logout">Logout</a>
         <hr />
-            <!--{% if user.get_profile.facebook_id %}
-                <h2>User Details</h2>
-                <img src="http://graph.facebook.com/{{ user.get_profile.facebook_id }}/picture" /><br />
-                {{ name }}
-            {% endif %}-->
         {% else %}
         <a href="/user/login">Login</a>
         {% endif %}
