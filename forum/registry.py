@@ -15,11 +15,11 @@ for m in modules_template_tags:
     django_template_tags.append(m.__name__)
 
 ui.register(ui.HEADER_LINKS,
-            ui.Link(_('faq'), ui.Url('faq'), weight=400),
-            ui.Link(_('about'), ui.Url('about'), weight=300),
+            ui.Link(_('Faq'), ui.Url('faq'), weight=400),
+            ui.Link(_('About'), ui.Url('about'), weight=300),
 
             ui.Link(
-                    text=lambda u, c: u.is_authenticated() and _('logout') or _('login'),
+                    text=lambda u, c: u.is_authenticated() and _('Logout') or _('Login'),
                     url=lambda u, c: u.is_authenticated() and reverse('logout') or reverse('auth_signin'),
                     weight=200),
 
@@ -45,13 +45,13 @@ class SupportLink(ui.Link):
 
 ui.register(ui.FOOTER_LINKS,
             ui.Link(
-                    text=_('contact'),
+                    text=_('Contact'),
                     url=lambda u, c: settings.CONTACT_URL and settings.CONTACT_URL or "%s?next=%s" % (reverse('feedback'), cleanup_urls( c['request'].path)),
                     weight=400),
             SupportLink(_('support'), settings.SUPPORT_URL, attrs={'target': '_blank'}, weight=300),
-            ui.Link(_('privacy'), ui.Url('privacy'), weight=200),
-            ui.Link(_('faq'), ui.Url('faq'), weight=100),
-            ui.Link(_('about'), ui.Url('about'), weight=0),
+            ui.Link(_('Privacy'), ui.Url('privacy'), weight=200),
+            ui.Link(_('Faq'), ui.Url('faq'), weight=100),
+            ui.Link(_('About'), ui.Url('about'), weight=0),
 )
 
 class ModerationMenuGroup(ui.AjaxMenuGroup):
@@ -64,19 +64,19 @@ class SuperUserSwitchMenuItem(ui.UserMenuItem):
 
 ui.register(ui.USER_MENU,
             ui.UserMenuItem(
-                label=_("edit profile"),
+                label=_("Edit Profile"),
                 url=lambda u, c: reverse('edit_user', kwargs={'id': c['user'].id}),
                 span_attrs={'class': 'user-edit'},
                 weight=0
             ),
             ui.UserMenuItem(
-                label=_("authentication settings"),
+                label=_("Authentication Settings"),
                 url=lambda u, c: reverse('user_authsettings', kwargs={'id': c['user'].id}),
                 span_attrs={'class': 'user-auth'},
                 weight=100
             ),
             ui.UserMenuItem(
-                label=_("email notification settings"),
+                label=_("Email Notification Settings"),
                 url=lambda u, c: reverse('user_subscriptions', kwargs={'id': c['user'].id, 'slug': slugify(c['user'].username)}),
                 span_attrs={'class': 'user-subscriptions'},
                 weight=200
