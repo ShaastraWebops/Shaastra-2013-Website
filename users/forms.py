@@ -62,7 +62,7 @@ class AddUserForm(ModelForm):
     
     class Meta:
         model = UserProfile
-        fields={'gender','age','branch','mobile_number','college_roll','want_hospi','college'}
+        fields=('gender','age','branch','mobile_number','college_roll','want_hospi','college')
         #exclude = {'is_coord','coord_event','shaastra_id','activation_key','key_expires','UID','user',}
     
     def clean_username(self):
@@ -143,7 +143,7 @@ class UserRegisterForm(ModelForm):
     
     class Meta:
         model = UserProfile
-        fields={'gender','age','branch','mobile_number','college_roll','want_hospi','college'}
+        fields=('gender','age','branch','mobile_number','college_roll','want_hospi','college')
         #exclude = {'is_coord','coord_event','shaastra_id','activation_key','key_expires','UID','user',}
     
     def clean_username(self):
