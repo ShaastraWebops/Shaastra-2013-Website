@@ -35,18 +35,9 @@
         <td width="360" style="vertical-align: top;">
         {% if can_view_private %}{% user_menu request.user view_user %}{% endif %}
             <table class="user-details">
-                {% if request.user.get_profile %}
                 <tr>
-                    <th colspan="2" align="left"><h3>{% trans "Registered user" %}</h3>
-                    Shaastra id: {{ request.user.get_profile.UID }}<br/>
-                    <a href="/register/user">Click to edit Profile Details</a></th>
+                    <th colspan="2" align="left"><h3>{% trans "Registered user" %}</h3></th>
                 </tr>
-                {% else %}
-                <tr>
-                    <th colspan="2" align="left"><h2>{% trans "Unregistered user" %}</h2>
-                    <a href="/register/user">Register to get Shaastra id</a></th>
-                </tr>
-                {% endif %}
                 {% if view_user.real_name %}
                 <tr>
                     <td>{% trans "real name" %}</td>
@@ -118,3 +109,4 @@
     </tr>
 </table>
 <!-- end user_info.html -->
+

@@ -148,7 +148,6 @@ INSTALLED_APPS = [
     'django.contrib.markup',
     'forum',
     'django.contrib.messages',
-    'users',
 ]
 
 if DEBUG:
@@ -178,5 +177,5 @@ FACEBOOK_APP_ID = '291744470918252'
 FACEBOOK_APP_SECRET = '599f13aad496d3acc8ea887a0e889b92'
 FACEBOOK_SCOPE = 'email'
 
-AUTH_PROFILE_MODULE = 'users.UserProfile'
+
 
