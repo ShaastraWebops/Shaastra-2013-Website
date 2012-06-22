@@ -1,34 +1,76 @@
-<html>
-<body>
-{% block home %}
- <h1><center>Welcome to Shaastra 2013 Spons Portal</h1></center>
+{% extends "base.html" %}
+
+{% block navigation %}
+                          
+    <li class="active"><a href="{{SITE_URL}}">Home</a></li>
+                                             
+    <li><a href="{{SITE_URL}}category/">Events</a></li>
+                            
+    {% for topic in topics %}
+        <li>
+            <a href="{{SITE_URL}}topic/{{topic.url_name}}/">{{topic.title}}</a>
+        </li>    
+    {% endfor %}
+    
 {% endblock %}
-{% block index %}
-<table border='1'>
-<tr>
-<td><a href="{{SITE_URL}}category/">Events</a><br/></td>
-<td>  </td>
-<td> </td>
-{% for topic in topics %}
-	<td><a href="{{SITE_URL}}topic/{{topic.url_name}}/">{{topic.title}}</a></td>
-	{% for image in topic_images %}
-		{% if image.topic == topic %}
-			<td><img src="{{MEDIA_URL}}{{image.image}}" width="100px" height="100px" /></td>
-		{% endif %}
-	{% endfor %}
-<td>  </td>
-<td>  </td>
-{% endfor %}
-</tr>
-</table>
+
+{% block content %}
+
+    <!-- Page Title -->
+    <hr>
+    <div class="page-header">
+        <h1>Welcome to Shaastra 2013 <small>Sponsorship Portal</small></h1>
+    </div>
+
+
+     <!-- Carousel
+     For carousel to work with slide effect bootstrap-transition.js must also be included
+    ================================================== -->
+    <section id="carousel">
+        <div class="row">
+            <div class="span8 columns">
+            <!-- About Shaastra -->
+                <h3>About</h3>
+                <p>Write about Shaastra</p>
+            </div>
+            
+            <div id="sidebar" class="span3 columns">
+                <h2>Previous Sponsors</h2>
+                <h6>Shaastra 2011</h6>
+                
+                <div id="myCarousel" class="carousel slide">
+                    
+                    <div class="carousel-inner">
+                    
+                        <div class="item active">
+                            <img src="{{MEDIA_URL}}sponsors/shaastra.jpg" width="300px" height="200px" alt="">
+                        </div>
+                    
+                    
+                    {% for i in previous_sponsors %}
+                        <div class="item">
+                            <img src="{{MEDIA_URL}}{{i.logo}}" width="300px" height="200px" alt="">
+                        </div>
+                    {% endfor %}
+                  
+                    </div><!--/.carousel-inner -->
+                  
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                </div><!--/.myCarousel -->
+                <hr>
+            </div><!--/.sidebar -->
+        </div><!--/.row -->
+    </section>
+    
 {% endblock %}
-<hr>
-<h2><center>{% block title %} {% endblock %}</center></h2>
-{% block body %}
-<p> <center>Write about Shaastra </center></p>
+
+{% block js %}
+
+<!-- Script is for automatic cycling with interval as mentioned below -->   
+<script>
+    $('#myCarousel').carousel({
+       interval: 3000
+    });
+</script> 
 {% endblock %}
-{% block end%}
-<hr>
-{% endblock %}
-</body>
-</html>

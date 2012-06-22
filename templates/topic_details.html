@@ -1,33 +1,42 @@
-{% extends "home.html" %}
-{% block home %} {% endblock %}
-{% block index %}
-<table border='1'>
-<tr>
-<td><a href='{{SITE_URL}}'>Home</a></td>
-<td> </td>
-<td> </td>
-<td><a href="{{SITE_URL}}category/">Events</a><br/></td>
-<td>  </td>
-<td> </td>
-{% for topic in topics %}
-	<td><a href="{{SITE_URL}}topic/{{topic.url_name}}/">{{topic.title}}</a></td>
-	<td>  </td>
-	<td>  </td>
-{% endfor %}
-</tr>
-</table>
+{% extends "base.html" %}
+
+{% block navigation %}
+
+    <li><a href="{{SITE_URL}}">Home</a></li>
+
+    <li><a href="{{SITE_URL}}category/">Events</a></li>
+
+    <!-- This is to show the topic that is active -->
+    {% for i in topics %}
+        <li {% ifequal request.path "/topic/{{i.url_name}}/" %}class="active"{% endifequal %}>
+            <a href="{{SITE_URL}}topic/{{i.url_name}}/">{{i.title}}</a>
+        </li>    
+    {% endfor %}
+    
 {% endblock %}
+
+{% block content %}
+<!-- Description of topic -->
 <hr>
-{% block title %} {{present_topic.title}} {% endblock %}
+<h1>{{present_topic.title}}</h1>
 <hr>
-{% block body %}
+
 {% for image in present_topic_images %}
-	<img src='{{MEDIA_URL}}{{image.image}}' width="100px" height="100px">
+	<img src='{{MEDIA_URL}}{{image.image}}' width="300px" height="200px" class="pull-right">
 {% endfor %}
+
+<div class="well">
+    <p> {{present_topic.display_mySafeField}}</p></br></br></br></br></br></br>
+</div>
 <hr>
-<center><p> {{present_topic.information}}</p></center>
-{% endblock %}
-{% block end %}
-<hr>
-<a href='{{SITE_URL}}'>back</a>
+
+<!-- form for editing content -->
+{% if request.user.is_authenticated %}
+    <form action="" method="POST">
+        {% csrf_token %}
+            {{form}}
+        <input type="submit" value="Save">
+    </form>
+{% endif %}
+
 {% endblock %}

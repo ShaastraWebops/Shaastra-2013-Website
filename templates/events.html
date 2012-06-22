@@ -1,60 +1,107 @@
-{% extends "home.html" %}
-{% block home %} {% endblock %}
-{% block index %}
-<table border='1'>
-<tr>
-<td><a href='{{SITE_URL}}'>Home</a></td>
-<td> </td>
-<td> </td>
-<td><a href="{{SITE_URL}}category/">Events</a><br/></td>
-<td>  </td>
-<td> </td>
-{% for topic in topics %}
-	<td><a href="{{SITE_URL}}topic/{{topic.url_name}}/">{{topic.title}}</a></td>
-	<td>  </td>
-	<td>  </td>
-{% endfor %}
-</tr>
-</table>
-{% endblock %}
-<hr>
-{% block title %}Events under {{c.name}}{% endblock %}
-{% block body %}
-<table border="1">
-	<tr>
-	<th>Event</th>
-	<th>Information</th>
-	<th>Current Status</th>
-	<th>Image</th></tr>
-	
-{% for i in events_list %}
+{% extends "base.html" %}
 
-	<tr>
-	<td>{{i.title}}</td>
-	<td>{{i.about}}</td>
-	<td>
-	{% if i.status == "s" %}
-    	Sold
-    {% endif %}
-    {% if i.status == "a"%}
-    	Available
-    {% endif %}    
-    <td>
-    {% for j in photos_list %}
-        {% if j.event == i %}       
-            <img src="{{MEDIA_URL}}{{j.image}}" width="100px" height="100px" />
-        {% endif %}
+{% block navigation %}
+                          
+    <li><a href="{{SITE_URL}}">Home</a></li>
+                                             
+    <li class="active"><a href="{{SITE_URL}}category/">Events</a></li>
+                            
+    {% for topic in topics %}
+        <li>
+            <a href="{{SITE_URL}}topic/{{topic.url_name}}/">{{topic.title}}</a>
+        </li>    
     {% endfor %}
-    </td>
-    </tr>
-<tr> </tr>    
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Navigation list on left
+================================================== -->
+<div class="row">
+    <div class="span3">
+        <ul class="nav nav-list">
+            {% for i in categories %}
+                <li class="nav-header">
+                    <a href="{{SITE_URL}}category/{{i.url_name}}/">{{i.name}}</a>
+                </li>
+                
+                {% for j in events %}
+                    {% if j.category == i %}
+                        <li {% ifequal "/category/{{i.url_name}}/" request.path %}class="active"{% endifequal %}><a>{{j.title}}</a></li>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}    
+        </ul>
+    </div>
+
+<!--Events-->
+    
+    <div id="events" class="span9">
+    <h2><center>Events under {{c.name}}</center></h2></br>
+        
+        {% for i in events_list %}
+        <div id="writing" class="span5">
+            <div class="well">
+            
+                <h5>{{i.title}}</h5>  
+                
+                <!-- label for showing status of event -->
+                {% if i.status == "s" %}
+    	            <span class="label label-success">Sold</span>
+                {% endif %}
+                {% if i.status == "a"%}
+           	        <span class="label label-important">Available</span>
+                {% endif %}
+                </br></br>
+                
+                <!-- event description -->
+                {{i.about}}
+                </br></br>
+            
+            </div><!--/.well -->
+        </div><!-- /.writing -->
+        
+        <div id="images" class="span3">
+                          
+                <!-- image carousel -->
+                <div id="{{i.id}}" class="carousel slide">
+                    
+                    <div class="carousel-inner">
+                    
+                        <div class="item active">
+                            <img src="{{MEDIA_URL}}sponsors/shaastra.jpg" width="300px" height="200px" alt="">
+                        </div>                    
+                    
+                    {% for j in photos_list %}
+                        {% if j.event == i %}
+                        <div class="item">
+                            <img src="{{MEDIA_URL}}{{j.image}}" width="300px" height="200px" alt="">
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                  
+                    </div><!--/.carousel-inner -->
+                  
+                    <a class="left carousel-control" href="#{{i.id}}" data-slide="prev">&lsaquo;</a>
+                    <a class="right carousel-control" href="#{{i.id}}" data-slide="next">&rsaquo;</a>
+                </div><!--/.i -->
+                
+        </div><!-- /.images -->        
+        {% endfor %}
+        
+    </div><!--/.events -->
+
+
+</div><!--/.row -->
+{% endblock %}
+{% block js %}
+<!-- Script is for automatic cycling with interval as mentioned below -->   
+<script>
+{% for i in events_list %}
+    $('#{{i.id}}').carousel({
+        interval: 3000
+    });
 {% endfor %}
-</table>
+</script> 
 {% endblock %}
-
-
-{% block end %}
-<hr>
-<a href="{{SITE_URL}}category/">Back</a><br/>
-{% endblock %}
-

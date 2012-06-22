@@ -1,0 +1,14 @@
+change_form is used to customise the add/change form. Here it has been used to
+add instructions for filling up the form.
+1.Copy change_form.html from django/contrib/admin/templates/admin/
+2.To customise for the entire site place in /admin/
+3.To customise for an app place in /admin/app_name/
+4.To customise for a specific model place in /admin/app_name/model_name
+
+Important: To customise a template check its hierarchy in django/contrib/admin/templates/
+Copy the template to be changed into the same folders/sub-folders and then edit.
+Don't forget the admin sub-directory.
+
+How It Works: First Django looks for the templates in your /templates/subdirectory.
+If there are no templates in your project's template folder, then
+by default, Django renders the templates in django.contrib.

@@ -1,45 +1,68 @@
-{% extends "home.html" %}
-<!--<h1> <center>Welcome to Shaastra 2013 Sponsorship Portal </center></h1>-->
-{% block home %} {% endblock %}
-{% block index %}
-<table border='1'>
-<tr>
-<td><a href="{{ SITE_URL }}">Home</a></td>
-<td> </td>
-<td> </td>
-<td><a href="{{SITE_URL}}category/">Events</a><br/></td>
-<td>  </td>
-<td> </td>
-{% for topic in topics %}
-	<td><a href="{{SITE_URL}}topic/{{topic.url_name}}/">{{topic.title}}</a></td>
-	<td>  </td>
-	<td>  </td>
-{% endfor %}
-</tr>
-</table>
-{% endblock %}
-<hr>
-{% block title %}Categories of events {% endblock %}
-<center>The events up for sponsorship fall under these categories. Click 
-on the events for more information.</center>
-<br/><br/>
-{% block body %}
-<table border='1'>
-
-{% for i in categories %}
-<tr>
-     <td><a href="{{SITE_URL}}category/{{i.url_name}}/">{{i.name}}</a></td>
-    {% for j in photos_list %}
-        {% if j.category == i %}       
-            <td><img src="{{MEDIA_URL}}{{j.image}}" width="100px" height="100px" /></td>
-        {% endif %}
+{% extends "base.html" %}
+<!--Show active tab-->
+{% block navigation %}
+                          
+    <li><a href="{{SITE_URL}}">Home</a></li>
+                                             
+    <li class="active"><a href="{{SITE_URL}}category/">Events</a></li>
+                            
+    {% for topic in topics %}
+        <li>
+            <a href="{{SITE_URL}}topic/{{topic.url_name}}/">{{topic.title}}</a>
+        </li>    
     {% endfor %}
-</tr>   
-{% endfor %}
-</table>
-{% endblock %}
-{% block end %}
-<hr>
-<a href='{{SITE_URL}}'>back</a>
 {% endblock %}
 
+{% block content %}
+
+<!-- Navigation list on left
+================================================== -->
+<div class="row">
+    <div class="span3">
+        <ul class="nav nav-list">
+            {% for i in categories %}
+                <li class="nav-header"><a href="{{SITE_URL}}category/{{i.url_name}}/">{{i.name}}</a></li>
+                {% for j in events %}
+                    {% if j.category == i %}
+                        <li><a>{{j.title}}</a></li>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}    
+        </ul>
+    </div>    
+        
+
+
+<!--Thumbnails with short description
+================================================== -->
+    <hr>
+    <div id="main" class="span9">
+        <h2>Events Galore</h2>
+        <p>Events in Shaastra are under the following categories</p>
+        <ul class="thumbnails">
+            {% for i in categories %}
+                <li class="span3">
+                    <div class="thumbnail">
+                        {% for j in photos_list %}
+                            {% if j.category == i %}       
+                            <img src="{{MEDIA_URL}}{{j.image}}" width="360px" height="268px" alt="" />
+                            {% endif %}
+                        {% endfor %}   
+                        <div class="caption">
+                            <h5>{{i.name}}</h5>
+                            <p>
+                            {% for j in events %}
+                                {% if j.category == i %}
+                                    <span class="label">{{j.title}}</span>
+                                {% endif %}
+                            {% endfor %}
+                            </p>
+                            <p><a href="{{SITE_URL}}category/{{i.url_name}}/" class="btn btn-primary">Know More</a>
+                        </div><!-- /.caption -->
+                    </div><!-- /.thumbnail -->
+                </li>
+            {% endfor %}            
+        </ul>
+    </div><!-- /.main -->
+</div><!-- /.row -->    
+{% endblock %}

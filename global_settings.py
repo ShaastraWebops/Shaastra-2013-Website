@@ -74,6 +74,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.static",
+    "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
     "context_processor_url.url",
 )
@@ -99,8 +100,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'shaastra_events',
-    'topics',
+    'portal',
 )
 
 #Added for implementing user profiles

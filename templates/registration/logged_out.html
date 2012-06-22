@@ -1,0 +1,15 @@
+<!-- To provide link to website after having logged out -->
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="../">{% trans 'Home' %}</a></div>{% endblock %}
+
+{% block content %}
+
+<p>{% trans "Thanks for visiting the site today." %}</p>
+
+<p><a href="../">{% trans 'Log in again' %}</a></p>
+
+<a href="{{SITE_URL}}">View Sponsorship Portal</a>
+
+{% endblock %}

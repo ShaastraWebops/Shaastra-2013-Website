@@ -1,0 +1,7 @@
+{% extends "admin/change_form.html" %}
+
+{% block form_top %}
+   <h1 class="errornote">Assigning superuser status assigns all permissions - please do not do so unless it is another core</br>
+   <i>For giving permissions to users, assign user to a group with the requisite permissions. If group has not been created yet, click on the green plus to add group. </i>
+   </h1>
+{% endblock %}
