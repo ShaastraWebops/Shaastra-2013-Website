@@ -80,6 +80,8 @@ def add_edit_core(request,form="",id=0):
             core=core_form.save()
             core.set_password("default")
             core.save()
+            core_profile = UserProfile( user=core, is_core=True)
+            core_profile.save()
             dajax.assign("#space",'innerHTML',"")
         else:
             template = loader.get_template('ajax/admin/addcore.html')

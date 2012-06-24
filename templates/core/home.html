@@ -28,6 +28,29 @@
                 Dajaxice.core.del_event(Dajax.process,{'id':id});
             }
         }
+        function add_coord()
+        {
+            $("#space option:first").attr("selected","selected"); 
+            data=$("#space :input").serializeObject();
+            $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
+            Dajaxice.core.add_edit_coord(Dajax.process,{'form':data});
+        }
+        function edit_coord(id)
+        {
+            $("#space option:first").attr("selected","selected"); 
+            data=$("#space :input").serializeObject();
+            $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
+            Dajaxice.core.add_edit_coord(Dajax.process,{'form':data,'id':id});
+        }
+        function del_coord(id)
+        {
+            var press=confirm("Confirm delete?");
+            if (press==true)
+            {
+                $("#space").append("Processing please wait..<br><img src='/static/img/loading.gif'>");
+                Dajaxice.core.del_coord(Dajax.process,{'id':id});
+            }
+        }
         function updateSummary()
         {
             $("#summary").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
@@ -46,6 +69,10 @@
                 $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
                 Dajaxice.core.add_edit_event(Dajax.process);            
            });
+           $("#add_coord").click(function(){
+                $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+                Dajaxice.core.add_edit_coord(Dajax.process);            
+           });
          });
 	    </script>
     </head>
@@ -55,6 +82,7 @@
         <hr/>
         <div id="nav">
             <button id="add_event">Add event</button>
+            <button id="add_coord">Add Coord</button>
         </div><br>
         <div id="container">
             <div id="space" style="float:right;width:50%;">
