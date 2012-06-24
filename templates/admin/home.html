@@ -28,6 +28,27 @@
                 Dajaxice.admin.del_group(Dajax.process,{'id':id});
             }
         }
+        function add_core()
+        {
+            data=$("#space :input").serializeObject();
+            $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
+            Dajaxice.admin.add_edit_core(Dajax.process,{'form':data});
+        }
+        function edit_core(id)
+        {
+            data=$("#space :input").serializeObject();
+            $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
+            Dajaxice.admin.add_edit_core(Dajax.process,{'form':data,'id':id});
+        }
+        function del_core(id)
+        {
+            var press=confirm("Confirm delete?");
+            if (press==true)
+            {
+                $("#space").append("Processing please wait..<br><img src='/static/img/loading.gif'>");
+                Dajaxice.admin.del_core(Dajax.process,{'id':id});
+            }
+        }
         function updateSummary()
         {
             $("#summary").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
@@ -38,6 +59,11 @@
             $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
             Dajaxice.admin.add_edit_group(Dajax.process,{'id':id});
         }
+        function displayCore(id)
+        {
+            $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+            Dajaxice.admin.add_edit_core(Dajax.process,{'id':id});
+        }
         </script>
 	    <script type="text/javascript">
         $(document).ready(function(){
@@ -45,6 +71,10 @@
            $("#add_group").click(function(){
                 $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
                 Dajaxice.admin.add_edit_group(Dajax.process);            
+           });
+           $("#add_core").click(function(){
+                $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+                Dajaxice.admin.add_edit_core(Dajax.process);            
            });
          });
 	    </script>
@@ -55,6 +85,7 @@
         <hr/>
         <div id="nav">
             <button id="add_group">Add group</button>
+            <button id="add_core">Add Core</button>
         </div><br>
         <div id="container">
             <div id="space" style="float:right;width:50%;">
