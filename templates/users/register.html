@@ -6,45 +6,7 @@
         <script type="text/javascript" src="/static/js/jquery.js"></script>
         <script type="text/javascript" src="/static/js/jquery.dajax.core.js"></script>
         <script language = 'JavaScript' type="text/javascript" src="/static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
-        <script type="text/javascript">
-        function college_reg()
-        {
-            data=$("#reg input,#reg select").serializeObject();
-            $("#reg").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
-            Dajaxice.users.college_register(Dajax.process,{'form':data});
-        }
-        function reg_done(data)
-        {
-            switch(data)
-            {
-            case 0:
-                alert("Please enter valid details!");
-                break;
-            case 1:
-        		var obj = document.getElementById("id_college");
-                obj.options[obj.options.length] = new Option($("#id_name").attr('value')+", "+$("#id_city").attr('value')+", "+$("#id_state").attr('value'), obj.options.length,false,true);
-                $("#reg").html("");
-                $("#msg").show();                
-                break;
-            case 2:
-                alert("Record exists");
-            }
-
-        }
-        </script>
-	    <script type="text/javascript">
-	    $(document).ready(function(){
-            html="<td><div id='msg'>Register New College</div><div id='reg'></div></td>"
-		    $("table tr:eq(3)").append(html);
-	    });
-        $(document).ready(function(){
-           $("#msg").click(function(){
-                $(this).hide();
-                $("#reg").prepend("Loading please wait..<br><img src='/static/img/loading.gif'>");
-                Dajaxice.users.college_register(Dajax.process);            
-           });
-         });
-	    </script>
+        <script type="text/javascript" src="/static/js/college.reg.js"></script>
     </head>
     <body>
         Register<br/>

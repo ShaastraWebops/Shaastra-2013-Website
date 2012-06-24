@@ -37,21 +37,10 @@ class BaseUserForm(forms.ModelForm):
 
     first_name      = forms.CharField  (max_length=30, help_text='Enter your first name here.')
     last_name       = forms.CharField  (max_length=30, help_text='Enter your last name here.')
-    username        = forms.CharField  (max_length=30, help_text='Your Shaastra 2013 username')
-    email           = forms.EmailField (help_text='Enter your e-mail address. eg, someone@gmail.com')
     
     class Meta:
         model = UserProfile
     
-    def clean_username(self):
-        if not alnum_re.search(self.cleaned_data['username']):
-           raise forms.ValidationError(u'Usernames can only contain letters, numbers and underscores')
-        if User.objects.filter(username=self.cleaned_data['username']):
-            pass
-        else:
-            return self.cleaned_data['username']
-        raise forms.ValidationError('This username is already taken. Please choose another.')
-
     def clean_age(self):
 	if (self.cleaned_data['age']>80 or self.cleaned_data['age']<12):
 	    raise forms.ValidationError(u'Please enter an acceptable age (12 to 80)')
@@ -79,15 +68,10 @@ class BaseUserForm(forms.ModelForm):
 	else:
 	    return self.cleaned_data['last_name']
 
-    def clean_email(self):
-        if User.objects.filter(email=self.cleaned_data['email']):
-            pass
-        else:
-            return self.cleaned_data['email']
-        raise forms.ValidationError('This email address is already taken. Please choose another.')
-
 class AddUserForm(BaseUserForm):
-    
+
+    username        = forms.CharField  (max_length=30, help_text='Your Shaastra 2013 username')
+    email           = forms.EmailField (help_text='Enter your e-mail address. eg, someone@gmail.com')
     password        = forms.CharField  (min_length=6,
                                        max_length=30,
                                        widget=forms.PasswordInput,
@@ -97,8 +81,24 @@ class AddUserForm(BaseUserForm):
                                        help_text='Enter the same password that you entered above')
     
     class Meta(BaseUserForm.Meta):
-        fields=('gender','age','branch','mobile_number','college_roll','want_hospi','college')
+        fields=('first_name', 'last_name', 'username', 'email', 'password', 'password_again', 'college', 'college_roll', 'gender', 'age', 'branch', 'mobile_number', 'want_hospi')
         #exclude = {'is_coord','coord_event','shaastra_id','activation_key','key_expires','UID','user',}
+
+    def clean_username(self):
+        if not alnum_re.search(self.cleaned_data['username']):
+           raise forms.ValidationError(u'Usernames can only contain letters, numbers and underscores')
+        if User.objects.filter(username=self.cleaned_data['username']):
+            pass
+        else:
+            return self.cleaned_data['username']
+        raise forms.ValidationError('This username is already taken. Please choose another.')
+
+    def clean_email(self):
+        if User.objects.filter(email=self.cleaned_data['email']):
+            pass
+        else:
+            return self.cleaned_data['email']
+        raise forms.ValidationError('This email address is already taken. Please choose another.')
 
     def clean_password(self):
         if self.prefix:
@@ -113,12 +113,23 @@ class AddUserForm(BaseUserForm):
         else:
             return self.data[field_name1]
 
-class EditUserForm(AddUserForm):
+class EditUserForm(BaseUserForm):
 
-    class Meta(AddUserForm.Meta):
+    class Meta(BaseUserForm.Meta):
 
-        #fields=('first_name', 'last_name', 'gender', 'age', 'branch', 'mobile_number', 'college_roll', 'want_hospi', )
-        exclude = ('user', 'facebook_id', 'activation_key', 'key_expires', 'is_coord', 'access_token', )
+        fields=('first_name', 'last_name', 'gender', 'age', 'branch', 'mobile_number', 'college', 'college_roll', 'want_hospi', )
+        #exclude = ('user', 'facebook_id', 'activation_key', 'key_expires', 'is_coord', 'access_token', 'username', 'email',)
+
+    def clean_mobile_number(self):
+        if (len(self.cleaned_data['mobile_number'])!=10 or (self.cleaned_data['mobile_number'][0]!='7' and self.cleaned_data['mobile_number'][0]!='8' and self.cleaned_data['mobile_number'][0]!='9') or (not self.cleaned_data['mobile_number'].isdigit())):
+    	    raise forms.ValidationError(u'Enter a valid mobile number')
+        if 'mobile_number' in self.changed_data:
+    	    if UserProfile.objects.filter(mobile_number=self.cleaned_data['mobile_number']):
+            	raise forms.ValidationError('This mobile number is already registered')  
+        else:
+          return self.cleaned_data['mobile_number']
+	
+
 
 class AddCollegeForm (ModelForm):
     class Meta:
