@@ -68,47 +68,29 @@ def register_post(request):
         return HttpResponseRedirect('/')
     return render_to_response('users/register.html', locals(), context_instance = RequestContext(request))
 
-@login_required
-def edit_profile(request):
+
+@login_required(login_url="/user/login")
+def editprofile_get(request):
+    currentUser = request.user
+    currentUserProfile = currentUser.get_profile()
+    values = {  'first_name'       : currentUser.first_name, 
+                'last_name'      : currentUser.last_name,}
+    editProfileForm = EditUserForm(instance=currentUserProfile,initial=values)
+    return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))    
+
+@login_required(login_url="/user/login")
+def editprofile_post(request):
     """
-    create_or_edit_profile():
         Edits a user's profile. 
-        If a user does not have a profile, creates a blank profile for that user and then allows editing.
+        
     """
     currentUser = request.user
-    try:
-        currentUserProfile = currentUser.get_profile()
-    except:
-        currentUserProfile = UserProfile()
-        currentUserProfile.user = currentUser
-        currentUserProfile.save()
-    if request.method == 'POST':
-        editProfileForm = forms.EditUserForm(request.POST)
-        if editProfileForm.is_valid():
-            newProfileInfo = editProfileForm.cleaned_data
-            currentUser.first_name = newProfileInfo['first_name']
-            currentUser.last_name = newProfileInfo['last_name']
-            currentUserProfile.gender = newProfileInfo['gender']
-            currentUserProfile.age = newProfileInfo['age']
-            currentUserProfile.branch = newProfileInfo['branch']
-            currentUserProfile.mobile_number = newProfileInfo['mobile_number']
-            currentUserProfile.college = newProfileInfo['college']
-            currentUserProfile.college_roll = newProfileInfo['college_roll']
-            currentUserProfile.want_hospi = newProfileInfo['want_hospi']
-            currentUser.save()
-            currentUserProfile.save()
-            redirect_to="/"
-            return HttpResponseRedirect (redirect_to)
-    else:
-        values = {'first_name' : currentUser.first_name, 
-                  'last_name' : currentUser.last_name,
-                  'gender' : currentUserProfile.gender,
-                  'age' : currentUserProfile.age,
-                  'branch' : currentUserProfile.branch,
-                  'mobile_number' : currentUserProfile.mobile_number, 
-                  'college' : currentUserProfile.college,                 
-                  'college_roll' : currentUserProfile.college_roll,
-                  'want_hospi' : currentUserProfile.want_hospi}
-        editProfileForm = forms.EditUserForm(initial = values)
-
-    return render_to_response('edit_profile.html', locals(), context_instance = RequestContext(request))
+    currentUserProfile = currentUser.get_profile()
+    editProfileForm = EditUserForm(request.POST,instance=currentUserProfile)
+    if editProfileForm.is_valid():
+        editProfileForm.save()
+        currentUser.first_name = request.POST['first_name']
+        currentUser.last_name = request.POST['last_name']
+        currentUser.save()
+        return HttpResponseRedirect ("/")
+    return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))
