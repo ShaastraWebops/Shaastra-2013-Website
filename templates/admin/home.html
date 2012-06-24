@@ -30,12 +30,14 @@
         }
         function add_core()
         {
+            $("#space option:first").attr("selected","selected"); 
             data=$("#space :input").serializeObject();
             $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
             Dajaxice.admin.add_edit_core(Dajax.process,{'form':data});
         }
         function edit_core(id)
         {
+            $("#space option:first").attr("selected","selected"); 
             data=$("#space :input").serializeObject();
             $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
             Dajaxice.admin.add_edit_core(Dajax.process,{'form':data,'id':id});
@@ -61,7 +63,7 @@
         }
         function displayCore(id)
         {
-            $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+            $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");
             Dajaxice.admin.add_edit_core(Dajax.process,{'id':id});
         }
         </script>
