@@ -1,0 +1,42 @@
+{% extends "events/dtvBase.html" %}
+
+{% block dtvTitle %}
+    {% ifequal form_mode 'add' %}
+        Add Sub-Event | {{ eventRequested.title }}
+    {% else %}
+        Edit | {{ eventRequested.title }} | {{ subeventRequested.title }}
+    {% endifequal %}
+{% endblock %}
+
+{% block dtvBody %}
+    <h3> Event: {{ eventRequested }} </h3>
+    <p>
+        {% ifequal form_mode 'add' %}
+            Add Sub-Event:
+        {% else %}
+            Edit Sub-Event "{{ subeventRequested.title }}":
+        {% endifequal %}
+    </p>
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+
+        {% ifequal form_mode 'add' %}        
+            <input type="submit" value="Add Sub-Event">
+        {% else %}
+            <input type="submit" value="Update Sub-Event">
+        {% endifequal %}
+        
+    </form>
+    
+    <a href = '/events/DTVSummary/'> Cancel </a>
+    
+{% endblock %}
