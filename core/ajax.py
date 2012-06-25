@@ -6,6 +6,19 @@ from core.forms import *
 from events.models import Event
 from django.contrib.auth.models import User
 from users.models import UserProfile
+
+@dajaxice_register
+def updateSummary(request):
+    dajax = Dajax()
+    dajax.assign("#summary",'innerHTML',"<table border='1'><thead><tr><th>S.No</th><th>Event Name</th><th>Coords</th></tr></thead><tbody id='event'>")
+    event=Event.objects.order_by('id').all()
+    for e in event:
+        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id-1)+"</td><td onclick=\'displayevent("+str(e.id)+");\' class='grps' id="+e.title+"><a href=#>"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
+        coords=UserProfile.objects.filter(event__title=e.title)
+        for c in coords:
+            dajax.append("#"+str(e.id),'innerHTML',"<li onclick=\'displayCoord("+str(c.user.id)+");\' class='coords' id="+str(c.user.username)+"><a href=#>"+str(c.user)+"</a>")
+    return dajax.json()
+
 @dajaxice_register
 def add_edit_event(request,form="",id=0):
     dajax = Dajax()
@@ -28,18 +41,6 @@ def add_edit_event(request,form="",id=0):
         event_form.save()
     dajax.assign("#space",'innerHTML',"")
     dajax.script("updateSummary();")
-    return dajax.json()
-
-@dajaxice_register
-def updateSummary(request):
-    dajax = Dajax()
-    dajax.assign("#summary",'innerHTML',"<table border='1'><thead><tr><th>S.No</th><th>Event Name</th><th>Coords</th></tr></thead><tbody id='event'>")
-    event=Event.objects.order_by('id').all()
-    for e in event:
-        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id-1)+"</td><td onclick=\'displayevent("+str(e.id)+");\' class='grps' id="+e.title+"><a href=#>"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
-        coords=UserProfile.objects.filter(event__title=e.title)
-        for c in coords:
-            dajax.append("#"+str(e.id),'innerHTML',"<li onclick=\'displayCoord("+str(c.user.id)+");\' class='coords' id="+str(c.user.username)+"><a href=#>"+str(c.user)+"</a>")
     return dajax.json()
 
 @dajaxice_register
@@ -77,10 +78,12 @@ def add_edit_coord(request,form="",id=0):
     else:
         coord_form = AddCoordForm(form)
         if coord_form.is_valid():
+#            data = coord_form.cleaned_data
+            evt=Event.objects.get(title=form['event'])
             coord=coord_form.save()
             coord.set_password("default")
             coord.save()
-            coord_profile = UserProfile( user=coord, is_coord=True)
+            coord_profile = UserProfile(user=coord, is_coord=True, event=evt)
             coord_profile.save()
             dajax.assign("#space",'innerHTML',"")
         else:

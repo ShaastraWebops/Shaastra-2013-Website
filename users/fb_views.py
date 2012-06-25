@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import login as auth_login, authenticate
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from users.forms import UserRegisterForm
+from users.forms import BaseUserForm
 from users.models import UserProfile
 
 def login(request):
@@ -64,6 +64,6 @@ def authentication_callback(request):
             gender='F'
         else:
             gender='M'
-        form = UserRegisterForm(initial=locals())
+        form = BaseUserForm(initial=locals())
     return render_to_response('users/register.html',locals(), context_instance=RequestContext(request))    
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 from shaastra.users.views import *
+import django.contrib.auth.views
 
 urlpatterns = patterns('',  
     url(r'^login/$', 'views.method_splitter', {'GET': login_get, 'POST': login_post}),
@@ -11,5 +12,5 @@ urlpatterns = patterns('',
     url(r'^password_change/$', 'django.contrib.auth.views.password_change'),
     url(r'^password_change/done/$', 'django.contrib.auth.views.password_change_done'),
     url(r'^logout/$', 'users.views.logout', name = 'logout'),
-    url(r'^admin/$','users.views.admin', name="super-user"),
+#    url(r'^admin/$','users.views.admin', name="super-user"),
 )
