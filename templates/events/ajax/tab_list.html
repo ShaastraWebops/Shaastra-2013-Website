@@ -1,3 +1,4 @@
+<div name="question_tab" id = "question_tab" onclick = "Dajaxice.{{pro_dir}}.events.load_question_tab(Dajax.process)">Questions</div>
 {% for tab in tabs %}
-<div name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.shaastra.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}}</div>
+<div name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.{{pro_dir}}.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}}</div>
 {% endfor %}

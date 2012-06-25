@@ -12,10 +12,6 @@ def upload_handler(model_name):
         return os.path.join(model_name, instance.title, filename)
     return upload_func
 
-
-class Question(models.Model):
-    question = models.TextField()
-    image = models.ImageField(upload_to = upload_handler('Events'))
     
 class Tag(models.Model):
     name = models.CharField(max_length = 25)
@@ -33,7 +29,6 @@ class Update(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length = 30)
     events_logo = models.ImageField(upload_to = upload_handler('Events'))
-    questions = models.ManyToManyField(Question, blank = True, null = True)
     tags = models.ManyToManyField(Tag, blank = True, null = True)
     category = models.ForeignKey(Category, blank = True, null = True)
     updates = models.ManyToManyField(Update, blank = True, null = True)
@@ -68,8 +63,54 @@ class TabFile(models.Model):
         os.remove(self.tab_file.name)
         super(TabFile, self).delete()
         
+class Question(models.Model):
+    q_number = models.IntegerField(max_length=2) 
+    title = models.CharField(max_length=1500, blank = False)
     
-#tabfiles is not functional right now 
+    def __unicode__(self):
+        return self.title
+    
+    class Meta:
+        ordering = ['q_number']
+        
+class SubjectiveQuestion(Question):
+    event= models.ForeignKey(Event)
+
+class ObjectiveQuestion(Question):
+    event= models.ForeignKey(Event)
+    
+    def delete(self):
+        options = self.mcqoption_set.all()
+        for option in options:
+            option.delete()
+        super(ObjectiveQuestion, self).delete()
+
+class MCQOption(models.Model):
+    question = models.ForeignKey(ObjectiveQuestion)
+    option = models.CharField(max_length = 1)
+    text = models.TextField(max_length = 1000)
+    def __unicode__(self):
+        return self.text
+    
+    class Meta:
+        ordering = ['option']
+
+
+class AddOptionForm(ModelForm):
+    class Meta:
+        model = MCQOption
+        exclude = ('question',)
+
+class AddMCQForm(ModelForm):
+    class Meta:
+        model = ObjectiveQuestion
+        fields = ('q_number', 'title')
+
+class AddSubjectiveQuestionForm(ModelForm):
+    class Meta:
+        model = SubjectiveQuestion
+        fields = ('q_number', 'title')
+
 class TabFileForm(ModelForm):
     class Meta:
         model = TabFile

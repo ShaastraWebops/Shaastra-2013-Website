@@ -1,0 +1,7 @@
+<form action="" method="POST" id="add_option_form" accept-charset="utf-8">
+{% csrf_token %}
+<table>
+    {{f.as_table}}
+</table>
+<input type="button" value="Save" onclick = "save_option({{ques.id}})">
+</form>
