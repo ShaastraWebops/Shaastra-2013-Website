@@ -11,5 +11,5 @@ class AddEventForm(forms.ModelForm):
 class AddCoordForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields=('event','username','email')
+#        fields=('event','username','email')
 #        widgets={'password':forms.widgets.HiddenInput,}
