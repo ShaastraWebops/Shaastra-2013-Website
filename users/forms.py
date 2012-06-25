@@ -81,7 +81,7 @@ class AddUserForm(BaseUserForm):
                                        help_text='Enter the same password that you entered above')
     
     class Meta(BaseUserForm.Meta):
-        fields=('first_name', 'last_name', 'username', 'email', 'password', 'password_again', 'college', 'college_roll', 'gender', 'age', 'branch', 'mobile_number', 'want_hospi')
+        fields=('first_name', 'last_name', 'username', 'email', 'password', 'password_again', 'college', 'college_roll', 'gender', 'age', 'branch', 'mobile_number')
         #exclude = {'is_coord','coord_event','shaastra_id','activation_key','key_expires','UID','user',}
 
     def clean_username(self):
@@ -117,17 +117,18 @@ class EditUserForm(BaseUserForm):
 
     class Meta(BaseUserForm.Meta):
 
-        fields=('first_name', 'last_name', 'gender', 'age', 'branch', 'mobile_number', 'college', 'college_roll', 'want_hospi', )
+        fields=('first_name', 'last_name', 'gender', 'age', 'branch', 'mobile_number', 'college', 'college_roll' )
         #exclude = ('user', 'facebook_id', 'activation_key', 'key_expires', 'is_coord', 'access_token', 'username', 'email',)
 
     def clean_mobile_number(self):
         if (len(self.cleaned_data['mobile_number'])!=10 or (self.cleaned_data['mobile_number'][0]!='7' and self.cleaned_data['mobile_number'][0]!='8' and self.cleaned_data['mobile_number'][0]!='9') or (not self.cleaned_data['mobile_number'].isdigit())):
-    	    raise forms.ValidationError(u'Enter a valid mobile number')
-        if 'mobile_number' in self.changed_data:
-    	    if UserProfile.objects.filter(mobile_number=self.cleaned_data['mobile_number']):
-            	raise forms.ValidationError('This mobile number is already registered')  
-        else:
-          return self.cleaned_data['mobile_number']
+            pass	
+        elif 'mobile_number' in self.changed_data:
+            if UserProfile.objects.filter(mobile_number=self.cleaned_data['mobile_number']):
+                raise forms.ValidationError('This mobile number is already registered')
+            else:
+                return self.cleaned_data['mobile_number']
+        raise forms.ValidationError(u'Enter a valid mobile number')
 	
 
 

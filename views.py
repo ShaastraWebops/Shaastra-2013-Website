@@ -3,8 +3,13 @@ from django.template.context import Context, RequestContext
 from django.shortcuts import render_to_response
 
 def home(request):
-    if request.user.is_authenticated() and request.user.is_superuser :
-        return HttpResponseRedirect('/admin')
+    if request.user.is_authenticated():
+        if request.user.is_superuser:
+            return HttpResponseRedirect('/admin')
+        elif request.user.get_profile().is_core:
+            return HttpResponseRedirect('/core')
+        else:
+        	return render_to_response('home.html',locals(),context_instance = RequestContext(request))
     else:
     	return render_to_response('home.html',locals(),context_instance = RequestContext(request))
 	
