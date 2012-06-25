@@ -171,7 +171,8 @@ class TopicAdmin(admin.ModelAdmin):
     list_display = ['index_number','title',]
     fields=['title','index_number']
     def save_model(self, request, obj, form, change):
-        obj.url_name = obj.title.replace(" ","_").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
+        obj.url_name = obj.title.replace(" ","_").replace('!', 
+'').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
         obj.save()
 
 class PreviousSponsorAdmin(admin.ModelAdmin):
