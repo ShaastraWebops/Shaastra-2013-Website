@@ -71,3 +71,5 @@ LOGGING = {
         },
     }
 }
+
+AUTH_PROFILE_MODULE = 'events.UserProfile'

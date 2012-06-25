@@ -1,0 +1,42 @@
+{% extends "events/dtvBase.html" %}
+
+{% block dtvTitle %}
+    Delete | {{ eventRequested }} | {{ subeventRequested }}
+{% endblock %}
+
+{% block dtvBody %}
+    <h3> Event: {{ eventRequested }} </h3>
+
+    <p>
+        Are you sure you want to delete the following sub-event?
+    </p>
+
+    <table>
+        <tr>
+            <th> Sub-Event </th>
+            <th> Start Date </th>
+            <th> Start Time </th>
+            <th> End Date </th>
+            <th> End Time </th>
+            <th> Venue </th>
+            <th> Last Modified </th>            
+        </tr>
+        <tr>
+            <td> {{ subeventRequested.title }} </td>
+            <td> {{ subeventRequested.start_date_and_time|date:"D, d M Y" }} </td> {# filter: | date: "D d M Y" #}
+            <td> {{ subeventRequested.start_date_and_time|date:"P"|upper }} </td> {# filter: | date: "f A" #}
+            <td> {{ subeventRequested.end_date_and_time|date:"D, d M Y"  }} </td> {# filter: | date: "D d M Y" #}
+            <td> {{ subeventRequested.end_date_and_time|date:"P"|upper  }} </td> {# filter: | date: "f A" #}
+            <td> {{ subeventRequested.venue }} </td>
+            <td> {{ subeventRequested.last_modified }} </td>
+        </tr>        
+    </table>
+    
+    <form action = "" method = "POST">
+        {% csrf_token %}
+        <input type = "submit" value = "Yes, I am sure. Delete Sub-event.">
+    </form>
+    
+    <a href = '/events/DTVSummary/'> No. Don't delete sub-event. </a>
+
+{% endblock %}
