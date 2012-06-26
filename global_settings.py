@@ -1,5 +1,14 @@
+import os
+
 TIME_ZONE = 'Asia/Calcutta'
 LANGUAGE_CODE = 'en-us'
+
+
+# settings that will be common and useful.
+PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
+PROJECT_DIR_NAME = PROJECT_DIR.split('/')[-1] # used in dajaxice.[my_project_folder_name].events.[ajax_function] (see context_processors.py)
+AJAX_TEMPLATE_DIR = os.path.join(PROJECT_DIR, 'templates/events', 'ajax') # path where ajax templates are stored
+
 
 SITE_ID = 1
 
@@ -91,3 +100,4 @@ DAJAX_JS_FRAMEWORK = "jQuery"
 DAJAX_MEDIA_PREFIX='dajax'
 DAJAXICE_MEDIA_PREFIX="dajaxice"
 DAJAXICE_DEBUG = True
+

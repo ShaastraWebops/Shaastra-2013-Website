@@ -1,5 +1,3 @@
-shaastra
-=====================
 6th June, 12
 Basic Tabs done. 
 Please take care of the different settings that need for dajax to run.
@@ -14,5 +12,7 @@ Renaming files has to be done.
 
 15th June, 12 Renaming of files done
 
-16th June, Chosen-JQuery plugin implemented in the form for adding events. 'Tags' for events can now be added in a more presentable way. 
+16th June, Chosen-JQuery plugin implemented in the form for adding events. 'Tags' for events can now be added in a more presentable way.
 
+25th June, Coords can now add questionnares. He/She can choose to add an mcq or a subjective. After adding an mcq, he/she can add choices for it. editing/deleting of options/questions can be done.
+As suggested by Suraj, I have made some changes so that you dont need to name your project folder as 'shaastra'. I have added some lines to global_settings.py and added a file called context_processors.py. So in templates just use {{pro_dir}} instead of 'shaastra' now, and your folder name will get rendered there. Just add the following line as it is in your TEMPLATE_CONTEXT_PROCESSORS - "events.context_processors.project_dir_name".
