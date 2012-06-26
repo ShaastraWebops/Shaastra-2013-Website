@@ -20,12 +20,70 @@ from reportlab.lib import colors
 from reportlab.platypus import Table, TableStyle
 from reportlab.pdfbase.pdfmetrics import getFont, getAscentDescent
 
+from events.VenueChoices import VENUE_CHOICES as venues
+
 import os
 import datetime
+from datetime import date
+from string import Template
+
+class DeltaTemplate(Template):
+    delimiter = "%"
+
+def strfdelta(tdelta, fmt):
+    d = {"D": tdelta.days}
+    d["H"], rem = divmod(tdelta.seconds, 3600)
+    d["M"], d["S"] = divmod(rem, 60)
+    d["H"] += d["D"]*24
+    del d["D"]
+    if d["H"] < 10:
+        d["H"] = '0' + str(d["H"])
+    else:
+        d["H"] = str(d["H"])
+    
+    if d["M"] < 10:
+        d["M"] = '0' + str(d["M"])
+    else:
+        d["M"] = str(d["M"])
+
+    if d["S"] < 10:
+        d["S"] = '0' + str(d["S"])
+    else:
+        d["S"] = str(d["S"])
+
+    t = DeltaTemplate(fmt)
+    return t.substitute(**d)
+
 # Create your views here.
     
 @login_required
-def dtvSummary(request):
+def dtvSummaryHandler(request):
+    """
+    This is the handler for the DTV Summary.
+    If a Coord logs in, it redirects him to the By Event Page.
+    If a Core logs in, and all the events are unlocked, it gives three options to see the DTV Summary by Event / Venue / Date.
+    If all events are not locked, the Core is redirected to the By Event Page.
+    """
+    try:
+        currentUserProfile = request.user.get_profile()
+    except:
+        # If the user's profile is not available
+        return HttpResponse("Sorry. %s's user profile is not available." % request.user.username)
+
+    if currentUserProfile.is_coord_of:
+        return HttpResponseRedirect('/events/DTVSummary/ByEvent/')
+        
+    if currentUserProfile.is_core:
+        
+        if PDFGenAllowed():
+            return render_to_response("events/CoreDTVLanding.html", locals(), context_instance = RequestContext(request))
+            
+        return HttpResponseRedirect('/events/DTVSummary/ByEvent/')
+        
+    return HttpResponseForbidden('This page can be accessed by Cores and Coordinators only. Please login with proper authentication to proceed.')
+
+@login_required
+def dtvSummaryByEvent(request):
     """
     Displays a summary of the DTV details of all events sorted by event.
     If core logs in: Displays summary of all events and sub-events with their date-time-venue (dtv).
@@ -46,19 +104,14 @@ def dtvSummary(request):
                         # the tuple structure is:
                         # (Event, [Sub-events under Event])
 
-        enablePDFPrinting = True # Passed to the template to activate the PDF generation link.
+        enablePDFPrinting = PDFGenAllowed() # Passed to the template to activate the PDF generation link.
 
         for requestedEvent in requestedEventList:
             Event_SubEventList = SubEvent.objects.filter(event = requestedEvent).order_by('start_date_and_time') # List of sub-events under
                                                                                                                  # requestedEvent
             happenings.append((requestedEvent, Event_SubEventList))
             
-            if requestedEvent.lock_status != 'locked':
-                # DTV PDF Printing is enabled only when all events are locked.
-                # If even one is unlocked, the PDF generation should not be allowed.
-                enablePDFPrinting = False
-
-        return render_to_response("events/CoreDTVSummary.html", locals(), context_instance = RequestContext(request))
+        return render_to_response("events/CoreDTVSummary_ByEvent.html", locals(), context_instance = RequestContext(request))
         
     else:
 
@@ -70,7 +123,82 @@ def dtvSummary(request):
         Event_SubEventList = SubEvent.objects.filter(event = requestedEvent).order_by('start_date_and_time') # List of sub-events under
                                                                                                              # requestedEvent
         happenings.append((requestedEvent, Event_SubEventList))
-        return render_to_response("events/CoordDTVSummary.html", locals(), context_instance = RequestContext(request))
+        return render_to_response("events/CoordDTVSummary_ByEvent.html", locals(), context_instance = RequestContext(request))
+        
+@login_required
+def dtvSummaryByVenue(request):
+    """
+    Displays a summary of the DTV details of all events sorted by venue.
+    Available to Cores only.
+    Displays summary of all sub-events with their date-time-venue (dtv).
+    """
+    try:
+        currentUserProfile = request.user.get_profile()
+    except:
+        # If the user's profile is not available
+        return HttpResponse("Sorry. %s's user profile is not available." % request.user.username)
+    
+    if currentUserProfile.is_core:
+        
+        # from models import SubEvent.VENUE_CHOICES as venues
+        requestedVenueList = []
+        for (venue_code, venue_name) in venues:
+            requestedVenueList.append(venue_code)
+
+        happeningsByVenue = [] # happenings is a list of tuples where
+                               # the tuple structure is:
+                               # (Venue, [Sub-events happening at Venue])
+
+        enablePDFPrinting = PDFGenAllowed() # Passed to the template to activate the PDF generation link.
+
+        for requestedVenue in requestedVenueList:
+            Venue_SubEventList = SubEvent.objects.filter(venue = requestedVenue).order_by('start_date_and_time') # List of sub-events under
+                                                                                                                 # requestedVenue
+            if Venue_SubEventList:
+                happeningsByVenue.append((requestedVenue, Venue_SubEventList))
+            
+        return render_to_response("events/CoreDTVSummary_ByVenue.html", locals(), context_instance = RequestContext(request))
+        
+    return HttpResponseForbidden('This page can be accessed by Cores only. Please login with proper authentication to proceed.')
+
+@login_required
+def dtvSummaryByDate(request):
+    """
+    Displays a summary of the DTV details of all events sorted by start date.
+    Available to Cores only.
+    Displays summary of all events and sub-events with their date-time-venue (dtv).
+    """
+    try:
+        currentUserProfile = request.user.get_profile()
+    except:
+        # If the user's profile is not available
+        return HttpResponse("Sorry. %s's user profile is not available." % request.user.username)
+    
+    if currentUserProfile.is_core:
+        
+        requestedDateList = []
+        subEventList = SubEvent.objects.all().order_by('start_date_and_time') # List of all sub-events
+        for subEvent in subEventList:
+            if subEvent.start_date_and_time.date() not in requestedDateList:
+                requestedDateList.append(subEvent.start_date_and_time.date())
+
+        happeningsByDate = []  # happenings is a list of tuples where
+                               # the tuple structure is:
+                               # (Date, [Sub-events starting on Date])
+
+        enablePDFPrinting = PDFGenAllowed() # Passed to the template to activate the PDF generation link.
+
+        for requestedDate in requestedDateList:
+            Date_SubEventList = SubEvent.objects.filter(start_date_and_time__startswith = requestedDate).order_by('start_date_and_time')
+            # List of sub-events hapenning on requestedDate
+            # For the contains part see:
+            # http://stackoverflow.com/questions/1317714/how-can-i-filter-a-date-of-a-datetimefield-in-django
+                                                                                                                 
+            happeningsByDate.append((requestedDate, Date_SubEventList))
+
+        return render_to_response("events/CoreDTVSummary_ByDate.html", locals(), context_instance = RequestContext(request))
+        
+    return HttpResponseForbidden('This page can be accessed by Cores only. Please login with proper authentication to proceed.')
     
 def PDFGenAllowed():
     """
@@ -127,9 +255,295 @@ def initNewPDFPage(pdf, doc_title, page_no, (pageWidth, pageHeight)):
 
     return y
     
+@login_required
+def dtvSummaryByVenue_PDF(request):
+    """
+    Generates and returns a PDF containing the DTV Summary (by venue).
+    Accessible by cores only.
+    """
+    try:
+        currentUserProfile = request.user.get_profile()
+    except:
+        # If the user's profile is not available
+        return HttpResponse("Sorry. %s's user profile is not available." % request.user.username)
+    
+    if not currentUserProfile.is_core:
+        return HttpResponseForbidden("Sorry. You do not have the required permissions to view this page.")
+        
+    if not PDFGenAllowed():
+        return HttpResponse('The PDF cannot be generated until all events are locked.')
+    
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=DTVSummary-ByVenue.pdf'
+    
+    # Create the PDF object, using the response object as its "file."
+    pdf = canvas.Canvas(response, pagesize = A4)
+    
+    # Define the title of the document as printed in the document header.
+    doc_title = 'DTV Summary (By Venue)'
+
+    # Get the width and height of the page.
+    A4Width, A4Height = A4
+    
+    # Page number
+    pageNo = 1
+
+    # Paint the headers and get the coordinates
+    y = initNewPDFPage(pdf, doc_title, pageNo, A4)
+    
+    # Setting x to be a cm from the left edge
+    x = cm
+    
+    # Print DTV Summary in PDF
+    
+    # Get all venues
+    requestedVenueList = []
+    for (venue_code, venue_name) in venues:
+        requestedVenueList.append(venue_code)
+    
+    # Sort venue list in alphabetical order
+    requestedVenueList.sort()    
+        
+    # List to hold venues where no events are happening
+    venuesWithNoEvents = []
+    # Will be printed at the end of the document
+    
+    for requestedVenue in requestedVenueList:
+        # Get all sub-events happening at requestedVenue
+        Venue_SubEventList = SubEvent.objects.filter(venue = requestedVenue).order_by('start_date_and_time') # List of sub-events happening at
+                                                                                                             # requestedVenue
+        if not Venue_SubEventList:  # If there are no events happening at the venue
+            venuesWithNoEvents.append(requestedVenue)
+            continue
+
+        # Construct the table data
+        tableData = [ ['Event', 'Sub-Event', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Duration', ], ]
+        for subevent in Venue_SubEventList:
+            tableData.append([subevent.event.title, 
+                              subevent.title, 
+                              subevent.start_date_and_time.date().strftime("%d-%b-%y"), 
+                              subevent.start_date_and_time.time().strftime("%I:%M %p"),
+                              subevent.end_date_and_time.date().strftime("%d-%b-%y"),
+                              subevent.end_date_and_time.time().strftime("%I:%M %p"),
+                              strfdelta(subevent.end_date_and_time - subevent.start_date_and_time, "%H:%M"), ])
+        t = Table(tableData, repeatRows = 1)
+        
+        # Set the table style
+        tableStyle = TableStyle([('FONTNAME', (0,1), (-1,-1), 'Times-Roman'),   # Font style for Table Data
+                                 ('FONTNAME', (0,0), (-1,0), 'Times-Bold'),     # Font style for Table Header
+                                 ('FONTSIZE', (0,0), (-1,-1), 12),
+                                 ('ALIGN', (0,0), (-1,-1), 'CENTRE'),
+                                 ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
+                                 ('GRID', (0,0), (-1,-1), 1, colors.black),
+                                 ])
+        t.setStyle(tableStyle)
+        
+        # Set the font for the venue code
+        lineheight = PDFSetFont(pdf, 'Times-Roman', 14)
+
+        availableWidth = A4Width - 2*cm  # Leaving margins of 1 cm on both sides
+        availableHeight = y - (lineheight + 0.2*cm)  # (lineheight + 0.2*cm) subtracted to include title height
+        tableWidth, tableHeight = t.wrap(availableWidth, availableHeight) # find required space
+        if tableHeight <= availableHeight:
+
+            # Paint the venue code
+            pdf.drawString(x, y, requestedVenue)
+            # Add spacing
+            y -= (lineheight + 0.2*cm)
+
+            t.drawOn(pdf, x, y-tableHeight)
+            y -= (tableHeight + cm)  # Find next position for painting
+        else:
+            pdf.showPage()
+            pageNo += 1
+            y = initNewPDFPage(pdf, doc_title, pageNo, A4)
+
+            # Set the font for the venue code
+            lineheight = PDFSetFont(pdf, 'Times-Roman', 14)            
+            # Paint the venue code
+            pdf.drawString(x, y, requestedVenue)
+            # Add spacing
+            y -= (lineheight + 0.2*cm)
+
+            availableHeight = y - (lineheight + 0.2*cm)  # (lineheight + 0.2*cm) subtracted to include title height
+            tableWidth, tableHeight = t.wrap(availableWidth, availableHeight)
+
+            t.drawOn(pdf, x, y-tableHeight)
+            y -= (tableHeight + cm)  # Find next position for painting
+            
+    y -= cm
+            
+    if venuesWithNoEvents:
+        # Paint all the venues that have no events happening
+
+        # Set the font for all following text
+        lineheight = PDFSetFont(pdf, 'Times-Roman', 14)
+
+        # Calculate the space requried for all following text
+        numberOfVenues = venuesWithNoEvents.__len__()
+        
+        availableHeight = y
+        
+        spaceRequired = lineheight + (cm / 2) + (numberOfVenues * lineheight) + ((numberOfVenues - 1) * (cm / 3))
+        # Explanation for the above calculation:
+        # lineheight                        -->  for message that says 'There are no events happening at the following venues:'
+        # (cm / 2)                          -->  for the space after the message
+        # (numberOfVenues * lineheight)     -->  for each venue (one venue per line)
+        # ((numberOfVenues - 1) * (cm / 3)) -->  for the space after each venue (except the last)
+                      
+        if spaceRequired > availableHeight:
+            # Paint on next page
+            # If there is space available on the same page, this will not happen and the painting will continue on the same page
+            pdf.showPage()
+            pageNo += 1
+            y = initNewPDFPage(pdf, doc_title, pageNo, A4)
+            
+            # Set the font for all following text
+            lineheight = PDFSetFont(pdf, 'Times-Roman', 14)
+            
+        pdf.drawString(x, y, 'There are no events happening at the following venues:')
+        y -= (lineheight + (cm/2))
+            
+        for requestedVenue in venuesWithNoEvents:
+            
+            # Check if the next event can be painted on the same page, else change the page
+            availableHeight = y
+            if availableHeight < lineheight:
+                pdf.showPage()
+                pageNo += 1
+                y = initNewPDFPage(pdf, doc_title, pageNo, A4)
+                
+                # Set the font for all following text
+                lineheight = PDFSetFont(pdf, 'Times-Roman', 14)
+
+            pdf.drawString(x, y, requestedVenue)
+            y -= (lineheight + (cm/3))
+
+    pdf.showPage()
+    pdf.save()
+    
+    return response    
+    
+@login_required
+def dtvSummaryByDate_PDF(request):
+    """
+    Generates and returns a PDF containing the DTV Summary (by date).
+    Accessible by cores only.
+    """
+    try:
+        currentUserProfile = request.user.get_profile()
+    except:
+        # If the user's profile is not available
+        return HttpResponse("Sorry. %s's user profile is not available." % request.user.username)
+    
+    if not currentUserProfile.is_core:
+        return HttpResponseForbidden("Sorry. You do not have the required permissions to view this page.")
+        
+    if not PDFGenAllowed():
+        return HttpResponse('The PDF cannot be generated until all events are locked.')
+    
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=DTVSummary-ByDate.pdf'
+    
+    # Create the PDF object, using the response object as its "file."
+    pdf = canvas.Canvas(response, pagesize = A4)
+    
+    # Define the title of the document as printed in the document header.
+    doc_title = 'DTV Summary (By Date)'
+
+    # Get the width and height of the page.
+    A4Width, A4Height = A4
+    
+    # Page number
+    pageNo = 1
+
+    # Paint the headers and get the coordinates
+    y = initNewPDFPage(pdf, doc_title, pageNo, A4)
+    
+    # Setting x to be a cm from the left edge
+    x = cm
+    
+    # Print DTV Summary in PDF
+    
+    # Get all dates
+    requestedDateList = []
+    subEventList = SubEvent.objects.all().order_by('start_date_and_time') # List of all sub-events
+    for subEvent in subEventList:
+        if subEvent.start_date_and_time.date() not in requestedDateList:
+            requestedDateList.append(subEvent.start_date_and_time.date())
+    
+    for requestedDate in requestedDateList:
+        # Get all sub-events happening at requestedVenue
+        Date_SubEventList = SubEvent.objects.filter(start_date_and_time__startswith = requestedDate).order_by('start_date_and_time')
+            # List of sub-events hapenning on requestedDate
+            # For the contains part see:
+            # http://stackoverflow.com/questions/1317714/how-can-i-filter-a-date-of-a-datetimefield-in-django
+
+        # Construct the table data
+        tableData = [ ['Event', 'Sub-Event', 'Start Time', 'End Date', 'End Time', 'Venue', 'Duration', ], ]
+        for subevent in Date_SubEventList:
+            tableData.append([subevent.event.title, 
+                              subevent.title, 
+                              subevent.start_date_and_time.time().strftime("%I:%M %p"),
+                              subevent.end_date_and_time.date().strftime("%d-%b-%y"),
+                              subevent.end_date_and_time.time().strftime("%I:%M %p"),
+                              subevent.venue,
+                              strfdelta(subevent.end_date_and_time - subevent.start_date_and_time, "%H:%M"), ])
+        t = Table(tableData, repeatRows = 1)
+        
+        # Set the table style
+        tableStyle = TableStyle([('FONTNAME', (0,1), (-1,-1), 'Times-Roman'),   # Font style for Table Data
+                                 ('FONTNAME', (0,0), (-1,0), 'Times-Bold'),     # Font style for Table Header
+                                 ('FONTSIZE', (0,0), (-1,-1), 12),
+                                 ('ALIGN', (0,0), (-1,-1), 'CENTRE'),
+                                 ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
+                                 ('GRID', (0,0), (-1,-1), 1, colors.black),
+                                 ])
+        t.setStyle(tableStyle)
+        
+        # Set the font for the date
+        lineheight = PDFSetFont(pdf, 'Times-Roman', 14)
+
+        availableWidth = A4Width - 2*cm  # Leaving margins of 1 cm on both sides
+        availableHeight = y - (lineheight + 0.2*cm)  # (lineheight + 0.2*cm) subtracted to include title height
+        tableWidth, tableHeight = t.wrap(availableWidth, availableHeight) # find required space
+        if tableHeight <= availableHeight:
+
+            # Paint the date
+            pdf.drawString(x, y, requestedDate.strftime("%A %d %B %Y"))
+            # Add spacing
+            y -= (lineheight + 0.2*cm)
+
+            t.drawOn(pdf, x, y-tableHeight)
+            y -= (tableHeight + cm)  # Find next position for painting
+        else:
+            pdf.showPage()
+            pageNo += 1
+            y = initNewPDFPage(pdf, doc_title, pageNo, A4)
+
+            # Set the font for the date
+            lineheight = PDFSetFont(pdf, 'Times-Roman', 14)            
+            # Paint the date
+            pdf.drawString(x, y, requestedDate)
+            # Add spacing
+            y -= (lineheight + 0.2*cm)
+
+            availableHeight = y - (lineheight + 0.2*cm)  # (lineheight + 0.2*cm) subtracted to include title height
+            tableWidth, tableHeight = t.wrap(availableWidth, availableHeight)
+
+            t.drawOn(pdf, x, y-tableHeight)
+            y -= (tableHeight + cm)  # Find next position for painting
+            
+    pdf.showPage()
+    pdf.save()
+    
+    return response    
+    
 
 @login_required
-def dtvSummary_PDF(request):
+def dtvSummaryByEvent_PDF(request):
     """
     Generates and returns a PDF containing the DTV Summary (by event).
     Accessible by cores only.
@@ -148,7 +562,7 @@ def dtvSummary_PDF(request):
     
     # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=DTVSummary_byEvent.pdf'
+    response['Content-Disposition'] = 'attachment; filename=DTVSummary-ByEvent.pdf'
     
     # Create the PDF object, using the response object as its "file."
     pdf = canvas.Canvas(response, pagesize = A4)
@@ -182,15 +596,16 @@ def dtvSummary_PDF(request):
         for subevent in Event_SubEventList:
             tableData.append([subevent.title, 
                               subevent.venue, 
-                              subevent.start_date_and_time.date(), 
-                              subevent.start_date_and_time.time(),
-                              subevent.end_date_and_time.date(),
-                              subevent.end_date_and_time.time(),
-                              subevent.end_date_and_time - subevent.start_date_and_time, ])
+                              subevent.start_date_and_time.date().strftime("%d-%b-%y"), 
+                              subevent.start_date_and_time.time().strftime("%I:%M %p"),
+                              subevent.end_date_and_time.date().strftime("%d-%b-%y"),
+                              subevent.end_date_and_time.time().strftime("%I:%M %p"),
+                              strfdelta(subevent.end_date_and_time - subevent.start_date_and_time, "%H:%M"), ])
         t = Table(tableData, repeatRows = 1)
         
         # Set the table style
-        tableStyle = TableStyle([('FONTNAME', (0,0), (-1,-1), 'Times-Roman'),
+        tableStyle = TableStyle([('FONTNAME', (0,1), (-1,-1), 'Times-Roman'),   # Font style for Table Data
+                                 ('FONTNAME', (0,0), (-1,0), 'Times-Bold'),     # Font style for Table Header
                                  ('FONTSIZE', (0,0), (-1,-1), 12),
                                  ('ALIGN', (0,0), (-1,-1), 'CENTRE'),
                                  ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
@@ -328,7 +743,7 @@ class CoordProtectedView(ProtectedView):
                 return False  # If the coord is not coord of the requested event
             return True
         except:
-            raise Http404
+            raise Http404('You do not have permissions to view this page')
         
 class CoreProtectedView(ProtectedView):
     """
@@ -357,7 +772,7 @@ class SubEventAddEditDeleteABC(CoordProtectedView):
             subeventRequested = SubEvent.objects.filter(event = eventRequested)
             subeventRequested = subeventRequested.get(title = subevent_name)
         except:
-            raise Http404  # If the sub-event requested is not found in the database
+            raise Http404('Invalid sub-event supplied')  # If the sub-event requested is not found in the database
         
         return subeventRequested
         
@@ -371,10 +786,10 @@ class SubEventAddEditDeleteABC(CoordProtectedView):
         try:  # To get the event
             eventRequested = Event.objects.get(title = event_name)
         except:
-            raise Http404  # If the event requested is not found in the database
+            raise Http404('Invalid event supplied')  # If the event requested is not found in the database
             
         if eventRequested.lock_status == 'locked':
-            raise Http404
+            raise Http404('Event cannot be modified')
         
         return eventRequested
         
@@ -530,10 +945,10 @@ class LockEvent(CoordProtectedView):
         try:  # To get the event
             eventRequested = Event.objects.get(title = kwargs['event'])
         except:
-            raise Http404  # If the event requested is not found in the database
+            raise Http404('Invalid event supplied.')  # If the event requested is not found in the database
 
         if eventRequested.lock_status != 'not_locked':
-            raise Http404
+            raise Http404('Event cannot be locked.')
             
         subEventList = SubEvent.objects.filter(event = eventRequested).order_by('start_date_and_time')
         
@@ -546,10 +961,10 @@ class LockEvent(CoordProtectedView):
         try:  # To get the event
             eventRequested = Event.objects.get(title = kwargs['event'])
         except:
-            raise Http404  # If the event requested is not found in the database
+            raise Http404('Invalid event supplied.')  # If the event requested is not found in the database
 
         if eventRequested.lock_status != 'not_locked':
-            raise Http404
+            raise Http404('Event cannot be locked.')
             
         eventRequested.lock_status = 'locked'
         eventRequested.unlock_reason = ''
@@ -566,10 +981,10 @@ class UnlockEvent(CoreProtectedView):
         try:  # To get the event
             eventRequested = Event.objects.get(title = kwargs['event'])
         except:
-            raise Http404  # If the event requested is not found in the database
+            raise Http404('Invalid event supplied.')  # If the event requested is not found in the database
             
         if eventRequested.lock_status != 'locked':
-            raise Http404
+            raise Http404('Event cannot be unlocked.')
             
         unlockForm = EventUnlockForm()
         
@@ -581,10 +996,10 @@ class UnlockEvent(CoreProtectedView):
         try:  # To get the event
             eventRequested = Event.objects.get(title = kwargs['event'])
         except:
-            raise Http404  # If the event requested is not found in the database
+            raise Http404('Invalid event supplied.')  # If the event requested is not found in the database
             
         if eventRequested.lock_status != 'locked':
-            raise Http404
+            raise Http404('Event cannot be unlocked.')
             
         unlockForm = EventUnlockForm(request.POST)
         

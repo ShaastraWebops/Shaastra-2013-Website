@@ -1,0 +1,52 @@
+{% extends "events/dtvBase.html" %}
+
+{% block dtvTitle %}
+    Summary | By Venue
+{% endblock %}
+
+{% block dtvBody %}
+    {% for venue, subEventList in happeningsByVenue %}
+        <h4> {{ venue }} </h4>
+        {% if subEventList %}
+            <table>
+                <tr>
+                    <th> Event </th>
+                    <th> Sub-Event </th>
+                    <th> Start Date </th>
+                    <th> Start Time </th>
+                    <th> End Date </th>
+                    <th> End Time </th>
+                    <th> Last Modified </th>
+                </tr>
+                {% for subEvent in subEventList %}
+                <tr>
+                    <td> {{ subEvent.event.title }} </td>
+                    <td> {{ subEvent.title }} </td>
+                    <td> {{ subEvent.start_date_and_time|date:"D, d M Y" }} </td> {# Displays date as Thu 11 Jun 2012 #}
+                    <td> {{ subEvent.start_date_and_time|date:"P"|upper }} </td> {# Displays time as 11:15 A.M. or 11 A.M. or NOON #}
+                    <td> {{ subEvent.end_date_and_time|date:"D, d M Y" }} </td> 
+                    <td> {{ subEvent.end_date_and_time|date:"P"|upper }} </td> {# If NOON is creating trouble, change back to "f A" #}
+                    <td> {{ subEvent.last_modified }} </td>
+                    {% block subEventActions %} {% endblock %}
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            No sub-events registered
+        {% endif %}
+    {% endfor %}
+    
+    <br/> <br/>
+
+    <a href = '/events/DTVSummary/'> <b> Go back to the DTV Summary Landing </b> </a>
+    
+    {% if enablePDFPrinting %}
+        or <a href = '/events/DTVSummary/ByVenue/generatePDF/'> print these details as PDF. </a>
+    {% endif %}
+    
+    <br/>
+    <br/>
+                
+{% endblock %}
+
+
