@@ -38,11 +38,6 @@ class Event(models.Model):
     category = models.ForeignKey(Category, blank = True, null = True)
     updates = models.ManyToManyField(Update, blank = True, null = True)
     
-class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-    is_core = models.BooleanField(default = False)
-    is_coord_of = models.ForeignKey(Event, blank = True, null = True)
-    
 class Tab(models.Model):
     event = models.ForeignKey(Event, blank = True, null = True)
     title = models.CharField(max_length = 30)
