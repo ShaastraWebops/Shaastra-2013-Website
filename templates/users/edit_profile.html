@@ -1,0 +1,24 @@
+{% load dajaxice_templatetags %}
+<html>
+    <head>
+        <title>Edit Profile</title>
+        {% dajaxice_js_import %}
+        <script type="text/javascript" src="/static/js/jquery.js"></script>
+        <script type="text/javascript" src="/static/js/jquery.dajax.core.js"></script>
+        <script language = 'JavaScript' type="text/javascript" src="/static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+        <script type="text/javascript" src="/static/js/college.reg.js"></script>
+    </head>
+<body>
+    <p>
+        Edit profile:
+    </p>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ editProfileForm.as_table }}
+        </table>
+        <input type="submit" value="Update Profile">
+    </form>
+    <a href="/">Home</a>
+</body>    
+</html>

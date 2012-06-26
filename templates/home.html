@@ -1,11 +1,17 @@
-{% if user.is_authenticated %}
-<div>you are logged in as {{user.username}}
-</div><div><a href='/logout/'>Click here to logout</a></div>
-{% else %}
-<div><a href='/login/'>Click here to login</a></div>
-{% endif %}
+<html>
 
-{% for event in events %}
-{{event.title}}
-{% endfor %}
-
+    <head>
+        <title>Shaastra 2013</title>
+    </head>
+    <body>
+        {% if user.is_authenticated %}
+        <h2>Welcome {{ user }},</h2>
+        <a href="/user/editprofile">Edit Profile</a>
+        <a href="/user/password_change">Change Password</a>
+        <a href="/user/logout">Logout</a>
+        <hr />
+        {% else %}
+        <a href="/user/login">Login</a>
+        {% endif %}
+    </body>
+</html>

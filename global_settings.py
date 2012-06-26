@@ -7,12 +7,16 @@ USE_I18N = False
 
 USE_L10N = True
 
-ADMIN_MEDIA_PREFIX = '/media/'
+AUTH_PROFILE_MODULE = 'users.UserProfile'
+
+FACEBOOK_APP_ID = '369811629738758'
+FACEBOOK_APP_SECRET = 'ac2b75ddad7f25c7f14e9d4e013fb49b'
+FACEBOOK_SCOPE = 'email'
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -23,21 +27,21 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'Shaastra-2013-Website.urls'
+ROOT_URLCONF = 'urls'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'Shaastra-2013-Website.events'
-    
-    
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'admin',
+    'users',
+    'events',
+    'dajaxice',
+    'dajax', 
+    'core',  
 )
 
 # A sample logging configuration. The only tangible logging
@@ -62,3 +66,28 @@ LOGGING = {
         },
     }
 }
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
+"django.core.context_processors.debug",
+"django.core.context_processors.i18n",
+"django.core.context_processors.media",
+"django.core.context_processors.static",
+"django.core.context_processors.request",
+"django.contrib.messages.context_processors.messages",)
+
+DAJAX_JS_FRAMEWORK = "jQuery"
+DAJAX_MEDIA_PREFIX='dajax'
+DAJAXICE_MEDIA_PREFIX="dajaxice"
+DAJAXICE_DEBUG = True

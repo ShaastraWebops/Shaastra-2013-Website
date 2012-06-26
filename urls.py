@@ -1,31 +1,17 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
 from events.urls import urlpatterns as event_urls
+from dajaxice.core import dajaxice_autodiscover
+dajaxice_autodiscover()
 
-import views
-
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
 urlpatterns = patterns('',
-    url(r'^$', 'shaastra.views.home', name = 'home'),
-    url(r'^login/$', 'views.method_splitter', {'GET': views.login_get, 'POST': views.login_post}),
-    url(r'^register/$', 'views.method_splitter', {'GET': views.register_get, 'POST': views.register_post}),
-    url(r'^logout/$', 'views.log_out', name = 'logout'),
-    # Examples:
-    # url(r'^$', 'shaastra2013.views.home', name='home'),
-    # url(r'^shaastra2013/', include('shaastra2013.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'views.home', name = 'home'),
+    url(r'^user/', include('users.urls')),
+    url(r'^admin/', include('admin.urls')),
+    url(r'^core/', include('core.urls')),
+    url(r'^events/', include('events.urls')),
+    url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
 )
-
-urlpatterns += event_urls
-
-
 
 urlpatterns += patterns('',
         url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {

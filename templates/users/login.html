@@ -1,0 +1,17 @@
+<html>
+
+    <head>
+        <title>Shaastra 2013</title>
+    </head>
+    <body>
+            <form action="" method="POST">
+            <a href="/user/facebook/login/">Login via Facebook</a>
+            <table>
+                {% csrf_token %}
+                {{form.as_table}}
+            </table>
+            <input type="submit" value="Login" />
+            <a href="/user/register/">Register</a>
+            </form>
+    </body>
+</html>

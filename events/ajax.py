@@ -1,19 +1,9 @@
 import random
 from dajax.core import Dajax
 from django.utils import simplejson
-from django.template import Template,Context, RequestContext
+from django.template import loader, Context, RequestContext, Template
 from events.models import *
 from dajaxice.decorators import dajaxice_register
-from django.conf import settings
-import os
-
-def get_template(file_name):
-    #this is used to get templates from the path /.../shaastra/events/templates/events/ajax      (*in my case)
-    #note - a separate folder for ajax templates.
-    #this function opens files (*.html) and returns them as python string.
-    filepath = os.path.join(settings.AJAX_TEMPLATE_DIR, file_name)
-    f = open(filepath, mode='r')
-    return f.read()
 
 def get_files(tab):
     try:
@@ -46,9 +36,9 @@ def delete_tab(request, tab_id):
     event = request.user.get_profile().is_coord_of
     tabs = get_tabs(event)
     template = """{{x}} deleted successfully!"""
-    t1 = Template(template).render(RequestContext(request,locals()))
-    template = get_template('tab_list.html')
-    t2 = Template(template).render(RequestContext(request,locals()))
+    t1 = template.render(RequestContext(request,locals()))
+    template = loader.get_template('events/tab_list.html')
+    t2 = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail', 'innerHTML', t1)
     dajax.assign('#tabs','innerHTML', t2)
@@ -58,8 +48,8 @@ def delete_tab(request, tab_id):
 def confirm_delete_tab(request, tab_id):
     #asks coord 'are u sure u want to delete this tab?'
     tab = Tab.objects.get(id = tab_id)
-    template = get_template('tab_delete.html')
-    t = Template(template).render(RequestContext(request,locals()))
+    template = loader.get_template('events/tab_delete.html')
+    t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail', 'innerHTML', t)
     return dajax.json()
@@ -76,17 +66,17 @@ def save_editted_tab(request, form, tab_id):
         unsaved_tab.save()
         tab = unsaved_tab
         tabs = get_tabs(event)
-        template = get_template('tab_list.html')
-        t1 = Template(template).render(RequestContext(request,locals()))
-        template2 = get_template('tab_detail.html')
-        t2 = Template(template2).render(RequestContext(request,locals()))
+        template = loader.get_template('events/tab_list.html')
+        t1 = template.render(RequestContext(request,locals()))
+        template2 = loader.get_template('events/tab_detail.html')
+        t2 = template2.render(RequestContext(request,locals()))
         dajax = Dajax()
         dajax.assign('#tabs','innerHTML', t1)
         dajax.assign('#detail', 'innerHTML', t2)
         return dajax.json()
     else:
-        template = get_template('tab_edit_form.html')
-        t = Template(template).render(RequestContext(request,locals()))
+        template = loader.get_template('events/tab_edit_form.html')
+        t = template.render(RequestContext(request,locals()))
         dajax = Dajax()
         dajax.assign('#detail', 'innerHTML', t)
         return dajax.json()
@@ -102,17 +92,17 @@ def save_tab(request, form):
         unsaved_tab.save()
         tab = unsaved_tab
         tabs = get_tabs(event)
-        template = get_template('tab_list.html')
-        t1 = Template(template).render(RequestContext(request,locals()))
-        template2 = get_template('tab_detail.html')
-        t2 = Template(template2).render(RequestContext(request,locals()))
+        template = loader.get_template('events/tab_list.html')
+        t1 = template.render(RequestContext(request,locals()))
+        template2 = loader.get_template('events/tab_detail.html')
+        t2 = template2.render(RequestContext(request,locals()))
         dajax = Dajax()
         dajax.assign('#tabs','innerHTML', t1)
         dajax.assign('#detail', 'innerHTML', t2)
         return dajax.json()
     else:
-        template = get_template('tab_add_form.html')
-        t = Template(template).render(RequestContext(request,locals()))
+        template = loader.get_template('events/tab_add_form.html')
+        t = template.render(RequestContext(request,locals()))
         dajax = Dajax()
         dajax.assign('#detail', 'innerHTML', t)
         return dajax.json()
@@ -121,8 +111,8 @@ def save_tab(request, form):
 def add_tab(request):
     #loads a form for creating a new tab.
     f = TabAddForm()
-    template = get_template('tab_add_form.html')
-    t = Template(template).render(RequestContext(request,locals()))
+    template = loader.get_template('events/tab_add_form.html')
+    t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
     return dajax.json()
@@ -132,8 +122,8 @@ def edit_tab(request, tab_id):
     #loads a form for editing the tab details.
     tab = Tab.objects.get(id = tab_id)
     f = TabAddForm(instance = tab)
-    template = get_template('tab_edit_form.html')
-    t = Template(template).render(RequestContext(request,locals()))
+    template = loader.get_template('events/tab_edit_form.html')
+    t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
     return dajax.json()
@@ -143,8 +133,8 @@ def load_tab(request, tab_id):
     #loads the tab details of the tab you clicked on.
     tab = Tab.objects.get(id = tab_id)
     file_list = get_files(tab)
-    template = get_template('tab_detail.html')
-    t = Template(template).render(RequestContext(request,locals()))
+    template = loader.get_template('events/tab_detail.html')
+    t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
     return dajax.json()
@@ -154,8 +144,8 @@ def add_file(request, tab_id):
     f = TabFileForm()
     tab = Tab.objects.get(id = tab_id)
     file_list = get_files(tab)
-    template = get_template('file_form.html')
-    t = Template(template).render(RequestContext(request,locals()))
+    template = loader.get_template('events/file_form.html')
+    t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
     return dajax.json()
@@ -166,8 +156,8 @@ def delete_file(request, tab_id, file_id):
     f.delete()
     tab = Tab.objects.get(id = tab_id)
     file_list = get_files(tab)
-    template = get_template('tab_detail.html')
-    t = Template(template).render(RequestContext(request,locals()))
+    template = loader.get_template('events/tab_detail.html')
+    t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
     return dajax.json()
@@ -178,8 +168,8 @@ def rename_file(request, tab_id, file_id):
     f = TabFile.objects.get(id = file_id)
     actual_name = f.tab_file.name.split('/')[-1]
     file_list = get_files(tab)
-    template = get_template('file_rename.html')
-    t = Template(template).render(RequestContext(request,locals()))
+    template = loader.get_template('events/file_rename.html')
+    t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
     return dajax.json()    
@@ -193,8 +183,8 @@ def rename_file_done(request, form, file_id):
         f.save()
     tab = f.tab
     file_list = get_files(tab)
-    template = get_template('tab_detail.html')
-    t = Template(template).render(RequestContext(request,locals()))
+    template = loader.get_template('events/tab_detail.html')
+    t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
     return dajax.json()    
