@@ -8,7 +8,7 @@ import views
 # from django.contrib import admin
 # admin.autodiscover()
 urlpatterns = patterns('',
-    url(r'^$', 'Shaastra-2013-Website.views.home', name = 'home'),
+    url(r'^$', '%s.views.home' % settings.PROJECT_DIR_NAME, name = 'home'),
     url(r'^login/$', 'views.method_splitter', {'GET': views.login_get, 'POST': views.login_post}),
     url(r'^register/$', 'views.method_splitter', {'GET': views.register_get, 'POST': views.register_post}),
     url(r'^logout/$', 'views.log_out', name = 'logout'),
