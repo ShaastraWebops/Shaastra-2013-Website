@@ -13,7 +13,7 @@ def updateSummary(request):
     dajax.assign("#summary",'innerHTML',"<table border='1'><thead><tr><th>S.No</th><th>Event Name</th><th>Coords</th></tr></thead><tbody id='event'>")
     event=Event.objects.order_by('id').all()
     for e in event:
-        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id-1)+"</td><td onclick=\'displayevent("+str(e.id)+");\' class='grps' id="+e.title+"><a href=#>"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
+        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td onclick=\'displayevent("+str(e.id)+");\' class='grps' id="+e.title+"><a href=#>"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
         coords=UserProfile.objects.filter(event__title=e.title)
         for c in coords:
             dajax.append("#"+str(e.id),'innerHTML',"<li onclick=\'displayCoord("+str(c.user.id)+");\' class='coords' id="+str(c.user.username)+"><a href=#>"+str(c.user)+"</a>")
@@ -58,7 +58,8 @@ def add_edit_coord(request,form="",id=0):
     if form == "" :
         if id:
             template = loader.get_template('ajax/core/editcoord.html')
-            coord_form = AddCoordForm(instance=User.objects.get(id=id))
+            coord=User.objects.get(id=id)
+            coord_form = AddCoordForm(instance=coord,initial={'event':coord.get_profile().event_id,})
             html=template.render(RequestContext(request,locals()))
         else:
             template = loader.get_template('ajax/core/addcoord.html')
@@ -69,7 +70,10 @@ def add_edit_coord(request,form="",id=0):
     if id:
         coord_form = AddCoordForm(form, instance=User.objects.get(id=id))
         if coord_form.is_valid():
-            coord_form.save()
+            coord=coord_form.save()
+            coord_profile=coord.get_profile()
+            coord_profile.event_id=form['event']
+            coord_profile.save()
             dajax.assign("#space",'innerHTML',"")
         else:
             template = loader.get_template('ajax/core/editcoord.html')
@@ -78,12 +82,11 @@ def add_edit_coord(request,form="",id=0):
     else:
         coord_form = AddCoordForm(form)
         if coord_form.is_valid():
-#            data = coord_form.cleaned_data
-            evt=Event.objects.get(title=form['event'])
             coord=coord_form.save()
             coord.set_password("default")
+            coord.groups.add(request.user.groups.get_query_set()[1])
             coord.save()
-            coord_profile = UserProfile(user=coord, is_coord=True, event=evt)
+            coord_profile = UserProfile(user=coord, is_coord=True, event_id=form['event'])
             coord_profile.save()
             dajax.assign("#space",'innerHTML',"")
         else:

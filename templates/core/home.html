@@ -30,14 +30,13 @@
         }
         function add_coord()
         {
-            $("#space option:first").attr("selected","selected"); 
             data=$("#space :input").serializeObject();
+            alert(data['event']);
             $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
             Dajaxice.core.add_edit_coord(Dajax.process,{'form':data});
         }
         function edit_coord(id)
         {
-            $("#space option:first").attr("selected","selected"); 
             data=$("#space :input").serializeObject();
             $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
             Dajaxice.core.add_edit_coord(Dajax.process,{'form':data,'id':id});
@@ -61,6 +60,11 @@
             $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
             Dajaxice.core.add_edit_event(Dajax.process,{'id':id});
         }
+        function displayCoord(id)
+        {
+            $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+            Dajaxice.core.add_edit_coord(Dajax.process,{'id':id});
+        }
         </script>
 	    <script type="text/javascript">
         $(document).ready(function(){
@@ -77,7 +81,7 @@
 	    </script>
     </head>
     <body>
-        Welcome {{ request.user }},<br>
+        Welcome {{ request.user }} | <i>{{ request.user.groups.get_query_set.1 }} core</i><br>
         <a href="/user/logout/">Logout</a>
         <a href="/user/editprofile/">Edit Profile</a>
         <a href="/user/password_change">Change Password</a>
