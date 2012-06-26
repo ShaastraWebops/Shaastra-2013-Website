@@ -7,21 +7,82 @@
 
 // not documenting this for now. Try n see all the templates in the ajax folder. These functions are called from those templates.
 // make a note of all the div ids. See how the divs are being changed dynamically by dajax.
+
+function save_editted_option(id){
+    data = $('#edit_option_form').serializeObject();
+    Dajaxice.{{pro_dir}}.events.save_editted_option(Dajax.process,{'form':data,'option_id':id})
+    return false;
+}
+
+function save_option(id){
+    data = $('#add_option_form').serializeObject();
+    Dajaxice.{{pro_dir}}.events.save_option(Dajax.process,{'form':data,'ques_id':id})
+    return false;
+}
+
+function delete_option(id){
+    var r=confirm("Are you sure you want to delete the option?");
+    if(r==true)
+    {
+        Dajaxice.{{pro_dir}}.events.delete_option(Dajax.process,{'option_id':id})
+    }
+}
+
+function delete_mcq(id){
+    var r=confirm("Are you sure you want to delete the question?");
+    if(r==true)
+    {
+        Dajaxice.{{pro_dir}}.events.delete_mcq(Dajax.process,{'ques_id':id})
+    }
+}
+
+function save_editted_mcq(id){
+    data = $('#edit_mcq_form').serializeObject();
+    Dajaxice.{{pro_dir}}.events.save_editted_mcq(Dajax.process,{'form':data,'ques_id':id})
+    return false;
+}
+
+function save_mcq(){
+    data = $('#add_mcq_form').serializeObject();
+    Dajaxice.{{pro_dir}}.events.save_mcq(Dajax.process,{'form':data})
+    return false;
+}
+
+function delete_sub(id){
+    var r=confirm("Are you sure you want to delete the question?");
+    if(r==true)
+    {
+        Dajaxice.{{pro_dir}}.events.delete_subjective(Dajax.process,{'ques_id':id})
+    }
+}
+
+function save_editted_subjective(id){
+    data = $('#edit_subjective_form').serializeObject();
+    Dajaxice.{{pro_dir}}.events.save_editted_subjective(Dajax.process,{'form':data,'ques_id':id})
+    return false;
+}
+
+function save_subjective(){
+    data = $('#add_subjective_form').serializeObject();
+    Dajaxice.{{pro_dir}}.events.save_subjective(Dajax.process,{'form':data})
+    return false;
+}
+
 function save_tab(){
     data = $('#tab_form').serializeObject();
-    Dajaxice.shaastra.events.save_tab(Dajax.process,{'form':data})
+    Dajaxice.{{pro_dir}}.events.save_tab(Dajax.process,{'form':data})
     return false;
 }
 
 function edit_tab(id){
     data = $('#edit_tab').serializeObject();
-    Dajaxice.shaastra.events.save_editted_tab(Dajax.process,{'form':data,'tab_id':id})
+    Dajaxice.{{pro_dir}}.events.save_editted_tab(Dajax.process,{'form':data,'tab_id':id})
     return false;
 }
 
 function rename_file(id){
     data = $('#file_rename').serializeObject();
-    Dajaxice.shaastra.events.rename_file_done(Dajax.process, {'form':data,'file_id':id})
+    Dajaxice.{{pro_dir}}.events.rename_file_done(Dajax.process, {'form':data,'file_id':id})
     return false;
 }
 
@@ -69,10 +130,12 @@ function File(id){
 <h3>Dashboard for {{request.user.get_profile.is_coord_of.title}}</h3>
 {% csrf_token %}
 <div name="tabs" id = "tabs">
+<div name="question_tab" id = "question_tab" onclick = "Dajaxice.{{pro_dir}}.events.load_question_tab(Dajax.process)">Questions</div>
 {% for tab in tabs %}
-<div name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.shaastra.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}}</div>
+<div name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.{{pro_dir}}.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}}</div>
 {% endfor %}
 </div>
-<div name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.shaastra.events.add_tab(Dajax.process,{})">add a tab</div>
+<div name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.{{pro_dir}}.events.add_tab(Dajax.process)">add a tab</div>
 <div name="detail" id="detail"></div>
+
 </html>

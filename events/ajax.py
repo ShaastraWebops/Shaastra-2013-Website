@@ -9,21 +9,16 @@ def get_files(tab):
     try:
         return tab.tabfile_set.all()
     except:
-        print 'here too'
         raise Http404()
 
 def get_tabs(event):
     try:
         return event.tab_set.all()
     except:
-        print 'here'
         raise Http404()
 
 @dajaxice_register
 def save_file(request, form, tab_id):
-    print 'here'
-    print form
-    print tab_id
     dajax = Dajax()
     return dajax.json()
         
@@ -176,7 +171,6 @@ def rename_file(request, tab_id, file_id):
         
 @dajaxice_register
 def rename_file_done(request, form, file_id):
-    print 'here', form
     f = TabFile.objects.get(id = file_id)
     if form['display_name']:
         f.title = form['display_name']
@@ -187,6 +181,260 @@ def rename_file_done(request, form, file_id):
     t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
-    return dajax.json()    
+    return dajax.json()
+
+@dajaxice_register
+def load_question_tab(request):
+    event = request.user.get_profile().is_coord_of
+    text_questions = event.subjectivequestion_set.all()
+    mcqs = event.objectivequestion_set.all()
+    template = get_template('question_tab.html')
+    t = Template(template).render(RequestContext(request,locals()))
+    dajax = Dajax()
+    dajax.assign('#detail', 'innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register
+def add_subjective(request):
+    #loads a form for creating a new subjective question.
+    f = AddSubjectiveQuestionForm()
+    template = get_template('add_subjective_form.html')
+    t = Template(template).render(RequestContext(request,locals()))
+    dajax = Dajax()
+    dajax.assign('#detail','innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register
+def save_subjective(request, form):
+    from django.conf import settings
+    f = AddSubjectiveQuestionForm(form)
+    if f.is_valid():
+        event = request.user.get_profile().is_coord_of
+        unsaved_ques = f.save(commit = False)
+        unsaved_ques.event = event
+        unsaved_ques.save()
+        text_questions = event.subjectivequestion_set.all()
+        mcqs = event.objectivequestion_set.all()
+        template = get_template('question_tab.html')
+        t = Template(template).render(RequestContext(request,locals()))
+        dajax = Dajax()
+        dajax.assign('#detail', 'innerHTML', t)
+        return dajax.json()
+    else:
+        template = get_template('add_subjective_form.html')
+        t = Template(template).render(RequestContext(request,locals()))
+        dajax = Dajax()
+        dajax.assign('#detail', 'innerHTML', t)
+        return dajax.json()
+
+@dajaxice_register        
+def edit_subjective(request, ques_id):
+    #loads a form for editing the selected question
+    ques = SubjectiveQuestion.objects.get(id = ques_id)
+    f = AddSubjectiveQuestionForm(instance = ques)
+    template = get_template('edit_subjective_form.html')
+    t = Template(template).render(RequestContext(request,locals()))
+    dajax = Dajax()
+    dajax.assign('#detail','innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register
+def save_editted_subjective(request, form, ques_id):
+    #validates the question details that were submitted while editing an existing question.
+    ques = SubjectiveQuestion.objects.get(id = ques_id)
+    f = AddSubjectiveQuestionForm(form, instance = ques)
+    if f.is_valid():
+        event = request.user.get_profile().is_coord_of
+        unsaved_ques = f.save(commit = False)
+        unsaved_ques.event = event
+        unsaved_ques.save()
+        text_questions = event.subjectivequestion_set.all()
+        mcqs = event.objectivequestion_set.all()
+        template = get_template('question_tab.html')
+        t = Template(template).render(RequestContext(request,locals()))
+        dajax = Dajax()
+        dajax.assign('#detail', 'innerHTML', t)
+        return dajax.json()
+    else:
+        template = get_template('edit_subjective_form.html')
+        t = Template(template).render(RequestContext(request,locals()))
+        dajax = Dajax()
+        dajax.assign('#detail', 'innerHTML', t)
+        return dajax.json()
+
+@dajaxice_register        
+def delete_subjective(request, ques_id):
+    #deletes the selected question
+    ques = SubjectiveQuestion.objects.get(id = ques_id)
+    ques.delete()
+    event = request.user.get_profile().is_coord_of
+    text_questions = event.subjectivequestion_set.all()
+    mcqs = event.objectivequestion_set.all()
+    template = get_template('question_tab.html')
+    t = Template(template).render(RequestContext(request,locals())) 
+    dajax = Dajax()
+    dajax.assign('#detail', 'innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register
+def add_mcq(request):
+    #loads a form for creating a new mcq question.
+    f = AddMCQForm()
+    template = get_template('add_mcq_form.html')
+    t = Template(template).render(RequestContext(request,locals()))
+    dajax = Dajax()
+    dajax.assign('#detail','innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register
+def save_mcq(request, form):
+    from django.conf import settings
+    f = AddMCQForm(form)
+    if f.is_valid():
+        event = request.user.get_profile().is_coord_of
+        ques = f.save(commit = False)
+        ques.event = event
+        ques.save()
+        template = get_template('manage_options.html')
+        t = Template(template).render(RequestContext(request,locals()))
+        dajax = Dajax()
+        dajax.assign('#detail', 'innerHTML', t)
+        return dajax.json()
+    else:
+        template = get_template('add_mcq_form.html')
+        t = Template(template).render(RequestContext(request,locals()))
+        dajax = Dajax()
+        dajax.assign('#detail', 'innerHTML', t)
+        return dajax.json()
+
+@dajaxice_register        
+def edit_mcq(request, ques_id):
+    #loads a form for editing the selected question
+    ques = ObjectiveQuestion.objects.get(id = ques_id)
+    f = AddMCQForm(instance = ques)
+    template = get_template('edit_mcq_form.html')
+    t = Template(template).render(RequestContext(request,locals()))
+    dajax = Dajax()
+    dajax.assign('#detail','innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register
+def save_editted_mcq(request, form, ques_id):
+    #validates the question details that were submitted while editing an existing question.
+    ques = ObjectiveQuestion.objects.get(id = ques_id)
+    f = AddMCQForm(form, instance = ques)
+    if f.is_valid():
+        event = request.user.get_profile().is_coord_of
+        unsaved_ques = f.save(commit = False)
+        unsaved_ques.event = event
+        unsaved_ques.save()
+        options = unsaved_ques.mcqoption_set.all()
+        template = get_template('manage_options.html')
+        t = Template(template).render(RequestContext(request,locals()))
+        dajax = Dajax()
+        dajax.assign('#detail', 'innerHTML', t)
+        return dajax.json()
+    else:
+        template = get_template('edit_mcq_form.html')
+        t = Template(template).render(RequestContext(request,locals()))
+        dajax = Dajax()
+        dajax.assign('#detail', 'innerHTML', t)
+        return dajax.json()
+
+@dajaxice_register        
+def delete_mcq(request, ques_id):
+    #deletes the selected question
+    ques = ObjectiveQuestion.objects.get(id = ques_id)
+    ques.delete()
+    event = request.user.get_profile().is_coord_of
+    text_questions = event.subjectivequestion_set.all()
+    mcqs = event.objectivequestion_set.all()
+    template = get_template('question_tab.html')
+    t = Template(template).render(RequestContext(request,locals())) 
+    dajax = Dajax()
+    dajax.assign('#detail', 'innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register        
+def manage_options(request, ques_id):
+    ques = ObjectiveQuestion.objects.get(id = ques_id)
+    options = ques.mcqoption_set.all()
+    template = get_template('manage_options.html')
+    t = Template(template).render(RequestContext(request,locals())) 
+    dajax = Dajax()
+    dajax.assign('#detail', 'innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register
+def add_option(request, ques_id):
+    ques = ObjectiveQuestion.objects.get(id = ques_id)
+    f = AddOptionForm()
+    template = get_template('add_option_form.html')
+    t = Template(template).render(RequestContext(request,locals())) 
+    dajax = Dajax()
+    dajax.assign('#option_edit', 'innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register
+def save_option(request, form, ques_id):
+    f = AddOptionForm(form)
+    ques = ObjectiveQuestion.objects.get(id = ques_id)
+    if f.is_valid():
+        unsaved_option = f.save(commit = False)
+        unsaved_option.question = ques
+        unsaved_option.save()
+        options = ques.mcqoption_set.all()
+        template = get_template('manage_options.html')
+        t = Template(template).render(RequestContext(request,locals())) 
+        dajax = Dajax()
+        dajax.assign('#detail', 'innerHTML', t)
+        return dajax.json()
+    else:
+        template = get_template('add_option_form.html')
+        t = Template(template).render(RequestContext(request,locals()))
+        dajax = Dajax()
+        dajax.assign('#option_edit', 'innerHTML', t)
+        return dajax.json()
         
-        
+@dajaxice_register
+def delete_option(request, option_id):
+    option = MCQOption.objects.get(id = option_id)
+    ques = option.question
+    option.delete()
+    options = ques.mcqoption_set.all()
+    template = get_template('manage_options.html')
+    t = Template(template).render(RequestContext(request,locals())) 
+    dajax = Dajax()
+    dajax.assign('#detail', 'innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register
+def edit_option(request, option_id):
+    option = MCQOption.objects.get(id = option_id)
+    f = AddOptionForm(instance = option)
+    template = get_template('edit_option_form.html')
+    t = Template(template).render(RequestContext(request,locals()))
+    dajax = Dajax()
+    dajax.assign('#option_edit','innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register
+def save_editted_option(request, form, option_id):
+    option = MCQOption.objects.get(id = option_id)
+    ques = option.question
+    f = AddOptionForm(form, instance = option)
+    if f.is_valid():
+        f.save()
+        options = ques.mcqoption_set.all()
+        template = get_template('manage_options.html')
+        t = Template(template).render(RequestContext(request,locals())) 
+        dajax = Dajax()
+        dajax.assign('#detail', 'innerHTML', t)
+        return dajax.json()
+    else:
+        template = get_template('edit_option_form.html')
+        t = Template(template).render(RequestContext(request,locals()))
+        dajax = Dajax()
+        dajax.assign('#option_edit', 'innerHTML', t)
+        return dajax.json()
+

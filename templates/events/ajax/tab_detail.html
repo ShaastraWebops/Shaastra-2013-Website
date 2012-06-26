@@ -1,9 +1,9 @@
 <b>Title</b>:{{tab.title}}</br>
 <b>Text</b>:{{tab.text}}</br>
 <b>Files:</b><div id="file">{% for file in file_list %}<a href="{{file.url}}">{{file.title}}</a>
-<div id="delete_file" onclick="Dajaxice.shaastra.events.delete_file(Dajax.process,{'tab_id':'{{tab.id}}','file_id':'{{file.id}}'})">delete</div>
-<div id="rename" onclick="Dajaxice.shaastra.events.rename_file(Dajax.process,{'tab_id':'{{tab.id}}','file_id':'{{file.id}}'})">rename</div>{% endfor %}</div>
+<div id="delete_file" onclick="Dajaxice.{{pro_dir}}.events.delete_file(Dajax.process,{'tab_id':'{{tab.id}}','file_id':'{{file.id}}'})">delete</div>
+<div id="rename" onclick="Dajaxice.{{pro_dir}}.events.rename_file(Dajax.process,{'tab_id':'{{tab.id}}','file_id':'{{file.id}}'})">rename</div>{% endfor %}</div>
 
-<div name="edit" id="{{tab.title}}" onclick="Dajaxice.shaastra.events.edit_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">edit</div>
-<div name="delete" id="{{tab.title}}" onclick="Dajaxice.shaastra.events.confirm_delete_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">delete</div>
-<div name="add_file" id="{{tab.title}}" onclick="Dajaxice.shaastra.events.add_file(Dajax.process,{'tab_id':'{{tab.id}}'})">add a file</div>
+<div name="edit" id="{{tab.title}}" onclick="Dajaxice.{{pro_dir}}.events.edit_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">edit</div>
+<div name="delete" id="{{tab.title}}" onclick="Dajaxice.{{pro_dir}}.events.confirm_delete_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">delete</div>
+<div name="add_file" id="{{tab.title}}" onclick="Dajaxice.{{pro_dir}}.events.add_file(Dajax.process,{'tab_id':'{{tab.id}}'})">add a file</div>

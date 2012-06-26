@@ -1,0 +1,7 @@
+<form action="" method="POST" id="add_mcq_form" enctype="multipart/form-data" accept-charset="utf-8">
+{% csrf_token %}
+<table>
+    {{f.as_table}}
+</table>
+<input type="button" value="Save" onclick = "save_mcq();">
+</form>
