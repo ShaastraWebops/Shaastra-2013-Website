@@ -21,7 +21,7 @@ ADMIN_MEDIA_PREFIX = '/media/'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -32,7 +32,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'Shaastra-2013-Website.urls'
+ROOT_URLCONF = '%s.urls' % PROJECT_DIR_NAME
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -40,8 +40,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'Shaastra-2013-Website.events'
-    
+    '%s.events' % PROJECT_DIR_NAME
+    'dajax'
+    'dajaxice'
     
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
