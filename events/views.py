@@ -23,10 +23,6 @@ from reportlab.pdfbase.pdfmetrics import getFont, getAscentDescent
 import os
 import datetime
 # Create your views here.
-
-def all_events(request):
-    events = Event.objects.all()
-    return render_to_response('allevents.html',locals(),context_instance = RequestContext(request))
     
 @login_required
 def dtvSummary(request):
@@ -601,41 +597,20 @@ class UnlockEvent(CoreProtectedView):
             return HttpResponseRedirect('/events/DTVSummary')
             
         return render_to_response ('events/unlockEvent.html', locals(), context_instance = RequestContext(request))
-            
-    
-class EventAdd(BaseView):
-    def handle_GET(self, request, **kwargs):
-        form = EventAddForm()
-        return render_to_response('events/addevent.html', locals(), context_instance = RequestContext(request))
         
-    def handle_POST(self, request, **kwargs):
-        form = EventAddForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/events/')
-        return render_to_response('events/addevent.html', locals(), context_instance = RequestContext(request))
-    
-        
-class EventEdit(BaseView):
-    def handle_GET(self, request, **kwargs):
-        event = request.user.get_profile().is_coord_of
-        form = EventAddForm(instance = event)
-        return render_to_response('events/editevent.html', locals(), context_instance = RequestContext(request))
-        
-    def handle_POST(self, request, **kwargs):
-        form = EventAddForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/events/')
-        return render_to_response('events/addevent.html', locals(), context_instance = RequestContext(request))
-        
-class CoordDashboard(BaseView):
+class CoordDashboard(CoordProtectedView):
+    """
+    displays the coord dashboard depending on the logged in coords event
+    """
     def handle_GET(self, request, **kwargs):
         event = request.user.get_profile().is_coord_of
         tabs = self.get_tabs(event)
         return render_to_response('events/dashboard.html', locals(), context_instance = RequestContext(request))
         
-class TabFileSubmit(BaseView):
+class TabFileSubmit(CoordProtectedView):
+    """
+    ajax file uploads are directed to this view
+    """
     def handle_POST(self, request, **kwargs):
         from django.conf import settings
         # These were the headers set by the function File() to pass additional data. 
