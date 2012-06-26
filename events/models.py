@@ -6,6 +6,8 @@ from chosen import forms as chosenforms
 from datetime import datetime
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from events.VenueChoices import VENUE_CHOICES  # These are the choices for the venues where events can be held
+                                               #TODO(Anant): Update the VenueChoices.py file with all venues for Shaastra 2013
 import os
 
 # Create your models here.
@@ -43,29 +45,18 @@ class SubEvent(models.Model):
     """
     A sub-event is, e.g. Prelims 1, Finals, Workshop 2, Lecture 3, etc., of an event.
     """
-    # TODO(Anant, anant.girdhar@gmail.com): We need a venue choice list in place of the temporary one used here.
-    VENUE_CHOICES = ((u'CRC', u'CRC'),
-                     (u'CLT', u'CLT'),
-                     (u'SAC', u'SAC'),
-                     (u'LIB', u'Central Library'),
-                     (u'OAT', u'OAT'),
-                     (u'PhLT', u'PhLT'),
-                     (u'ChLT', u'ChLT'),
-                     (u'PHY', u'Physics Dept.'),
-                     (u'CHEM', u'Chemistry Dept.'),
-                     (u'BT', u'BT Dept.'),
-                    )
     title = models.CharField(max_length = 32, 
                              help_text = 'Title of the sub-event. E.g. "Prelims 1", "Finals", "Lecture 2", "Workshop 3", etc.', 
                              verbose_name = "Sub-Event Title")
     start_date_and_time = models.DateTimeField(blank = True, null = True, help_text = 'When will this sub-event start? (yyyy-mm-dd hh:mm:ss)')
     end_date_and_time = models.DateTimeField(blank = True, null = True, help_text = 'When will this sub-event end? (yyyy-mm-dd hh:mm:ss)')
     venue = models.CharField(max_length = 64, blank = True, null = True, help_text = 'Where will this sub-event be held?', choices = VENUE_CHOICES)
+    #TODO(Anant): Update the VenueChoices.py file with all venues for Shaastra 2013
     event = models.ForeignKey(Event)
     last_modified = models.DateTimeField(editable = False)
 
     def __unicode__(self):
-        return '%s' % self.title
+        return '%s' % (self.title,)
         
     def checkSubEventClash(self, venue, start, end):
         """
@@ -90,18 +81,35 @@ class SubEvent(models.Model):
         except:
             pass
             
+        subEventClashMsgs = []
+        
         for subEvent in subEventList:
+            '''
+            if subEvent.event.title == 'Contraptions':
+                contrapVenue = subEvent.venue
+                contrapStart = subEvent.start_date_and_time
+                contrapEnd = subEvent.end_date_and_time
+                selfVenue = self.venue
+                selfStart = self.start_date_and_time
+                selfEnd = self.end_date_and_time
+                assert False
+            '''
             if subEvent.venue != venue:
-                subEventClashMsg = None
-            elif subEvent.start_date_and_time >= end:
-                subEventClashMsg = None
-            elif subEvent.end_date_and_time <= start:
-                subEventClashMsg = None
-            else:
-                # The events clash.
-                # Must tell user from when to when the venue is booked.
-                subEventClashMsg = u'Sorry. %s is unavailable from %s to %s. Please select a different time or choose a different venue.' % (subEvent.venue, subEvent.start_date_and_time, subEvent.end_date_and_time)
-            return subEventClashMsg
+                continue  # No clash
+
+            if subEvent.start_date_and_time >= end:  # Start date-time of subEvent is after end date-time of self
+                continue  # No clash
+
+            if subEvent.end_date_and_time <= start:  # End date-time of subEvent is before start date-time of self
+                continue  # No clash
+            
+            # The events clash.
+            # Must tell user from when to when the venue is booked.
+            subEventClashMsgs.append(u'%s is unavailable from %s to %s.' % (subEvent.venue, subEvent.start_date_and_time, subEvent.end_date_and_time))
+
+        if subEventClashMsgs:
+            return subEventClashMsgs
+        return None
 
     def clean(self):
         """
@@ -136,7 +144,7 @@ class SubEvent(models.Model):
                 # Already checked validity of start and end dates and times
                 subEventClashErrorMsg = self.checkSubEventClash(self.venue, self.start_date_and_time, self.end_date_and_time)
                 if subEventClashErrorMsg is not None:
-                    errors.append(subEventClashErrorMsg)
+                    errors.extend(subEventClashErrorMsg)
                     
         # The sub-event's title must be unique under its event.
         if self.title:

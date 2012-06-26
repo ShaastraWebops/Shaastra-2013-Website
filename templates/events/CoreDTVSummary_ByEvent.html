@@ -1,0 +1,21 @@
+{% extends "events/dtvSummary.html" %}
+
+{% block eventActions %}
+    {% ifequal event.lock_status 'locked' %}
+        <a href = '/events/{{event}}/unlockEvent/'> Unlock Event </a>
+    {% else %}
+        <h6> AWAITING LOCK </h6>
+    {% endifequal %}
+{% endblock %}
+
+{% block miscActions %}
+    <br/> <br/>
+    {% if enablePDFPrinting %}
+        <a href = '/events/DTVSummary/'> <b> Go back to the DTV Summary Landing </b> </a>
+        or <a href = '/events/DTVSummary/ByDate/generatePDF/'> print these details as PDF. </a>
+    {% else %}
+        <a href = '/events/DTVSummary/ByVenue/'> View DTV Summary By Venue </a> <br/>
+        <a href = '/events/DTVSummary/ByDate/'> View DTV Summary By Date </a>
+    {% endif %}
+    <br/> <br/>
+{% endblock %}
