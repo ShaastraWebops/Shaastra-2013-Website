@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, include, url
 from events.views import *
 
 urlpatterns = patterns('',
-    url(r'^dashboard/$', CoordDashboard()),
+    url(r'^/$', CoordDashboard()),
     url(r'^tabfile/$', TabFileSubmit()),
 )
 
