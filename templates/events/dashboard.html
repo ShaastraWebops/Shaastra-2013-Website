@@ -103,7 +103,7 @@ function File(id){
     var fileInput = document.getElementById('thefile');
     var file = fileInput.files[0];
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/tabfile/', true);
+    xhr.open('POST', '/coord/tabfile/', true);
     xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
     xhr.setRequestHeader('X-Tab-Id', id);
     xhr.setRequestHeader("X-File-Name", file.name);
