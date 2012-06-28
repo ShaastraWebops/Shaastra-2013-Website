@@ -1,3 +1,6 @@
+#The variable Summary refers to the div where a table consisting event name and its coords is displayed
+#The variable space refers to the div where different forms like add/edit event/coord are displayed
+
 from dajaxice.decorators import dajaxice_register
 from django.utils import simplejson
 from django.template import Context, RequestContext, loader
@@ -9,6 +12,10 @@ from users.models import UserProfile
 
 @dajaxice_register
 def updateSummary(request):
+    """
+    This function updates the table in summary div whenever a new event/coord is added or when an existing event/coord is edited or deleted
+
+    """
     dajax = Dajax()
     dajax.assign("#summary",'innerHTML',"<table border='1'><thead><tr><th>S.No</th><th>Event Name</th><th>Coords</th></tr></thead><tbody id='event'>")
     event=Event.objects.order_by('id').all()
@@ -21,6 +28,12 @@ def updateSummary(request):
 
 @dajaxice_register
 def add_edit_event(request,form="",id=0):
+    """
+    This function calls the AddEventForm from forms.py
+    If a new event is being created, a blank form is displayed and the core can fill in necessary details.
+    If an existing event's details is being edited, the same form is displayed populated with current event details for all fields
+
+    """
     dajax = Dajax()
     if form == "" :
         if id:
@@ -45,6 +58,10 @@ def add_edit_event(request,form="",id=0):
 
 @dajaxice_register
 def del_event(request,id):
+    """
+    This function is called when the core wants to delete an event
+
+    """
     dajax = Dajax()
     event=Event.objects.get(id=id)
     event.delete()
@@ -54,6 +71,12 @@ def del_event(request,id):
 
 @dajaxice_register
 def add_edit_coord(request,form="",id=0):
+    """
+    This function calls the AddCoordForm from forms.py
+    If a new coord is being created, a blank form is displayed and the core can fill in necessary details.
+    If an existing coord's details is being edited, the same form is displayed populated with current coord details for all fields
+
+    """
     dajax = Dajax()
     if form == "" :
         if id:
@@ -98,6 +121,10 @@ def add_edit_coord(request,form="",id=0):
 
 @dajaxice_register
 def del_coord(request,id):
+    """
+    This function is called when the core wants to delete a coord
+
+    """
     dajax = Dajax()
     coord=User.objects.get(id=id)
     coord.delete()
