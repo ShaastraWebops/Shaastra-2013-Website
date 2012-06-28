@@ -14,7 +14,7 @@ def updateSummary(request):
     event=Event.objects.order_by('id').all()
     for e in event:
         dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td onclick=\'displayevent("+str(e.id)+");\' class='grps' id="+e.title+"><a href=#>"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
-        coords=UserProfile.objects.filter(event__title=e.title)
+        coords=UserProfile.objects.filter(is_coord_of__title=e.title)
         for c in coords:
             dajax.append("#"+str(e.id),'innerHTML',"<li onclick=\'displayCoord("+str(c.user.id)+");\' class='coords' id="+str(c.user.username)+"><a href=#>"+str(c.user)+"</a>")
     return dajax.json()
@@ -59,7 +59,7 @@ def add_edit_coord(request,form="",id=0):
         if id:
             template = loader.get_template('ajax/core/editcoord.html')
             coord=User.objects.get(id=id)
-            coord_form = AddCoordForm(instance=coord,initial={'event':coord.get_profile().event_id,})
+            coord_form = AddCoordForm(instance=coord,initial={'event':coord.get_profile().is_coord_of_id,})
             html=template.render(RequestContext(request,locals()))
         else:
             template = loader.get_template('ajax/core/addcoord.html')
@@ -72,7 +72,7 @@ def add_edit_coord(request,form="",id=0):
         if coord_form.is_valid():
             coord=coord_form.save()
             coord_profile=coord.get_profile()
-            coord_profile.event_id=form['event']
+            coord_profile.is_coord_of_id=form['event']
             coord_profile.save()
             dajax.assign("#space",'innerHTML',"")
         else:
@@ -86,7 +86,7 @@ def add_edit_coord(request,form="",id=0):
             coord.set_password("default")
             coord.groups.add(request.user.groups.get_query_set()[1])
             coord.save()
-            coord_profile = UserProfile(user=coord, is_coord=True, event_id=form['event'])
+            coord_profile = UserProfile(user=coord, is_coord_of_id=form['event'])
             coord_profile.save()
             dajax.assign("#space",'innerHTML',"")
         else:

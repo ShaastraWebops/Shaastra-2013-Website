@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     url(r'^user/', include('users.urls')),
     url(r'^admin/', include('admin.urls')),
     url(r'^core/', include('core.urls')),
-    url(r'^events/', include('events.urls')),
+    url(r'^coord/', include('events.urls')),
     url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
 )
 

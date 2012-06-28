@@ -71,8 +71,8 @@ class UserProfile(models.Model):
     key_expires 	= models.DateTimeField	(null=True)
     want_hospi 		= models.BooleanField	(default = False)
     is_core         = models.BooleanField	(default = False)
-    is_coord        = models.BooleanField	(default = False)
-    event     = models.ForeignKey     (Event, null = True)
+#    is_coord        = models.BooleanField	(default = False)
+    is_coord_of     = models.ForeignKey     (Event, null = True)
 #    registered      = models.ManyToManyField(Event, null=True, related_name='registered_users')        #Events which this user has registered for
     facebook_id     = models.CharField      (max_length=20)
     access_token    = models.CharField      (max_length=250)
