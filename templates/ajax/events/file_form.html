@@ -1,5 +1,5 @@
 upload files for {{tab.title}}
-<form id="TabFileForm" action="/sub/" method="post" enctype="multipart/form-data"> {% csrf_token %}
+<form id="TabFileForm" action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
     Display name: <input type="text" name="display_name" id="display_name"/> 
     file: <input type="file" id="thefile"/>
     <input type="button" value="Upload File" onclick="File({{tab.id}});"/> 

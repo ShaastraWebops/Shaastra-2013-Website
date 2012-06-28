@@ -682,13 +682,6 @@ class BaseView(object):
             print 'here too'
             raise Http404()
         
-    def get_template(self, file_name):
-        #this is used to get templates from the path /.../shaastra/events/templates/events/ajax      (*in my case)
-        #note - a separate folder for ajax templates.
-        #this function opens files (*.html) and returns them as python string.
-        filepath = os.path.join(settings.AJAX_TEMPLATE_DIR, file_name)
-        f = open(filepath, mode='r')
-        return f.read()
 
 class ProtectedView(BaseView):
     """
@@ -1057,8 +1050,8 @@ class TabFileSubmit(CoordProtectedView):
         a[0].save()
         file_list = self.get_files(tab)
 
-        template = self.get_template('file_list.html')
-        t = Template(template).render(RequestContext(request, locals()))
+        template = loader.get_template('ajax/events/file_list.html')
+        t = template.render(RequestContext(request, locals()))
         # the ajax function File() assigns this as the innerHTML of a div after the request has been completed.
         return HttpResponse(t)
         
