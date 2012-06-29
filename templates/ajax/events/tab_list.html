@@ -1,4 +1,5 @@
 <div name="question_tab" id = "question_tab" onclick = "Dajaxice.events.load_question_tab(Dajax.process)">Questions</div>
+<div name="mobapp_tab" id = "mobapp_tab" onclick = "Dajaxice.events.add_edit_mobapp_tab(Dajax.process)">Mobile App Writeup</div>
 {% for tab in tabs %}
 <div name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}}</div>
 {% endfor %}

@@ -12,6 +12,12 @@ def get_files(tab):
     except:
         raise Http404()
 
+def get_mob_app_tab(event):
+    try:
+        return event.mobapptab
+    except:
+        return None
+
 def get_tabs(event):
     # gets all tabs that are related to a particular event
     try:
@@ -449,3 +455,30 @@ def save_editted_option(request, form, option_id):
         dajax.assign('#option_edit', 'innerHTML', t)
         return dajax.json()
 
+@dajaxice_register
+def add_edit_mobapp_tab(request, form = ''):
+    dajax = Dajax()
+    event = request.user.get_profile().is_coord_of
+    mob_app_tab = get_mob_app_tab(event)
+    template = loader.get_template('ajax/events/add_edit_mobapptab.html')
+    if form:
+        if mob_app_tab:
+            f = MobAppWriteupForm(form, instance = mob_app_tab)
+        else:
+            f = MobAppWriteupForm(form)
+        if f.is_valid():
+            unsaved = f.save(commit = False)
+            unsaved.event = event
+            unsaved.save()
+            dajax.alert('saved successfully!')
+        else:
+            dajax.alert('Error. Your write up could not be saved!')
+    else:
+        if mob_app_tab:
+            f = MobAppWriteupForm(instance = mob_app_tab)
+        else:
+            f = MobAppWriteupForm()
+    t = template.render(RequestContext(request,locals())) 
+    dajax.assign('#detail', 'innerHTML', t)
+    return dajax.json()
+    
