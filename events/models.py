@@ -220,6 +220,11 @@ class MCQOption(models.Model):
     class Meta:
         ordering = ['option']
 
+class MobAppTab(models.Model):
+    event = models.OneToOneField(Event, blank = True, null = True)
+    text = models.TextField()
+    
+    
 
 class AddOptionForm(ModelForm):
     class Meta:
@@ -279,6 +284,11 @@ class EventUnlockForm(forms.Form):
 class TabAddForm(ModelForm):
     class Meta:
         model = Tab
+        exclude = ('event',)
+        
+class MobAppWriteupForm(ModelForm):
+    class Meta:
+        model = MobAppTab
         exclude = ('event',)
         
 
