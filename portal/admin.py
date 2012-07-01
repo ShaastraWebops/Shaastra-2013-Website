@@ -168,7 +168,7 @@ class TopicAdmin(admin.ModelAdmin):
     for custom form for 'information'
     """
     inlines=[TopicImageInline]
-    list_display = ['index_number','title',]
+    list_display = ['title','index_number',]
     fields=['title','index_number']
     def save_model(self, request, obj, form, change):
         obj.url_name = obj.title.replace(" ","_").replace('!', 
