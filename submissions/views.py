@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def all_submissions(request):
     if request.method == 'GET':
+        submissions = request.user.get_profile().individualsubmission_set.all()
         return render_to_response('submissions/submission_list.html', locals(), context_instance = RequestContext(request))
         
 @login_required
