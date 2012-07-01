@@ -50,7 +50,8 @@ INSTALLED_APPS = (
     'events',
     'dajaxice',
     'dajax', 
-    'core',  
+    'core',
+    'submissions',
 )
 
 # A sample logging configuration. The only tangible logging
