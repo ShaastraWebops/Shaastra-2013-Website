@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include('admin.urls')),
     url(r'^core/', include('core.urls')),
     url(r'^coord/', include('events.urls')),
+    url(r'^submission/', include('submissions.urls')),
     url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
 )
 
