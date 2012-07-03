@@ -1,12 +1,37 @@
 <html>
 <head>{% load dajaxice_templatetags %}
+<link href="/static/css/demo_page.css"  type="text/css" rel="stylesheet">
+<link href="/static/css/demo_table.css"  type="text/css" rel="stylesheet">
 <script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
+<script language = 'JavaScript' type="text/javascript" src="/static/js/jquery.dataTables.js" charset = "utf-8"></script>
 <script language = 'JavaScript' type="text/javascript" src="/static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
 <script language = 'JavaScript' type="text/javascript" src="/static/js/jquery.dajax.core.js" charset = "utf-8"></script>
 <script type="text/javascript" charset = "utf-8">
 
 // not documenting this for now. Try n see all the templates in the ajax folder. These functions are called from those templates.
 // make a note of all the div ids. See how the divs are being changed dynamically by dajax.
+function save_score(id){
+    data = $('#score').serializeObject();
+    isnum = /^[-+]?[0-9]+(\.[0-9]+)?$/.test(data.score);
+    if(!isnum){alert('enter a valid score');return false;}
+    Dajaxice.submissions.save_score(Dajax.process,{'form':data,'sub_id':id})
+    return false;
+}
+
+function send_checklist(){
+    data = $('#sub_list').serializeObject();
+    if(data.action=='0'){alert('Please select an Action');return false;}
+    if(!data.sub_checklist){alert('Select a Submission!');return false;}
+    Dajaxice.submissions.send_checklist(Dajax.process,{'form':data})
+    return false;
+    
+}
+function toggleChecked(status){
+    $(".checkbox").each( function(){
+        $(this).attr("checked", status);
+        })
+}
+
 function save_mobapptab(){
     $('#detail').html = "<img src = '/static/img/loading.gif'>";
     data = $('#mobapptab_form').serializeObject();
@@ -135,12 +160,13 @@ function File(id){
 </head>
 <h3>Dashboard for {{request.user.get_profile.is_coord_of.title}}</h3>
 {% csrf_token %}
-<div name="tabs" id = "tabs">
 <div name="question_tab" id = "question_tab" onclick = "Dajaxice.events.load_question_tab(Dajax.process)">Questions</div>
 <div name="mobapp_tab" id = "mobapp_tab" onclick = "Dajaxice.events.add_edit_mobapp_tab(Dajax.process)">Mobile App Writeup</div>
-{% for tab in tabs %}
-<div name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}}</div>
-{% endfor %}
+<div name="submissions" id = "submissions" onclick = "Dajaxice.submissions.all_submissions(Dajax.process)">Submissions</div>
+<div name="tabs" id = "tabs">
+    {% for tab in tabs %}
+    <div name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}}</div>
+    {% endfor %}
 </div>
 <div name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.add_tab(Dajax.process)">add a tab</div>
 <div name="detail" id="detail"></div>
