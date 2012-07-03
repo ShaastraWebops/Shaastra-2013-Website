@@ -4,21 +4,21 @@ MCQs:<br />
 {% for option in q.mcqoption_set.all %}
 {{option.option}}:{{option.text}}<br />
 {% endfor %}
-<div onclick="Dajaxice.events.manage_options(Dajax.process, {'ques_id':{{q.id}}})">Edit Choices</div>
-<div onclick="Dajaxice.events.edit_mcq(Dajax.process, {'ques_id':{{q.id}}})">Edit</div>
-<div onclick="delete_mcq({{q.id}});">Delete</div>
+<a href="#" onclick="Dajaxice.events.manage_options(Dajax.process, {'ques_id':{{q.id}}})">Edit Choices</a>
+<a href="#" onclick="Dajaxice.events.edit_mcq(Dajax.process, {'ques_id':{{q.id}}})">Edit</a>
+<a href="#" onclick="delete_mcq({{q.id}});">Delete</a>
 <br />
 {% endfor %}
-<div onclick = "Dajaxice.events.add_mcq(Dajax.process)">
-Add MCQ</div>
+<a href="#" onclick = "Dajaxice.events.add_mcq(Dajax.process)">
+Add MCQ</a>
 <br /><br />
 
 Subjectives:<br />
 {% for q in text_questions %}
 {{q.q_number}}.{{q.title}}
-<div onclick="Dajaxice.events.edit_subjective(Dajax.process, {'ques_id':{{q.id}}})">Edit</div>
-<div onclick="delete_sub({{q.id}});">Delete</div><br />
+<a href="#" onclick="Dajaxice.events.edit_subjective(Dajax.process, {'ques_id':{{q.id}}})">Edit</a>
+<a href="#" onclick="delete_sub({{q.id}});">Delete</a><br />
 {% endfor %} 
-<div onclick = "Dajaxice.events.add_subjective(Dajax.process)">
-Add Subjective</div>
+<a href="#" onclick = "Dajaxice.events.add_subjective(Dajax.process)">
+Add Subjective</a>
 <br />
