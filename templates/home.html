@@ -6,12 +6,12 @@
     <body>
         {% if user.is_authenticated %}
         <h2>Welcome {{ user }},</h2>
-        <a href="/user/editprofile">Edit Profile</a>
-        <a href="/user/password_change">Change Password</a>
-        <a href="/user/logout">Logout</a>
+        <a href="{{site_url}}user/editprofile/">Edit Profile</a>
+        <a href="{{site_url}}user/password_change/">Change Password</a>
+        <a href="{{site_url}}user/logout/">Logout</a>
         <hr />
         {% else %}
-        <a href="/user/login">Login</a>
+        <a href="{{site_url}}user/login">Login</a>
         {% endif %}
     </body>
 </html>

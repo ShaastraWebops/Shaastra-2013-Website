@@ -71,14 +71,14 @@ def dtvSummaryHandler(request):
         return HttpResponse("Sorry. %s's user profile is not available." % request.user.username)
 
     if currentUserProfile.is_coord_of:
-        return HttpResponseRedirect('/events/DTVSummary/ByEvent/')
+        return HttpResponseRedirect(settings.SITE_URL + 'events/DTVSummary/ByEvent/')
         
     if currentUserProfile.is_core:
         
         if PDFGenAllowed():
             return render_to_response("events/CoreDTVLanding.html", locals(), context_instance = RequestContext(request))
             
-        return HttpResponseRedirect('/events/DTVSummary/ByEvent/')
+        return HttpResponseRedirect(settings.SITE_URL + 'events/DTVSummary/ByEvent/')
         
     return HttpResponseForbidden('This page can be accessed by Cores and Coordinators only. Please login with proper authentication to proceed.')
 
@@ -846,7 +846,7 @@ class SubEventAdd(SubEventAddEditDeleteABC):
             newSubEventData = form.cleaned_data
             newSubEvent = SubEvent()
             self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
-            return HttpResponseRedirect('/events/DTVSummary/')
+            return HttpResponseRedirect(settings.SITE_URL + 'events/DTVSummary/')
         
         form_mode = 'add'  # For re-using the template (only difference: add/edit button)
         return render_to_response ('events/addEditSubEvent.html', locals(), context_instance = RequestContext(request))
@@ -895,7 +895,7 @@ class SubEventEdit(SubEventAddEditDeleteABC):
             newSubEventData = form.cleaned_data
             newSubEvent = subeventRequested  # We want to update this SubEvent instance
             self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
-            return HttpResponseRedirect('/events/DTVSummary/')
+            return HttpResponseRedirect(settings.SITE_URL + 'events/DTVSummary/')
 
         form_mode = 'edit'  # For re-using the template (only difference: add/edit button)
         return render_to_response ('events/addEditSubEvent.html', locals(), context_instance = RequestContext(request))
@@ -922,7 +922,7 @@ class SubEventDelete(SubEventAddEditDeleteABC):
         subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
         subeventRequested.delete()
         self.updateEventLockStatus(self.getEvent(kwargs['event']))
-        return HttpResponseRedirect('/events/DTVSummary/')
+        return HttpResponseRedirect(settings.SITE_URL + 'events/DTVSummary/')
         
 class LockEvent(CoordProtectedView):
     """
@@ -963,7 +963,7 @@ class LockEvent(CoordProtectedView):
         eventRequested.unlock_reason = ''
         eventRequested.save()
             
-        return HttpResponseRedirect('/events/DTVSummary')
+        return HttpResponseRedirect(settings.SITE_URL + 'events/DTVSummary/')
         
 class UnlockEvent(CoreProtectedView):
     """
@@ -1002,7 +1002,7 @@ class UnlockEvent(CoreProtectedView):
             eventRequested.unlock_reason = submittedData['unlock_reason']
             eventRequested.save()
             
-            return HttpResponseRedirect('/events/DTVSummary')
+            return HttpResponseRedirect(settings.SITE_URL + 'events/DTVSummary/')
             
         return render_to_response ('events/unlockEvent.html', locals(), context_instance = RequestContext(request))
         

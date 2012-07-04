@@ -3,20 +3,20 @@
     <head>
         <title>Shaastra 2013</title>
         {% dajaxice_js_import %}
-        <script type="text/javascript" src="/static/js/jquery.js"></script>
-        <script type="text/javascript" src="/static/js/jquery.dajax.core.js"></script>
-        <script language = 'JavaScript' type="text/javascript" src="/static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
         <script type="text/javascript">
         function add_event()
         {
             data=$("#space :input").serializeObject();
-            $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
+            $("#space").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.core.add_edit_event(Dajax.process,{'form':data});
         }
         function edit_event(id)
         {
             data=$("#space :input").serializeObject();
-            $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
+            $("#space").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.core.add_edit_event(Dajax.process,{'form':data,'id':id});
         }
         function del_event(id)
@@ -24,7 +24,7 @@
             var press=confirm("Confirm delete?");
             if (press==true)
             {
-                $("#space").append("Processing please wait..<br><img src='/static/img/loading.gif'>");
+                $("#space").append("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
                 Dajaxice.core.del_event(Dajax.process,{'id':id});
             }
         }
@@ -32,13 +32,13 @@
         {
             data=$("#space :input").serializeObject();
             alert(data['event']);
-            $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
+            $("#space").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.core.add_edit_coord(Dajax.process,{'form':data});
         }
         function edit_coord(id)
         {
             data=$("#space :input").serializeObject();
-            $("#space").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
+            $("#space").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.core.add_edit_coord(Dajax.process,{'form':data,'id':id});
         }
         function del_coord(id)
@@ -46,23 +46,23 @@
             var press=confirm("Confirm delete?");
             if (press==true)
             {
-                $("#space").append("Processing please wait..<br><img src='/static/img/loading.gif'>");
+                $("#space").append("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
                 Dajaxice.core.del_coord(Dajax.process,{'id':id});
             }
         }
         function updateSummary()
         {
-            $("#summary").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+            $("#summary").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
             Dajaxice.core.updateSummary(Dajax.process);
         }
         function displayevent(id)
         {
-            $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+            $("#space").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
             Dajaxice.core.add_edit_event(Dajax.process,{'id':id});
         }
         function displayCoord(id)
         {
-            $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+            $("#space").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
             Dajaxice.core.add_edit_coord(Dajax.process,{'id':id});
         }
         </script>
@@ -70,11 +70,11 @@
         $(document).ready(function(){
             updateSummary();
            $("#add_event").click(function(){
-                $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+                $("#space").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
                 Dajaxice.core.add_edit_event(Dajax.process);            
            });
            $("#add_coord").click(function(){
-                $("#space").html("Loading please wait..<br><img src='/static/img/loading.gif'>");            
+                $("#space").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
                 Dajaxice.core.add_edit_coord(Dajax.process);            
            });
          });
@@ -82,9 +82,9 @@
     </head>
     <body>
         Welcome {{ request.user }} | <i>{{ request.user.groups.get_query_set.1 }} core</i><br>
-        <a href="/user/logout/">Logout</a>
-        <a href="/user/editprofile/">Edit Profile</a>
-        <a href="/user/password_change">Change Password</a>
+        <a href="{{site_url}}user/logout/">Logout</a>
+        <a href="{{site_url}}user/editprofile/">Edit Profile</a>
+        <a href="{{site_url}}user/password_change/">Change Password</a>
         <hr/>
         <div id="nav">
             <button id="add_event">Add event</button>

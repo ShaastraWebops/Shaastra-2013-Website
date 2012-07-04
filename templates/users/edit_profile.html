@@ -3,10 +3,10 @@
     <head>
         <title>Edit Profile</title>
         {% dajaxice_js_import %}
-        <script type="text/javascript" src="/static/js/jquery.js"></script>
-        <script type="text/javascript" src="/static/js/jquery.dajax.core.js"></script>
-        <script language = 'JavaScript' type="text/javascript" src="/static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
-        <script type="text/javascript" src="/static/js/college.reg.js"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/college.reg.js"></script>
     </head>
 <body>
     <p>
@@ -19,6 +19,6 @@
         </table>
         <input type="submit" value="Update Profile">
     </form>
-    <a href="/">Home</a>
+    <a href="{{site_url}}">Home</a>
 </body>    
 </html>

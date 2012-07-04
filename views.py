@@ -1,13 +1,14 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template.context import Context, RequestContext
 from django.shortcuts import render_to_response
+from django.conf import settings
 
 def home(request):
     if request.user.is_authenticated():
         if request.user.is_superuser:
-            return HttpResponseRedirect('/admin')
+            return HttpResponseRedirect(settings.SITE_URL + 'admin/')
         elif request.user.get_profile().is_core:
-            return HttpResponseRedirect('/core')
+            return HttpResponseRedirect(settings.SITE_URL + 'core/')
         else:
         	return render_to_response('home.html',locals(),context_instance = RequestContext(request))
     else:
