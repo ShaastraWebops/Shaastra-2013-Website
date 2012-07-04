@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from shaastra.events.models import Event
+from events.models import Event
 
 GENDER_CHOICES = (
     ('M','Male'),
