@@ -52,7 +52,8 @@ def updateSummary(request):
         dajax.append("#groups",'innerHTML',"<tr><td>"+str(g.id-1)+"</td><td onclick=\'displayGroup("+str(g.id)+");\' class='grps' id="+g.name+"><a href=#>"+g.name+"</a></td><td id="+str(g.id)+"></td></tr>")
         cores=User.objects.filter(groups__name=g.name)
         for c in cores:
-            dajax.append("#"+str(g.id),'innerHTML',"<li onclick=\'displayCore("+str(c.id)+");\' class='cores' id="+str(c.username)+"><a href=#>"+str(c)+"</a>")
+            if c.get_profile().is_core:
+	        dajax.append("#"+str(g.id),'innerHTML',"<li onclick=\'displayCore("+str(c.id)+");\' class='cores' id="+str(c.username)+"><a href=#>"+str(c)+"</a>")
     return dajax.json()
 
 @dajaxice_register
@@ -125,4 +126,3 @@ def del_core(request,id):
     dajax.assign('#space', 'innerHTML', "")
     dajax.script("updateSummary();")
     return dajax.json()
-

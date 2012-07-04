@@ -36,7 +36,9 @@ def login_post(request):
             return HttpResponseRedirect(settings.SITE_URL + 'core/')
         elif user.get_profile().is_coord_of :
             return HttpResponseRedirect(settings.SITE_URL + 'coord/')
-    return HttpResponseRedirect(settings.SITE_URL)
+    msg="Username and Password does not match."
+    form=LoginForm()
+    return render_to_response('users/login.html',locals(),context_instance = RequestContext(request))
 
 @login_required(login_url=settings.SITE_URL + 'user/login/')    
 def logout(request):
@@ -45,12 +47,14 @@ def logout(request):
 
 def register_get(request):
     form = AddUserForm()
+    post_url = settings.SITE_URL+'user/register/'
     return render_to_response('users/register.html', locals(), context_instance = RequestContext(request))    
     
 def register_post(request):
     """
         This is the user registration view
     """
+    
     form = AddUserForm(request.POST)
     if form.is_valid():
         data = form.cleaned_data
@@ -72,6 +76,34 @@ def register_post(request):
         return HttpResponseRedirect(settings.SITE_URL)
     return render_to_response('users/register.html', locals(), context_instance = RequestContext(request))
 
+def register_post_fb(request):
+    """
+        This is the user registration view for fb
+    """
+    form = FacebookUserForm(request.POST)
+    facebook_id = request.POST['facebook_id']
+    access_token = request.POST['access_token']
+    if form.is_valid():
+        data = form.cleaned_data
+        new_user = User(first_name = data['first_name'], last_name=data['last_name'], username= data['username'], email = data['email'])
+        new_user.set_password('default')
+        new_user.save()
+        userprofile = UserProfile(
+                user = new_user,
+                gender     = data['gender'],
+                age = data['age'],
+                branch = data['branch'],
+                mobile_number = data['mobile_number'],
+                college = data['college'],
+                college_roll = data['college_roll'],
+                facebook_id = facebook_id,
+                access_token = access_token,
+                )
+        userprofile.save()
+        new_user = authenticate(username = data['username'], password = "default")
+        auth_login(request, new_user)
+        return HttpResponseRedirect(settings.SITE_URL)
+    return render_to_response('users/register.html', locals(), context_instance = RequestContext(request))
 
 @login_required(login_url=settings.SITE_URL + "user/login/")
 def editprofile_get(request):

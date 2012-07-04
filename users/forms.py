@@ -122,18 +122,41 @@ class EditUserForm(BaseUserForm):
 
     def clean_mobile_number(self):
         if (len(self.cleaned_data['mobile_number'])!=10 or (self.cleaned_data['mobile_number'][0]!='7' and self.cleaned_data['mobile_number'][0]!='8' and self.cleaned_data['mobile_number'][0]!='9') or (not self.cleaned_data['mobile_number'].isdigit())):
-            pass	
+	        raise forms.ValidationError(u'Enter a valid mobile number')
         elif 'mobile_number' in self.changed_data:
             if UserProfile.objects.filter(mobile_number=self.cleaned_data['mobile_number']):
                 raise forms.ValidationError('This mobile number is already registered')
             else:
                 return self.cleaned_data['mobile_number']
-        raise forms.ValidationError(u'Enter a valid mobile number')
+        return self.cleaned_data['mobile_number']                
+
+
+
+class FacebookUserForm(BaseUserForm):
+
+    username        = forms.CharField  (max_length=30, help_text='Your Shaastra 2013 username')
+    email           = forms.EmailField (help_text='Enter your e-mail address. eg, someone@gmail.com')
+
+    class Meta(BaseUserForm.Meta):
+	fields=('first_name', 'last_name', 'username', 'email', 'gender', 'age', 'college', 'college_roll', 'branch', 'mobile_number')
+
+    def clean_username(self):
+        if not alnum_re.search(self.cleaned_data['username']):
+           raise forms.ValidationError(u'Usernames can only contain letters, numbers and underscores')
+        if User.objects.filter(username=self.cleaned_data['username']):
+            pass
+        else:
+            return self.cleaned_data['username']
+        raise forms.ValidationError('This username is already taken. Please choose another.')
+
+    def clean_email(self):
+        if User.objects.filter(email=self.cleaned_data['email']):
+            pass
+        else:
+            return self.cleaned_data['email']
+        raise forms.ValidationError('This email address is already taken. Please choose another.')
 	
-
-
 class AddCollegeForm (ModelForm):
     class Meta:
         model = College
         fields=('name','city','state')
-

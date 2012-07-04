@@ -7,6 +7,7 @@ from django.views.generic.simple import redirect_to
 urlpatterns = patterns('',  
     url(r'^login/$', 'views.method_splitter', {'GET': login_get, 'POST': login_post}),
     url(r'^register/$', 'views.method_splitter', {'GET': register_get, 'POST': register_post}),
+    url(r'^register_fb/$', register_post_fb),    
     url(r'^editprofile/$', 'views.method_splitter', {'GET': editprofile_get, 'POST': editprofile_post}),
     url(r'^facebook/login/?$', 'users.fb_views.login'),
     url(r'^facebook/authentication_callback/?$', 'users.fb_views.authentication_callback'),
