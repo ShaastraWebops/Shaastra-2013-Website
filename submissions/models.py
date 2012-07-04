@@ -58,7 +58,6 @@ class Answer_MCQ_Form(ModelForm):
         queryset = kwargs.pop('queryset')
         super(Answer_MCQ_Form, self).__init__(*args,**kwargs)
         self.fields['choice'].queryset = queryset
-        print dir(self.fields['choice'].initial)
         
     
 
