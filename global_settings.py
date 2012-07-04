@@ -96,7 +96,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
 "django.core.context_processors.static",
 "django.core.context_processors.request",
 "django.contrib.messages.context_processors.messages",
-"main_site.context_processors.site_url",)
+"context_processors.site_url",)
 
 DAJAX_JS_FRAMEWORK = "jQuery"
 DAJAX_MEDIA_PREFIX='dajax'
@@ -109,3 +109,4 @@ EMAIL_HOST='localhost'
 EMAIL_HOST_PASSWORD='$#aastra20iiw3b0ps'
 #Default: '' (Empty string)
 EMAIL_HOST_USER='shaastra'
+
