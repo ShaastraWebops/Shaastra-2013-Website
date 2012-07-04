@@ -20,7 +20,6 @@ def get_answer_text(sub, q):
         return None
 
 def get_elem(index, pag_list, n):
-    print 'getting elem', index, n
     if index+n<0:
         return None
     try:
@@ -34,7 +33,6 @@ def save_edit_mcq(request, eve_id, q_id, form = ''):
     dajax = Dajax()
     q = ObjectiveQuestion.objects.get(id = q_id)
     jav_func = None
-    print eve_id, q_id, form
     if form:
         choice = q.mcqoption_set.get(id = int(form['choice']))
         ans = Answer_MCQ.objects.get_or_create(question_id = q_id, submission = sub)[0]
@@ -100,5 +98,65 @@ def pagination(request, eve_id, q_id, is_mcq):
     t = template.render(RequestContext(request, locals()))
     dajax.assign('#pagination', 'innerHTML', t)
     return dajax.json()
-            
+
+# coord related ajax views start from here
+
+def submission_list(request):
+    dajax = Dajax()
+    subs = request.user.get_profile().is_coord_of.basesubmission_set.all()
+    template = loader.get_template('ajax/submissions/all_submissions.html')
+    t = template.render(RequestContext(request,locals())) 
+    dajax.assign('#detail', 'innerHTML', t)
+    dajax.script("$('#submissions_list').dataTable();")
+    return dajax.json()
+    
+@dajaxice_register
+def all_submissions(request):
+    return submission_list(request)
+
+def submission(request, sub_id, mark_read = False):    
+    dajax = Dajax()
+    sub = BaseSubmission.objects.get(id = sub_id)
+    if mark_read: 
+        sub.sub_read = True
+        sub.save()
+    mcqs = Answer_MCQ.objects.filter(submission = sub)
+    textqs = Answer_Text.objects.filter(submission = sub)
+    template = loader.get_template('ajax/submissions/view_submission.html')
+    t = template.render(RequestContext(request,locals()))
+    dajax.assign('#detail', 'innerHTML', t)
+    return dajax.json()
+    
+@dajaxice_register
+def view_submission(request, sub_id):
+    return submission(request, sub_id, mark_read = True)
+
+@dajaxice_register
+def edit_sub(request, sub_id, attr, assign):
+    kw = {'false':False, 'true':True}
+    sub = BaseSubmission.objects.get(id = sub_id)
+    setattr(sub, attr, kw[assign])
+    sub.save()
+    return submission(request, sub_id)
+    
+@dajaxice_register
+def send_checklist(request, form):
+    dajax = Dajax()
+    assign = True
+    if form['action'] == 'sub_read': assign = False
+    if form['action'] == 'read': form['action'] = 'sub_read'
+    sub_ids = [form['sub_checklist']] if len(form['sub_checklist'])==1 else form['sub_checklist']
+    for sub_id in sub_ids:
+        sub = BaseSubmission.objects.get(id = sub_id)
+        setattr(sub, form['action'], assign)
+        sub.save()
+    return submission_list(request)
+
+@dajaxice_register    
+def save_score(request, form, sub_id):
+    print 'here'
+    sub = BaseSubmission.objects.get(id = sub_id)
+    sub.score = form['score']
+    sub.save()
+    return submission(request, sub_id)
     
