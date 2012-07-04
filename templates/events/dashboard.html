@@ -158,7 +158,9 @@ function File(id){
 {% dajaxice_js_import %}
 
 </head>
-<h3>Dashboard for {{request.user.get_profile.is_coord_of.title}}</h3>
+<h3>Welcome {{request.user}} | <i>{{request.user.get_profile.is_coord_of.title}} coord </i></h3>
+<a href="{{site_url}}user/logout/">Logout</a>
+<p>
 {% csrf_token %}
 <a href="#" name="question_tab" id = "question_tab" onclick = "Dajaxice.events.load_question_tab(Dajax.process)">Questions</a>
 <a href="#" name="mobapp_tab" id = "mobapp_tab" onclick = "Dajaxice.events.add_edit_mobapp_tab(Dajax.process)">Mobile App Writeup</a>
@@ -166,10 +168,11 @@ function File(id){
 <hr/>
 <div name="tabs" id = "tabs">
     {% for tab in tabs %}
-    <a href="#" name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}}</a><br/>
+    <a href="#" name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}} </a>
     {% endfor %}
 </div>
 <a href="#" name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.add_tab(Dajax.process)">add a tab</a>
+<p>
 <div name="detail" id="detail"></div>
 
 </html>
