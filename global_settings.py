@@ -102,3 +102,10 @@ DAJAX_JS_FRAMEWORK = "jQuery"
 DAJAX_MEDIA_PREFIX='dajax'
 DAJAXICE_MEDIA_PREFIX="dajaxice"
 DAJAXICE_DEBUG = True
+
+EMAIL_HOST='localhost'
+#Default: 'localhost'
+#The host to use for sending e-mail.
+EMAIL_HOST_PASSWORD='$#aastra20iiw3b0ps'
+#Default: '' (Empty string)
+EMAIL_HOST_USER='shaastra'
