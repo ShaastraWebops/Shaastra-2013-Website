@@ -14,13 +14,13 @@ def login_get(request):
         currentuser=request.user
         currentUserProfile=currentuser.get_profile()
         if request.user.is_superuser :
-            return HttpResponseRedirect('/admin')
+            return HttpResponseRedirect(settings.SITE_URL + 'admin/')
         elif currentUserProfile.is_core :
-            return HttpResponseRedirect('/core')
+            return HttpResponseRedirect(settings.SITE_URL + 'core/')
         elif currentUserProfile.is_coord_of :
-            return HttpResponseRedirect('/coord')
+            return HttpResponseRedirect(settings.SITE_URL + 'coord/')
         else:
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(settings.SITE_URL)
     form = LoginForm()
     return render_to_response('users/login.html',locals(),context_instance = RequestContext(request))
     
@@ -31,17 +31,17 @@ def login_post(request):
     if user is not None and user.is_active:
         auth_login(request, user)
         if user.is_superuser :
-            return HttpResponseRedirect('/admin')
+            return HttpResponseRedirect(settings.SITE_URL + 'admin/')
         elif user.get_profile().is_core :
-            return HttpResponseRedirect('/core')
+            return HttpResponseRedirect(settings.SITE_URL + 'core/')
         elif user.get_profile().is_coord_of :
-            return HttpResponseRedirect('/coord')
-    return HttpResponseRedirect('/')
+            return HttpResponseRedirect(settings.SITE_URL + 'coord/')
+    return HttpResponseRedirect(settings.SITE_URL)
 
-@login_required(login_url='/user/login')    
+@login_required(login_url=settings.SITE_URL + 'user/login/')    
 def logout(request):
     auth_logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(settings.SITE_URL)
 
 def register_get(request):
     form = AddUserForm()
@@ -69,11 +69,11 @@ def register_post(request):
         userprofile.save()
         new_user = authenticate(username = data['username'], password = data['password'])
         auth_login(request, new_user)
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(settings.SITE_URL)
     return render_to_response('users/register.html', locals(), context_instance = RequestContext(request))
 
 
-@login_required(login_url="/user/login")
+@login_required(login_url=settings.SITE_URL + "user/login/")
 def editprofile_get(request):
     currentUser = request.user
     currentUserProfile = currentUser.get_profile()
@@ -82,7 +82,7 @@ def editprofile_get(request):
     editProfileForm = EditUserForm(instance=currentUserProfile,initial=values)
     return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))    
 
-@login_required(login_url="/user/login")
+@login_required(login_url=settings.SITE_URL + "user/login/")
 def editprofile_post(request):
     """
         Edits a user's profile. 
@@ -96,7 +96,7 @@ def editprofile_post(request):
         currentUser.first_name = request.POST['first_name']
         currentUser.last_name = request.POST['last_name']
         currentUser.save()
-        return HttpResponseRedirect ("/")
+        return HttpResponseRedirect (settings.SITE_URL)
     return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))
 '''
 def forgot_password(request):
