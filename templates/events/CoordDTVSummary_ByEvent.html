@@ -4,11 +4,11 @@
     {% ifequal event.lock_status 'locked' %}
         <h4> LOCKED </h4>
     {% else %}
-        <a href = '/events/{{event}}/addSubEvent/'> Add Sub-Event </a>
+        <a href = '{{site_url}}events/{{event}}/addSubEvent/'> Add Sub-Event </a>
         <br/>
         {% for event, subEventList in happenings %}    {# There will be only one tuple here (only one event) #}
             {% ifequal event.lock_status 'not_locked' %}
-                <a href = '/events/{{event}}/lockEvent/'> Lock Event </a>
+                <a href = '{{site_url}}events/{{event}}/lockEvent/'> Lock Event </a>
             {% endifequal %}
         {% endfor %}
     {% endifequal %}
@@ -17,8 +17,8 @@
 
 {% block subEventActions %}
      {% ifnotequal event.lock_status 'locked' %}
-        <td> <a href = '/events/{{event}}/{{subEvent}}/editSubEvent/'> Edit </a> </td>
-        <td> <a href = '/events/{{event}}/{{subEvent}}/deleteSubEvent/'> Delete </a> </td>
+        <td> <a href = '{{site_url}}events/{{event}}/{{subEvent}}/editSubEvent/'> Edit </a> </td>
+        <td> <a href = '{{site_url}}events/{{event}}/{{subEvent}}/deleteSubEvent/'> Delete </a> </td>
     {% endifnotequal %}
 {% endblock %}
 
