@@ -1,4 +1,4 @@
-"""This module contains the views that generate the PDFs fof the DTV Picker feature."""
+"""This module contains the views that generate the PDFs for the DTV Picker feature."""
 
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
@@ -133,6 +133,8 @@ def dtvSummaryByVenue_PDF(request):
                               subevent.end_date_and_time.date().strftime("%d-%b-%y"),
                               subevent.end_date_and_time.time().strftime("%I:%M %p"),
                               strfdelta(subevent.end_date_and_time - subevent.start_date_and_time, "%H:%M"), ])
+                              # For strftime documentation and the format specifiers see
+                              # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
         t = Table(tableData, repeatRows = 1)
         
         # Set the table style
@@ -297,6 +299,8 @@ def dtvSummaryByDate_PDF(request):
                               subevent.end_date_and_time.time().strftime("%I:%M %p"),
                               subevent.venue,
                               strfdelta(subevent.end_date_and_time - subevent.start_date_and_time, "%H:%M"), ])
+                              # For strftime documentation and the format specifiers see
+                              # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
         t = Table(tableData, repeatRows = 1)
         
         # Set the table style
@@ -407,6 +411,8 @@ def dtvSummaryByEvent_PDF(request):
                               subevent.end_date_and_time.date().strftime("%d-%b-%y"),
                               subevent.end_date_and_time.time().strftime("%I:%M %p"),
                               strfdelta(subevent.end_date_and_time - subevent.start_date_and_time, "%H:%M"), ])
+                              # For strftime documentation and the format specifiers see
+                              # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
         t = Table(tableData, repeatRows = 1)
         
         # Set the table style

@@ -49,7 +49,7 @@ class LockEvent(CoordProtectedView):
         eventRequested.unlock_reason = ''
         eventRequested.save()
             
-        return HttpResponseRedirect('/DTVPicker/Summary/')
+        return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
         
 class UnlockEvent(CoreProtectedView):
     """
@@ -88,7 +88,7 @@ class UnlockEvent(CoreProtectedView):
             eventRequested.unlock_reason = submittedData['unlock_reason']
             eventRequested.save()
             
-            return HttpResponseRedirect('/DTVPicker/Summary/')
+            return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
             
         return render_to_response ('dtvpicker/EventPages/unlockEvent.html', locals(), context_instance = RequestContext(request))
 

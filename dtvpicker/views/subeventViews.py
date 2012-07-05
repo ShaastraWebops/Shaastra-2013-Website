@@ -42,7 +42,7 @@ class SubEventAdd(SubEventAddEditDeleteABC):
             newSubEventData = form.cleaned_data
             newSubEvent = SubEvent()
             self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
-            return HttpResponseRedirect('/DTVPicker/Summary/')
+            return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
         
         form_mode = 'add'  # For re-using the template (only difference: add/edit button)
         return render_to_response ('dtvpicker/SubeventPages/addEditSubEvent.html', locals(), context_instance = RequestContext(request))
@@ -91,7 +91,7 @@ class SubEventEdit(SubEventAddEditDeleteABC):
             newSubEventData = form.cleaned_data
             newSubEvent = subeventRequested  # We want to update this SubEvent instance
             self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
-            return HttpResponseRedirect('/DTVPicker/Summary/')
+            return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
 
         form_mode = 'edit'  # For re-using the template (only difference: add/edit button)
         return render_to_response ('dtvpicker/SubeventPages/addEditSubEvent.html', locals(), context_instance = RequestContext(request))
@@ -118,5 +118,5 @@ class SubEventDelete(SubEventAddEditDeleteABC):
         subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
         subeventRequested.delete()
         self.updateEventLockStatus(self.getEvent(kwargs['event']))
-        return HttpResponseRedirect('/DTVPicker/Summary/')
+        return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
 

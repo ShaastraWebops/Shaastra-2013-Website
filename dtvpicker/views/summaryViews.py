@@ -26,14 +26,14 @@ def dtvSummaryHandler(request):
         return HttpResponse("Sorry. %s's user profile is not available." % request.user.username)
 
     if currentUserProfile.is_coord_of:
-        return HttpResponseRedirect('/DTVPicker/Summary/ByEvent/')
+        return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/ByEvent/')
         
     if currentUserProfile.is_core:
         
         if PDFGenAllowed():
             return render_to_response("dtvpicker/SummaryPages/DTVLanding.html", locals(), context_instance = RequestContext(request))
             
-        return HttpResponseRedirect('/DTVPicker/Summary/ByEvent/')
+        return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/ByEvent/')
         
     return HttpResponseForbidden('This page can be accessed by Cores and Coordinators only. Please login with proper authentication to proceed.')
 
