@@ -5,6 +5,7 @@ from BaseClasses import CoordProtectedView, CoreProtectedView
 from django.http import HttpResponseRedirect, HttpResponseForbidden, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.conf import settings
 
 from dtvpicker.models import SubEvent
 from events.models import Event

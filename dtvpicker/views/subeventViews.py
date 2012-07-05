@@ -5,6 +5,7 @@ from BaseClasses import SubEventAddEditDeleteABC
 from django.http import HttpResponseForbidden, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.conf import settings
 
 from dtvpicker.models import SubEvent
 from events.models import Event
