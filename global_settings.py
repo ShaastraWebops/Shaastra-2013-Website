@@ -48,8 +48,8 @@ INSTALLED_APPS = (
     'admin',
     'users',
     'events',
-#    'dajaxice',
-#    'dajax', 
+    'dajaxice',
+    'dajax', 
     'core',
     'submissions',
     'dtvpicker',
@@ -99,7 +99,6 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
 "django.contrib.messages.context_processors.messages",
 "context_processors.site_url",)
 
-'''
 DAJAX_JS_FRAMEWORK = "jQuery"
 DAJAX_MEDIA_PREFIX='dajax'
 DAJAXICE_MEDIA_PREFIX="dajaxice"
@@ -112,4 +111,3 @@ EMAIL_HOST_PASSWORD='$#aastra20iiw3b0ps'
 #Default: '' (Empty string)
 EMAIL_HOST_USER='shaastra'
 
-'''
