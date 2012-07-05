@@ -1,12 +1,12 @@
-{% extends "events/dtvBase.html" %}
+{% extends "dtvpicker/dtvBase.html" %}
 
 {% block dtvTitle %}
     Lock Event | {{ eventRequested }}
 {% endblock %}
 
-{% block dtvBody %}
-    <h3> Lock Event: {{ eventRequested }} </h3>
+{% block onScreenPageTitle %} Lock Event: {{ eventRequested }} {% endblock %}
 
+{% block dtvBody %}
     <p>
         If you lock this event, you will no longer be able to make changes to any of the sub-events associated with this event. 
     </p>
@@ -53,6 +53,6 @@
         <input type = "submit" value = "LOCK">
     </form>
     
-    <a href = '{{site_url}}events/DTVSummary/'> Cancel </a>
+    <a href = '{{site_url}}DTVPicker/Summary/'> Cancel </a>
     
 {% endblock %}

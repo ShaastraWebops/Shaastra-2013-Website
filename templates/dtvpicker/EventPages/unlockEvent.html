@@ -1,12 +1,13 @@
-{% extends "events/dtvBase.html" %}
+{% extends "dtvpicker/dtvBase.html" %}
 
 {% block dtvTitle %}
     Unlock Event | {{ eventRequested }}
 {% endblock %}
 
-{% block dtvBody %}
-    <h3> Unlock Event: {{ eventRequested }} </h3>
+{% block onScreenPageTitle %} Unlock Event: {{ eventRequested }} {% endblock %}
 
+
+{% block dtvBody %}
     <p>
         If you unlock this event, the coords will be able to make changes to any of the sub-events associated with this event. Then you will have to wait for them to lock it again.
     </p>
@@ -60,6 +61,6 @@
         <input type = "submit" value = "UNLOCK">
     </form>
     
-    <a href = '{{site_url}}events/DTVSummary/'> Cancel </a>
+    <a href = '{{site_url}}DTVPicker/Summary/'> Cancel </a>
     
 {% endblock %}

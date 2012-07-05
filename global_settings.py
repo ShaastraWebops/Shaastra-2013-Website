@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'dajax', 
     'core',
     'submissions',
+    'dtvpicker',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -98,10 +99,12 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
 "django.contrib.messages.context_processors.messages",
 "context_processors.site_url",)
 
+'''
 DAJAX_JS_FRAMEWORK = "jQuery"
 DAJAX_MEDIA_PREFIX='dajax'
 DAJAXICE_MEDIA_PREFIX="dajaxice"
 DAJAXICE_DEBUG = True
+<<<<<<< Updated upstream
 
 EMAIL_HOST='localhost'
 #Default: 'localhost'
@@ -110,3 +113,6 @@ EMAIL_HOST_PASSWORD='$#aastra20iiw3b0ps'
 #Default: '' (Empty string)
 EMAIL_HOST_USER='shaastra'
 
+=======
+'''
+>>>>>>> Stashed changes
