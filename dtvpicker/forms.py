@@ -12,17 +12,3 @@ class SubEventForm(ModelForm):
         
 class EventUnlockForm(forms.Form):
     unlock_reason = forms.CharField(max_length = 1024, help_text = 'Please give reason for unlocking.')
-'''    
-    def clean(self):
-        errors = []
-        super(EventUnlockForm, self).clean()  # Calling clean method of the super class
-        
-        dirself = dir(self)
-        assert False
-        
-        if self.unlock_reason == '':
-            errors.append(u'The reason cannot be empty.')
-            
-        raise ValidationError(errors)
-'''        
-
