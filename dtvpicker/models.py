@@ -51,16 +51,7 @@ class SubEvent(models.Model):
         subEventClashMsgs = []
         
         for subEvent in subEventList:
-            '''
-            if subEvent.event.title == 'Contraptions':
-                contrapVenue = subEvent.venue
-                contrapStart = subEvent.start_date_and_time
-                contrapEnd = subEvent.end_date_and_time
-                selfVenue = self.venue
-                selfStart = self.start_date_and_time
-                selfEnd = self.end_date_and_time
-                assert False
-            '''
+
             if subEvent.venue != venue:
                 continue  # No clash
 
