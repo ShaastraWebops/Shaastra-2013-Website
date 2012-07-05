@@ -8,7 +8,7 @@
 
 {% block eventActions %}
     {% ifequal event.lock_status 'locked' %}
-        <a href = '/DTVPicker/{{event}}/UnlockEvent/'> Unlock Event </a>
+        <a href = '{{site_url}}DTVPicker/{{event}}/UnlockEvent/'> Unlock Event </a>
     {% else %}
         <h6> AWAITING LOCK </h6>
     {% endifequal %}
