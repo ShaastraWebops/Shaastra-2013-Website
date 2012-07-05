@@ -1,6 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
-from events.urls import urlpatterns as event_urls
 from dajaxice.core import dajaxice_autodiscover
 dajaxice_autodiscover()
 
@@ -10,7 +9,11 @@ urlpatterns = patterns('',
     url(r'^admin/', include('admin.urls')),
     url(r'^core/', include('core.urls')),
     url(r'^coord/', include('events.urls')),
+<<<<<<< Updated upstream
     url(r'^submission/', include('submissions.urls')),
+=======
+    url(r'^DTVPicker/', include('dtvpicker.urls')),
+>>>>>>> Stashed changes
     url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
 )
 
