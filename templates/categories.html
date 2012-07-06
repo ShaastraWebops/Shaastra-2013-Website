@@ -14,11 +14,14 @@
 {% endblock %}
 
 {% block content %}
+<br>
+<br>
 
 <!-- Navigation list on left
 ================================================== -->
 <div class="row">
     <div class="span3">
+		<div class="well sidebar-nav">
         <ul class="nav nav-list">
             {% for i in categories %}
                 <li class="nav-header"><a href="{{SITE_URL}}category/{{i.url_name}}/">{{i.name}}</a></li>
@@ -29,6 +32,7 @@
                 {% endfor %}
             {% endfor %}    
         </ul>
+		</div>
     </div>    
         
 

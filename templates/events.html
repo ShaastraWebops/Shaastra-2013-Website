@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+ 
 {% block navigation %}
                           
     <li><a href="{{SITE_URL}}">Home</a></li>
@@ -15,11 +15,14 @@
 {% endblock %}
 
 {% block content %}
+<br>
+<br>
 
 <!-- Navigation list on left
 ================================================== -->
 <div class="row">
     <div class="span3">
+		<div class="well sidebar-nav">
         <ul class="nav nav-list">
             {% for i in categories %}
                 <li class="nav-header">
@@ -33,6 +36,7 @@
                 {% endfor %}
             {% endfor %}    
         </ul>
+		</div>
     </div>
 
 <!--Events-->
