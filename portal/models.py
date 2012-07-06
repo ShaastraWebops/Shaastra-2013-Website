@@ -96,13 +96,11 @@ class TopicImage(models.Model):
 	any number of images being associated with a each topic
 	"""
 	name=models.CharField(max_length=75,blank=True)
-	image=models.ImageField(upload_to='topic',null=True,blank=True)
+	image=models.FileField(upload_to='topic',null=True,blank=True)
 	topic=models.ForeignKey(Topic,related_name='topicimage')
 	def __unicode__(self):
 		return self.name
 	
-	def save(self):
-		super(TopicImage,self).save()
 
 class PreviousSponsor(models.Model):
     """
