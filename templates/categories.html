@@ -20,7 +20,23 @@
 <div class="row">
     <div class="span3">
 		<div class="well sidebar-nav">
-        <ul class="nav nav-list">
+            {% for i in categories %}
+                <ul class="nav nav-pills">
+                <h5><a href="{{SITE_URL}}category/{{i.url_name}}/" class="pull-left"><span style="text-transform: uppercase">{{i.name}}</span></a></h5>
+                    <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><b class="caret"></b></a>
+                    <ul id="menu1" class="dropdown-menu">
+                        {% for j in events %}
+                            {% if j.category == i %}
+                                <li><a>{{j.title}}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                    </ul>
+                    </li>
+                </ul>  
+            {% endfor %}		
+        <!--<ul class="nav nav-list">
             {% for i in categories %}
                 <li class="nav-header"><a href="{{SITE_URL}}category/{{i.url_name}}/">{{i.name}}</a></li>
                 {% for j in events %}
@@ -29,10 +45,9 @@
                     {% endif %}
                 {% endfor %}
             {% endfor %}    
-        </ul>
+        </ul>-->
 		</div>
-    </div>    
-        
+    </div>           
 
 
 <!--Thumbnails with short description
