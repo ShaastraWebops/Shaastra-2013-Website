@@ -100,6 +100,9 @@ class TopicImage(models.Model):
 	topic=models.ForeignKey(Topic,related_name='topicimage')
 	def __unicode__(self):
 		return self.name
+	
+	def save(self):
+		super(TopicImage,self).save()
 
 class PreviousSponsor(models.Model):
     """
