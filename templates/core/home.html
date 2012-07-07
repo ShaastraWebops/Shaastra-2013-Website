@@ -5,18 +5,19 @@
         {% dajaxice_js_import %}
         <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
         <script type="text/javascript">
         function add_event()
         {
-            data=$("#space :input").serializeObject();
-            $("#space").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            data=$(".bbq-item :input").serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.core.add_edit_event(Dajax.process,{'form':data});
         }
         function edit_event(id)
         {
-            data=$("#space :input").serializeObject();
-            $("#space").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            data=$(".bbq-item :input").serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.core.add_edit_event(Dajax.process,{'form':data,'id':id});
         }
         function del_event(id)
@@ -24,21 +25,20 @@
             var press=confirm("Confirm delete?");
             if (press==true)
             {
-                $("#space").append("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+                $(".bbq-item").append("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
                 Dajaxice.core.del_event(Dajax.process,{'id':id});
             }
         }
         function add_coord()
         {
-            data=$("#space :input").serializeObject();
-            alert(data['event']);
-            $("#space").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            data=$(".bbq-item :input").serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.core.add_edit_coord(Dajax.process,{'form':data});
         }
         function edit_coord(id)
         {
-            data=$("#space :input").serializeObject();
-            $("#space").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            data=$(".bbq-item :input").serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.core.add_edit_coord(Dajax.process,{'form':data,'id':id});
         }
         function del_coord(id)
@@ -46,7 +46,7 @@
             var press=confirm("Confirm delete?");
             if (press==true)
             {
-                $("#space").append("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+                $(".bbq-item").append("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
                 Dajaxice.core.del_coord(Dajax.process,{'id':id});
             }
         }
@@ -55,30 +55,52 @@
             $("#summary").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
             Dajaxice.core.updateSummary(Dajax.process);
         }
-        function displayevent(id)
-        {
-            $("#space").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
-            Dajaxice.core.add_edit_event(Dajax.process,{'id':id});
-        }
-        function displayCoord(id)
-        {
-            $("#space").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
-            Dajaxice.core.add_edit_coord(Dajax.process,{'id':id});
-        }
         </script>
 	    <script type="text/javascript">
         $(document).ready(function(){
             updateSummary();
-           $("#add_event").click(function(){
-                $("#space").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
-                Dajaxice.core.add_edit_event(Dajax.process);            
-           });
-           $("#add_coord").click(function(){
-                $("#space").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
-                Dajaxice.core.add_edit_coord(Dajax.process);            
-           });
          });
 	    </script>
+        <script type="text/javascript" language="javascript">
+
+        $(function(){
+                    
+          // Bind an event to window.onhashchange that, when the history state changes,
+          // gets the url from the hash and displays either our cached content or fetches
+          // new content to be displayed.
+          $(window).bind( 'hashchange', function(e) {
+            
+            // Get the hash (fragment) as a string, with any leading # removed. Note that
+            // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+            var url = $.param.fragment();
+            
+            // Remove .bbq-current class from any previously "current" link(s).
+            $( 'a.bbq-current' ).removeClass( 'bbq-current' );
+            if(url)
+            {
+                $(".bbq-default").hide();
+            // Add .bbq-current class to "current" nav link(s), only if url isn't empty.
+            url && $( 'a[href="#' + url + '"]' ).addClass( 'bbq-current' );
+
+          // Show "loading" content while AJAX content loads.
+          $( '.bbq-loading' ).show();
+        // Load external content via AJAX. Note that in order to keep this
+        // example streamlined, only the content in .infobox is shown. You'll
+        // want to change this based on your needs.
+          $('.bbq-item').load( url, function(){
+              // Content loaded, hide "loading" content.
+              $( '.bbq-loading' ).hide();
+            });
+            }
+            else
+            {
+                $(".bbq-item").hide();
+                $(".bbq-default").show();
+            }
+          })
+          
+        });
+        </script>
     </head>
     <body>
         Welcome {{ request.user }} | <i>{{ request.user.groups.get_query_set.1 }} core</i><br>
@@ -87,14 +109,30 @@
         <a href="{{site_url}}user/password_change/">Change Password</a>
         <hr/>
         <div id="nav">
-            <button id="add_event">Add event</button>
-            <button id="add_coord">Add Coord</button>
+            <a href="#addevent">Add Event</a>
+            <a href="#addcoord">Add Coord</a>
         </div><br>
         <div id="container">
-            <div id="space" style="float:right;width:50%;">
-            </div>
             <div id="summary" style="float:left;width:50%;">
             </div>
+            <div class="bbq" id="space" style="float:right;width:50%;">              
+                <div class="bbq-content">
+
+                    <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
+                    <div class="bbq-loading" style="display:none;">
+                        <img src="{{site_url}}static/img/loading.gif" alt="Loading"/> Loading content...
+                    </div>
+
+                    <!-- This content will be shown if no path is specified in the URL fragment. -->
+                    <div class="bbq-default">
+                    <i> Space for displaying forms </i>
+                    </div>
+
+                    <div class="bbq-item">
+                    </div>
+                </div>
+            </div>
+
         </div>
     </body>
 </html>
