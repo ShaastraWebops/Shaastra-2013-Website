@@ -119,4 +119,5 @@ class SubEventDelete(SubEventAddEditDeleteABC):
         subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
         subeventRequested.delete()
         self.updateEventLockStatus(self.getEvent(kwargs['event']))
+
         return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')

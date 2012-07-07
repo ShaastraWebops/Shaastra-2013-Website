@@ -20,10 +20,11 @@ def updateSummary(request):
     dajax.assign("#summary",'innerHTML',"<table border='1'><thead><tr><th>S.No</th><th>Event Name</th><th>Coords</th></tr></thead><tbody id='event'>")
     event=Event.objects.order_by('id').all()
     for e in event:
-        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td onclick=\'displayevent("+str(e.id)+");\' class='grps' id="+e.title+"><a href=#>"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
+        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a href="+'#editevent/'+str(e.id)+">"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
         coords=UserProfile.objects.filter(is_coord_of__title=e.title)
         for c in coords:
-            dajax.append("#"+str(e.id),'innerHTML',"<li onclick=\'displayCoord("+str(c.user.id)+");\' class='coords' id="+str(c.user.username)+"><a href=#>"+str(c.user)+"</a>")
+            dajax.append("#"+str(e.id),'innerHTML',"<li class='coords' id="+str(c.user.username)+"><a href="+'#editcoord'+str(c.id)+">"+str(c.user)+"</a>")
+    dajax.script("window.location.hash=''")
     return dajax.json()
 
 @dajaxice_register
@@ -35,24 +36,12 @@ def add_edit_event(request,form="",id=0):
 
     """
     dajax = Dajax()
-    if form == "" :
-        if id:
-            template = loader.get_template('ajax/core/editevent.html')
-            event_form = AddEventForm(instance=Event.objects.get(id=id))
-            html=template.render(RequestContext(request,locals()))
-        else:
-            template = loader.get_template('ajax/core/addevent.html')
-            event_form = AddEventForm()
-            html=template.render(RequestContext(request,locals()))
-        dajax.assign('#space', 'innerHTML', html)
-        return dajax.json()
     if id:
         event_form = AddEventForm(form, instance=Event.objects.get(id=id))
     else:
         event_form = AddEventForm(form)
     if event_form.is_valid():
         event_form.save()
-    dajax.assign("#space",'innerHTML',"")
     dajax.script("updateSummary();")
     return dajax.json()
 
@@ -65,7 +54,6 @@ def del_event(request,id):
     dajax = Dajax()
     event=Event.objects.get(id=id)
     event.delete()
-    dajax.assign('#space', 'innerHTML', "")
     dajax.script("updateSummary();")
     return dajax.json()
 
@@ -78,18 +66,6 @@ def add_edit_coord(request,form="",id=0):
 
     """
     dajax = Dajax()
-    if form == "" :
-        if id:
-            template = loader.get_template('ajax/core/editcoord.html')
-            coord=User.objects.get(id=id)
-            coord_form = AddCoordForm(instance=coord,initial={'event':coord.get_profile().is_coord_of_id,})
-            html=template.render(RequestContext(request,locals()))
-        else:
-            template = loader.get_template('ajax/core/addcoord.html')
-            coord_form = AddCoordForm()
-            html=template.render(RequestContext(request,locals()))
-        dajax.assign('#space', 'innerHTML', html)
-        return dajax.json()
     if id:
         coord_form = AddCoordForm(form, instance=User.objects.get(id=id))
         if coord_form.is_valid():
@@ -97,11 +73,11 @@ def add_edit_coord(request,form="",id=0):
             coord_profile=coord.get_profile()
             coord_profile.is_coord_of_id=form['event']
             coord_profile.save()
-            dajax.assign("#space",'innerHTML',"")
+            dajax.script("updateSummary();")
         else:
             template = loader.get_template('ajax/core/editcoord.html')
             html=template.render(RequestContext(request,locals()))
-            dajax.assign("#space",'innerHTML',html)
+            dajax.assign(".bbq-item",'innerHTML',html)
     else:
         coord_form = AddCoordForm(form)
         if coord_form.is_valid():
@@ -111,12 +87,11 @@ def add_edit_coord(request,form="",id=0):
             coord.save()
             coord_profile = UserProfile(user=coord, is_coord_of_id=form['event'])
             coord_profile.save()
-            dajax.assign("#space",'innerHTML',"")
+            dajax.script("updateSummary();")
         else:
             template = loader.get_template('ajax/core/addcoord.html')
             html=template.render(RequestContext(request,locals()))
-            dajax.assign("#space",'innerHTML',html)
-    dajax.script("updateSummary();")
+            dajax.assign(".bbq-item",'innerHTML',html)
     return dajax.json()
 
 @dajaxice_register
@@ -128,7 +103,6 @@ def del_coord(request,id):
     dajax = Dajax()
     coord=User.objects.get(id=id)
     coord.delete()
-    dajax.assign('#space', 'innerHTML', "")
     dajax.script("updateSummary();")
     return dajax.json()
 

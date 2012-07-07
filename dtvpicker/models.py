@@ -121,4 +121,5 @@ class SubEvent(models.Model):
             raise ValidationError(errors)
                     
         # The last_modified field must be updated to the current date and time.
+
         self.last_updated = datetime.now()
