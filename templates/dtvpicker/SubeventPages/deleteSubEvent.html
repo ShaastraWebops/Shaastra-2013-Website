@@ -1,12 +1,12 @@
-{% extends "events/dtvBase.html" %}
+{% extends "dtvpicker/dtvBase.html" %}
 
 {% block dtvTitle %}
     Delete | {{ eventRequested }} | {{ subeventRequested }}
 {% endblock %}
 
-{% block dtvBody %}
-    <h3> Event: {{ eventRequested }} </h3>
+{% block onScreenPageTitle %} Event: {{ eventRequested }} {% endblock %}
 
+{% block dtvBody %}
     <p>
         Are you sure you want to delete the following sub-event?
     </p>
@@ -37,6 +37,6 @@
         <input type = "submit" value = "Yes, I am sure. Delete Sub-event.">
     </form>
     
-    <a href = '{{site_url}}events/DTVSummary/'> No. Don't delete sub-event. </a>
+    <a href = '{{site_url}}DTVPicker/Summary/'> No. Don't delete sub-event. </a>
 
 {% endblock %}

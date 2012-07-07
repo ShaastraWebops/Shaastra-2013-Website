@@ -1,0 +1,33 @@
+{% extends "dtvpicker/dtvBase.html" %}
+
+{% block dtvTitle %}
+    Summary | Landing
+{% endblock %}
+
+{% block onScreenPageTitle %} DTV Summary Landing {% endblock %}
+
+{% block dtvBody %}
+    <p>
+        You are seeing this page because all events are locked and cannot be modified further until they are unlocked by the Core team.
+        <br/> <br/>
+        Use the following links to see / generate PDFs for the events' DTV Summary:
+        <table>
+            <tr>
+                <th> View </th>
+                <th> Print PDF </th>
+            </tr>
+            <tr>
+                <td> <a href = '{{site_url}}DTVPicker/Summary/ByEvent/'> By Event </a> </td>
+                <td> <a href = '{{site_url}}DTVPicker/Summary/ByEvent/GeneratePDF/'> Print PDF </a> </td>
+            </tr>
+            <tr>
+                <td> <a href = '{{site_url}}DTVPicker/Summary/ByVenue/'> By Venue </a> </td>
+                <td> <a href = '{{site_url}}DTVPicker/Summary/ByVenue/GeneratePDF/'> Print PDF </a> </td>
+            </tr>
+            <tr>
+                <td> <a href = '{{site_url}}DTVPicker/Summary/ByDate/'> By Date </a> </td>
+                <td> <a href = '{{site_url}}DTVPicker/Summary/ByDate/GeneratePDF/'> Print PDF </a> </td>
+            </tr>
+        </table>
+    </p>
+{% endblock %}
