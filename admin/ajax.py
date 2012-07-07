@@ -42,7 +42,7 @@ def updateSummary(request):
         for c in cores:
             if c.get_profile().is_core:
 	        dajax.append("#"+str(g.id),'innerHTML',"<li class='cores' id="+str(c.username)+"><a href="+'#editcore/'+str(c.id)+'/'+">"+str(c)+"</a>")
-    dajax.assign(".bbq-item","innerHTML","<i>Space for displaying forms</i>");
+    dajax.script("window.location.hash=''")
     return dajax.json()
 
 @dajaxice_register

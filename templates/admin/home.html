@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Shaastra 2013</title>
-	{% dajaxice_js_import %}
+	    {% dajaxice_js_import %}
         <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
@@ -79,8 +79,12 @@
             // Remove .bbq-current class from any previously "current" link(s).
             $( 'a.bbq-current' ).removeClass( 'bbq-current' );
             
+            if(url)
+            {
+                $(".bbq-default").hide();
             // Add .bbq-current class to "current" nav link(s), only if url isn't empty.
             url && $( 'a[href="#' + url + '"]' ).addClass( 'bbq-current' );
+
           // Show "loading" content while AJAX content loads.
           $( '.bbq-loading' ).show();
         // Load external content via AJAX. Note that in order to keep this
@@ -90,6 +94,12 @@
               // Content loaded, hide "loading" content.
               $( '.bbq-loading' ).hide();
             });
+            }
+            else
+            {
+                $(".bbq-item").hide();
+                $(".bbq-default").show();
+            }
           })
           
         });
@@ -115,8 +125,12 @@
                     </div>
 
                     <!-- This content will be shown if no path is specified in the URL fragment. -->
+                    <div class="bbq-default">
+                    <i> Space for displaying forms </i>
+                    </div>
+
                     <div class="bbq-item">
-                    </div>                
+                    </div>
                 </div>
             </div>
         </div>
