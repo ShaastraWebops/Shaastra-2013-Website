@@ -1,5 +1,7 @@
 <html>
-<head>{% load dajaxice_templatetags %}
+<head>
+	<title>Shaastra 2013 | Coord Dashboard</title>
+{% load dajaxice_templatetags %}
 <link href="{{site_url}}static/css/demo_page.css"  type="text/css" rel="stylesheet">
 <link href="{{site_url}}static/css/demo_table.css"  type="text/css" rel="stylesheet">
 <script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
@@ -160,6 +162,7 @@ function File(id){
 </head>
 <h3>Welcome {{request.user}} | <i>{{request.user.get_profile.is_coord_of.title}} coord </i></h3>
 <a href="{{site_url}}user/logout/">Logout</a>
+<a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a>
 <p>
 {% csrf_token %}
 <a href="#" name="question_tab" id = "question_tab" onclick = "Dajaxice.events.load_question_tab(Dajax.process)">Questions</a>
@@ -168,7 +171,7 @@ function File(id){
 <hr/>
 <div name="tabs" id = "tabs">
     {% for tab in tabs %}
-    <a href="#" name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}} </a>
+    <a href="#" name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})"> {tab.title}} </a>
     {% endfor %}
 </div>
 <a href="#" name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.add_tab(Dajax.process)">add a tab</a>

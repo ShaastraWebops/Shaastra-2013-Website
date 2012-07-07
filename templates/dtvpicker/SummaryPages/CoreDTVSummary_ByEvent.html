@@ -1,0 +1,27 @@
+{% extends "dtvpicker/SummaryPages/dtvSummary.html" %}
+
+{% block dtvTitle %}
+    Summary | By Event
+{% endblock %}
+
+{% block onScreenPageTitle %} DTV Summary (By Event) {% endblock %}
+
+{% block eventActions %}
+    {% ifequal event.lock_status 'locked' %}
+        <a href = '{{site_url}}DTVPicker/{{event}}/UnlockEvent/'> Unlock Event </a>
+    {% else %}
+        <h6> AWAITING LOCK </h6>
+    {% endifequal %}
+{% endblock %}
+
+{% block miscActions %}
+    <br/> <br/>
+    {% if enablePDFPrinting %}
+        <a href = '{{site_url}}DTVPicker/Summary/'> <b> Go back to the DTV Summary Landing </b> </a>
+        or <a href = '{{site_url}}DTVPicker/Summary/ByEvent/GeneratePDF/'> print these details as PDF. </a>
+    {% else %}
+        <a href = '{{site_url}}DTVPicker/Summary/ByVenue/'> View DTV Summary By Venue </a> <br/>
+        <a href = '{{site_url}}DTVPicker/Summary/ByDate/'> View DTV Summary By Date </a>
+    {% endif %}
+    <br/> <br/>
+{% endblock %}

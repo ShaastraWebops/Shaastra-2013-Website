@@ -9,6 +9,8 @@ def home(request):
             return HttpResponseRedirect(settings.SITE_URL + 'admin/')
         elif request.user.get_profile().is_core:
             return HttpResponseRedirect(settings.SITE_URL + 'core/')
+        elif request.user.get_profile().is_coord_of:
+            return HttpResponseRedirect(settings.SITE_URL + 'coord/')
         else:
         	return render_to_response('home.html',locals(),context_instance = RequestContext(request))
     else:

@@ -1,15 +1,16 @@
-{% extends "events/dtvBase.html" %}
+{% extends "dtvpicker/dtvBase.html" %}
 
 {% block dtvTitle %}
     {% ifequal form_mode 'add' %}
-        Add Sub-Event | {{ eventRequested.title }}
+        {{ eventRequested.title }} | Add Sub-event
     {% else %}
-        Edit | {{ eventRequested.title }} | {{ subeventRequested.title }}
+        {{ eventRequested.title }} | Edit Sub-event | {{ subeventRequested.title }}
     {% endifequal %}
 {% endblock %}
 
+{% block onScreenPageTitle %} Event: {{ eventRequested }} {% endblock %}
+
 {% block dtvBody %}
-    <h3> Event: {{ eventRequested }} </h3>
     <p>
         {% ifequal form_mode 'add' %}
             Add Sub-Event:
@@ -37,6 +38,6 @@
         
     </form>
     
-    <a href = '{{site_url}}events/DTVSummary/'> Cancel </a>
+    <a href = '{{site_url}}DTVPicker/Summary/'> Cancel </a>
     
 {% endblock %}
