@@ -2,7 +2,8 @@
 from django.db import models
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-
+#import PythonMagick
+from django.conf import settings
 #Allows for updating status of event
 STATUS_CHOICES = (
     ('s', 'Sold'),
@@ -100,6 +101,16 @@ class TopicImage(models.Model):
 	topic=models.ForeignKey(Topic,related_name='topicimage')
 	def __unicode__(self):
 		return self.name
+"""
+	def save(self):
+		path = settings.MEDIA_ROOT + "topic/" + self.image.name
+		image1=PythonMagick.Image('test.jpeg')
+		print "hello"
+		#path=settings.MEDIA_ROOT + "topic/" + self.image.fileName()
+		#s="!64x64"
+		#self.image.sample(s)
+		super(TopicImage,self).save()
+"""
 	
 
 class PreviousSponsor(models.Model):
