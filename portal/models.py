@@ -2,8 +2,9 @@
 from django.db import models
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-#import PythonMagick
 from django.conf import settings
+import os
+
 #Allows for updating status of event
 STATUS_CHOICES = (
     ('s', 'Sold'),
@@ -26,10 +27,14 @@ SPONSOR_CHOICES = (
     
 )
 
+
+
+
 class Category(models.Model):
 	"""
 	This model is for storing the name and generating the url name of the various categories 
 	under which events fall.
+	
 	"""
 	name = models.CharField(max_length=30, unique=True)
 	url_name = models.CharField(max_length=30, blank=True)
@@ -55,23 +60,38 @@ class Event(models.Model):
  
 	def __unicode__(self):
 		return self.title
-"""
-Image classes to add any number of images for a category/event
-"""
+
+	
+	"""
+	Image classes to add any number of images for a category/event
+
+	"""
         
 class CategoryImage(models.Model):
-    name=models.CharField(max_length=30, blank=True)
-    image=models.FileField(upload_to='category',null=True,blank=True)
-    category=models.ForeignKey(Category, related_name = 'categoryimages')
-    def __unicode__(self):
-        return self.name
+	name=models.CharField(max_length=30, blank=True)
+	image=models.FileField(upload_to='category',null=True,blank=True)
+	category=models.ForeignKey(Category, related_name = 'categoryimages')
+	
+	def __unicode__(self):
+		return self.name
+	
+	def save(self):
+		super(CategoryImage,self).save()
+		resize_image(self.image,'360x268')
+		
 
 class EventImage(models.Model):
-    name=models.CharField(max_length=30, blank=True)
-    image=models.FileField(upload_to='event',null=True,blank=True)
-    event=models.ForeignKey(Event, related_name = 'eventimages')
-    def __unicode__(self):
-        return self.name
+	name=models.CharField(max_length=30, blank=True)
+	image=models.FileField(upload_to='event',null=True,blank=True)
+	event=models.ForeignKey(Event, related_name = 'eventimages')
+	
+	def __unicode__(self):
+		return self.name
+	
+	def save(self):
+		super(EventImage,self).save()
+		resize_image(self.image,'300x200')
+		
 
 class Topic(models.Model):
     """
@@ -82,6 +102,7 @@ class Topic(models.Model):
     information=models.TextField(blank=True)
     #index_number provides the information about the order in which we need to display the topics
     index_number=models.IntegerField(help_text='Determines the order in which topic is displayed in the navigation bar')
+    
     def __unicode__(self):
         return self.title
 
@@ -98,20 +119,18 @@ class TopicImage(models.Model):
 	"""
 	name=models.CharField(max_length=75,blank=True)
 	image=models.FileField(upload_to='topic',null=True,blank=True)
+	#image_resized=models.FileField(upload_to='topic',null=True,blank=True)
 	topic=models.ForeignKey(Topic,related_name='topicimage')
+	
 	def __unicode__(self):
 		return self.name
-"""
+
 	def save(self):
-		path = settings.MEDIA_ROOT + "topic/" + self.image.name
-		image1=PythonMagick.Image('test.jpeg')
-		print "hello"
-		#path=settings.MEDIA_ROOT + "topic/" + self.image.fileName()
-		#s="!64x64"
-		#self.image.sample(s)
 		super(TopicImage,self).save()
-"""
+		resize_image(self.image,'300x200')
+		
 	
+
 
 class PreviousSponsor(models.Model):
     """
@@ -121,5 +140,29 @@ class PreviousSponsor(models.Model):
     name=models.CharField(max_length=20,unique=True, help_text='Enter company name (Required)')
     url=models.URLField(blank=True)
     about=models.CharField(max_length=100, choices=SPONSOR_CHOICES, blank=True)
+   
     def __unicode__(self):
 		return self.name
+
+    def save(self):
+		super(PreviousSponsor,self).save()
+		resize_image(self.logo,'300x200')
+		
+	
+def resize_image(image_source,size):
+	"""
+	Function to resize the uploaded image
+	It works using ImageMagick
+	image_sorce is the uploaded image
+	size for example: 300x200
+	
+	"""
+	os.system('convert '+str(settings.MEDIA_ROOT)  + image_source.name +' -resize '+ size + ' ' + str(settings.MEDIA_ROOT) +  image_source.name )
+	
+
+
+
+
+
+
+
