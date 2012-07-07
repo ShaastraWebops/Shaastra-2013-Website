@@ -37,6 +37,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'search',
+    'haystack',
+    'dajax',
+    'dajaxice',
     
     
     # Uncomment the next line to enable the admin:

@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^main/$','search.views.main',name='mainpage'), #tag-based search querying server database
     url(r'^main/search/$','search.views.search',name='search'), #used to get results of search bar
     url(r'^main2/$','search.views.main2',name='main2'), #tag-based search querying client database
+    (r'^haystacksearch/', include('haystack.urls')),
         
     # Examples:
     # url(r'^$', 'shaastra2013.views.home', name='home'),
