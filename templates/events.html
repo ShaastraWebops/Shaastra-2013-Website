@@ -79,7 +79,7 @@
             <br>
             <br>   
                 <!-- image carousel -->
-                <div class="carousel slide">
+                <div id="{{i.id}}{{i.id}}" class="carousel slide">
                     
                     <div class="carousel-inner">
                     
@@ -97,8 +97,8 @@
                   
                     </div><!--/.carousel-inner -->
                   
-                    <a class="left carousel-control" href="#{{i.id}}" data-slide="prev">&lsaquo;</a>
-                    <a class="right carousel-control" href="#{{i.id}}" data-slide="next">&rsaquo;</a>
+                    <a class="left carousel-control" href="#{{i.id}}{{i.id}}" data-slide="prev">&lsaquo;</a>
+                    <a class="right carousel-control" href="#{{i.id}}{{i.id}}" data-slide="next">&rsaquo;</a>
                 </div><!--/.i -->
 
         </div><!-- /.images -->        
@@ -112,7 +112,7 @@
 <!-- Script is for automatic cycling with interval as mentioned below -->   
 <script>
 {% for i in events_list %}
-    $('#{{i.id}}').carousel({
+    $('#{{i.id}}{{i.id}}').carousel({
         interval: 3000
     });
 {% endfor %}
