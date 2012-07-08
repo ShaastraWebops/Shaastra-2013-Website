@@ -77,3 +77,12 @@
     </div><!-- /.main -->
 </div><!-- /.row -->    
 {% endblock %}
+{% block js %}
+
+<script type="text/javascript">
+$(document).ready(function(){
+var maxHeight = 0;
+$('.thumbnails li').each(function() { maxHeight = Math.max(maxHeight, $(this).height()); }).height(maxHeight);
+});
+</script>
+{% endblock %}
