@@ -44,7 +44,6 @@
                     
                         <div class="item active">
                             <img src="{{MEDIA_URL}}sponsors/shaastra.jpg" width="300px" height="200px" alt="">
-							<img src="{{img2}}">
                         </div>
                     
                     
@@ -73,5 +72,10 @@
     $('#myCarousel').carousel({
        interval: 3000
     });
+    
+$(function() {
+  $(".right.carousel-control").click();
+});
+    
 </script> 
 {% endblock %}

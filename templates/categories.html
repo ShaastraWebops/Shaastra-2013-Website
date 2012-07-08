@@ -15,68 +15,62 @@
 
 {% block content %}
 
-<!-- Navigation list on left
+<!-- Navigation list on top
 ================================================== -->
-<div class="row">
-    <div class="span3">
-		<div class="well sidebar-nav">
-            {% for i in categories %}
-                <ul class="nav nav-pills">
-                <h5><a href="{{SITE_URL}}category/{{i.url_name}}/" class="pull-left" id="external"><span style="text-transform: uppercase">{{i.name}}</span></a></h5>
-                    <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><b class="caret"></b></a>
-                    <ul id="menu1" class="dropdown-menu">
-                        {% for j in events %}
-                            {% if j.category == i %}
-                                <li><a>{{j.title}}</a></li>
-                            {% endif %}
-                        {% endfor %}
-                        
-                    </ul>
-                    </li>
-                </ul>  
-            {% endfor %}		
-        <!--<ul class="nav nav-list">
-            {% for i in categories %}
-                <li class="nav-header"><a href="{{SITE_URL}}category/{{i.url_name}}/">{{i.name}}</a></li>
-                {% for j in events %}
-                    {% if j.category == i %}
-                        <li><a>{{j.title}}</a></li>
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}    
-        </ul>-->
-		</div>
-    </div>           
-
+<header class="jumbotron subhead" id="overview">
+  <div class="subnav-fixed">
+    <ul class="nav nav-pills">
+    {% for i in categories %}
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span style="text-transform: uppercase">{{i.name}}</span><b class="caret"></b></a>
+        <ul class="dropdown-menu">
+        <li><a href="{{SITE_URL}}category/{{i.url_name}}/">All Events</a></li>
+        <li class="divider"></li>
+        {% for j in events %}
+            {% if j.category == i %}
+                <li><a href="{{SITE_URL}}category/{{i.url_name}}#{{j.id}}">{{j.title}}</a></li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+</header>
 
 <!--Thumbnails with short description
 ================================================== -->
+    
+    <div id="main" class="span12">
     <hr>
-    <div id="main" class="span9">
         <h2>Events Galore</h2>
-        <p>Events in Shaastra are under the following categories</p>
+        <hr>
+        <p><b>Events in Shaastra are under the following categories.</b></p>
         <ul class="thumbnails">
             {% for i in categories %}
                 <li class="span3">
+                
                     <div class="thumbnail">
                         {% for j in photos_list %}
-                            {% if j.category == i %}       
+                            {% if j.category == i %}
+                            <a href="{{SITE_URL}}category/{{i.url_name}}/">       
                             <img src="{{MEDIA_URL}}{{j.image}}" width="360px" height="268px" alt="" />
+                            </a>  
                             {% endif %}
                         {% endfor %}   
                         <div class="caption">
-                            <h5>{{i.name}}</h5>
+                            <h5><span style="text-transform: uppercase"><a href="{{SITE_URL}}category/{{i.url_name}}/" id="external"><font color="000033">{{i.name}}</font></a></span></h5>
                             <p>
                             {% for j in events %}
                                 {% if j.category == i %}
-                                    <span class="label">{{j.title}}</span>
+                                    <span class="label"><a href="{{SITE_URL}}category/{{i.url_name}}#{{j.id}}">{{j.title}}</a></span>
                                 {% endif %}
                             {% endfor %}
                             </p>
-                            <p><a href="{{SITE_URL}}category/{{i.url_name}}/" class="btn btn-primary">Know More</a>
+                            <!--<p><a href="{{SITE_URL}}category/{{i.url_name}}/" class="btn btn-primary">Know More</a>-->
                         </div><!-- /.caption -->
                     </div><!-- /.thumbnail -->
+                
                 </li>
             {% endfor %}            
         </ul>
