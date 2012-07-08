@@ -54,7 +54,7 @@
                         {% for j in photos_list %}
                             {% if j.category == i %}
                             <a href="{{SITE_URL}}category/{{i.url_name}}/">       
-                            <img src="{{MEDIA_URL}}{{j.image}}" width="360px" height="268px" alt="" />
+                            <img src="{{MEDIA_URL}}{{j.image}}"  alt="" />
                             </a>  
                             {% endif %}
                         {% endfor %}   

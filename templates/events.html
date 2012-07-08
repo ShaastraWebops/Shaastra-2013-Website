@@ -84,14 +84,23 @@
                     <div class="carousel-inner">
                     
                         <div class="item active">
-                            <img src="{{MEDIA_URL}}sponsors/shaastra.jpg" width="300px" height="200px" alt="">
+                         {% for j in photos_list %}
+                       	 {% if j.event == i %}
+							{% ifchanged i %}
+                        	 <img src="{{MEDIA_URL}}{{j.image}}" width="300px" height="200px" alt="">
+							{% endifchanged %}
+                         {% endif %}
+                    	 {% endfor %}   
                         </div>                    
                     
                     {% for j in photos_list %}
                         {% if j.event == i %}
-                        <div class="item">
-                            <img src="{{MEDIA_URL}}{{j.image}}" width="300px" height="200px" alt="">
-                        </div>
+							{% ifchanged i %}
+							{% else %}
+                        		<div class="item">
+                            		<img src="{{MEDIA_URL}}{{j.image}}" width="300px" height="200px" alt="">
+                       			</div>
+							{% endifchanged %}
                         {% endif %}
                     {% endfor %}
                   
