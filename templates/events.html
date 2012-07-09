@@ -29,7 +29,7 @@
         <li class="divider"></li>
         {% for j in events %}
             {% if j.category == i %}
-                <li><a href="{{SITE_URL}}category/{{i.url_name}}/#{{j.id}}" onclick="window.location.reload();">{{j.title}}</a></li>
+                <li><a href="{{SITE_URL}}category/{{i.url_name}}/#{{j.id}}" >{{j.title}}</a></li>
             {% endif %}
         {% endfor %}
         </ul>
