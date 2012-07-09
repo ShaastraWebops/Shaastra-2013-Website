@@ -8,11 +8,7 @@
 
     <!-- This is to show the topic that is active -->
     {% for i in topics %}
-    	{% if topic_url_name == i.url_name %}		
-		<li class="active" >
-		{% else %}
-		<li>
-		{% endif %}
+		<li {% ifequal topic_url_name i.url_name %}class="active"{% endifequal %} >
 			<a href="{{SITE_URL}}topic/{{i.url_name}}/">{{i.title}}</a>
         </li>    
     {% endfor %}

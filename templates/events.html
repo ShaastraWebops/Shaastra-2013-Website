@@ -22,7 +22,7 @@
   <div class="subnav-fixed">
     <ul class="nav nav-pills">
     {% for i in categories %}
-      <li class="dropdown">
+      <li {% ifequal c.url_name i.url_name %}class="dropdown active"{% endifequal %}{% ifnotequal c.url_name i.url_name %}class="dropdown"{% endifnotequal %}>
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span style="text-transform: uppercase">{{i.name}}</span><b class="caret"></b></a>
         <ul class="dropdown-menu">
         <li><a href="{{SITE_URL}}category/{{i.url_name}}/">All Events</a></li>
@@ -41,43 +41,32 @@
 <!--Events-->
  
     <div id="events" class="span12">
-    
-    <h2><center>Events under {{c.name}}</center></h2></br>
+    <hr>
+    <h2><center>EVENTS UNDER <span style="text-transform: uppercase">{{c.name}}</span></center></h2>
         <hr>
         {% for i in events_list %}
         
             <!-- For an unknown reason, if the link has to work on another page, both name and id are required -->
             <div name="{{i.id}}" id="{{i.id}}" class="span8">
-            <h4><span style="text-transform: uppercase">{{i.title}}</span></h4>
-            <br>
-            <div class="well">
-                
-                  
-                
-                <!-- label for showing status of event -->
-                {% if i.status == "s" %}
-    	            <span class="label label-important">Sold</span>
-                {% endif %}
-                {% if i.status == "a"%}
-           	        <span class="label label-success">Available</span>
-                {% endif %}
-                </br>
-                <hr>
-                </br>
-                <!-- event description -->
-                {{i.about}}
-                </br></br>
-            </br>
-            <hr>
+                <h3><span style="text-transform: uppercase">{{i.title}}</span></h3>
+                <br>
+                <div class="well">
+                    <hr>
+                    <br><br>
+                    <!-- event description -->
+                    {{i.about}}
+                    <br><br><br><hr>
+                    <!-- label for showing status of event -->
+                    {% if i.status == "s" %}
+    	                <span class="label label-important">Sold</span>
+                    {% endif %}
+                    {% if i.status == "a"%}
+           	            <span class="label label-success">Available</span>
+                    {% endif %}            
+                </div>
             </div>
-            </div>
-       <br>
-       <br>
-        <div id="images" class="span3">
-            <br>
-            <br>
-            <br>
-            <br>   
+       <div id="images" class="span3">
+            <br><br><br><br><br><br>   
                 <!-- image carousel -->
                 <div id="{{i.id}}{{i.id}}" class="carousel slide">
                     
@@ -110,7 +99,8 @@
                     <a class="right carousel-control" href="#{{i.id}}{{i.id}}" data-slide="next">&rsaquo;</a>
                 </div><!--/.i -->
 
-        </div><!-- /.images -->        
+        </div><!-- /.images --> 
+               
         {% endfor %}
         
     </div><!--/.events -->
