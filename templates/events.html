@@ -29,7 +29,7 @@
         <li class="divider"></li>
         {% for j in events %}
             {% if j.category == i %}
-                <li><a href="{{SITE_URL}}category/{{i.url_name}}/#{{j.id}}" onclick="reloadPage()">{{j.title}}</a></li>
+                <li><a href="{{SITE_URL}}category/{{i.url_name}}/#{{j.id}}" onclick="window.location.reload();">{{j.title}}</a></li>
             {% endif %}
         {% endfor %}
         </ul>
@@ -48,6 +48,7 @@
         
             <!-- For an unknown reason, if the link has to work on another page, both name and id are required -->
             <div name="{{i.id}}" id="{{i.id}}" class="span8">
+				</br>
 				</br>
 				</br>
 				</br>
