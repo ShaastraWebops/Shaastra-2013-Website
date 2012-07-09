@@ -23,7 +23,7 @@ def updateSummary(request):
         dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a href="+'#editevent/'+str(e.id)+">"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
         coords=UserProfile.objects.filter(is_coord_of__title=e.title)
         for c in coords:
-            dajax.append("#"+str(e.id),'innerHTML',"<li class='coords' id="+str(c.user.username)+"><a href="+'#editcoord'+str(c.id)+">"+str(c.user)+"</a>")
+            dajax.append("#"+str(e.id),'innerHTML',"<li class='coords' id="+str(c.user.username)+"><a href="+'#editcoord/'+str(c.user_id)+">"+str(c.user)+"</a>")
     dajax.script("window.location.hash=''")
     return dajax.json()
 
@@ -105,4 +105,3 @@ def del_coord(request,id):
     coord.delete()
     dajax.script("updateSummary();")
     return dajax.json()
-

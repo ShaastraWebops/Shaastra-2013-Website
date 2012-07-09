@@ -52,6 +52,6 @@ def editcoord(request,id=0):
     """
     if request.user.get_profile().is_core is False :
         return HttpResponseRedirect(settings.SITE_URL)
-    coord_form=AddCoordForm(instance=User.objects.get(id=id))
+    coord=User.objects.get(id=id)
+    coord_form = AddCoordForm(instance=coord,initial={'event':coord.get_profile().is_coord_of,})
     return render_to_response('ajax/core/editcoord.html', locals(), context_instance = RequestContext(request))
-
