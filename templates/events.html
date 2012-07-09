@@ -29,7 +29,7 @@
         <li class="divider"></li>
         {% for j in events %}
             {% if j.category == i %}
-                <li><a href="{{SITE_URL}}category/{{i.url_name}}/#{{j.id}}" >{{j.title}}</a></li>
+                <li><a href="{{SITE_URL}}category/{{i.url_name}}/#{{j.id}}" onclick="reloadPage()">{{j.title}}</a></li>
             {% endif %}
         {% endfor %}
         </ul>
@@ -48,21 +48,25 @@
         
             <!-- For an unknown reason, if the link has to work on another page, both name and id are required -->
             <div name="{{i.id}}" id="{{i.id}}" class="span8">
+				</br>
+				</br>
+				</br>
                 <h3><span style="text-transform: uppercase">{{i.title}}</span></h3>
-                <br>
+                </br>
                 <div class="well">
-                    <hr>
-                    <br><br>
-                    <!-- event description -->
-                    {{i.about}}
-                    <br><br><br><hr>
-                    <!-- label for showing status of event -->
-                    {% if i.status == "s" %}
+					{% if i.status == "s" %}
     	                <span class="label label-important">Sold</span>
                     {% endif %}
                     {% if i.status == "a"%}
            	            <span class="label label-success">Available</span>
-                    {% endif %}            
+                    {% endif %} 
+                    <hr>
+                    <br>
+                    <!-- event description -->
+                    {{i.about}}
+                    <br><br><br>
+                    <!-- label for showing status of event -->
+                               
                 </div>
             </div>
        <div id="images" class="span3">
@@ -100,7 +104,10 @@
                 </div><!--/.i -->
 
         </div><!-- /.images --> 
-               
+        </br>
+		</br>
+		</br>
+		</br>       
         {% endfor %}
         
     </div><!--/.events -->
