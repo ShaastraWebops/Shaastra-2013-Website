@@ -11,6 +11,11 @@
         <link href="{{MEDIA_URL}}bootstrap/css/bootstrap.css" rel="stylesheet">
         <style>
             #external{text-decoration:none;}
+			textarea{
+        				width: 660px;
+        				height: 170px;
+					}
+
         </style>        
         <!-- edit.css has special script for subnav and some other changes-->
         <link href="{{MEDIA_URL}}bootstrap/css/edit.css" rel="stylesheet">
@@ -74,7 +79,7 @@
         <div class="container">
             <!-- Indication that user has logged in -->
             {% if request.user.is_authenticated %}
-                <h6><li class="pull-right">Hi, {{request.user}}. You are currently logged in.</li></h6>
+                <p class="pull-right">You are currently logged in as {{request.user}}.</p>
             {% endif %}
             {% block content %}{% endblock %}
         </div>

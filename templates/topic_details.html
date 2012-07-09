@@ -28,13 +28,17 @@
 <div class="well">
     <p> {{present_topic.display_mySafeField}}</p></br></br></br></br></br></br>
 </div>
+</br>	
 <hr>
 
 <!-- form for editing content -->
 {% if request.user.is_authenticated %}
-    <form action="" method="POST">
+	<p>You can edit the above contents here.</p>
+    <form class="well" action="" method="POST">
         {% csrf_token %}
+		<div>
             {{form}}
+		</div>
         <input type="submit" value="Save">
     </form>
 {% endif %}
