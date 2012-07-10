@@ -4,5 +4,5 @@ from django.conf.urls.defaults import *
 from core.views import *
 
 urlpatterns = patterns('',  
-    url(r'^$', home, name = 'home'),
+    url(r'^$', home, name = 'corehome'),
 )

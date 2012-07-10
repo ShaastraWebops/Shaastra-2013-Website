@@ -53,6 +53,9 @@ INSTALLED_APPS = (
     'core',
     'submissions',
     'dtvpicker',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+
 )
 
 # A sample logging configuration. The only tangible logging
@@ -87,7 +90,7 @@ AUTHENTICATION_BACKENDS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",

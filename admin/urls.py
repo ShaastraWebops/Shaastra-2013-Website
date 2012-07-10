@@ -8,5 +8,5 @@ urlpatterns = patterns('',
     url(r'^editgroup/(?P<id>\d+)', editgroup, name='editgroup'),
     url(r'^addcore/', addcore, name='addcore'),
     url(r'^editcore/(?P<id>\d+)', editcore, name='editcore'),
-    url(r'^$', home, name = 'home'),
+    url(r'^$', home, name = 'adminhome'),
 )
