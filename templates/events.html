@@ -28,7 +28,7 @@
     		</li>
 			<div id="side{{i.id}}" class="collapse">
 			<ul class="nav nav-pills nav-stacked">
-				<li><a href="{{SITE_URL}}category/{{i.url_name}}/"><b>All Events</b></a></li>
+				<li><a href="{{SITE_URL}}category/{{i.url_name}}/#all-events"><b>All Events</b></a></li>
         		<li class="divider"></li>
         		{% for j in events %}
             		{% if j.category == i %}
@@ -56,8 +56,10 @@
                   <h5 ><span style="text-transform: uppercase" ><font color="000000">{{i.title}}</font></span></h5>
                 </a>
               </div>
-              <div id="collapse{{i.id}}" class="accordion-body collapse in">
+              <div id="collapse{{i.id}}" class="accordion-body collapse ">
+				
                 <div class="accordion-inner span4">
+					<div class="well">
 					{% if i.status == "s" %}
     	                <span class="label label-important">Sold</span>
                     {% endif %}
@@ -66,7 +68,9 @@
                     {% endif %} <br><br>
                                      
                     <div align="justify">{{i.about}}</div>
-                </div><!--/.accordion-inner -->                    
+					</div>
+                </div><!--/.accordion-inner -->
+				                    
                 <div class="accordion-inner span3 pull-right">
                 <div id="{{i.id}}{{i.id}}" class="carousel slide">
                     <div class="carousel-inner">
@@ -151,10 +155,11 @@
 particular event */
 var id = window.location.hash.replace("#", "")
 if (id){
-    if (id!={{i.id}}){
-    $('#collapse{{i.id}}').collapse("hide");
+    if (id=={{i.id}}){
+    $('#collapse{{i.id}}').collapse("show");
     }
 }
+
 {% endfor %}
   
 </script> 
