@@ -7,6 +7,7 @@ from portal.forms import *
 import os
 from django.core.urlresolvers import reverse
 from django.contrib import admin
+from django.contrib.auth import logout
 
 def home(request):
 	categories = Category.objects.all()
@@ -54,3 +55,8 @@ def topic_details(request,topic_url_name):
 	else:
 	    form = TextForm(instance=present_topic)       
 	return render_to_response("topic_details.html",locals(),context_instance=RequestContext(request))
+
+
+def logout_admin(request):
+	logout(request)
+	return HttpResponseRedirect('/')
