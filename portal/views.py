@@ -60,4 +60,4 @@ def topic_details(request,topic_url_name):
 
 def logout_admin(request):
 	logout(request)
-	return HttpResponseRedirect(str(settings.SITE_URL))
+	return HttpResponseRedirect(reverse('portal.views.home'))
