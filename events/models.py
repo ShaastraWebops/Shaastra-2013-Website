@@ -39,6 +39,13 @@ class Event(models.Model):
     def __unicode__(self):
         return '%s' % self.title
 
+    def save(self, force_insert=False, force_update=False):
+	super(Event, self).save(force_insert, force_update)
+	try:
+		ping_google()
+	except Exception:
+		pass
+
 class Tab(models.Model):
     event = models.ForeignKey(Event, blank = True, null = True)
     title = models.CharField(max_length = 30)
