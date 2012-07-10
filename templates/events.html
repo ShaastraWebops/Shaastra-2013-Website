@@ -79,7 +79,9 @@
                          {% for j in photos_list %}
                        	 {% if j.event == i %}
 							{% ifchanged i %}
-                        	 <img src="{{MEDIA_URL}}{{j.image}}" width="300px" height="200px" alt="">
+							<div style="height: 200px">
+                        	 <img src="{{MEDIA_URL}}{{j.image}}" alt="">
+							</div>
 							{% endifchanged %}
                          {% endif %}
                     	 {% endfor %}   
@@ -90,7 +92,9 @@
 							{% ifchanged i %}
 							{% else %}
                         		<div class="item">
-                            		<img src="{{MEDIA_URL}}{{j.image}}" width="300px" height="200px" alt="">
+									<div style="height: 200px">
+                            		<img src="{{MEDIA_URL}}{{j.image}}"  alt="">
+									</div>
                        			</div>
 							{% endifchanged %}
                         {% endif %}
@@ -158,9 +162,17 @@ if (id){
     if (id=={{i.id}}){
     $('#collapse{{i.id}}').collapse("show");
     }
-}
+	}
 
 {% endfor %}
-  
+
+var id= window.location.hash.replace("#","")
+if (id){
+	if (id=="all-events"){
+		{% for i in events_list %}
+		 	$('#collapse{{i.id}}').collapse("show");
+		{% endfor %}
+		}
+	} 
 </script> 
 {% endblock %}
