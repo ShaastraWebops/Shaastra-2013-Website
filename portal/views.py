@@ -8,6 +8,7 @@ import os
 from django.core.urlresolvers import reverse
 from django.contrib import admin
 from django.contrib.auth import logout
+from django.conf import settings
 
 def home(request):
 	categories = Category.objects.all()
@@ -59,4 +60,4 @@ def topic_details(request,topic_url_name):
 
 def logout_admin(request):
 	logout(request)
-	return HttpResponseRedirect('/')
+	return HttpResponseRedirect(str(settings.SITE_URL))
