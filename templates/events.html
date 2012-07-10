@@ -15,7 +15,9 @@
 {% endblock %}
 
 {% block content %}
-  
+
+
+{% comment %}  
 <!-- Navigation list on top
 ================================================== -->
 <header class="jumbotron subhead" id="overview">
@@ -38,16 +40,47 @@
     </ul>
   </div>
 </header>
+
+{% endcomment %}
+
+<!-- side nav bar -->
+<div id="side-nav-bar" class="span3">
+	</br>
+	</br>
+	<div class="">
+	<ul class="nav nav-tabs nav-stacked">
+		{% for i in categories %}
+			{% ifequal category i.url_name %}
+				<li><a href="#"  data-toggle="collapse" data-target="#side{{i.id}}"><span style="text-transform: uppercase"><strong>{{i.name}}</strong></span></a></li>
+			{% else %}
+				<li><a href="#" data-toggle="collapse" data-target="#side{{i.id}}"><span style="text-transform: uppercase"><strong>{{i.name}}</strong></span></a></li>
+			{% endifequal %}
+			
+			<div id="side{{i.id}}" class="collapse">
+			<ul class="nav nav-pills nav-stacked">
+				<li><a href="{{SITE_URL}}category/{{i.url_name}}/">All Events</a></li>
+        		<li class="divider"></li>
+        		{% for j in events %}
+            		{% if j.category == i %}
+                	<li><a href="{{SITE_URL}}category/{{i.url_name}}#{{j.id}}">{{j.title}}</a></li>
+            		{% endif %}
+        		{% endfor %}
+			</ul>
+			</div>
+		{% endfor %}
+	</ul>
+</div>
+</div>
 <!--Events-->
  
-    <div id="events" class="span12">
+    <div id="events" class="span8">
     <hr>
     <h2><center>EVENTS UNDER <span style="text-transform: uppercase">{{c.name}}</span></center></h2>
         <hr>
         {% for i in events_list %}
         
             <!-- For an unknown reason, if the link has to work on another page, both name and id are required -->
-            <div name="{{i.id}}" id="{{i.id}}" class="span8">
+            <div name="{{i.id}}" id="{{i.id}}" class="span4">
 				</br>
 				</br>
 				</br>

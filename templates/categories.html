@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content %}
-
+{% comment %}
 <!-- Navigation list on top
 ================================================== -->
 <header class="jumbotron subhead" id="overview">
@@ -37,11 +37,34 @@
     </ul>
   </div>
 </header>
+{% endcomment %}
+
+<!-- side nav bar -->
+<div id="side-nav-bar" class="span3">
+	</br>
+	</br>
+	<ul class="nav nav-tabs nav-stacked">
+		{% for i in categories %}
+			<li><a href="#" data-toggle="collapse" data-target="#side{{i.id}}"><span style="text-transform: uppercase"><strong>{{i.name}}</strong></span></a></li>
+			<div id="side{{i.id}}" class="collapse ">
+			<ul class="nav nav-pills nav-stacked">
+				<li><a href="{{SITE_URL}}category/{{i.url_name}}/">All Events</a></li>
+        		<li class="divider"></li>
+        		{% for j in events %}
+            		{% if j.category == i %}
+                	<li><a href="{{SITE_URL}}category/{{i.url_name}}#{{j.id}}">{{j.title}}</a></li>
+            		{% endif %}
+        		{% endfor %}
+			</ul>
+			</div>
+		{% endfor %}
+	</ul>
+</div>
 
 <!--Thumbnails with short description
 ================================================== -->
     
-    <div id="main" class="span12">
+    <div id="main" class="span8">
     <hr>
         <h2>Events Galore</h2>
         <hr>
@@ -75,7 +98,7 @@
             {% endfor %}            
         </ul>
     </div><!-- /.main -->
-</div><!-- /.row -->    
+   
 {% endblock %}
 {% block js %}
 
