@@ -15,50 +15,20 @@
 {% endblock %}
 
 {% block content %}
-
-
-{% comment %}  
-<!-- Navigation list on top
-================================================== -->
-<header class="jumbotron subhead" id="overview">
-  <div class="subnav-fixed">
-    <ul class="nav nav-pills">
-    {% for i in categories %}
-      <li {% ifequal c.url_name i.url_name %}class="dropdown active"{% endifequal %}{% ifnotequal c.url_name i.url_name %}class="dropdown"{% endifnotequal %}>
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span style="text-transform: uppercase">{{i.name}}</span><b class="caret"></b></a>
-        <ul class="dropdown-menu">
-        <li><a href="{{SITE_URL}}category/{{i.url_name}}/">All Events</a></li>
-        <li class="divider"></li>
-        {% for j in events %}
-            {% if j.category == i %}
-                <li><a href="{{SITE_URL}}category/{{i.url_name}}/#{{j.id}}" >{{j.title}}</a></li>
-            {% endif %}
-        {% endfor %}
-        </ul>
-      </li>
-    {% endfor %}
-    </ul>
-  </div>
-</header>
-
-{% endcomment %}
-
+  
 <!-- side nav bar -->
-<div id="side-nav-bar" class="span3">
-	</br>
-	</br>
-	<div class="">
+<div class="span2">
+	<br>
+	<div>
+	<br>
 	<ul class="nav nav-tabs nav-stacked">
 		{% for i in categories %}
-			{% ifequal category i.url_name %}
-				<li><a href="#"  data-toggle="collapse" data-target="#side{{i.id}}"><span style="text-transform: uppercase"><strong>{{i.name}}</strong></span></a></li>
-			{% else %}
-				<li><a href="#" data-toggle="collapse" data-target="#side{{i.id}}"><span style="text-transform: uppercase"><strong>{{i.name}}</strong></span></a></li>
-			{% endifequal %}
-			
+    		<li {% ifequal c.url_name i.url_name %}class="dropdown active"{% endifequal %}{% ifnotequal c.url_name i.url_name %}class="dropdown"{% endifnotequal %}>
+    		    <a href="#"  data-toggle="collapse" data-target="#side{{i.id}}"><span style="text-transform: uppercase"><strong>{{i.name}}</strong></span></a>
+    		</li>
 			<div id="side{{i.id}}" class="collapse">
 			<ul class="nav nav-pills nav-stacked">
-				<li><a href="{{SITE_URL}}category/{{i.url_name}}/">All Events</a></li>
+				<li><a href="{{SITE_URL}}category/{{i.url_name}}/"><b>All Events</b></a></li>
         		<li class="divider"></li>
         		{% for j in events %}
             		{% if j.category == i %}
@@ -73,43 +43,32 @@
 </div>
 <!--Events-->
  
-    <div id="events" class="span8">
+    <div id="events" class="span9 events-pull-right">
     <hr>
     <h2><center>EVENTS UNDER <span style="text-transform: uppercase">{{c.name}}</span></center></h2>
-        <hr>
+    <hr> 
         {% for i in events_list %}
-        
-            <!-- For an unknown reason, if the link has to work on another page, both name and id are required -->
-            <div name="{{i.id}}" id="{{i.id}}" class="span4">
-				</br>
-				</br>
-				</br>
-				</br>
-				</br>
-				</br>
-                <h3><span style="text-transform: uppercase">{{i.title}}</span></h3>
-                </br>
-                <div class="well">
+
+          <div class="accordion span8" id="accordion">
+            <div name="{{i.id}}" id="{{i.id}}" class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{i.id}}">
+                  <h4><span style="text-transform: uppercase">{{i.title}}</span></h4>
+                </a>
+              </div>
+              <div id="collapse{{i.id}}" class="accordion-body collapse in">
+                <div class="accordion-inner span4">
 					{% if i.status == "s" %}
     	                <span class="label label-important">Sold</span>
                     {% endif %}
                     {% if i.status == "a"%}
            	            <span class="label label-success">Available</span>
-                    {% endif %} 
-                    <hr>
-                    <br>
-                    <!-- event description -->
-                    {{i.about}}
-                    <br><br><br>
-                    <!-- label for showing status of event -->
-                               
-                </div>
-            </div>
-       <div id="images" class="span3">
-            <br><br><br><br><br><br></br>   
-                <!-- image carousel -->
+                    {% endif %} <br><br>
+                                     
+                    <div align="justify">{{i.about}}</div>
+                </div><!--/.accordion-inner -->                    
+                <div class="accordion-inner span3 pull-right">
                 <div id="{{i.id}}{{i.id}}" class="carousel slide">
-                    
                     <div class="carousel-inner">
                     
                         <div class="item active">
@@ -136,20 +95,50 @@
                     </div><!--/.carousel-inner -->
                   
                     <a class="left carousel-control" href="#{{i.id}}{{i.id}}" data-slide="prev">&lsaquo;</a>
+                    <a class="right carousel-control" href="#{{i.id}}{{i.id}}" data-slide="next">&rsaquo;</a>					
+                </div>
+                </div><!--/.accordion-inner -->
+                                    
+                <!--<div id="{{i.id}}{{i.id}}" class="carousel slide span3">
+                    
+                    <div class="carousel-inner">
+                    
+                        <div class="item active">
+                         {% for j in photos_list %}
+                       	 {% if j.event == i %}
+							{% ifchanged i %}
+                        	 <img src="{{MEDIA_URL}}{{j.image}}" width="300px" height="200px" alt="">
+							{% endifchanged %}
+                         {% endif %}
+                    	 {% endfor %}   
+                        </div>                    
+                    
+                    {% for j in photos_list %}
+                        {% if j.event == i %}
+							{% ifchanged i %}
+							{% else %}
+                        		<div class="item">
+                            		<img src="{{MEDIA_URL}}{{j.image}}" width="300px" height="200px" alt="">
+                       			</div>
+							{% endifchanged %}
+                        {% endif %}
+                    {% endfor %}
+                  
+                    </div><!--/.carousel-inner -->
+                  
+<!--                    <a class="left carousel-control" href="#{{i.id}}{{i.id}}" data-slide="prev">&lsaquo;</a>
                     <a class="right carousel-control" href="#{{i.id}}{{i.id}}" data-slide="next">&rsaquo;</a>
                 </div><!--/.i -->
+                     
 
-        </div><!-- /.images --> 
-        </br>
-		</br>
-		</br>
-		</br>       
-        {% endfor %}
-        
+              </div><!--/.accordion-body collapse in -->
+            </div><!--/.accordion group -->
+          </div><!--/.accordion-->
+        {% endfor %}  
     </div><!--/.events -->
 </div><!--/.row -->
-
 {% endblock %}
+
 {% block js %}
 <!-- Script is for automatic cycling with interval as mentioned below -->   
 <script>
@@ -157,6 +146,16 @@
     $('#{{i.id}}{{i.id}}').carousel({
         interval: 3000
     });
+/* window.location.hash will return # followed be the anchor id for example
+#13 or #17. Remove hash and this gives you the id. Compare and display the 
+particular event */
+var id = window.location.hash.replace("#", "")
+if (id){
+    if (id!={{i.id}}){
+    $('#collapse{{i.id}}').collapse("hide");
+    }
+}
 {% endfor %}
+  
 </script> 
 {% endblock %}

@@ -10,9 +10,12 @@
         <!-- Le styles -->
         <link href="{{MEDIA_URL}}bootstrap/css/bootstrap.css" rel="stylesheet">
         <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }        
             #external{text-decoration:none;}
 			textarea{
-        				width: 660px;
+        				width: 960px;
         				height: 170px;
 					}
 
@@ -62,9 +65,14 @@
                         <!-- Link to admin page --> 
                         <ul class="nav pull-right">
                             <li class="divider-vertical"></li>
-                            <li class="admin">
+                            <li>
                                 <a href="{{SITE_URL}}admin" target="_blank">Admin</a>
                             </li>
+                            {% if request.user.is_authenticated %}
+                            <li>
+                                <a href="{{SITE_URL}}admin/logout">Logout</a>
+                            </li>                            
+                            {% endif %}
                         </ul>
                         
                     </div><!--/.nav-collapse -->
@@ -79,7 +87,7 @@
         <div class="container">
             <!-- Indication that user has logged in -->
             {% if request.user.is_authenticated %}
-                <p class="pull-right">You are currently logged in as {{request.user}}.</p>
+                <h5 class="pull-right">You are currently logged in as {{request.user}}.</h5>
             {% endif %}
             {% block content %}{% endblock %}
         </div>
@@ -102,10 +110,10 @@
         <script src="{{MEDIA_URL}}bootstrap/js/bootstrap-typeahead.js"></script>
         <!-- This is to allow automatic padding rather than specify since layout of each page is different -->
         <script>
-        $(document).ready(function() {
-            $("body").css('padding-top',$(".navbar-fixed-top").height()+$(".subnav-fixed").height());
+/*        $(document).ready(function() {
+            $("body").css('padding-top',$(".navbar-fixed-top").height());
             $("body").css('padding-bottom',$(".navbar-fixed-bottom").css("height"));
-        });
+        });*/
         </script>
         {% block js %}{% endblock %}
         
