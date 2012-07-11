@@ -20,16 +20,37 @@
 <hr>
 <h1>{{present_topic.title}}</h1>
 <hr>
+	{% if present_topic_images %}
+	<div class="well">
+	<div class="row">
+		<div class="span8">
+			<p> {{present_topic.display_mySafeField}}</p></br></br></br></br></br>
+		</div>
+		<div class="span3">
+		{% for image in present_topic_images %}
+		<ul class="thumbnails">
+			<li class="span3">
+			<div class="thumbnail">
+				<img src='{{MEDIA_URL}}{{image.image}}' width="300px" height="200px" >
+			</div>
+			</li>
+		</ul>
+		
+		{% endfor %}
+		</div>
+		
+	</div>
+	</div><!-- well -->
+	</br>	
+	<hr>
+	{% else %}
+		<div class="well">
+    		<p> {{present_topic.display_mySafeField}}</p></br></br></br></br></br></br>
+		</div>
+		</br>	
+		<hr>
+	{% endif %}
 
-{% for image in present_topic_images %}
-	<img src='{{MEDIA_URL}}{{image.image}}' width="300px" height="200px" class="pull-right">
-{% endfor %}
-
-<div class="well">
-    <p> {{present_topic.display_mySafeField}}</p></br></br></br></br></br></br>
-</div>
-</br>	
-<hr>
 
 <!-- form for editing content -->
 {% if request.user.is_authenticated %}

@@ -56,7 +56,7 @@
                     <div class="thumbnail">
                         {% for j in photos_list %}
                             {% if j.category == i %}
-                            <a href="{{SITE_URL}}category/{{i.url_name}}/">
+                            <a href="{{SITE_URL}}category/{{i.url_name}}/#all-events">
 							<div style="width=360px">       
                             <img src="{{MEDIA_URL}}{{j.image}}"  alt="" />
 							</div>
@@ -64,7 +64,7 @@
                             {% endif %}
                         {% endfor %}   
                         <div class="caption">
-                            <h5><span style="text-transform: uppercase"><a href="{{SITE_URL}}category/{{i.url_name}}/" id="external"><font color="000033">{{i.name}}</font></a></span></h5>
+                            <h5><span style="text-transform: uppercase"><a href="{{SITE_URL}}category/{{i.url_name}}/#all-events" id="external"><font color="000033">{{i.name}}</font></a></span></h5>
                             <p>
                             {% for j in events %}
                                 {% if j.category == i %}
