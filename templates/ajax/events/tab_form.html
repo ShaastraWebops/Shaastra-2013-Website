@@ -1,10 +1,11 @@
 <p>
-Add a Custom Tab<br/>
+Custom Tab<br/>
 <form action="" method="POST" id="tab_form" accept-charset="utf-8">
     {% csrf_token %}
     <table>
         {{form.as_table}}
     </table>
     <input type="button" value="Save" onclick = "save_tab();">
+    <input type="hidden" id="tab_id" value="{{tab_id}}" >
     <a href='/events/'>events</a>
 </form>
