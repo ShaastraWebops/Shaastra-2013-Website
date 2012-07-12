@@ -66,7 +66,7 @@ class TabFile(models.Model):
         
 class Question(models.Model):
     q_number = models.IntegerField(max_length=2) 
-    title = models.CharField(max_length=1500, blank = False)
+    title = models.TextField(max_length=1500, blank = False)
     
     def __unicode__(self):
         return self.title

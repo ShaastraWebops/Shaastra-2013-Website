@@ -78,6 +78,7 @@ def save_editted_tab(request, form, tab_id):
         t = template.render(RequestContext(request,locals()))
         dajax = Dajax()
         dajax.assign('#detail', 'innerHTML', t)
+        dajax.script("niced = new nicEditor().panelInstance('id_text');")
         return dajax.json()
 
 @dajaxice_register
@@ -104,6 +105,7 @@ def save_tab(request, form):
         t = template.render(RequestContext(request,locals()))
         dajax = Dajax()
         dajax.assign('#detail', 'innerHTML', t)
+        dajax.script("niced = new nicEditor().panelInstance('id_text');")
         return dajax.json()
         
 @dajaxice_register
@@ -114,6 +116,7 @@ def add_tab(request):
     t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
+    dajax.script("niced = new nicEditor().panelInstance('id_text');")
     return dajax.json()
     
 @dajaxice_register
@@ -125,6 +128,7 @@ def edit_tab(request, tab_id):
     t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#detail','innerHTML', t)
+    dajax.script("niced = new nicEditor().panelInstance('id_text');")
     return dajax.json()
     
 @dajaxice_register
