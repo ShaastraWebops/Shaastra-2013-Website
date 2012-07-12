@@ -2,9 +2,7 @@ from django.http import *
 from django.template import *
 from django.shortcuts import *
 from django.contrib import *
-from django.contrib.auth.forms import UserCreationForm
 from django.core.context_processors import csrf
-from django.contrib import *
 from django.contrib.auth.models import User
 from events.models import *
 from django.conf import settings
@@ -164,4 +162,65 @@ class TabFileSubmit(CoordProtectedView):
         # the ajax function File() assigns this as the innerHTML of a div after the request has been completed.
         return HttpResponse(t)
         
-        
+class QuestionsTab(CoordProtectedView):
+    """
+        displays the questions tab
+    """
+    def handle_GET(self, request, **kwargs):
+        path = request.META['PATH_INFO'].split('/')
+        if path[3] == 'mcq':
+            try:
+                ques_id = path[4]
+                ques = ObjectiveQuestion.objects.get(id = ques_id)
+                form = AddMCQForm(instance = ques)
+            except:
+                form = AddMCQForm()
+            template = 'ajax/events/mcq_form.html'
+        else:
+            event = request.user.get_profile().is_coord_of
+            text_questions = event.subjectivequestion_set.all()
+            mcqs = event.objectivequestion_set.all()
+            template = 'ajax/events/question_tab.html'
+        return render_to_response(template, locals(), context_instance = RequestContext(request))
+
+class MobAppTab(CoordProtectedView):
+    """
+        displays the mobapp tab
+    """
+    def handle_GET(self, request, **kwargs):
+        event = request.user.get_profile().is_coord_of
+        try:
+            form = MobAppWriteupForm(instance = event.mobapptab)
+        except:
+            form = MobAppWriteupForm()
+        return render_to_response('ajax/events/add_edit_mobapptab.html', locals(), context_instance = RequestContext(request))
+
+class CustomTabs(CoordProtectedView):
+    """
+        displays the Custom tabs
+    """
+    def get_files(self, tab):
+        # gets all files that are related to a particular tab
+        try:
+            return tab.tabfile_set.all()
+        except:
+            raise Http404()
+
+    def handle_GET(self, request, **kwargs):
+        path = request.META['PATH_INFO'].split('/')
+        if path[3]:
+            if path[3] == 'edit' :
+                tab_id = path[4]
+                tab = Tab.objects.get(id = tab_id)
+                form = TabAddForm(instance = tab)
+                template = 'ajax/events/tab_form.html'
+            else:
+                tab_id = path[3]
+                tab = Tab.objects.get(id = tab_id)
+                file_list = self.get_files(tab)
+                template = 'ajax/events/tab_detail.html'
+        else:
+            form = TabAddForm()
+            template = 'ajax/events/tab_form.html'
+        return render_to_response(template, locals(), context_instance = RequestContext(request))
+

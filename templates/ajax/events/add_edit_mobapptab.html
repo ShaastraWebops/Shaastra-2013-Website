@@ -1,7 +1,9 @@
-<form action="" method="POST" id="mobapptab_form" enctype="multipart/form-data" accept-charset="utf-8">
-{% csrf_token %}
-<table>
-    {{f.as_table}}
-</table>
-<input type="button" value="Save" onclick = "save_mobapptab();">
+<p>
+MobApp Writeup<br>
+<form action="" method="POST" id="mobapptab_form" accept-charset="utf-8">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <input type="button" value="Save" onclick = "save_mobapptab();">
 </form>
