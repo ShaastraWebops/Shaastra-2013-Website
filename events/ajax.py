@@ -54,6 +54,7 @@ def delete_tab(request, tab_id):
         
 @dajaxice_register
 def save_tab(request, form, tab_id=0):
+
     # validates the tab details that were submitted while adding a new tab
     if tab_id:
         tab = Tab.objects.get(id = tab_id)
@@ -77,6 +78,7 @@ def save_tab(request, form, tab_id=0):
         dajax = Dajax()
         dajax.assign('.bbq-item', 'innerHTML', html)
         return dajax.json()
+
 
 @dajaxice_register
 def add_file(request, tab_id):
