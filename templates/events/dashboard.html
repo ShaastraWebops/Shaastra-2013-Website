@@ -109,15 +109,24 @@
         }
 
         function save_subjective(){
-            data = $('#add_subjective_form').serializeObject();
-            Dajaxice.events.save_subjective(Dajax.process,{'form':data})
+            data = $('#subjective_form').serializeObject();
+            ques_id=$("#ques_id").attr('value');
+            Dajaxice.events.save_subjective(Dajax.process,{'data':data,'ques_id':ques_id,})
             return false;
         }
 
         function save_tab(){
             data = $('#tab_form').serializeObject();
             tab_id=$("#tab_id").attr('value');
-            Dajaxice.events.save_tab(Dajax.process,{'form':data,'tab_id':tab_id,})
+            Dajaxice.events.save_tab(Dajax.process,{'data':data,'tab_id':tab_id,})
+            return false;
+        }
+
+        function add_file(){
+            data = $('#file_form').serializeObject();
+            tab_id=$("#tab_id").attr('value');
+            alert(data['tab_file']);
+            Dajaxice.events.add_file(Dajax.process,{'data':data,'tab_id':tab_id,})
             return false;
         }
 
@@ -127,10 +136,10 @@
             return false;
         }
 
-        function delete_tab(titles,id){
-            var r=confirm("Are you sure you want to delete tab "+ titles +id);
-//            if(r=="true")
-//                Dajaxice.events.delete_tab(Dajax.process,{'tab_id':id})
+        function delete_tab(id){
+            var r=confirm("Are you sure you want to delete the tab?"+id);
+            if(r==true)
+                Dajaxice.events.delete_tab(Dajax.process,{'tab_id':id})
         }
 
         function rename_file(id){
@@ -166,10 +175,11 @@
                     document.getElementById('file_list').innerHTML = xhr.responseText;
                 }
                 if (xhr.readyState == 1){
-                document.getElementById('uploading').innerHTML = "<img src = '/static/js/loading.gif'>";    //loading..loading..
+                document.getElementById('uploading').innerHTML = "<img src = '/static/images/loading.gif'>";    //loading..loading..
                 }
                 if (xhr.readyState == 4){
                 document.getElementById('uploading').innerHTML = "";    //loading done
+                document.forms['TabFileForm'].reset();
                 }
             }
             xhr.send(file);                 // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
@@ -214,8 +224,9 @@
                     $(".bbq-default").show();
                 }
             })
-            $(window).trigger('hashchange');
             Dajaxice.events.updateTabs(Dajax.process);
+            $(window).trigger('hashchange');
+
         });
         </script>
     </head>
@@ -225,6 +236,9 @@
         <a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a>
         <p>
         {% csrf_token %}
+        <a href='#questions' name='questions' id = 'question' >Questions</a>
+        <a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a>
+        <button name='submissions' id = 'submissions' onclick = 'Dajaxice.submissions.all_submissions(Dajax.process)'>Submissions</button>
         <div name="tabs" id = "tabs">
         </div>
         <a href="#customtabs">Add a Tab</a>

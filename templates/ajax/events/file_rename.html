@@ -1,6 +1,6 @@
 File:{{actual_name}}
 <form id="file_rename" action="" method="post"> {% csrf_token %}
-    Name: <input type="text" value="{{f.title}}" name="display_name" id="display_name"/>
+    Name: <input type="text" value="{{form.title}}" name="display_name" id="display_name"/>
     <input type="button" value="Change Name" onclick="rename_file({{f.id}});"/> 
 </form>
 
