@@ -24,7 +24,7 @@
 	<ul class="nav nav-tabs nav-stacked">
 		{% for i in categories %}
     		<li {% ifequal c.url_name i.url_name %}class="dropdown active"{% endifequal %}{% ifnotequal c.url_name i.url_name %}class="dropdown"{% endifnotequal %}>
-    		    <a href="#"  data-toggle="collapse" data-target="#side{{i.id}}"><span style="text-transform: uppercase"><strong>{{i.name}}</strong></span></a>
+    		    <a href="#category"  data-toggle="collapse" data-target="#side{{i.id}}"><span style="text-transform: uppercase"><strong>{{i.name}}</strong></span></a>
     		</li>
 			<div id="side{{i.id}}" class="collapse">
 			<ul class="nav nav-pills nav-stacked">
@@ -172,6 +172,7 @@ if (id){
 		{% for i in events_list %}
 		 	$('#collapse{{i.id}}').collapse("show");
 		{% endfor %}
+		document.write("<h3><font color=\"000033\"><a class=\"pull-right\" href=\"#\" id=\"external\"><pre>    BACK TO TOP    <\/pre><\/a><\/font><h3><br><br>");
 		}
 	} 
 </script> 

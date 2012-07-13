@@ -20,7 +20,7 @@
 	</br>
 	<ul class="nav nav-tabs nav-stacked">
 		{% for i in categories %}
-			<li><a href="#" data-toggle="collapse" data-target="#side{{i.id}}"><span style=" text-transform: uppercase"><strong>{{i.name}}</strong></span></a></li>
+			<li><a href="#category" data-toggle="collapse" data-target="#side{{i.id}}"><span style=" text-transform: uppercase"><strong>{{i.name}}</strong></span></a></li>
 			<div id="side{{i.id}}" class="collapse ">
 			<ul class="nav nav-pills nav-stacked">
 				<li><a href="{{SITE_URL}}category/{{i.url_name}}/#all-events"><b>All Events</b></a></li>
