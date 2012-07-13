@@ -5,10 +5,12 @@ from django.contrib import *
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from events.models import *
+from events.forms import *
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.core.exceptions import ObjectDoesNotExist
+from django import forms
 
 import os
 import datetime
@@ -222,5 +224,20 @@ class CustomTabs(CoordProtectedView):
         else:
             form = TabAddForm()
             template = 'ajax/events/tab_form.html'
+        return render_to_response(template, locals(), context_instance = RequestContext(request))            
+    
+class MCQAddEdit(CoordProtectedView):
+    """
+    """
+    def handle_GET(self, request, **kwargs):
+        mcq = None
+        ques_id = kwargs['mcq_id']
+        options = []
+        if kwargs['mcq_id']:
+            mcq = ObjectiveQuestion.objects.get(id = kwargs['mcq_id'])
+            options = mcq.mcqoption_set.all()
+        form = MyForm(mcq, options)
+        template = 'ajax/events/mcq_form.html'
         return render_to_response(template, locals(), context_instance = RequestContext(request))
+            
 
