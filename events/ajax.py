@@ -31,92 +31,64 @@ def updateTabs(request):
     This function updates the tabs div
     """
     dajax = Dajax()
-    dajax.assign("#tabs",'innerHTML',"<a href='#questions' name='question_tab' id = 'question_tab' >Questions</a> ")
-    dajax.append("#tabs",'innerHTML',"<a href='#mobapp' name='mobapp_tab' id = 'mobapp_tab' >Mobile App Writeup</a> ")
-    dajax.append("#tabs",'innerHTML',"<a href='#' name='submissions' id = 'submissions' onclick = 'Dajaxice.submissions.all_submissions(Dajax.process)'>Submissions</a> ")
     event = request.user.get_profile().is_coord_of
     tabs=get_tabs(event)
     for tab in tabs:
         dajax.append("#tabs",'innerHTML',"<a href="+'#customtabs/'+str(tab.id)+" name ="+tab.title+" id ="+ str(tab.id)+" >"+tab.title+"</a> ")
-    dajax.script("window.location.hash=''")
+    dajax.script("window.location.hash='';")
     return dajax.json()
         
 @dajaxice_register
-def delete_tab(request, tab_id):
+def delete_tab(request, tab_id=0):
     # deletes the tab. shows a delete successful message.
     dajax = Dajax()
-    tab = Tab.objects.get(id = tab_id)
-    title = tab.title
-    tab.delete()
-    dajax.alert(title+' deleted sucessfully!')
-    dajax.script("Dajaxice.events.updateTabs(Dajax.process);");
+    if tab_id:
+        tab = Tab.objects.get(id = tab_id)
+        title = tab.title
+        tab.delete()
+        dajax.alert(title+' deleted sucessfully!')
+        dajax.script("Dajaxice.events.updateTabs(Dajax.process);");
+    else:
+        dajax.alert('error '+ tab_id)
     return dajax.json()
         
 @dajaxice_register
-def save_tab(request, form, tab_id=0):
-
+def save_tab(request, data, tab_id=0):
     # validates the tab details that were submitted while adding a new tab
+    dajax = Dajax()
     if tab_id:
         tab = Tab.objects.get(id = tab_id)
-        f = TabAddForm(form, instance = tab)
+        form = TabAddForm(data, instance = tab)
     else:
-        f = TabAddForm(form)
-    if f.is_valid():
+        form = TabAddForm(data)
+    if form.is_valid():
         event = request.user.get_profile().is_coord_of
-        unsaved_tab = f.save(commit = False)
+        unsaved_tab = form.save(commit = False)
         unsaved_tab.event = event
         unsaved_tab.save()
         tab = unsaved_tab
-        dajax = Dajax()
         if not tab_id:
             dajax.append('#tabs','innerHTML',"<a href="+'#customtabs/'+str(tab.id)+" name ="+str(tab.title)+" id ="+str(tab.id)+" > "+str(tab.title)+"  </a>")
-        dajax.script("window.location.hash='';")
+        dajax.script("window.location.hash='"+'customtabs/'+str(tab.id)+"';")
         return dajax.json()
     else:
         template = loader.get_template('ajax/events/tab_form.html')
         html = template.render(RequestContext(request,locals()))
-        dajax = Dajax()
         dajax.assign('.bbq-item', 'innerHTML', html)
         return dajax.json()
-
-
-@dajaxice_register
-def add_file(request, tab_id):
-    # loads a form for adding files inside a tab
-    f = TabFileForm()
-    tab = Tab.objects.get(id = tab_id)
-    file_list = get_files(tab)
-    template = loader.get_template('ajax/events/file_form.html')
-    t = template.render(RequestContext(request,locals()))
-    dajax = Dajax()
-    dajax.assign('#detail','innerHTML', t)
-    return dajax.json()
     
 @dajaxice_register
 def delete_file(request, tab_id, file_id):
     # deletes the selected file
-    f = TabFile.objects.get(id = file_id)
-    f.delete()
+    form = TabFile.objects.get(id = file_id)
+    form.delete()
     tab = Tab.objects.get(id = tab_id)
     file_list = get_files(tab)
     template = loader.get_template('ajax/events/tab_detail.html')
-    t = template.render(RequestContext(request,locals()))
+    html = template.render(RequestContext(request,locals()))
     dajax = Dajax()
-    dajax.assign('#detail','innerHTML', t)
+    dajax.assign('.bbq-item','innerHTML', html)
     return dajax.json()
-
-@dajaxice_register
-def rename_file(request, tab_id, file_id):
-    # loads a form for renaming a file
-    tab = Tab.objects.get(id = tab_id)
-    f = TabFile.objects.get(id = file_id)
-    actual_name = f.tab_file.name.split('/')[-1]
-    file_list = get_files(tab)
-    template = loader.get_template('ajax/events/file_rename.html')
-    t = template.render(RequestContext(request,locals()))
-    dajax = Dajax()
-    dajax.assign('#detail','innerHTML', t)
-    return dajax.json()    
         
 @dajaxice_register
 def rename_file_done(request, form, file_id):
@@ -128,78 +100,31 @@ def rename_file_done(request, form, file_id):
     tab = f.tab
     file_list = get_files(tab)
     template = loader.get_template('ajax/events/tab_detail.html')
-    t = template.render(RequestContext(request,locals()))
+    html = template.render(RequestContext(request,locals()))
     dajax = Dajax()
-    dajax.assign('#detail','innerHTML', t)
+    dajax.assign('.bbq-item','innerHTML', html)
     return dajax.json()
     
 @dajaxice_register
-def add_subjective(request):
-    # loads a form for creating a new subjective question.
-    f = AddSubjectiveQuestionForm()
-    template = loader.get_template('ajax/events/add_subjective_form.html')
-    t = template.render(RequestContext(request,locals()))
-    dajax = Dajax()
-    dajax.assign('#detail','innerHTML', t)
-    return dajax.json()
-    
-@dajaxice_register
-def save_subjective(request, form):
+def save_subjective(request, data, ques_id=0):
     # validates and saves a subjective question
-    from django.conf import settings
-    f = AddSubjectiveQuestionForm(form)
-    if f.is_valid():
-        event = request.user.get_profile().is_coord_of
-        unsaved_ques = f.save(commit = False)
-        unsaved_ques.event = event
-        unsaved_ques.save()
-        text_questions = event.subjectivequestion_set.all()
-        mcqs = event.objectivequestion_set.all()
-        template = loader.get_template('ajax/events/question_tab.html')
-        t = template.render(RequestContext(request,locals()))
-        dajax = Dajax()
-        dajax.assign('#detail', 'innerHTML', t)
-        return dajax.json()
-    else:
-        template = loader.get_template('ajax/events/add_subjective_form.html')
-        t = template.render(RequestContext(request,locals()))
-        dajax = Dajax()
-        dajax.assign('#detail', 'innerHTML', t)
-        return dajax.json()
-
-@dajaxice_register        
-def edit_subjective(request, ques_id):
-    # loads a form for editing the selected question
-    ques = SubjectiveQuestion.objects.get(id = ques_id)
-    f = AddSubjectiveQuestionForm(instance = ques)
-    template = loader.get_template('ajax/events/edit_subjective_form.html')
-    t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
-    dajax.assign('#detail','innerHTML', t)
-    return dajax.json()
-    
-@dajaxice_register
-def save_editted_subjective(request, form, ques_id):
-    # validates the question details that were submitted while editing an existing question.
-    ques = SubjectiveQuestion.objects.get(id = ques_id)
-    f = AddSubjectiveQuestionForm(form, instance = ques)
-    if f.is_valid():
+    if ques_id :
+        ques = SubjectiveQuestion.objects.get(id = ques_id)
+        form = AddSubjectiveQuestionForm(data, instance = ques)
+    else:
+        form = AddSubjectiveQuestionForm(data)
+    if form.is_valid():
         event = request.user.get_profile().is_coord_of
-        unsaved_ques = f.save(commit = False)
+        unsaved_ques = form.save(commit = False)
         unsaved_ques.event = event
         unsaved_ques.save()
-        text_questions = event.subjectivequestion_set.all()
-        mcqs = event.objectivequestion_set.all()
-        template = loader.get_template('ajax/events/question_tab.html')
-        t = template.render(RequestContext(request,locals()))
-        dajax = Dajax()
-        dajax.assign('#detail', 'innerHTML', t)
+        dajax.script("window.location.hash='questions'")
         return dajax.json()
     else:
-        template = loader.get_template('ajax/events/edit_subjective_form.html')
-        t = template.render(RequestContext(request,locals()))
-        dajax = Dajax()
-        dajax.assign('#detail', 'innerHTML', t)
+        template = loader.get_template('ajax/events/subj_form.html')
+        html = template.render(RequestContext(request,locals()))
+        dajax.assign('.bbq-item', 'innerHTML', html)
         return dajax.json()
 
 @dajaxice_register        
@@ -211,9 +136,9 @@ def delete_subjective(request, ques_id):
     text_questions = event.subjectivequestion_set.all()
     mcqs = event.objectivequestion_set.all()
     template = loader.get_template('ajax/events/question_tab.html')
-    t = template.render(RequestContext(request,locals())) 
+    html = template.render(RequestContext(request,locals())) 
     dajax = Dajax()
-    dajax.assign('#detail', 'innerHTML', t)
+    dajax.assign('.bbq-item', 'innerHTML', html)
     return dajax.json()
     
 @dajaxice_register
@@ -253,7 +178,7 @@ def delete_mcq(request, ques_id):
     template = loader.get_template('ajax/events/question_tab.html')
     t = template.render(RequestContext(request,locals())) 
     dajax = Dajax()
-    dajax.assign('#detail', 'innerHTML', t)
+    dajax.assign('.bbq-item', 'innerHTML', t)
     return dajax.json()
     
 @dajaxice_register        
