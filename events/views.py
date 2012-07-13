@@ -162,7 +162,7 @@ class TabFileSubmit(CoordProtectedView):
         # the ajax function File() assigns this as the innerHTML of a div after the request has been completed.
         return HttpResponse(t)
         
-class QuestionsTab(CoordProtectedView):
+class Questions(CoordProtectedView):
     """
         displays the questions tab
     """
@@ -176,6 +176,14 @@ class QuestionsTab(CoordProtectedView):
             except:
                 form = AddMCQForm()
             template = 'ajax/events/mcq_form.html'
+        elif path[3] == 'subj':
+            try:
+                ques_id = path[4]
+                ques = SubjectiveQuestion.objects.get(id = ques_id)
+                form = AddSubjectiveQuestionForm(instance = ques)
+            except:
+                form = AddSubjectiveQuestionForm()
+            template = 'ajax/events/subj_form.html'
         else:
             event = request.user.get_profile().is_coord_of
             text_questions = event.subjectivequestion_set.all()
@@ -183,7 +191,7 @@ class QuestionsTab(CoordProtectedView):
             template = 'ajax/events/question_tab.html'
         return render_to_response(template, locals(), context_instance = RequestContext(request))
 
-class MobAppTab(CoordProtectedView):
+class MobApp(CoordProtectedView):
     """
         displays the mobapp tab
     """
@@ -208,12 +216,27 @@ class CustomTabs(CoordProtectedView):
 
     def handle_GET(self, request, **kwargs):
         path = request.META['PATH_INFO'].split('/')
-        if path[3]:
+        if path[3] :
             if path[3] == 'edit' :
                 tab_id = path[4]
                 tab = Tab.objects.get(id = tab_id)
                 form = TabAddForm(instance = tab)
                 template = 'ajax/events/tab_form.html'
+            elif path[3] == 'files' :
+                if path[4] == 'rename' :
+                    tab_id = path[5]
+                    file_id = path[6]
+                    tab = Tab.objects.get(id = tab_id)
+                    form = TabFile.objects.get(id = file_id)
+                    actual_name = form.tab_file.name.split('/')[-1]
+                    file_list = self.get_files(tab)
+                    template = 'ajax/events/file_rename.html'
+                else:
+                    form = TabFileForm()
+                    tab_id = path[4]
+                    tab = Tab.objects.get(id = tab_id)
+                    file_list = self.get_files(tab)
+                    template = 'ajax/events/file_form.html'
             else:
                 tab_id = path[3]
                 tab = Tab.objects.get(id = tab_id)

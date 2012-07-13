@@ -105,8 +105,8 @@ def submission_list(request):
     dajax = Dajax()
     subs = request.user.get_profile().is_coord_of.basesubmission_set.all()
     template = loader.get_template('ajax/submissions/all_submissions.html')
-    t = template.render(RequestContext(request,locals())) 
-    dajax.assign('#detail', 'innerHTML', t)
+    html = template.render(RequestContext(request,locals())) 
+    dajax.assign('.bbq-item', 'innerHTML', html)
     dajax.script("$('#submissions_list').dataTable();")
     return dajax.json()
     

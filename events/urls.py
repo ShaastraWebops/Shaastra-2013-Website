@@ -3,8 +3,8 @@ from events.views import *
 
 urlpatterns = patterns('',
     url(r'^customtabs/', CustomTabs()),
-    url(r'^questions/', QuestionsTab()),
-    url(r'^mobapp/$', MobAppTab()),
+    url(r'^questions/', Questions()),
+    url(r'^mobapp/$', MobApp()),
     url(r'^tabfile/$', TabFileSubmit()),
     url(r'^$', CoordDashboard()),
 )
