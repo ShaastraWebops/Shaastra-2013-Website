@@ -87,7 +87,7 @@ class ObjectiveQuestion(Question):
         super(ObjectiveQuestion, self).delete()
 
 class MCQOption(models.Model):
-    question = models.ForeignKey(ObjectiveQuestion, null = True, blank = True)
+    question = models.ForeignKey(ObjectiveQuestion)
     option = models.CharField(max_length = 1)
     text = models.TextField(max_length = 1000)
     def __unicode__(self):

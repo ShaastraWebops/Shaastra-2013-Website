@@ -14,21 +14,6 @@
 
         // not documenting this for now. Try n see all the templates in the ajax folder. These functions are called from those templates.
         // make a note of all the div ids. See how the divs are being changed dynamically by dajax.
-        function add_option_field(){
-        var old_opt = $("#mcq_form tr:last input:last").attr("name");   // oldopt = 'optb'
-        var html = $("#mcq_form tr:last").html();
-        opt = old_opt.replace('opt','');                                // opt = 'b'
-        old_option = 'option '.concat(opt);                             // oldoption = 'option b'
-        new_opt = String.fromCharCode(opt.charCodeAt(0) + 1);           // newopt = 'c'
-        new_option = 'option '.concat(new_opt);                         // newoption = 'option c'
-        new_opt = 'opt'.concat(new_opt);                                // newopt = 'optc'
-        html = html.replace(new RegExp(old_opt, 'g'), new_opt);
-        html = html.replace(old_option, new_option);
-        html = "<tr>"+html+"</tr>";
-        $("#mcq_form tbody").append(html);
-        return false;
-        }
-        
         function save_score(id){
             data = $('#score').serializeObject();
             isnum = /^[-+]?[0-9]+(\.[0-9]+)?$/.test(data.score);
@@ -86,11 +71,10 @@
             }
         }
 
-        function save_mcq(id){
+        function save_mcq(){
             data = $('#mcq_form').serializeObject();
-            if (data.title == null || data.title == ""){alert('Question Title cannot be blank');return false;}
-            if (isNaN(data.q_no) || data.q_no == null || data.q_no == ""){alert('Question number must be an integer');return false;}
-            Dajaxice.events.save_mcq(Dajax.process,{'data':data,'ques_id':id})
+            ques_id=$("#ques_id").attr('value');
+            Dajaxice.events.save_mcq(Dajax.process,{'data':data,'ques_id':ques_id,})
             return false;
         }
 
