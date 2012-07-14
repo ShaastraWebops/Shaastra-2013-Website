@@ -6,12 +6,12 @@ dajaxice_autodiscover()
 from django.contrib.sites import *
 from django.contrib.sitemaps import *
 from sitemaps import *
-from django.contrib.sites import *
+
 from events.urls import *
 from users.urls import *
 urlpatterns = patterns('',
     url(r'^$', 'views.home', name = 'home'),
-    url(r'^user/', include('users.urls'),name='usersurls'),
+    url(r'^user/', include('users.urls')),
     url(r'^admin/', include('admin.urls')),
     url(r'^core/', include('core.urls')),
     url(r'^coord/', include('events.urls')),
@@ -49,12 +49,12 @@ sitemaps= {
     'event':EventSitemap,
     'pages':SiteSiteMap(sitelist),
     
-    'editcoresitemap':EditCoreSiteMap(),
+#    'editcoresitemap':EditCoreSiteMap(),
 }
 urlpatterns += patterns ('',
     #...<snip out other url patterns>...
-    (r'^sitemap\.xml$', 'index', {'sitemaps': sitemaps}),
-    (r'^sitemap-(?P<section>.+)\.xml$', 'sitemap', {'sitemaps': sitemaps}),
+    (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+    (r'^sitemap-(?P<section>.+)\.xml$','django.contrib.sitemaps.views.sitemap' , {'sitemaps': sitemaps}),
 )
 
 
