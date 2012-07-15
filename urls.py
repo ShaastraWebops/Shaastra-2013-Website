@@ -39,17 +39,27 @@ urlpatterns += patterns('django.views.static',
         'serve', {
         'document_root': settings.STATIC_ROOT,
         'show_indexes': True }),)
+#Add the name of any url(without captured parameters) in this list for it to appear in the sitemap
 sitelist=['home','login','register','register_fb','editprofile','login_fb','authentication_callback','password_change','password_change_done','logout'
 ,'coorddashboard','tabfile','summary','summarybyevent','summarybyvenue','summarybydate','summarybyeventgenpdf','summarybyvenuegenpdf',
-'summarybydategenpdf','corehome','sub_home','addgroup','addcore','adminhome']
+'summarybydategenpdf','corehome','addgroup','addcore','adminhome','all_submissions']
 
 
 sitemaps= {
 
-    'event':EventSitemap,
+#    'event':EventSitemap,
     'pages':SiteSiteMap(sitelist),
     
-#    'editcoresitemap':EditCoreSiteMap(),
+    'editcoresitemap':EditCoreSiteMap(),
+    'editgroupsitemap':EditGroupSiteMap(),
+    'editgroupsitemap':Register_ActivateSiteMap(),
+    'addsubeventsitemap':AddSubEventSiteMap(),
+    'editsubeventsitemap':EditSubEventSiteMap(),
+    'deletesubeventsitemap':DeleteSubEventSiteMap(),
+    'lockeventsitemap':LockEventSiteMap(),
+    'unlockeventsitemap':UnlockEventSiteMap(),
+    'event_submissionsitemap':Event_SubmissionSiteMap()
+
 }
 urlpatterns += patterns ('',
     #...<snip out other url patterns>...

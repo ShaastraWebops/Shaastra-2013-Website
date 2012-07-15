@@ -26,8 +26,8 @@ urlpatterns = patterns('',
 eventurls=urlpatterns
 sitemaps= {
 
-    'event':EventSitemap,
-    'pages':SiteSiteMap(['logout']),
+    #'event':EventSitemap,
+    #'pages':SiteSiteMap(['logout']),
     
 }
 urlpatterns += patterns ('',
