@@ -10,6 +10,7 @@ from django.conf import settings
 from dtvpicker.models import SubEvent
 from events.models import Event
 from dtvpicker.forms import SubEventForm
+from django.contrib.sitemaps import ping_google
 
 class SubEventAdd(SubEventAddEditDeleteABC):
     """
@@ -116,8 +117,9 @@ class SubEventDelete(SubEventAddEditDeleteABC):
         if self.permissionsGranted(request, **kwargs) == False:
             return HttpResponseForbidden()
 
-        subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
-        subeventRequested.delete()
+        subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])     
+	subeventRequested.delete()
+	ping_google()   
         self.updateEventLockStatus(self.getEvent(kwargs['event']))
         return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
 
