@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from events.models import Event
 from users.models import UserProfile, College
 from django.utils.translation import ugettext as _
 from users.forms import *
@@ -184,7 +185,6 @@ def activate (request, a_key = None ):
                 activated = True
     return render_to_response('users/activated.html',locals(), context_instance= RequestContext(request))
 
-
 '''
 def forgot_password(request):
     reset_password_form = forms.ResetPasswordForm()
@@ -218,3 +218,7 @@ def forgot_password(request):
             return HttpResponseRedirect('%smyshaastra/forgot_password/done/' % settings.SITE_URL)
     return render_to_response('users/username_form.html', locals(), context_instance = global_context(request))
 '''
+def events(request):
+    event=Event.objects.all()
+    return render_to_response('users/events.html',locals(), context_instance= RequestContext(request))
+

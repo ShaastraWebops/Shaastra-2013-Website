@@ -1,14 +1,8 @@
-from django.conf.urls.defaults import patterns, include, url
+# -*- coding: utf-8 -*-
+from django.conf import settings
+from django.conf.urls.defaults import *
 from events.views import *
-from submissions.views import *
 
 urlpatterns = patterns('',
-    url(r'^submissions/', submissions),
-    url(r'^customtabs/', CustomTabs()),
-    url(r'^questions/', Questions()),
-    url(r'^mobapp/$', MobApp()),
-    url(r'^tabfile/$', TabFileSubmit()),
-    url(r'^$', CoordDashboard()),
+    url(r'^$', events, name = 'event-list'),
 )
-
-#these urls will be imported by the root url.

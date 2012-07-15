@@ -14,7 +14,7 @@ def home(request):
         else:
         	return render_to_response('home.html',locals(),context_instance = RequestContext(request))
     else:
-    	return render_to_response('home.html',locals(),context_instance = RequestContext(request))
+    	return render_to_response('index.html',locals(),context_instance = RequestContext(request))
 	
 def method_splitter(request, *args, **kwargs):
     get_view = kwargs.pop('GET', None)

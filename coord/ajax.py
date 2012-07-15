@@ -3,6 +3,7 @@ from dajax.core import Dajax
 from django.utils import simplejson
 from django.template import loader, Context, RequestContext, Template
 from events.models import *
+from coord.forms import *
 from dajaxice.decorators import dajaxice_register
 
 def get_files(tab):
@@ -47,7 +48,7 @@ def delete_tab(request, tab_id=0):
         title = tab.title
         tab.delete()
         dajax.alert(title+' deleted sucessfully!')
-        dajax.script("Dajaxice.events.updateTabs(Dajax.process);");
+        dajax.script("Dajaxice.coord.updateTabs(Dajax.process);");
     else:
         dajax.alert('error '+ tab_id)
     return dajax.json()
@@ -72,7 +73,7 @@ def save_tab(request, data, tab_id=0):
         dajax.script("window.location.hash='"+'customtabs/'+str(tab.id)+"';")
         return dajax.json()
     else:
-        template = loader.get_template('ajax/events/tab_form.html')
+        template = loader.get_template('ajax/coord/tab_form.html')
         html = template.render(RequestContext(request,locals()))
         dajax.assign('.bbq-item', 'innerHTML', html)
         return dajax.json()
@@ -84,7 +85,7 @@ def delete_file(request, tab_id, file_id):
     form.delete()
     tab = Tab.objects.get(id = tab_id)
     file_list = get_files(tab)
-    template = loader.get_template('ajax/events/tab_detail.html')
+    template = loader.get_template('ajax/coord/tab_detail.html')
     html = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('.bbq-item','innerHTML', html)
@@ -99,7 +100,7 @@ def rename_file_done(request, form, file_id):
         f.save()
     tab = f.tab
     file_list = get_files(tab)
-    template = loader.get_template('ajax/events/tab_detail.html')
+    template = loader.get_template('ajax/coord/tab_detail.html')
     html = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('.bbq-item','innerHTML', html)
@@ -122,7 +123,7 @@ def save_subjective(request, data, ques_id=0):
         dajax.script("window.location.hash='questions'")
         return dajax.json()
     else:
-        template = loader.get_template('ajax/events/subj_form.html')
+        template = loader.get_template('ajax/coord/subj_form.html')
         html = template.render(RequestContext(request,locals()))
         dajax.assign('.bbq-item', 'innerHTML', html)
         return dajax.json()
@@ -135,7 +136,7 @@ def delete_subjective(request, ques_id):
     event = request.user.get_profile().is_coord_of
     text_questions = event.subjectivequestion_set.all()
     mcqs = event.objectivequestion_set.all()
-    template = loader.get_template('ajax/events/question_tab.html')
+    template = loader.get_template('ajax/coord/question_tab.html')
     html = template.render(RequestContext(request,locals())) 
     dajax = Dajax()
     dajax.assign('.bbq-item', 'innerHTML', html)
@@ -155,13 +156,13 @@ def save_mcq(request, data, ques_id=0):
         ques.event = event
         ques.save()
         options = ques.mcqoption_set.all()
-        template = loader.get_template('ajax/events/manage_options.html')
+        template = loader.get_template('ajax/coord/manage_options.html')
         html = template.render(RequestContext(request,locals()))
         dajax = Dajax()
         dajax.assign('.bbq-item', 'innerHTML', html)
         return dajax.json()
     else:
-        template = loader.get_template('ajax/events/mcq_form.html')
+        template = loader.get_template('ajax/coord/mcq_form.html')
         html = template.render(RequestContext(request,locals()))
         dajax = Dajax()
         dajax.assign('.bbq-item', 'innerHTML', html)
@@ -175,7 +176,7 @@ def delete_mcq(request, ques_id):
     event = request.user.get_profile().is_coord_of
     text_questions = event.subjectivequestion_set.all()
     mcqs = event.objectivequestion_set.all()
-    template = loader.get_template('ajax/events/question_tab.html')
+    template = loader.get_template('ajax/coord/question_tab.html')
     t = template.render(RequestContext(request,locals())) 
     dajax = Dajax()
     dajax.assign('.bbq-item', 'innerHTML', t)
@@ -186,7 +187,7 @@ def manage_options(request, ques_id):
     # all existing options displayed with features of editing/deleting them and adding new ones
     ques = ObjectiveQuestion.objects.get(id = ques_id)
     options = ques.mcqoption_set.all()
-    template = loader.get_template('ajax/events/manage_options.html')
+    template = loader.get_template('ajax/coord/manage_options.html')
     html = template.render(RequestContext(request,locals())) 
     dajax = Dajax()
     dajax.assign('.bbq-item', 'innerHTML', html)
@@ -197,7 +198,7 @@ def add_option(request, ques_id):
     # displays a form for adding an option
     ques = ObjectiveQuestion.objects.get(id = ques_id)
     f = AddOptionForm()
-    template = loader.get_template('ajax/events/add_option_form.html')
+    template = loader.get_template('ajax/coord/add_option_form.html')
     t = template.render(RequestContext(request,locals())) 
     dajax = Dajax()
     dajax.assign('#option_edit', 'innerHTML', t)
@@ -213,13 +214,13 @@ def save_option(request, form, ques_id):
         unsaved_option.question = ques
         unsaved_option.save()
         options = ques.mcqoption_set.all()
-        template = loader.get_template('ajax/events/manage_options.html')
+        template = loader.get_template('ajax/coord/manage_options.html')
         t = template.render(RequestContext(request,locals())) 
         dajax = Dajax()
         dajax.assign('#detail', 'innerHTML', t)
         return dajax.json()
     else:
-        template = loader.get_template('ajax/events/add_option_form.html')
+        template = loader.get_template('ajax/coord/add_option_form.html')
         t = template.render(RequestContext(request,locals()))
         dajax = Dajax()
         dajax.assign('#option_edit', 'innerHTML', t)
@@ -232,7 +233,7 @@ def delete_option(request, option_id):
     ques = option.question
     option.delete()
     options = ques.mcqoption_set.all()
-    template = loader.get_template('ajax/events/manage_options.html')
+    template = loader.get_template('ajax/coord/manage_options.html')
     t = template.render(RequestContext(request,locals())) 
     dajax = Dajax()
     dajax.assign('#detail', 'innerHTML', t)
@@ -243,7 +244,7 @@ def edit_option(request, option_id):
     # loads a form for editting an existing option
     option = MCQOption.objects.get(id = option_id)
     f = AddOptionForm(instance = option)
-    template = loader.get_template('ajax/events/edit_option_form.html')
+    template = loader.get_template('ajax/coord/edit_option_form.html')
     t = template.render(RequestContext(request,locals()))
     dajax = Dajax()
     dajax.assign('#option_edit','innerHTML', t)
@@ -258,13 +259,13 @@ def save_editted_option(request, form, option_id):
     if f.is_valid():
         f.save()
         options = ques.mcqoption_set.all()
-        template = loader.get_template('ajax/events/manage_options.html')
+        template = loader.get_template('ajax/coord/manage_options.html')
         t = template.render(RequestContext(request,locals())) 
         dajax = Dajax()
         dajax.assign('#detail', 'innerHTML', t)
         return dajax.json()
     else:
-        template = loader.get_template('ajax/events/edit_option_form.html')
+        template = loader.get_template('ajax/coord/edit_option_form.html')
         t = template.render(RequestContext(request,locals()))
         dajax = Dajax()
         dajax.assign('#option_edit', 'innerHTML', t)
@@ -275,7 +276,7 @@ def add_edit_mobapp_tab(request, form = ''):
     dajax = Dajax()
     event = request.user.get_profile().is_coord_of
     mob_app_tab = get_mob_app_tab(event)
-    template = loader.get_template('ajax/events/add_edit_mobapptab.html')
+    template = loader.get_template('ajax/coord/add_edit_mobapptab.html')
     if mob_app_tab:
         f = MobAppWriteupForm(form, instance = mob_app_tab)
     else:
