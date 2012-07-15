@@ -39,6 +39,7 @@
             data = $('#score').serializeObject();
             isnum = /^[-+]?[0-9]+(\.[0-9]+)?$/.test(data.score);
             if(!isnum){alert('enter a valid score');return false;}
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.submissions.save_score(Dajax.process,{'form':data,'sub_id':id})
             return false;
         }
@@ -47,6 +48,7 @@
             data = $('#sub_list').serializeObject();
             if(data.action=='0'){alert('Please select an Action');return false;}
             if(!data.sub_checklist){alert('Select a Submission!');return false;}
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.submissions.send_checklist(Dajax.process,{'form':data})
             return false;
             
@@ -60,6 +62,7 @@
         function save_mobapptab(){
             $('.bbq-item').html = "<img src = '{{site_url}}static/img/loading.gif'>";
             data = $('#mobapptab_form').serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.events.add_edit_mobapp_tab(Dajax.process,{'form':data})
             return false;
         }
@@ -88,6 +91,7 @@
             var r=confirm("Are you sure you want to delete the question?");
             if(r==true)
             {
+                $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
                 Dajaxice.events.delete_mcq(Dajax.process,{'ques_id':id})
             }
         }
@@ -96,6 +100,7 @@
             data = $('#mcq_form').serializeObject();
             if (data.title == null || data.title == ""){alert('Question Title cannot be blank');return false;}
             if (isNaN(data.q_no) || data.q_no == null || data.q_no == ""){alert('Question number must be an integer');return false;}
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.events.save_mcq(Dajax.process,{'data':data,'ques_id':id})
             return false;
         }
@@ -104,12 +109,14 @@
             var r=confirm("Are you sure you want to delete the question?");
             if(r==true)
             {
+                $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
                 Dajaxice.events.delete_subjective(Dajax.process,{'ques_id':id})
             }
         }
 
         function save_editted_subjective(id){
             data = $('#edit_subjective_form').serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.events.save_editted_subjective(Dajax.process,{'form':data,'ques_id':id})
             return false;
         }
@@ -117,6 +124,7 @@
         function save_subjective(){
             data = $('#subjective_form').serializeObject();
             ques_id=$("#ques_id").attr('value');
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.events.save_subjective(Dajax.process,{'data':data,'ques_id':ques_id,})
             return false;
         }
@@ -125,6 +133,7 @@
             niced.removeInstance('niced_text');
             data = $('#tab_form').serializeObject();
             tab_id=$("#tab_id").attr('value');
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.events.save_tab(Dajax.process,{'data':data,'tab_id':tab_id,})
             return false;
         }
@@ -133,12 +142,14 @@
             data = $('#file_form').serializeObject();
             tab_id=$("#tab_id").attr('value');
             alert(data['tab_file']);
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.events.add_file(Dajax.process,{'data':data,'tab_id':tab_id,})
             return false;
         }
 
         function edit_tab(id){
             data = $('#edit_tab').serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.events.save_editted_tab(Dajax.process,{'form':data,'tab_id':id})
             return false;
         }
@@ -146,11 +157,13 @@
         function delete_tab(id){
             var r=confirm("Are you sure you want to delete the tab?"+id);
             if(r==true)
-                Dajaxice.events.delete_tab(Dajax.process,{'tab_id':id})
+                {$(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+                Dajaxice.events.delete_tab(Dajax.process,{'tab_id':id})}
         }
 
         function rename_file(id){
             data = $('#file_rename').serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.events.rename_file_done(Dajax.process, {'form':data,'file_id':id})
             return false;
         }
@@ -182,7 +195,7 @@
                     document.getElementById('file_list').innerHTML = xhr.responseText;
                 }
                 if (xhr.readyState == 1){
-                document.getElementById('uploading').innerHTML = "<img src = '/static/images/loading.gif'>";    //loading..loading..
+                document.getElementById('uploading').innerHTML = "<img src = '/static/img/loading.gif'>";    //loading..loading..
                 }
                 if (xhr.readyState == 4){
                 document.getElementById('uploading').innerHTML = "";    //loading done

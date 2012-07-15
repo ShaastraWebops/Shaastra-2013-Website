@@ -34,6 +34,7 @@ def updateTabs(request):
     dajax = Dajax()
     event = request.user.get_profile().is_coord_of
     tabs=get_tabs(event)
+    dajax.assign("#tabs", 'innerHTML', '')
     for tab in tabs:
         dajax.append("#tabs",'innerHTML',"<a href="+'#customtabs/'+str(tab.id)+" name ="+tab.title+" id ="+ str(tab.id)+" >"+tab.title+"</a> ")
     dajax.script("window.location.hash='';")
