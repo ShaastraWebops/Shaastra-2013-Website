@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.contrib.sitemaps import ping_google
 
 from events.models import Event
 
@@ -122,4 +123,11 @@ class SubEvent(models.Model):
                     
         # The last_modified field must be updated to the current date and time.
         self.last_updated = datetime.now()
+
+    def save(self, force_insert=False, force_update=False):
+	super(SubEvent, self).save(force_insert, force_update)
+	try:
+		ping_google()
+	except Exception:
+		pass
 
