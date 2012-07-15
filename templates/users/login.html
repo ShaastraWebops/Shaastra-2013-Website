@@ -2,18 +2,190 @@
 
     <head>
         <title>Shaastra 2013</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<script>
+		window.onload = function()
+		{
+		window.onresize = function(){window.resizeTo(1366,768)};
+		};
+	</script>
     </head>
     <body>
-    		{{msg}}
-            <form action="" method="POST">
-            <a href="{{site_url}}user/facebook/login/">Login via Facebook</a>
-            <table>
-                {% csrf_token %}
-                {{form.as_table}}
-            </table>
-            <input type="submit" value="Login" />
-            <a href="{{site_url}}user/register/">Register</a>
-            <a href="{{site_url}}user/admin/password_reset/">Forgot password?</a> 
-            </form>
-    </body>
-</html>
+<div id="main_container">
+	<div id="left" class="floatleft">
+		<img id="splash" src="{{STATIC_URL}}img/diceNtext.png">
+		<a href="{{site_url}}user/facebook/login/" id="fb">Login via Facebook</a>	
+	</div>
+	<div id="right" class="floatright">
+        <div id="triangle"></div> 
+		{{msg}}   	
+		<form name="login" id="login_form" action="" method="POST" >
+            		<!--<table>
+                		{% csrf_token %}
+                		{{form.as_table}}
+            		</table>-->
+			{% csrf_token %}
+			<input class="inp" onclick='this.value=""' type="text" name="username">
+			<input value="password" class="inp" onclick='this.value=""' type="password" name="password">
+			<input class="subbut" type="submit" value="Login"> <br/>
+			<a href="{{site_url}}user/register/">Register</a>
+                	<a href="{{site_url}}user/admin/password_reset/">Forgot password?</a> 
+		</form>
+   <center> <div id="footer">
+	<div id="navcontainer">
+	<ul>
+	<li><a href="http://www.shaastra.org/2011/main/policy/">Privacy Policy</a></li>
+    <li><a href="http://www.shaastra.org/blog/">Blog</a></li>
+    <li><a href="http://shaastra.org/2013/yash/login/splash.html#">Events</a></li>
+    <li><a href="http://shaastra.org/2013/yash/login/splash.html#">Credits</a></li>
+    <li><a href="http://shaastra.org/2013/yash/login/splash.html#">Contact</a></li>
+    </ul>
+	</div>
+</div></center>
+
+	</div>
+   
+	<br style="clear:both">
+</div>
+
+<style>
+body
+	{
+	margin:0;
+	min-width:1200px;
+	min-height: 600px;
+	
+	}
+#main_container
+	{
+	width : 100%;
+	height: 100%;
+	}
+.floatleft
+	{
+	float:left;
+	}
+.floatright
+	{
+	float:right;
+	}
+#left
+	{
+	width : 39%;
+	height : 100%;
+	background:url({{STATIC_URL}}img/bggrade.jpg);
+	margin:0; padding:0;
+	}
+#left a{
+	color:#FFF;
+        font-family:serif;
+	line-height:20px;
+        text-decoration:none;}
+#fb{
+	position:absolute;
+	top:65%;
+	margin-left:26%;}
+#right
+	{
+	width : 61%;
+	height : 100%;
+	background :#ECECEC;
+	background :-moz-linear-gradient(#F7F7F7, #E3E3E3); /* FF 3.6+ */  
+ 	background:-ms-linear-gradient(#F7F7F7, #E3E3E3); /* IE10 */  
+ 	background:-webkit-gradient(linear, left top, right top, from(#F7F7F7), to(#E3E3E3)); /* Safari 4+, Chrome 2+ */  
+  	/*background:#ECECEC -webkit-linear-gradient(#F7F7F7, #E3E3E3); /* Safari 5.1+, Chrome 10+ */  
+  	background:-o-linear-gradient(#F7F7F7, #E3E3E3);
+  	margin:0; padding:0;
+	}
+#splash
+	{
+	display:block;
+	width : 83.4%;
+	margin:18.3% auto 0 auto;
+	
+	}
+#login_form
+	{
+	position:absolute;	
+	top : 64.2%;
+	margin-left :3%;
+	}
+#triangle
+	{
+	position:absolute;	
+	top : 64.2%;
+	margin-left: 0%;
+	margin:0;
+	padding:0;
+	background-image: url({{STATIC_URL}}img/triangle.png);
+	width: 26px;
+	height:30px;
+	}
+.inp
+	{
+	height : 36px;
+	width : 155px;
+	background:url({{STATIC_URL}}img/form_36px.png) no-repeat;
+	margin-left : 10px;
+	padding :0 5px;
+	border:none;
+	text-indent:5px;
+	font-size : 20px;
+	font-weight:100;
+	font-family : "tahoma";
+	color: #AAA;
+	}
+.subbut
+	{
+	position:relative;
+	top:-2px;
+	background:url({{STATIC_URL}}img/button.png);
+	color : #FFF;
+	border:none;
+	padding : 4px;
+	width : 107px;
+	height : 28px;
+	opacity:0.9;
+        filter:alpha(opacity=90);
+	}
+.subbut:hover{
+        opacity:1.0;
+        filter:alpha(opacity=100);}
+#footer
+{
+	width:60%;
+	height:40px;
+	position:absolute;
+	bottom:0%;
+	margin-left:auto;
+	margin-right:auto;
+	background-color:transparent;
+	text-align:center;
+	z-index:100;
+}
+#navcontainer ul
+{
+margin: 12px;
+padding: 0;
+list-style-type: none;
+text-align: center;
+}
+
+#navcontainer ul li { display: inline; }
+#navcontainer ul li a
+{
+	text-decoration:none;
+	font-size:15px;
+	color:#183f5a;
+	padding:10px;
+}
+#navcontainer ul li a:hover
+{
+	color: #183f5a;
+	background-color: #CCC;
+}
+
+</style>
+
+</body></html>
+

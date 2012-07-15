@@ -5,7 +5,6 @@ MCQs:<br/>
     {% for option in q.mcqoption_set.all %}
         {{option.option}}:{{option.text}}<br />
     {% endfor %}
-    <a href="#" onclick="Dajaxice.events.manage_options(Dajax.process, {'ques_id':{{q.id}}})">Edit Choices</a>
     <a href="#questions/mcq/{{q.id}}" >Edit</a>
     <a href="#questions" onclick="delete_mcq({{q.id}});">Delete</a>
 {% endfor %}
