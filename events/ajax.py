@@ -3,6 +3,7 @@ from dajax.core import Dajax
 from django.utils import simplejson
 from django.template import loader, Context, RequestContext, Template
 from events.models import *
+from events.forms import *
 from dajaxice.decorators import dajaxice_register
 
 def get_files(tab):
@@ -75,6 +76,7 @@ def save_tab(request, data, tab_id=0):
         template = loader.get_template('ajax/events/tab_form.html')
         html = template.render(RequestContext(request,locals()))
         dajax.assign('.bbq-item', 'innerHTML', html)
+        dajax.script("niced = new nicEditor().panelInstance('niced_text');")
         return dajax.json()
     
 @dajaxice_register
@@ -140,32 +142,49 @@ def delete_subjective(request, ques_id):
     dajax = Dajax()
     dajax.assign('.bbq-item', 'innerHTML', html)
     return dajax.json()
+
+def saving_mcq(data, mcq):
+    data.pop('csrfmiddlewaretoken')
+    mcq.title = data.pop('title')
+    mcq.q_number = data.pop('q_no')
+    print data
+    mcq.save()
+    try:
+        options = mcq.mcqoption_set.all()
+    except:
+        options = []
+    keys = data.keys()
+    keys.sort()
+    print keys
+    for opt_id in keys:
+        if not data[opt_id]: continue
+        if not opt_id.startswith('o'):
+            print 'not'
+            print opt_id[:-1]
+            mcqoption = MCQOption(id = opt_id[:-1])
+            print 'h'
+        else:
+            print 'else'
+            mcqoption = MCQOption()
+            print 'here'
+        mcqoption.option = opt_id[-1]
+        mcqoption.text = data[opt_id]
+        mcqoption.question = mcq
+        mcqoption.save()
     
 @dajaxice_register
-def save_mcq(request, data, ques_id=0):
-    # validates and saves the mcq and displays a page to manage options
-    if ques_id:
-        ques = ObjectiveQuestion.objects.get(id = ques_id)
-        form = AddMCQForm(data, instance = ques)
-    else:
-        form = AddMCQForm(data)
-    if form.is_valid():
-        event = request.user.get_profile().is_coord_of
-        ques = form.save(commit = False)
-        ques.event = event
-        ques.save()
-        options = ques.mcqoption_set.all()
-        template = loader.get_template('ajax/events/manage_options.html')
-        html = template.render(RequestContext(request,locals()))
-        dajax = Dajax()
-        dajax.assign('.bbq-item', 'innerHTML', html)
-        return dajax.json()
-    else:
-        template = loader.get_template('ajax/events/mcq_form.html')
-        html = template.render(RequestContext(request,locals()))
-        dajax = Dajax()
-        dajax.assign('.bbq-item', 'innerHTML', html)
-        return dajax.json()
+def save_mcq(request, data, ques_id):
+    mcq = ObjectiveQuestion.objects.get(id = ques_id) if ques_id else ObjectiveQuestion(event = request.user.get_profile().is_coord_of)
+    saving_mcq(data, mcq)
+    ques_id = mcq.id
+    options = mcq.mcqoption_set.all()
+    template = loader.get_template('ajax/events/mcq_form.html')
+    form = MCQForm(mcq, options)
+    html = template.render(RequestContext(request,locals()))
+    dajax = Dajax()
+    dajax.script('alert("question saved succesfully");')
+    dajax.assign('.bbq-item', 'innerHTML', html)
+    return dajax.json()
     
 @dajaxice_register        
 def delete_mcq(request, ques_id):
