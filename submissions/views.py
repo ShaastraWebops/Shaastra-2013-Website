@@ -8,6 +8,10 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
+def submissions(request):
+    subs = request.user.get_profile().is_coord_of.basesubmission_set.all()
+    return render_to_response('ajax/submissions/all_submissions.html', locals(), context_instance = RequestContext(request))
 
 @login_required
 def all_submissions(request):

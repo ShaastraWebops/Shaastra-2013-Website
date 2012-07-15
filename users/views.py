@@ -17,12 +17,11 @@ import sha,random,datetime
 def login_get(request):
     if request.user.is_authenticated() :
         currentuser=request.user
-        currentUserProfile=currentuser.get_profile()
         if request.user.is_superuser :
             return HttpResponseRedirect(settings.SITE_URL + 'admin/')
-        elif currentUserProfile.is_core :
+        elif currentuser.get_profile().is_core :
             return HttpResponseRedirect(settings.SITE_URL + 'core/')
-        elif currentUserProfile.is_coord_of :
+        elif currentuser.get_profile().is_coord_of :
             return HttpResponseRedirect(settings.SITE_URL + 'coord/')
         else:
             return HttpResponseRedirect(settings.SITE_URL)

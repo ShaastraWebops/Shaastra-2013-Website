@@ -124,7 +124,7 @@ def submission(request, sub_id, mark_read = False):
     textqs = Answer_Text.objects.filter(submission = sub)
     template = loader.get_template('ajax/submissions/view_submission.html')
     t = template.render(RequestContext(request,locals()))
-    dajax.assign('#detail', 'innerHTML', t)
+    dajax.assign('.bbq-item', 'innerHTML', t)
     return dajax.json()
     
 @dajaxice_register
