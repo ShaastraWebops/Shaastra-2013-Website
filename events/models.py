@@ -87,7 +87,7 @@ class ObjectiveQuestion(Question):
         super(ObjectiveQuestion, self).delete()
 
 class MCQOption(models.Model):
-    question = models.ForeignKey(ObjectiveQuestion)
+    question = models.ForeignKey(ObjectiveQuestion, null = True, blank = True)
     option = models.CharField(max_length = 1)
     text = models.TextField(max_length = 1000)
     def __unicode__(self):
@@ -134,6 +134,7 @@ class EventAddForm(ModelForm):
         }        
 
 class TabAddForm(ModelForm):
+    text = forms.CharField(widget=forms.Textarea(attrs={'id':'niced_text','height':'200','width':'200'}))
     class Meta:
         model = Tab
         exclude = ('event',)
