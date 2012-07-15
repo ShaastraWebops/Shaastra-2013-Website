@@ -8,7 +8,6 @@ $(function(){
     // Get the hash (fragment) as a string, with any leading # removed. Note that
     // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
     var url = $.param.fragment();
-    alert(url);
     
     // Remove .bbq-current class from any previously "current" link(s).
     $( 'a.bbq-current' ).removeClass( 'bbq-current' );

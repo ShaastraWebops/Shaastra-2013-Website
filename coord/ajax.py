@@ -34,6 +34,7 @@ def updateTabs(request):
     dajax = Dajax()
     event = request.user.get_profile().is_coord_of
     tabs=get_tabs(event)
+    dajax.assign("#tabs", 'innerHTML', '')
     for tab in tabs:
         dajax.append("#tabs",'innerHTML',"<a href="+'#customtabs/'+str(tab.id)+" name ="+tab.title+" id ="+ str(tab.id)+" >"+tab.title+"</a> ")
     dajax.script("window.location.hash='';")
@@ -173,32 +174,6 @@ def saving_mcq(data, mcq):
         mcqoption.save()
     
 @dajaxice_register
-<<<<<<< HEAD:coord/ajax.py
-def save_mcq(request, data, ques_id=0):
-    # validates and saves the mcq and displays a page to manage options
-    if ques_id:
-        ques = ObjectiveQuestion.objects.get(id = ques_id)
-        form = AddMCQForm(data, instance = ques)
-    else:
-        form = AddMCQForm(data)
-    if form.is_valid():
-        event = request.user.get_profile().is_coord_of
-        ques = form.save(commit = False)
-        ques.event = event
-        ques.save()
-        options = ques.mcqoption_set.all()
-        template = loader.get_template('ajax/coord/manage_options.html')
-        html = template.render(RequestContext(request,locals()))
-        dajax = Dajax()
-        dajax.assign('.bbq-item', 'innerHTML', html)
-        return dajax.json()
-    else:
-        template = loader.get_template('ajax/coord/mcq_form.html')
-        html = template.render(RequestContext(request,locals()))
-        dajax = Dajax()
-        dajax.assign('.bbq-item', 'innerHTML', html)
-        return dajax.json()
-=======
 def save_mcq(request, data, ques_id):
     mcq = ObjectiveQuestion.objects.get(id = ques_id) if ques_id else ObjectiveQuestion(event = request.user.get_profile().is_coord_of)
     saving_mcq(data, mcq)
@@ -211,7 +186,6 @@ def save_mcq(request, data, ques_id):
     dajax.script('alert("question saved succesfully");')
     dajax.assign('.bbq-item', 'innerHTML', html)
     return dajax.json()
->>>>>>> 39d86f3f9def5beaefb57a1cc6d9888080f6ae8c:events/ajax.py
     
 @dajaxice_register        
 def delete_mcq(request, ques_id):

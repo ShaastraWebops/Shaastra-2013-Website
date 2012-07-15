@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
-from events.views import *
+from coord.views import *
 from submissions.views import *
 
 urlpatterns = patterns('',
