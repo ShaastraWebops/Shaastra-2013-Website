@@ -46,13 +46,14 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'admin',
+    'core',
+    'coord',
     'users',
     'events',
-    'dajaxice',
-    'dajax', 
-    'core',
     'submissions',
     'dtvpicker',
+    'dajaxice',
+    'dajax', 
 )
 
 # A sample logging configuration. The only tangible logging
