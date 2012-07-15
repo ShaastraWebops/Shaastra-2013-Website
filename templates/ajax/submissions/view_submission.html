@@ -9,13 +9,13 @@ selected - {% if sub.selected %} Yes {% else %} No {% endif %}<br/>
 {{ans.question.q_number}}.{{ans.question.title}}<br/>
 {{ans.text}}<br/>
 {% endfor %}
-<a href="#" onclick="Dajaxice.submissions.edit_sub(Dajax.process,{'sub_id':{{sub_id}},'attr':'sub_read', 'assign':'{% if sub.sub_read %}false{% else %}true{% endif %}'})">
+<a onclick="Dajaxice.submissions.edit_sub(Dajax.process,{'sub_id':{{sub_id}},'attr':'sub_read', 'assign':'{% if sub.sub_read %}false{% else %}true{% endif %}'})">
 {% if sub.sub_read %}Un{% else %}{% endif %}mark as read
 </a><br/>
-<a href="#" onclick="Dajaxice.submissions.edit_sub(Dajax.process,{'sub_id':{{sub_id}},'attr':'selected', 'assign':'{% if sub.selected %}false{% else %}true{% endif %}'})">
+<a onclick="Dajaxice.submissions.edit_sub(Dajax.process,{'sub_id':{{sub_id}},'attr':'selected', 'assign':'{% if sub.selected %}false{% else %}true{% endif %}'})">
 {% if sub.selected %}Un{% else %}{% endif %}mark as selected
 </a><br/>
-<a href="#" onclick="Dajaxice.submissions.edit_sub(Dajax.process,{'sub_id':{{sub_id}},'attr':'interesting', 'assign':'{% if sub.interesting %}false{% else %}true{% endif %}'})">
+<a onclick="Dajaxice.submissions.edit_sub(Dajax.process,{'sub_id':{{sub_id}},'attr':'interesting', 'assign':'{% if sub.interesting %}false{% else %}true{% endif %}'})">
 {% if sub.interesting %}Un{% else %}{% endif %}mark as interesting
 </a>
 <form id="score" action="" method="POST">{% csrf_token %}

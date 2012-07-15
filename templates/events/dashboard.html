@@ -200,6 +200,8 @@
                         // Content loaded, hide "loading" content.
                         $( '.bbq-loading' ).hide();
                         $( '.bbq-item' ).show();
+                        if(window.location.hash='submissions')
+                            $("#submissions_list").dataTable();
                     });
                 }
                 else
@@ -222,7 +224,7 @@
         {% csrf_token %}
         <a href='#questions' name='questions' id = 'question' >Questions</a>
         <a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a>
-        <button name='submissions' id = 'submissions' onclick = 'Dajaxice.submissions.all_submissions(Dajax.process)'>Submissions</button>
+        <a href="#submissions" name='submissions' id = 'submissions' >Submissions</button>
         <div name="tabs" id = "tabs">
         </div>
         <a href="#customtabs">Add a Tab</a>
