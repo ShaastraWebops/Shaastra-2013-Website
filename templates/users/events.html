@@ -1,10 +1,8 @@
 <html>
-
     <head>
-        <title>Shaastra 2013</title>
     </head>
     <body>
-        {% if user.is_authenticated %}
+    {% if user.is_authenticated %}
         <h2>Welcome {{ user.first_name }},</h2>
         <a href="{{site_url}}user/events">Events</a>
         {% if user.get_profile.facebook_id %}
@@ -15,9 +13,9 @@
         <a href="{{site_url}}user/editprofile/">Edit Profile</a>        
         <a href="{{site_url}}user/logout/">Logout</a>
         <hr />
-        {% else %}
-        <a href="{{site_url}}user/login">Login</a>
-        <a href="{{site_url}}user/events">Events</a>
-        {% endif %}
+    {% endif %}
+    {% for e in event %}
+            <a href="{{site_url}}user/events/{{e.title}}">{{ e.title }}</a><br />
+    {% endfor %}
     </body>
 </html>
