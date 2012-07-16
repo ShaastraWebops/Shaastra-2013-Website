@@ -254,13 +254,23 @@
 
         });
         </script>
+    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
     </head>
     <body>
+    <div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+         	<div class="left" id="wel"><h3>Welcome {{request.user}} | <i>{{event}} coord </i></h3></div>
+         <div class="right" id="links"><ul class="nav nav-pills"> 
+        		<li><a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a></li>
+        		<li><a href="{{site_url}}user/logout/">Logout</a></li></ul>
+        	</div>
+         </div>
+      </div>
+     </div><hr/>
         <div id="header" style="width:100%;">
         <div id="userdetails" style="float:left;width:50%;height:40%;">
-        <h3>Welcome {{request.user}} | <i>{{event}} coord </i></h3>
-        <a href="{{site_url}}user/logout/">Logout</a>
-        <a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a>
         <p>
         {% csrf_token %}
         <a href='#questions' name='questions' id = 'question' >Questions</a>
