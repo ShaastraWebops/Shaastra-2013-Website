@@ -1,17 +1,16 @@
 <div id="eventcontent">
     <div id="sidemenu">
-	    <div id="sidemenutitle">{{event.title}}</div>
+        <div id="sidemenutitle">{{event.title}}</div>
         <ul id="sidemenulist">
-         		<li>Introduction</li>
-         		<li>Registration</li>
-         		<li>Problem Statement</li>
-         		<li>Queries</li>
-      		</ul>
+            {% for tab in tab_set %}
+     		<li><a href="#events/{{event.id}}/tab/{{tab.id}}">{{tab.title}}</a></li>
+            {% endfor %}
+        </ul>
     </div>
     <div id="maincontent" style="color: #FFF">Click on a tab to view it
     </div>
     <div id="gallery">
-	    <div id="picture"><img src="{{event.events_logo}}" />
+        <div id="picture"><img src="{{event.events_logo}}" />
         </div>
     </div>
 </div>
