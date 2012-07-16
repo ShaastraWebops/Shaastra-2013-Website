@@ -17,7 +17,7 @@ def updateSummary(request):
 
     """
     dajax = Dajax()
-    dajax.assign("#summary",'innerHTML',"<table border='1'><thead><tr><th>S.No</th><th>Event Name</th><th>Coords</th></tr></thead><tbody id='event'>")
+    dajax.assign("#summary",'innerHTML',"<table border='1' class='table table-striped table-bordered table-condensed'><thead><tr><th>S.No</th><th>Event Name</th><th>Coords</th></tr></thead><tbody id='event'>")
     event=Event.objects.order_by('id').all()
     for e in event:
         dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a href="+'#editevent/'+str(e.id)+">"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
