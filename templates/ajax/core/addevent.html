@@ -1,6 +1,9 @@
 <center><b>Event Details</center></b><br/>      
-<table>
-    {{ event_form.as_table }}
-</table>
-<button onclick="add_event();" type ='submit' value='Save'>Add</button>
+<form id="AddEventForm" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        {{ event_form.as_table }}
+    </table>
+    <button onclick="add_event();" type ='button' value='Save'>Add</button>
+</form>
 

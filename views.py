@@ -2,8 +2,10 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template.context import Context, RequestContext
 from django.shortcuts import render_to_response
 from django.conf import settings
+from events.models import Event
 
 def home(request):
+    event_set = Event.objects.all()
     if request.user.is_authenticated():
         if request.user.is_superuser:
             return HttpResponseRedirect(settings.SITE_URL + 'admin/')

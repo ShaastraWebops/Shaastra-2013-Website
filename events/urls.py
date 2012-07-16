@@ -4,5 +4,6 @@ from django.conf.urls.defaults import *
 from events.views import *
 
 urlpatterns = patterns('',
-    url(r'^$', events, name = 'event-list'),
+    url(r'^(?P<event_id>\d+)/tab/(?P<tab_id>\d+)', tabs, name = 'tab-list'),
+    url(r'^(?P<event_id>\d+)', events, name = 'event-list'),
 )

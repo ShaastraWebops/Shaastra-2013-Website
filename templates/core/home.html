@@ -4,10 +4,30 @@
         <title>Shaastra 2013 | Core Dashboard</title>
         {% dajaxice_js_import %}
         <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
+        <link href="{{site_url}}static/css/chosen.css"  type="text/css" rel="stylesheet">
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
         <script type="text/javascript">
+        function upload_events_logo(id)
+        {
+//            var name = document.forms["AddEventForm"]["display_name"].value;
+            var fileInput = document.getElementById('id_events_logo');
+            var file = fileInput.files[0];
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{site_url}}core/addevent/', true);
+            xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+            xhr.setRequestHeader('X-Event-Id', id );
+            xhr.setRequestHeader("X-File-Name", file.name);
+//            xhr.setRequestHeader('X-Name', name);
+            xhr.onreadystatechange = function () {                      // read ajax onreadystatechange responses
+                if ((xhr.readyState == 4) && (xhr.status == 200)){
+                    updateSummary();
+                }
+            }
+            xhr.send(file);                 // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
+        }
         function add_event()
         {
             data=$(".bbq-item :input").serializeObject();
@@ -90,6 +110,10 @@
           $('.bbq-item').load( url, function(){
               // Content loaded, hide "loading" content.
               $( '.bbq-loading' ).hide();$( '.bbq-item' ).show();
+                if($('.bbq-item').find('.chzn-select'))
+                {
+                    $(".chzn-select").chosen();
+                }
             });
             }
             else

@@ -63,19 +63,19 @@
             $('.bbq-item').html = "<img src = '{{site_url}}static/img/loading.gif'>";
             data = $('#mobapptab_form').serializeObject();
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.events.add_edit_mobapp_tab(Dajax.process,{'form':data})
+            Dajaxice.coord.add_edit_mobapp_tab(Dajax.process,{'form':data})
             return false;
         }
 
         function save_editted_option(id){
             data = $('#edit_option_form').serializeObject();
-            Dajaxice.events.save_editted_option(Dajax.process,{'form':data,'option_id':id})
+            Dajaxice.coord.save_editted_option(Dajax.process,{'form':data,'option_id':id})
             return false;
         }
 
         function save_option(id){
             data = $('#add_option_form').serializeObject();
-            Dajaxice.events.save_option(Dajax.process,{'form':data,'ques_id':id})
+            Dajaxice.coord.save_option(Dajax.process,{'form':data,'ques_id':id})
             return false;
         }
 
@@ -83,7 +83,7 @@
             var r=confirm("Are you sure you want to delete the option?");
             if(r==true)
             {
-                Dajaxice.events.delete_option(Dajax.process,{'option_id':id})
+                Dajaxice.coord.delete_option(Dajax.process,{'option_id':id})
             }
         }
 
@@ -92,7 +92,7 @@
             if(r==true)
             {
                 $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-                Dajaxice.events.delete_mcq(Dajax.process,{'ques_id':id})
+                Dajaxice.coord.delete_mcq(Dajax.process,{'ques_id':id})
             }
         }
 
@@ -101,7 +101,7 @@
             if (data.title == null || data.title == ""){alert('Question Title cannot be blank');return false;}
             if (isNaN(data.q_no) || data.q_no == null || data.q_no == ""){alert('Question number must be an integer');return false;}
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.events.save_mcq(Dajax.process,{'data':data,'ques_id':id})
+            Dajaxice.coord.save_mcq(Dajax.process,{'data':data,'ques_id':id})
             return false;
         }
 
@@ -110,14 +110,14 @@
             if(r==true)
             {
                 $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-                Dajaxice.events.delete_subjective(Dajax.process,{'ques_id':id})
+                Dajaxice.coord.delete_subjective(Dajax.process,{'ques_id':id})
             }
         }
 
         function save_editted_subjective(id){
             data = $('#edit_subjective_form').serializeObject();
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.events.save_editted_subjective(Dajax.process,{'form':data,'ques_id':id})
+            Dajaxice.coord.save_editted_subjective(Dajax.process,{'form':data,'ques_id':id})
             return false;
         }
 
@@ -125,7 +125,7 @@
             data = $('#subjective_form').serializeObject();
             ques_id=$("#ques_id").attr('value');
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.events.save_subjective(Dajax.process,{'data':data,'ques_id':ques_id,})
+            Dajaxice.coord.save_subjective(Dajax.process,{'data':data,'ques_id':ques_id,})
             return false;
         }
 
@@ -134,7 +134,7 @@
             data = $('#tab_form').serializeObject();
             tab_id=$("#tab_id").attr('value');
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.events.save_tab(Dajax.process,{'data':data,'tab_id':tab_id,})
+            Dajaxice.coord.save_tab(Dajax.process,{'data':data,'tab_id':tab_id,})
             return false;
         }
 
@@ -143,14 +143,14 @@
             tab_id=$("#tab_id").attr('value');
             alert(data['tab_file']);
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.events.add_file(Dajax.process,{'data':data,'tab_id':tab_id,})
+            Dajaxice.coord.add_file(Dajax.process,{'data':data,'tab_id':tab_id,})
             return false;
         }
 
         function edit_tab(id){
             data = $('#edit_tab').serializeObject();
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.events.save_editted_tab(Dajax.process,{'form':data,'tab_id':id})
+            Dajaxice.coord.save_editted_tab(Dajax.process,{'form':data,'tab_id':id})
             return false;
         }
 
@@ -158,13 +158,13 @@
             var r=confirm("Are you sure you want to delete the tab?"+id);
             if(r==true)
                 {$(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-                Dajaxice.events.delete_tab(Dajax.process,{'tab_id':id})}
+                Dajaxice.coord.delete_tab(Dajax.process,{'tab_id':id})}
         }
 
         function rename_file(id){
             data = $('#file_rename').serializeObject();
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.events.rename_file_done(Dajax.process, {'form':data,'file_id':id})
+            Dajaxice.coord.rename_file_done(Dajax.process, {'form':data,'file_id':id})
             return false;
         }
 
@@ -236,9 +236,11 @@
                         // Content loaded, hide "loading" content.
                         $( '.bbq-loading' ).hide();
                         $( '.bbq-item' ).show();
-                        if(window.location.hash=='submissions')
+                        if(window.location.hash=='#submissions')
                             $("#submissions_list").dataTable();
-                        createNicEdit();
+                        if(window.location.hash=='#customtabs')
+                            createNicEdit();
+
                     });
                 }
                 else
@@ -247,14 +249,16 @@
                     $(".bbq-default").show();
                 }
             })
-            Dajaxice.events.updateTabs(Dajax.process);
+            Dajaxice.coord.updateTabs(Dajax.process);
             $(window).trigger('hashchange');
 
         });
         </script>
     </head>
     <body>
-        <h3>Welcome {{request.user}} | <i>{{request.user.get_profile.is_coord_of.title}} coord </i></h3>
+        <div id="header" style="width:100%;">
+        <div id="userdetails" style="float:left;width:50%;height:40%;">
+        <h3>Welcome {{request.user}} | <i>{{event}} coord </i></h3>
         <a href="{{site_url}}user/logout/">Logout</a>
         <a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a>
         <p>
@@ -265,8 +269,13 @@
         <div name="tabs" id = "tabs">
         </div>
         <a href="#customtabs">Add a Tab</a>
+        </div>
+        <div id="eventdetails" style="float:left;width:50%;height:40%;">
+        {{event}} details
+        </div>
+        </div>
         <hr/>
-        <div class="bbq" id="detail">              
+        <div class="bbq" id="detail">
             <div class="bbq-content">
 
                 <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
