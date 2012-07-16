@@ -101,21 +101,36 @@
           
         });
         </script>
+        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style.css">
+     <style>
+    body{
+       background:#fff;}
+    a:active{
+        text-decoration:none;
+    }
+    </style>
     </head>
     <body>
-        Welcome {{ request.user }} | <i>{{ request.user.groups.get_query_set.1 }} core</i><br>
-        <a href="{{site_url}}user/logout/">Logout</a>
-        <a href="{{site_url}}user/editprofile/">Edit Profile</a>
-        <a href="{{site_url}}user/password_change/">Change Password</a>
-        <a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a>
-        <hr/>
+    <div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+        Welcome {{ request.user }} | <i>{{ request.user.groups.get_query_set.1 }} core</i>
+        <a href="{{site_url}}user/editprofile/" class="floatright">Edit Profile</a>
+        <a href="{{site_url}}user/password_change/" class="floatright">Change Password</a>
+        <a href="{{site_url}}DTVPicker/Summary/" class="floatright">DTVPicker</a>
+        <a href="{{site_url}}user/logout/" class="floatright">Logout</a>
+        </div></div></div><hr/>
         <div id="nav">
-            <a href="#addevent">Add Event</a>
-            <a href="#addcoord">Add Coord</a>
+        		<ul class="nav nav-pills">
+            	<li><a href="#addevent">Add Event</a></li>
+            	<li><a href="#addcoord">Add Coord</a></li></ul>
         </div><br>
-        <div id="container">
-            <div id="summary" style="float:left;width:50%;">
+        <div class="container-fluid">
+			<div class="row-fluid">
+            <div id="summary" class="span6">
             </div>
+            <div class="span6">
             <div class="bbq" id="space" style="float:right;width:50%;">              
                 <div class="bbq-content">
 
@@ -133,7 +148,7 @@
                     </div>
                 </div>
             </div>
-
-        </div>
+				</div>
+        </div></div>
     </body>
 </html>
