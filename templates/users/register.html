@@ -1,0 +1,59 @@
+{% load dajaxice_templatetags %}
+<html>
+    <head>
+        <title>Shaastra 2013</title>
+        {% dajaxice_js_import %}
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/college.reg.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+        	if ($("#facebook_id").attr("value"))
+        		$("#register").attr("onclick","document.forms['form_reg'].submit();");
+        });
+	    function forumReg()
+	    {
+		    var xmlhttp;
+		    if (window.XMLHttpRequest)
+		    {// code for IE7+, Firefox, Chrome, Opera, Safari
+		    xmlhttp=new XMLHttpRequest();
+		    }
+		    else
+		    {// code for IE6, IE5
+		    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		    }
+		    xmlhttp.onreadystatechange=function()
+		    {
+		    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		    {
+			    document.forms["form_reg"].submit();
+		       }
+		    }
+		    xmlhttp.open("POST","http://www.forums.shaastra.org/account/local/register/");
+		    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		    var data;
+		    data="next=http://www.shaastra.org/2013/main/test/";
+		    data+="&username="+document.getElementById("id_username").value;
+		    data+="&email="+document.getElementById("id_email").value;
+		    data+="&password1="+document.getElementById("id_password").value;
+		    data+="&password2="+document.getElementById("id_password_again").value;
+		    xmlhttp.send(data);
+	    }
+	    </script>
+    </head>
+    <body>
+        Register<br/>
+        <form id="form_reg" action="{{ post_url }}" method="POST">
+        <table>
+            {% csrf_token %}
+            {{ form.as_table }}
+        </table>
+        <input type="hidden" name="facebook_id" id="facebook_id" value="{{ facebook_id }}" />
+        <input type="hidden" name="access_token" id="access_token" value="{{access_token}}" />
+        <button type="button" onclick="forumReg();" id="register">Register</button>
+        <a href="{{ site_url }}">Home</a>
+    </form>
+    </body>
+</html>
+	 

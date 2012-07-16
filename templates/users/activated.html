@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>Shaastra 2013</title>
+</head>          
+<body>
+{% if key_dne %}
+<div class="errors">
+There was a problem with the activation link. Please try again later or register again.
+</div>
+{% endif %}
+{% if prof_dne %}
+<div class="errors">
+The user profile does not exist. This could be because the time for you to activate your account has expired. Please register again.
+</div>
+{% endif %}
+{% if expired %}
+<div class = "errors">
+The time given to you to activate this account has expired. Please register again.
+</div>
+{% endif %}
+{% if activated %}
+<div class = "success">
+Your account has now been activated.You may now <a href="{{site_url}}">login</a>.
+</div>
+{% endif %}
+</body>
+</html>

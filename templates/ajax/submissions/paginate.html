@@ -1,0 +1,15 @@
+{% if prev_elem %}
+{% if prev_elem.2 %}
+<a href="#" onclick = "Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id': {{eve_id}}, 'q_id': {{prev_elem.0}}})"><{{prev_elem.1}} </a>
+{% else %}
+<a href="#" onclick = "Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id': {{eve_id}}, 'q_id': {{prev_elem.0}}})"><{{prev_elem.1}} </a>
+{% endif %}
+{% endif %}
+
+{% if next_elem %}
+{% if next_elem.2 %}
+<a href="#" onclick = "Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id': {{eve_id}}, 'q_id': {{next_elem.0}}})"> {{next_elem.1}}></a>
+{% else %}
+<a href="#" onclick = "Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id': {{eve_id}}, 'q_id': {{next_elem.0}}})"> {{next_elem.1}}></a>
+{% endif %}
+{% endif %}

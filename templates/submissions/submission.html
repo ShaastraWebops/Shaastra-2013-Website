@@ -1,0 +1,61 @@
+<html>
+<head>{% load dajaxice_templatetags %}
+<script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
+<script type="text/javascript" charset = "utf-8">
+//define all necessary functions here
+
+function pagination(eve_id, q_id, is_mcq){
+    Dajaxice.submissions.pagination(Dajax.process,{'eve_id':eve_id, 'q_id': q_id, 'is_mcq':is_mcq})
+
+}
+
+function getRadioByValue(v) {
+        var inputs = document.getElementsByTagName('input');
+        for (var i = 0; i < inputs.length; i ++) {
+                if (inputs[i].type == 'radio' && inputs[i].value == v) {
+                        return inputs[i].id;
+                }
+        }
+        return false;
+}
+
+function setChecked(id) {
+        document.getElementById(id).checked = 'checked';
+        return false;
+}
+
+function save_edit_subjective(eve_id, q_id){
+    data = $('#textq_form').serializeObject();
+    Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
+    return false;
+}
+
+function save_edit_mcq(eve_id, q_id){
+    data = $('#mcq_form').serializeObject();
+    Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
+    return false;
+}
+
+</script>
+
+{% dajaxice_js_import %}
+
+</head>
+<body>
+<div>Welcome {{request.user}}<br/>
+{{event.title}}'s question list.</div>
+<div style="float: left; width: 120px;' id = 'q_list'">q_no<br/>
+mcqs:<br/>
+{% for q in mcqs %}
+    <li><a href="#" onclick="Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id':{{event.id}},'q_id':{{q.id}}})">{{q.q_number}}</a>
+{% endfor %}<br/>
+text:<br/>
+{% for q in subjectives %}
+    <li><a href="#" onclick="Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id':{{event.id}},'q_id':{{q.id}}})">{{q.q_number}}</a>
+{% endfor %}
+</div>
+<div id="q_detail">q_detail</div>
+<div id="pagination"></div>
+</body>

@@ -1,0 +1,6 @@
+{{q.q_number}}.{{q.title}}
+<form id = "mcq_form" action="" method = "POST">{% csrf_token %}
+{{f}}
+<input type="button" value = "Save" onclick="save_edit_mcq({{eve_id}},{{q_id}});"/>
+</form>
+

@@ -1,0 +1,178 @@
+<html>
+<head>{% load dajaxice_templatetags %}
+<link href="{{site_url}}static/css/demo_page.css"  type="text/css" rel="stylesheet">
+<link href="{{site_url}}static/css/demo_table.css"  type="text/css" rel="stylesheet">
+<script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dataTables.js" charset = "utf-8"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
+<script type="text/javascript" charset = "utf-8">
+
+// not documenting this for now. Try n see all the templates in the ajax folder. These functions are called from those templates.
+// make a note of all the div ids. See how the divs are being changed dynamically by dajax.
+function save_score(id){
+    data = $('#score').serializeObject();
+    isnum = /^[-+]?[0-9]+(\.[0-9]+)?$/.test(data.score);
+    if(!isnum){alert('enter a valid score');return false;}
+    Dajaxice.submissions.save_score(Dajax.process,{'form':data,'sub_id':id})
+    return false;
+}
+
+function send_checklist(){
+    data = $('#sub_list').serializeObject();
+    if(data.action=='0'){alert('Please select an Action');return false;}
+    if(!data.sub_checklist){alert('Select a Submission!');return false;}
+    Dajaxice.submissions.send_checklist(Dajax.process,{'form':data})
+    return false;
+    
+}
+function toggleChecked(status){
+    $(".checkbox").each( function(){
+        $(this).attr("checked", status);
+        })
+}
+
+function save_mobapptab(){
+    $('#detail').html = "<img src = '{{site_url}}static/img/loading.gif'>";
+    data = $('#mobapptab_form').serializeObject();
+    Dajaxice.events.add_edit_mobapp_tab(Dajax.process,{'form':data})
+    return false;
+}
+
+function save_editted_option(id){
+    data = $('#edit_option_form').serializeObject();
+    Dajaxice.events.save_editted_option(Dajax.process,{'form':data,'option_id':id})
+    return false;
+}
+
+function save_option(id){
+    data = $('#add_option_form').serializeObject();
+    Dajaxice.events.save_option(Dajax.process,{'form':data,'ques_id':id})
+    return false;
+}
+
+function delete_option(id){
+    var r=confirm("Are you sure you want to delete the option?");
+    if(r==true)
+    {
+        Dajaxice.events.delete_option(Dajax.process,{'option_id':id})
+    }
+}
+
+function delete_mcq(id){
+    var r=confirm("Are you sure you want to delete the question?");
+    if(r==true)
+    {
+        Dajaxice.events.delete_mcq(Dajax.process,{'ques_id':id})
+    }
+}
+
+function save_editted_mcq(id){
+    data = $('#edit_mcq_form').serializeObject();
+    Dajaxice.events.save_editted_mcq(Dajax.process,{'form':data,'ques_id':id})
+    return false;
+}
+
+function save_mcq(){
+    data = $('#add_mcq_form').serializeObject();
+    Dajaxice.events.save_mcq(Dajax.process,{'form':data})
+    return false;
+}
+
+function delete_sub(id){
+    var r=confirm("Are you sure you want to delete the question?");
+    if(r==true)
+    {
+        Dajaxice.events.delete_subjective(Dajax.process,{'ques_id':id})
+    }
+}
+
+function save_editted_subjective(id){
+    data = $('#edit_subjective_form').serializeObject();
+    Dajaxice.events.save_editted_subjective(Dajax.process,{'form':data,'ques_id':id})
+    return false;
+}
+
+function save_subjective(){
+    data = $('#add_subjective_form').serializeObject();
+    Dajaxice.events.save_subjective(Dajax.process,{'form':data})
+    return false;
+}
+
+function save_tab(){
+    data = $('#tab_form').serializeObject();
+    Dajaxice.events.save_tab(Dajax.process,{'form':data})
+    return false;
+}
+
+function edit_tab(id){
+    data = $('#edit_tab').serializeObject();
+    Dajaxice.events.save_editted_tab(Dajax.process,{'form':data,'tab_id':id})
+    return false;
+}
+
+function rename_file(id){
+    data = $('#file_rename').serializeObject();
+    Dajaxice.events.rename_file_done(Dajax.process, {'form':data,'file_id':id})
+    return false;
+}
+
+function validateForm() {                   //prevents display name from being empty
+    var x=document.forms["TabFileForm"]["display_name"].value;
+    if (x==null || x=="")
+    {
+    alert("name must be filled out");
+    return false;
+    }
+    // validation for empty file field here. Works even without it for now, an error is shown in firebug.
+    return true;
+}
+
+function File(id){
+    if (validateForm()){
+    var name = document.forms["TabFileForm"]["display_name"].value;
+    var fileInput = document.getElementById('thefile');
+    var file = fileInput.files[0];
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/coord/tabfile/', true);
+    xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+    xhr.setRequestHeader('X-Tab-Id', id);
+    xhr.setRequestHeader("X-File-Name", file.name);
+    xhr.setRequestHeader('X-Name', name);
+    xhr.onreadystatechange = function () {                      // read ajax onreadystatechange responses
+        if ((xhr.readyState == 4) && (xhr.status == 200)){
+            document.getElementById('file_list').innerHTML = xhr.responseText;
+        }
+        if (xhr.readyState == 1){
+        document.getElementById('uploading').innerHTML = "<img src = '/static/js/loading.gif'>";    //loading..loading..
+        }
+        if (xhr.readyState == 4){
+        document.getElementById('uploading').innerHTML = "";    //loading done
+        }
+    }
+    xhr.send(file);                                     // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
+}
+}
+</script>
+
+{% dajaxice_js_import %}
+
+</head>
+<h3>Welcome {{request.user}} | <i>{{request.user.get_profile.is_coord_of.title}} coord </i></h3>
+<a href="{{site_url}}user/logout/">Logout</a>
+<p>
+{% csrf_token %}
+<a href="#" name="question_tab" id = "question_tab" onclick = "Dajaxice.events.load_question_tab(Dajax.process)">Questions</a>
+<a href="#" name="mobapp_tab" id = "mobapp_tab" onclick = "Dajaxice.events.add_edit_mobapp_tab(Dajax.process)">Mobile App Writeup</a>
+<a href="#" name="submissions" id = "submissions" onclick = "Dajaxice.submissions.all_submissions(Dajax.process)">Submissions</a>
+<hr/>
+<div name="tabs" id = "tabs">
+    {% for tab in tabs %}
+    <a href="#" name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}} </a>
+    {% endfor %}
+</div>
+<a href="#" name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.add_tab(Dajax.process)">add a tab</a>
+<p>
+<div name="detail" id="detail"></div>
+
+</html>
