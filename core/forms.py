@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from users.models import UserProfile
 from chosen import forms as chosenforms
 from events.models import *
+from chosen import widgets as chosenwidgets
 
 class AddEventForm(forms.ModelForm):
 
@@ -11,10 +12,11 @@ class AddEventForm(forms.ModelForm):
     class Meta:
         model = Event
         # fields = ('title','events_logo','tags')
-        fields = ('title','events_logo', 'tags', 'lock_status', 'unlock_reason')
+        fields = ('title','events_logo', 'tags', 'category', 'lock_status', 'unlock_reason')
         widgets = {
             'lock_status' : forms.HiddenInput(),
             'unlock_reason' : forms.HiddenInput(),
+            'category': chosenwidgets.ChosenSelect(),
         }        
 
 class AddCoordForm(forms.ModelForm):

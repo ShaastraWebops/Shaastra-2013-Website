@@ -52,6 +52,6 @@ def editcore(request,id=0):
     """
     if request.user.is_superuser is False :
         return HttpResponseRedirect(settings.SITE_URL)
-    core_form=AddCoreForm(instance=User.objects.get(id=id))
+    core_form=AddCoreForm(instance=User.objects.get(id=id), initial={'groups':User.objects.get(id=id).groups.get_query_set()[0],})
     return render_to_response('ajax/admin/editcore.html', locals(), context_instance = RequestContext(request))
 

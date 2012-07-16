@@ -89,7 +89,7 @@ def add_edit_coord(request,form="",id=0):
         if coord_form.is_valid():
             coord=coord_form.save()
             coord.set_password("default")
-            coord.groups.add(request.user.groups.get_query_set()[1])
+            coord.groups.add(request.user.groups.get_query_set()[0])
             coord.save()
             coord_profile = UserProfile(user=coord, is_coord_of_id=form['event'])
             coord_profile.save()
