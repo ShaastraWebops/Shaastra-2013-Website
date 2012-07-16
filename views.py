@@ -7,7 +7,7 @@ from events.models import Event, EVENT_CATEGORIES
 def home(request):
     event_set=[]
     for c in EVENT_CATEGORIES :
-        event_category_set = Event.objects.filter(category=c[1])
+        event_category_set = Event.objects.filter(category=c[0])
         event_set.append(event_category_set)
     if request.user.is_authenticated():
         if request.user.is_superuser:
