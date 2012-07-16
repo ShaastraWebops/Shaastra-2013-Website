@@ -185,7 +185,7 @@
             var fileInput = document.getElementById('thefile');
             var file = fileInput.files[0];
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/coord/tabfile/', true);
+            xhr.open('POST', '{{site_url}}coord/tabfile/', true);
             xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
             xhr.setRequestHeader('X-Tab-Id', id);
             xhr.setRequestHeader("X-File-Name", file.name);
@@ -261,8 +261,9 @@
     <div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-         	<div class="left" id="wel"><h3>Welcome {{request.user}} | <i>{{event}} coord </i></h3></div>
-         <div class="right" id="links"><ul class="nav nav-pills"> 
+         	<div class="left" id="wel"><h3>Welcome {{request.user}} | <i>{% if request.user.get_profile.is_core %}{{ request.user.groups.get_query_set.0 }} core{% else %}{{event}} coord {% endif %}</i></h3></div>
+         <div class="right" id="links"><ul class="nav nav-pills">
+                {% if request.user.get_profile.is_core %}<li><a href="{{site_url}}core/">Core Home</a></li>{% endif %}
                 <li><a href="{{site_url}}user/editprofile/">Edit Profile</a></li>
                 <li><a href="{{site_url}}user/password_change/">Change Password</a></li>
         		    <li><a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a></li>
@@ -271,22 +272,23 @@
          </div>
       </div>
      </div><hr/>
-        <div id="header" style="width:100%;">
-        <div id="userdetails" style="float:left;width:50%;height:40%;">
         {% csrf_token %}
-        <a href='#questions' name='questions' id = 'question' >Questions</a>
-        <a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a>
-        <a href="#submissions" name='submissions' id = 'submissions' >Submissions</a>
+        <div id="nav">
+         <ul class="nav nav-pills">
+        		<li><a href='#questions' name='questions' id = 'question'>Questions</a></li>
+        		<li><a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a></li>
+        		<li><a href="#submissions" name='submissions' id = 'submissions' >Submissions</a></li>
+        		<li><a href="#customtabs">Add a Tab</a></li>
+        </ul><br/>
         <div name="tabs" id = "tabs">
         </div>
-        <a href="#customtabs">Add a Tab</a>
         </div>
-        <div id="eventdetails">
+        <div id="eventdetails" class="container">
         <p>Event Name : {{event}}<br>
            Category   : {{event.category}}<br></p>           
         </div>
-        </div>
-        <hr/>
+        <hr/><br>
+        <div class="container"        
         <div class="bbq" id="detail">
             <div class="bbq-content">
 
@@ -303,6 +305,7 @@
                 <div class="bbq-item">
                 </div>
             </div>
+        </div>
         </div>
     </body>
 </html>
