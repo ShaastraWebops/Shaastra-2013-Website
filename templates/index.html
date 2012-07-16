@@ -104,28 +104,20 @@
                 // Get the hash (fragment) as a string, with any leading # removed. Note that
                 // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
                 var url = $.param.fragment();
-                        $(".bbq-item").hide();
-                if (cache[ url ])
+                if(url)
                 {
-                    // Since the element is already in the cache, it doesn't need to be
-                    // created, so instead of creating it again, let's just show it!
-                        $(".bbq-default").hide();
-                    cache[ url ].show();
-                }
-                else
-                {
-                    if(url.split('/')[2])
+                    if(url.split('/tab')[1])
                     {
-                        cache[url.split('/tab')[0]].appendTo('.bbq-content').show();
-                        $( '.bbq-loading' ).show();
-                        $('.bbq-item :visible #maincontent').load( url, function(){
+                        // Load external content via AJAX. Note that in order to keep this
+                        // example streamlined, only the content in .infobox is shown. You'll
+                        // want to change this based on your needs.
+                        $(".bbq-item #maincontent").load( url, function(){
                                 // Content loaded, hide "loading" content.
-                                $( '.bbq-loading' ).hide();
+                                $( '.bbq-item' ).show();
                             });
                     }
                     else
                     {
-//                        $(".bbq-item").hide();
                         $(".bbq-default").hide();
 
                         // Show "loading" content while AJAX content loads.
@@ -133,17 +125,19 @@
                         // Load external content via AJAX. Note that in order to keep this
                         // example streamlined, only the content in .infobox is shown. You'll
                         // want to change this based on your needs.
-                        cache[ url ] = $( '<div class="bbq-item"></div>' )
-                                
-                            // Append the content container to the parent container.
-                            .appendTo( '.bbq-content' ).first()
-                            .load( url, function(){
+                        $( '.bbq-item' ).load( url, function(){
                                 // Content loaded, hide "loading" content.
 
                                 $( '.bbq-loading' ).hide();
+                                $(".bbq-item").show();
                                 resetabs();
                             });
                     }
+                }
+                else
+                {
+                    $(".bbq-item").hide();
+                    $(".bbq-default").show();
                 }
             })
             $(window).trigger('hashchange');
@@ -191,18 +185,12 @@
             </div>
             <div id="menulist1" class="menulist">
             <ul id="menuhead1" class="menuhead">
-            	Design and Build
+            	{{event_set.0.0.category}}
             </ul>
             <ul>
-                {% for event in event_set %}
+                {% for event in event_set.0 %}
          		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
                 {% endfor %}
-<!--         		<li>Contraptions</li>
-         		<li>Robowars</li>
-         		<li>Junkyard Wars</li>
-         		<li>Project X</li>
-         		<li>Fire n Ice</li>
-         		<li class="last">Pentathlon</li>-->
       		</ul>
             </div>
         </div>
@@ -211,16 +199,12 @@
             </div>
             <div id="menulist2" class="menulist">
             <ul id="menuhead2" class="menuhead">
-            	Design and Build
+            	{{event_set.1.0.category}}
             </ul>
             <ul>
-         		<li>obotics</li>
-         		<li>Contraptions</li>
-         		<li>Robowars</li>
-         		<li>Junkyard Wars</li>
-         		<li>Project X</li>
-         		<li>Fire n Ice</li>
-         		<li class="last">Pentathlon</li>
+                {% for event in event_set.1 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
       		</ul>
             </div>
         </div>
@@ -229,16 +213,12 @@
             </div>
             <div id="menulist3" class="menulist">
             <ul id="menuhead3" class="menuhead">
-            	Design and Build
+            	{{event_set.2.0.category}}
             </ul>
             <ul>
-         		<li>botics</li>
-         		<li>Contraptions</li>
-         		<li>Robowars</li>
-         		<li>Junkyard Wars</li>
-         		<li>Project X</li>
-         		<li>Fire n Ice</li>
-         		<li class="last">Pentathlon</li>
+                {% for event in event_set.2 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
       		</ul>
             </div>
         </div>
@@ -247,16 +227,12 @@
             </div>
             <div id="menulist4" class="menulist">
             <ul id="menuhead4" class="menuhead">
-            	Design and Build
+            	{{event_set.3.0.category}}
             </ul>
             <ul>
-         		<li>otics</li>
-         		<li>Contraptions</li>
-         		<li>Robowars</li>
-         		<li>Junkyard Wars</li>
-         		<li>Project X</li>
-         		<li>Fire n Ice</li>
-         		<li class="last">Pentathlon</li>
+                {% for event in event_set.3 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
       		</ul>
             </div>
         </div>
@@ -265,16 +241,12 @@
             </div>
             <div id="menulist5" class="menulist">
             <ul id="menuhead5" class="menuhead">
-            	Design and Build
+            	{{event_set.4.0.category}}
             </ul>
             <ul>
-         		<li>tics</li>
-         		<li>Contraptions</li>
-         		<li>Robowars</li>
-         		<li>Junkyard Wars</li>
-         		<li>Project X</li>
-         		<li>Fire n Ice</li>
-         		<li class="last">Pentathlon</li>
+                {% for event in event_set.4 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
       		</ul>
             </div>
         </div>
@@ -283,16 +255,12 @@
             </div>
             <div id="menulist6" class="menulist">
             <ul id="menuhead6" class="menuhead">
-            	Design and Build
+            	{{event_set.5.0.category}}
             </ul>
             <ul>
-         		<li>ics</li>
-         		<li>Contraptions</li>
-         		<li>Robowars</li>
-         		<li>Junkyard Wars</li>
-         		<li>Project X</li>
-         		<li>Fire n Ice</li>
-         		<li class="last">Pentathlon</li>
+                {% for event in event_set.5 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
       		</ul>
             </div>
         </div>
@@ -301,16 +269,12 @@
             </div>
             <div id="menulist7" class="menulist">
             <ul id="menuhead7" class="menuhead">
-            	Design and Build
+            	{{event_set.6.0.category}}
             </ul>
             <ul>
-         		<li>cs</li>
-         		<li>Contraptions</li>
-         		<li>Robowars</li>
-         		<li>Junkyard Wars</li>
-         		<li>Project X</li>
-         		<li>Fire n Ice</li>
-         		<li class="last">Pentathlon</li>
+                {% for event in event_set.6 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
       		</ul>
             </div>
         </div>
@@ -319,16 +283,12 @@
             </div>
             <div id="menulist8" class="menulist">
             <ul id="menuhead8" class="menuhead">
-            	Design and Build
+            	{{event_set.7.0.category}}
             </ul>
             <ul>
-         		<li>s</li>
-         		<li>Contraptions</li>
-         		<li>Robowars</li>
-         		<li>Junkyard Wars</li>
-         		<li>Project X</li>
-         		<li>Fire n Ice</li>
-         		<li class="last">Pentathlon</li>
+                {% for event in event_set.7 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
       		</ul>
             </div>
         </div>
@@ -337,16 +297,12 @@
             </div>
             <div id="menulist9" class="menulist">
             <ul id="menuhead9" class="menuhead">
-            	Design and Build
+            	{{event_set.8.0.category}}
             </ul>
             <ul>
-         		<li>1</li>
-         		<li>Contraptions</li>
-         		<li>Robowars</li>
-         		<li>Junkyard Wars</li>
-         		<li>Project X</li>
-         		<li>Fire n Ice</li>
-         		<li class="last">Pentathlon</li>
+                {% for event in event_set.8 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
       		</ul>
             </div>
         </div>
