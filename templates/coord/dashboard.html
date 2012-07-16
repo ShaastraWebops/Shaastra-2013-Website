@@ -185,7 +185,7 @@
             var fileInput = document.getElementById('thefile');
             var file = fileInput.files[0];
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '{{request.meta["SCRIPT_NAME"]}}/coord/tabfile/', true);
+            xhr.open('POST', '{{site_url}}coord/tabfile/', true);
             xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
             xhr.setRequestHeader('X-Tab-Id', id);
             xhr.setRequestHeader("X-File-Name", file.name);
