@@ -21,6 +21,7 @@ class BaseView(object):
     # parent class. classes below inherit this
     def __call__(self, request, **kwargs):
         # handles request and dispatches the corresponding handler based on the type of request (GET/POST)
+        if not self.authenticate_req(request): return HttpResponseRedirect(settings.SITE_URL+'user/login')
         method = request.META['REQUEST_METHOD'].upper()
         handler = getattr(self, 'handle_%s' %method, None)
         
@@ -45,76 +46,16 @@ class BaseView(object):
         try:
             return tab.tabfile_set.all()
         except:
-            print 'here too'
             raise Http404()
-        
-
-class ProtectedView(BaseView):
-    """
-    ProtectedView requires users to authenticate themselves before proceeding to the computation logic.
-    """
-
-    @method_decorator(login_required)
-    def userAuthentication(self, request, **kwargs):
-        return True
     
-    def __call__(self, request, **kwargs):
-        """
-        * Checks authentication
-        * Handles request
-        * Dispatches the corresponding handler based on the type of request (GET/POST)
-        """
-        # TODO(Anant, anant.girdhar@gmail.com): Instead of copying the code, it would be better if we override BaseView.__call__
-        #                                       and add the necessary lines for authentication.
-        
-        # Copied code from BaseView.__call__
-        # Overriding BaseView.__call__ to check authentication.
-
-        if self.userAuthentication(request, **kwargs) == False:
-            return HttpResponseForbidden()
-        method = request.META['REQUEST_METHOD'].upper()
-        handler = getattr(self, 'handle_%s' %method, None)
-        
-        if handler is None:
-            methods = []
-            for x in dir(self):
-                if x.startswith('handle_'):
-                    methods.append(x[7:])
-            return HttpResponseNotAllowed(methods)    
-        return handler(request, **kwargs)
-        
-class CoordProtectedView(ProtectedView):
-    """
-    CoordProtectedView requires the user to be authenticated and to be a coord before proceeding to the computation logic.
-    """
-    @method_decorator(login_required)
-    def userAuthentication(self, request, **kwargs):
-        if request.user.get_profile().is_coord_of is not None:
-            return True
-        return False
-
-    def permissionsGranted(self, request, **kwargs):
-        """
-        Checks if the coord has permissions to access the requested event.
-        """
+    def authenticate_req(self, req):
         try:
-            if request.user.get_profile().is_coord_of != Event.objects.get(title = kwargs['event']):
-                return False  # If the coord is not coord of the requested event
-            return True
+            eve = req.user.get_profile().is_coord_of
         except:
-            raise Http404('You do not have permissions to view this page')
-        
-class CoreProtectedView(ProtectedView):
-    """
-    CoreProtectedView requires the user to be authenticated and to be a core before proceeding to the computation logic.
-    """
-    @method_decorator(login_required)
-    def userAuthentication(self, request, **kwargs):
-        if request.user.get_profile().is_core:
-            return True
-        return False
-    
-class CoordDashboard(CoordProtectedView):
+            return False
+        return True
+            
+class CoordDashboard(BaseView):
     """
     displays the coord dashboard depending on the logged in coords event
     """
@@ -123,7 +64,7 @@ class CoordDashboard(CoordProtectedView):
         tabs = self.get_tabs(event)
         return render_to_response('coord/dashboard.html', locals(), context_instance = RequestContext(request))
         
-class TabFileSubmit(CoordProtectedView):
+class TabFileSubmit(BaseView):
     """
     ajax file uploads are directed to this view
     """
@@ -175,12 +116,10 @@ def get_options(mcq):
     except:
         return []
         
-class Questions(CoordProtectedView):
+class Questions(BaseView):
     """
         displays the questions tab
     """
-    def handle_GET(self, request, **kwargs):
-        path = request.META['PATH_INFO'].split('/')
     def handle_GET(self, request, **kwargs):
         path = request.META['PATH_INFO'].split('/')
         if path[3] == 'mcq':
@@ -207,7 +146,7 @@ class Questions(CoordProtectedView):
             template = 'ajax/coord/question_tab.html'
         return render_to_response(template, locals(), context_instance = RequestContext(request))
 
-class MobApp(CoordProtectedView):
+class MobApp(BaseView):
     """
         displays the mobapp tab
     """
@@ -219,7 +158,7 @@ class MobApp(CoordProtectedView):
             form = MobAppWriteupForm()
         return render_to_response('ajax/coord/add_edit_mobapptab.html', locals(), context_instance = RequestContext(request))
 
-class CustomTabs(CoordProtectedView):
+class CustomTabs(BaseView):
     """
         displays the Custom tabs
     """
@@ -263,7 +202,7 @@ class CustomTabs(CoordProtectedView):
             template = 'ajax/coord/tab_form.html'
         return render_to_response(template, locals(), context_instance = RequestContext(request))
 
-class MCQAddEdit(CoordProtectedView):
+class MCQAddEdit(BaseView):
     """
     """
     def handle_GET(self, request, **kwargs):
