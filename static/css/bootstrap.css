@@ -497,7 +497,7 @@ h6 {
   line-height: 1;
 }
 
-ul,
+
 ol {
   padding: 0;
   margin: 0 0 9px 25px;
@@ -510,19 +510,13 @@ ol ul {
   margin-bottom: 0;
 }
 
-ul {
-  list-style: disc;
-}
+
 
 ol {
   list-style: decimal;
 }
 
-li {
-  line-height: 18px;
-}
 
-ul.unstyled,
 ol.unstyled {
   margin-left: 0;
   list-style: none;
@@ -4001,7 +3995,7 @@ input[type="submit"].btn.btn-mini {
   margin: 18px 0;
 }
 
-.pagination ul {
+.pagination ul{
   display: inline-block;
   *display: inline;
   margin-bottom: 0;
