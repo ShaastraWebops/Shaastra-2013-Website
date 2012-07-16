@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     url(r'^editevent/(?P<id>\d+)', editevent, name='editevent'),
     url(r'^addcoord/', addcoord, name='addcoord'),
     url(r'^editcoord/(?P<id>\d+)', editcoord, name='editcoord'),
+    url(r'^dashboard/', include('coord.urls'), name = 'dashboard'),
     url(r'^$', home, name = 'home'),
 )

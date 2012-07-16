@@ -256,8 +256,8 @@
         </script>
     </head>
     <body>
-        <div id="header" style="width:100%;">
-        <div id="userdetails" style="float:left;width:50%;height:40%;">
+        <div id="header">
+        <div id="userdetails">
         <h3>Welcome {{request.user}} | <i>{{event}} coord </i></h3>
         <a href="{{site_url}}user/logout/">Logout</a>
         <a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a>
@@ -270,8 +270,9 @@
         </div>
         <a href="#customtabs">Add a Tab</a>
         </div>
-        <div id="eventdetails" style="float:left;width:50%;height:40%;">
-        {{event}} details
+        <div id="eventdetails">
+        <h3>{{event}} details</h3>
+        <img src="{{event.events_logo}}">
         </div>
         </div>
         <hr/>

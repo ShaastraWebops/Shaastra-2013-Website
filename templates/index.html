@@ -108,6 +108,7 @@
                 {
                     // Since the element is already in the cache, it doesn't need to be
                     // created, so instead of creating it again, let's just show it!
+                        $(".bbq-default").hide();
                     cache[ url ].show();
                 }
                 else
@@ -138,6 +139,7 @@
                             .load( url, function(){
                                 // Content loaded, hide "loading" content.
                                 $( '.bbq-loading' ).hide();
+                                resetabs();
                             });
                     }
                 }
@@ -155,8 +157,8 @@
 		<div id="logo" class="floatleft"></div>
     		<div id="topright" class="floatright">
     	 		<div id="icons" class="floatleft">
-        			<a href="{{site_url}}events" id="events" class="floatleft"><p class="head_text">Events</p></a>
-            			<a id="home" class="floatleft"><p class="head_text">Home</p></a>
+        			<a href="#events" id="events" class="floatleft"><p class="head_text">Events</p></a>
+            			<a href="#" id="home" class="floatleft"><p class="head_text">Home</p></a>
             			<a id="hospitality" class="floatleft"><p class="head_text">Hospitality</p></a>
             			<a id="spons" class="floatleft"><p class="head_text">Sponsorship</p></a>
             			<a href="{{site_url}}user/login" id="login" class="floatleft"><p class="head_text">Login</p></a>	

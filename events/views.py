@@ -6,7 +6,7 @@ from events.models import *
 
 # Create your views here.
 
-def events(request, event_id=1):
+def events(request, event_id):
     event = Event.objects.get(id = event_id)
     tab_set = event.tab_set.all()
     return render_to_response('events/events.html',locals(), context_instance= RequestContext(request))
@@ -15,5 +15,5 @@ def tabs(request, event_id=1, tab_id=1):
     event = Event.objects.get(id = event_id)
     tab_set = event.tab_set.all()
     tab = tab_set.get(id = tab_id)
-    return HttpResponse(tab.text)
-
+    file_set = tab.tabfile_set.all()
+    return render_to_response('events/tabs.html',locals(), context_instance= RequestContext(request))

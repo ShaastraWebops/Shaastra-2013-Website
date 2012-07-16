@@ -1,0 +1,8 @@
+<div id="tabcontent" style="color: #FFF">
+{{tab.text}}
+<hr/>
+Downloads:<br>
+{% for file in file_set %}
+    <a href="{{file.url}}">{{file.title}}</a>
+{% endfor %}
+</div>
