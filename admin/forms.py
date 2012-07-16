@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import Group, User
 from users.models import UserProfile
+from chosen import widgets as chosenwidgets
 
 class AddGroupForm(forms.ModelForm):
     """
@@ -19,4 +20,4 @@ class AddCoreForm(forms.ModelForm):
     class Meta:
         model = User
         fields=('groups','username','email')
-#        widgets={'password':forms.widgets.HiddenInput,}
+        widgets={'groups':chosenwidgets.ChosenSelect,}

@@ -35,9 +35,9 @@ def updateSummary(request):
     """
     dajax = Dajax()
     dajax.assign("#summary",'innerHTML',"<table border='1' class='table table-striped table-bordered table-condensed'><thead><tr><th>S.No</th><th>Group Name</th><th>Cores</th></tr></thead><tbody id='groups'>")
-    groups=Group.objects.order_by('id').all()[1:]
+    groups=Group.objects.order_by('id').all()
     for g in groups:
-        dajax.append("#groups",'innerHTML',"<tr><td>"+str(g.id-1)+"</td><td class='grps' id="+g.name+"><a href="+'#editgroup/'+str(g.id)+'/'+">"+g.name+"</a></td><td id="+str(g.id)+"></td></tr>")
+        dajax.append("#groups",'innerHTML',"<tr><td>"+str(g.id)+"</td><td class='grps' id="+g.name+"><a href="+'#editgroup/'+str(g.id)+'/'+">"+g.name+"</a></td><td id="+str(g.id)+"></td></tr>")
         cores=User.objects.filter(groups__name=g.name)
         for c in cores:
             if c.get_profile().is_core:
@@ -67,6 +67,10 @@ def add_edit_core(request,form="",id=0):
     """
     dajax = Dajax()
     if id:
+        # groups field is a Many-to-Many field and requires a list of values
+        grps=[]
+        grps.append(form['groups'])
+        form['groups']=grps
         core_form = AddCoreForm(form, instance=User.objects.get(id=id))
         if core_form.is_valid():
             core_form.save()
@@ -76,6 +80,10 @@ def add_edit_core(request,form="",id=0):
             html=template.render(RequestContext(request,locals()))
             dajax.assign(".bbq-item",'innerHTML',html)
     else:
+        # groups field is a Many-to-Many field and requires a list of values
+        grps=[]
+        grps.append(form['groups'])
+        form['groups']=grps
         core_form = AddCoreForm(form)
         if core_form.is_valid():
             core=core_form.save()
@@ -85,9 +93,11 @@ def add_edit_core(request,form="",id=0):
             core_profile.save()
             dajax.script("updateSummary();")
         else:
+            form['groups']=grps[0]
             template = loader.get_template('ajax/admin/addcore.html')
             html=template.render(RequestContext(request,locals()))
             dajax.assign(".bbq-item",'innerHTML',html)
+            dajax.script("$('.chzn-select').chosen();")
     return dajax.json()
 
 @dajaxice_register
