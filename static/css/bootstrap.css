@@ -177,7 +177,8 @@ body {
 .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 940px;
+  width: 980px;
+  vertical-align: middle;
 }
 
 .span12 {
@@ -371,6 +372,7 @@ body {
 .container {
   margin-right: auto;
   margin-left: auto;
+  padding-top: 10px;
   *zoom: 1;
 }
 
@@ -765,7 +767,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: 18px;
+  height: 25px;
   padding: 4px;
   margin-bottom: 9px;
   font-size: 13px;
@@ -1495,8 +1497,9 @@ table {
 }
 
 .table {
-  width: 100%;
+  width: 70%;
   margin-bottom: 18px;
+  margin-left:10px;
 }
 
 .table th,
@@ -3282,7 +3285,7 @@ input[type="submit"].btn.btn-mini {
 }
 
 .nav-tabs > li > a,
-.nav-pills > li > a {
+.nav-pills > li > a,a:active {
   padding-right: 12px;
   padding-left: 12px;
   margin-right: 2px;
@@ -3747,7 +3750,8 @@ input[type="submit"].btn.btn-mini {
 
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 940px;
+  width: 80%;
+  color:#FFF;
 }
 
 .navbar-fixed-top {

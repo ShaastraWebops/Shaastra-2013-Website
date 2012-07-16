@@ -34,7 +34,7 @@ def updateSummary(request):
 
     """
     dajax = Dajax()
-    dajax.assign("#summary",'innerHTML',"<table border='1'><thead><tr><th>S.No</th><th>Group Name</th><th>Cores</th></tr></thead><tbody id='groups'>")
+    dajax.assign("#summary",'innerHTML',"<table border='1' class='table table-striped table-bordered table-condensed'><thead><tr><th>S.No</th><th>Group Name</th><th>Cores</th></tr></thead><tbody id='groups'>")
     groups=Group.objects.order_by('id').all()[1:]
     for g in groups:
         dajax.append("#groups",'innerHTML',"<tr><td>"+str(g.id-1)+"</td><td class='grps' id="+g.name+"><a href="+'#editgroup/'+str(g.id)+'/'+">"+g.name+"</a></td><td id="+str(g.id)+"></td></tr>")
