@@ -74,7 +74,6 @@ body
 	color:#fff;
 }
 
-
 #icons a:hover{
 	opacity:1.0; 
 	filter:alpha(opacity=100);
@@ -365,4 +364,28 @@ background:url(../img/footer_sprite.jpg) 0 129px;
 {
 	background-color: rgba(00, 00, 00, 0.8);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80000000,endColorstr=#80000000); 
+}
+
+table a,a:active{
+	 color: #08C;
+	 text-decoration: none;}
+table a:hover{
+	text-decoration: underline;	
+	cursor:pointer;}
+
+.container a,a:active{
+	text-decoration: none;
+	color:#999999;
+	margin-left:15px;
+	}
+.container a:hover{
+	color:#fff;
+	cursor:pointer}
+a:-webkit-any-link {
+text-decoration: none;
+cursor: auto;
+}
+a:-moz-any-link {
+text-decoration: none;
+cursor: auto;
 }
