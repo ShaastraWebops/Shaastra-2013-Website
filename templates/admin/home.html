@@ -65,21 +65,16 @@
          });
 	    </script>
     <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
-    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style.css">
-    <style>
-    body{
-       background:#fff;}
-    a:active{
-        text-decoration:none;
-    }
-    </style>
+    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-        		Welcome {{ request.user }}
-        		<a href="{{site_url}}user/logout/" class="floatright">Logout</a>
+        		<div class="left" id="wel"><h3>Welcome {{ request.user }}</h3></div>
+        		<div class="right" id="links"><ul class="nav nav-pills">
+        			<li><a href="{{site_url}}user/logout/" class="right">Logout</a></li>
+        		</ul></div>
 	</div></div></div>
         <hr/>
         <div id="nav">
