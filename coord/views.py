@@ -5,6 +5,7 @@ from django.contrib import *
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from events.models import *
+from coord.forms import *
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -161,6 +162,18 @@ class TabFileSubmit(CoordProtectedView):
         t = template.render(RequestContext(request, locals()))
         # the ajax function File() assigns this as the innerHTML of a div after the request has been completed.
         return HttpResponse(t)
+
+def get_objective(ques_id):
+    try:
+        return ObjectiveQuestion.objects.get(id = ques_id)
+    except:
+        return None
+        
+def get_options(mcq):
+    try:
+        return mcq.mcqoption_set.all()
+    except:
+        return []
         
 class Questions(CoordProtectedView):
     """
@@ -168,13 +181,16 @@ class Questions(CoordProtectedView):
     """
     def handle_GET(self, request, **kwargs):
         path = request.META['PATH_INFO'].split('/')
+    def handle_GET(self, request, **kwargs):
+        path = request.META['PATH_INFO'].split('/')
         if path[3] == 'mcq':
             try:
                 ques_id = path[4]
-                ques = ObjectiveQuestion.objects.get(id = ques_id)
-                form = AddMCQForm(instance = ques)
             except:
-                form = AddMCQForm()
+                ques_id = 0
+            mcq = get_objective(ques_id)
+            options = get_options(mcq)
+            form = MCQForm(mcq, options)
             template = 'ajax/coord/mcq_form.html'
         elif path[3] == 'subj':
             try:
@@ -245,5 +261,19 @@ class CustomTabs(CoordProtectedView):
         else:
             form = TabAddForm()
             template = 'ajax/coord/tab_form.html'
+        return render_to_response(template, locals(), context_instance = RequestContext(request))
+
+class MCQAddEdit(CoordProtectedView):
+    """
+    """
+    def handle_GET(self, request, **kwargs):
+        mcq = None
+        ques_id = kwargs['mcq_id']
+        options = []
+        if kwargs['mcq_id']:
+            mcq = ObjectiveQuestion.objects.get(id = kwargs['mcq_id'])
+            options = mcq.mcqoption_set.all()
+        form = MyForm(mcq, options)
+        template = 'ajax/coord/mcq_form.html'
         return render_to_response(template, locals(), context_instance = RequestContext(request))
 

@@ -8,10 +8,10 @@ class AddOptionForm(ModelForm):
         model = MCQOption
         exclude = ('question',)
 
-class AddMCQForm(ModelForm):
-    class Meta:
-        model = ObjectiveQuestion
-        fields = ('q_number', 'title')
+#class AddMCQForm(ModelForm):
+#    class Meta:
+#        model = ObjectiveQuestion
+#        fields = ('q_number', 'title')
 
 class AddSubjectiveQuestionForm(ModelForm):
     class Meta:

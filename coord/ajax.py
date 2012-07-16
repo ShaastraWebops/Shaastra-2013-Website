@@ -148,7 +148,7 @@ def saving_mcq(data, mcq):
     data.pop('csrfmiddlewaretoken')
     mcq.title = data.pop('title')
     mcq.q_number = data.pop('q_no')
-    print data
+#    print data
     mcq.save()
     try:
         options = mcq.mcqoption_set.all()
@@ -156,18 +156,18 @@ def saving_mcq(data, mcq):
         options = []
     keys = data.keys()
     keys.sort()
-    print keys
+#    print keys
     for opt_id in keys:
         if not data[opt_id]: continue
         if not opt_id.startswith('o'):
-            print 'not'
-            print opt_id[:-1]
+#            print 'not'
+#            print opt_id[:-1]
             mcqoption = MCQOption(id = opt_id[:-1])
-            print 'h'
+#            print 'h'
         else:
-            print 'else'
+#            print 'else'
             mcqoption = MCQOption()
-            print 'here'
+#            print 'here'
         mcqoption.option = opt_id[-1]
         mcqoption.text = data[opt_id]
         mcqoption.question = mcq
@@ -179,7 +179,7 @@ def save_mcq(request, data, ques_id):
     saving_mcq(data, mcq)
     ques_id = mcq.id
     options = mcq.mcqoption_set.all()
-    template = loader.get_template('ajax/events/mcq_form.html')
+    template = loader.get_template('ajax/coord/mcq_form.html')
     form = MCQForm(mcq, options)
     html = template.render(RequestContext(request,locals()))
     dajax = Dajax()

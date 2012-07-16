@@ -5,8 +5,9 @@
 
 <title>Shaastra</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-
-</script>
+{% load dajaxice_templatetags %}
+{% dajaxice_js_import %}
+    <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
 <script>
 	function getWindowHeight() {
 		var windowHeight = 0;
@@ -74,6 +75,7 @@
 <link rel="stylesheet" type="text/css" href="static/style/bootstrap.css"  />
 <link rel="stylesheet" type="text/css" href="static/style/prettify.css" />
 <link rel="stylesheet" type="text/css" href="static/style/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" href="static/style/eventsstyle.css" />
 <script type="text/javascript" src="static/scripts/bootstrap-tour.js"></script>
 <script type="text/javascript" src="static/scripts/shaastratour.js"></script>
 <script type="text/javascript" src="static/scripts/jquery.cookie.js"></script>
@@ -84,7 +86,66 @@
 <script src="static/scripts/bootstrap-popover.js"></script>
 <script src="static/scripts/bootstrap-alert.js"></script>
 <script src="static/scripts/prettify.js"></script> 
-        <script type="text/javascript" language="javascript" src="{{site_url}}static/js/hash.fragments.js"></script>
+<script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
+<script type="text/javascript" language="javascript">
+        $(function(){
+            // Keep a mapping of url-to-container for caching purposes.
+            var cache = {
+                // If url is '' (no fragment), display this div's content.
+                '': $('.bbq-default').first()
+            };
+
+            // Bind an event to window.onhashchange that, when the history state changes,
+            // gets the url from the hash and displays either our cached content or fetches
+            // new content to be displayed.
+            $(window).bind( 'hashchange', function(e) {
+
+                // Get the hash (fragment) as a string, with any leading # removed. Note that
+                // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+                var url = $.param.fragment();
+                        $(".bbq-item").hide();
+                if (cache[ url ])
+                {
+                    // Since the element is already in the cache, it doesn't need to be
+                    // created, so instead of creating it again, let's just show it!
+                    cache[ url ].show();
+                }
+                else
+                {
+                    if(url.split('/')[2])
+                    {
+                        cache[url.split('/tab')[0]].appendTo('.bbq-content').show();
+                        $( '.bbq-loading' ).show();
+                        $('.bbq-item :visible #maincontent').load( url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '.bbq-loading' ).hide();
+                            });
+                    }
+                    else
+                    {
+//                        $(".bbq-item").hide();
+                        $(".bbq-default").hide();
+
+                        // Show "loading" content while AJAX content loads.
+                        $( '.bbq-loading' ).show();
+                        // Load external content via AJAX. Note that in order to keep this
+                        // example streamlined, only the content in .infobox is shown. You'll
+                        // want to change this based on your needs.
+                        cache[ url ] = $( '<div class="bbq-item"></div>' )
+                                
+                            // Append the content container to the parent container.
+                            .appendTo( '.bbq-content' ).first()
+                            .load( url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '.bbq-loading' ).hide();
+                            });
+                    }
+                }
+            })
+            $(window).trigger('hashchange');
+
+        });
+        </script>
 </head> 
 <body>
 <center>
@@ -94,11 +155,11 @@
 		<div id="logo" class="floatleft"></div>
     		<div id="topright" class="floatright">
     	 		<div id="icons" class="floatleft">
-        			<a href="#!events" id="events" class="floatleft"><p class="head_text">Events</p></a>
+        			<a href="{{site_url}}events" id="events" class="floatleft"><p class="head_text">Events</p></a>
             			<a id="home" class="floatleft"><p class="head_text">Home</p></a>
             			<a id="hospitality" class="floatleft"><p class="head_text">Hospitality</p></a>
             			<a id="spons" class="floatleft"><p class="head_text">Sponsorship</p></a>
-            			<a href="#!user/login" id="login" class="floatleft"><p class="head_text">Login</p></a>	
+            			<a href="{{site_url}}user/login" id="login" class="floatleft"><p class="head_text">Login</p></a>	
         		</div>
         		<div id="twologos" class="floatright">
         			<div id="tuvnord" class="floatleft"></div>
@@ -107,6 +168,21 @@
     		</div>
 	</div>
 	<div id="body">
+        <div id="content" class="bbq" style="width:100%">
+                <div class="bbq-content">
+                <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
+                <div class="bbq-loading" style="display:none;">
+                    <img src="{{site_url}}static/img/loading.gif" alt="Loading"/> Loading content...
+                </div>
+
+                <!-- This content will be shown if no path is specified in the URL fragment. -->
+                <div class="bbq-default">
+                <i> Events Home!</i>
+                </div>
+                <div class="bbq-item">
+                </div>
+                </div>
+        </div>
        	<div id="menu1" class="menu">
         	<div id="menutopcolour1" class="menutopcolour">
             </div>
@@ -115,13 +191,15 @@
             	Design and Build
             </ul>
             <ul>
-         		<li>Robotics</li>
-         		<li>Contraptions</li>
+                {% for event in event_set %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
+<!--         		<li>Contraptions</li>
          		<li>Robowars</li>
          		<li>Junkyard Wars</li>
          		<li>Project X</li>
          		<li>Fire n Ice</li>
-         		<li class="last">Pentathlon</li>
+         		<li class="last">Pentathlon</li>-->
       		</ul>
             </div>
         </div>

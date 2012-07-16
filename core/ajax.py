@@ -41,8 +41,13 @@ def add_edit_event(request,form="",id=0):
     else:
         event_form = AddEventForm(form)
     if event_form.is_valid():
-        event_form.save()
-    dajax.script("updateSummary();")
+        event = event_form.save()
+        dajax.script("upload_events_logo(" + str(event.id) + ");")
+    else:
+        template = loader.get_template('ajax/core/addevent.html')
+        html=template.render(RequestContext(request,locals()))
+        dajax.assign(".bbq-item",'innerHTML',html)
+
     return dajax.json()
 
 @dajaxice_register

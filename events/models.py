@@ -29,7 +29,7 @@ class Update(models.Model):
 
 class Event(models.Model):
     title = models.CharField(max_length = 30)
-    events_logo = models.ImageField(upload_to = upload_handler('Events'))
+    events_logo = models.ImageField(upload_to = upload_handler('Events'), blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank = True, null = True)
     category = models.ForeignKey(Category, blank = True, null = True)
     updates = models.ManyToManyField(Update, blank = True, null = True)

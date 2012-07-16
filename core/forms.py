@@ -2,15 +2,20 @@ from django import forms
 from events.models import Event
 from django.contrib.auth.models import User
 from users.models import UserProfile
+from chosen import forms as chosenforms
+from events.models import *
 
 class AddEventForm(forms.ModelForm):
-    """
-    This form is used to add/edit events
 
-    """
+    tags = chosenforms.ChosenModelMultipleChoiceField(required = False,queryset = Tag.objects.all())
     class Meta:
         model = Event
-        exclude=('events_logo','questions','tags','category','updates',)
+        # fields = ('title','events_logo','tags')
+        fields = ('title','events_logo', 'tags', 'lock_status', 'unlock_reason')
+        widgets = {
+            'lock_status' : forms.HiddenInput(),
+            'unlock_reason' : forms.HiddenInput(),
+        }        
 
 class AddCoordForm(forms.ModelForm):
     """
