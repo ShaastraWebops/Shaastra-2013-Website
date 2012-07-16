@@ -64,19 +64,35 @@
             updateSummary();
          });
 	    </script>
+    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style.css">
+    <style>
+    body{
+       background:#fff;}
+    a:active{
+        text-decoration:none;
+    }
+    </style>
     </head>
     <body>
-        Welcome {{ request.user }},<br>
-        <a href="{{site_url}}user/logout/">Logout</a>
+        <div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+        		Welcome {{ request.user }}
+        		<a href="{{site_url}}user/logout/" class="floatright">Logout</a>
+	</div></div></div>
         <hr/>
         <div id="nav">
-            <a href="#addgroup">Add group</a>
-            <a href="#addcore">Add Core</a>
+            <ul class="nav nav-pills">
+            <li><a href="#addgroup">Add group</a></li>
+            <li><a href="#addcore">Add Core</a></li></ul>
         </div><br>
-        <div id="container">
-            <div id="summary" style="float:left;width:50%;">
+        <div class="container-fluid">
+	<div class="row-fluid">
+            <div id="summary" class="span6">
             </div>
-            <div class="bbq" id="space" style="float:right;width:50%;">              
+            <div class="span6">
+            <div class="bbq" id="space">              
                 <div class="bbq-content">
 
                     <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
@@ -92,7 +108,7 @@
                     <div class="bbq-item">
                     </div>
                 </div>
-            </div>
-        </div>
+            </div></div>
+        </div></div>
     </body>
 </html>
