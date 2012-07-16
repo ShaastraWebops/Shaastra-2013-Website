@@ -22,6 +22,7 @@ def updateSummary(request):
     for e in event:
         dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a href="+'#editevent/'+str(e.id)+">"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
         coords=UserProfile.objects.filter(is_coord_of__title=e.title)
+        coords=coords.filter(is_core=0)
         for c in coords:
             dajax.append("#"+str(e.id),'innerHTML',"<li class='coords' id="+str(c.user.username)+"><a href="+'#editcoord/'+str(c.user_id)+">"+str(c.user)+"</a>")
     dajax.script("window.location.hash=''")

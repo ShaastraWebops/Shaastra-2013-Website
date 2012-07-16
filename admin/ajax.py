@@ -76,6 +76,10 @@ def add_edit_core(request,form="",id=0):
             html=template.render(RequestContext(request,locals()))
             dajax.assign(".bbq-item",'innerHTML',html)
     else:
+        # groups field is a Many-to-Many field and requires a list of values
+        grps=[]
+        grps.append(form['groups'])
+        form['groups']=grps
         core_form = AddCoreForm(form)
         if core_form.is_valid():
             core=core_form.save()
@@ -85,9 +89,11 @@ def add_edit_core(request,form="",id=0):
             core_profile.save()
             dajax.script("updateSummary();")
         else:
+            form['groups']=grps[0]
             template = loader.get_template('ajax/admin/addcore.html')
             html=template.render(RequestContext(request,locals()))
             dajax.assign(".bbq-item",'innerHTML',html)
+            dajax.script("$('.chzn-select').chosen();")
     return dajax.json()
 
 @dajaxice_register
