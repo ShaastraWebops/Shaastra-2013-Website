@@ -366,10 +366,12 @@ background:url(../img/footer_sprite.jpg) 0 129px;
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80000000,endColorstr=#80000000); 
 }
 
-table a:active{
+table a,a:active{
 	 color: #08C;
 	 text-decoration: none;}
-table a:hover{cursor:pointer;}
+table a:hover{
+	text-decoration: underline;	
+	cursor:pointer;}
 
 .container a,a:active{
 	text-decoration: none;
@@ -379,3 +381,11 @@ table a:hover{cursor:pointer;}
 .container a:hover{
 	color:#fff;
 	cursor:pointer}
+a:-webkit-any-link {
+text-decoration: none;
+cursor: auto;
+}
+a:-moz-any-link {
+text-decoration: none;
+cursor: auto;
+}
