@@ -265,15 +265,14 @@
          <div class="right" id="links"><ul class="nav nav-pills"> 
                 <li><a href="{{site_url}}user/editprofile/">Edit Profile</a></li>
                 <li><a href="{{site_url}}user/password_change/">Change Password</a></li>
-        		<li><a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a></li>
-        		<li><a href="{{site_url}}user/logout/">Logout</a></li></ul>
+        		    <li><a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a></li>
+        		    <li><a href="{{site_url}}user/logout/">Logout</a></li></ul>
         	</div>
          </div>
       </div>
      </div><hr/>
         <div id="header" style="width:100%;">
         <div id="userdetails" style="float:left;width:50%;height:40%;">
-        <p>
         {% csrf_token %}
         <a href='#questions' name='questions' id = 'question' >Questions</a>
         <a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a>
