@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 import os
 
 EVENT_CATEGORIES = (
-	("Design and Build" , "Design and Build"),
+	("Category1" , "Design and Build"),
 	("Category2" , "Category2"),
 	("Category3" , "Category3"),
 	("Category4" , "Category4"),
