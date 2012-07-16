@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+
+.right{
+	float:right;}
+	
+.left{
+	float:left;}
+	
+.navbar-inner .container a,a:link{
+	display:block;
+	color:#999999;
+	line-height: 20px;
+}
+
+.navbar-inner .container a:hover{
+	color:#fff;}
+	
+#wel{
+    margin-top:5px;}
+
+#nav a{
+	text-decoration: none;}
