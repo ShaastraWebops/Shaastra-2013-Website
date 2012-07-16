@@ -72,7 +72,6 @@
 		
 <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" />
 <link rel="stylesheet" type="text/css" href="static/css/style.css"  />
-<link rel="stylesheet" type="text/css" href="static/css/eventsstyle.css"  />
 <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css"  />
 <link rel="stylesheet" type="text/css" href="static/css/prettify.css" />
 <link rel="stylesheet" type="text/css" href="static/css/bootstrap-responsive.css" />
@@ -127,7 +126,6 @@
                         // want to change this based on your needs.
                         $( '.bbq-item' ).load( url, function(){
                                 // Content loaded, hide "loading" content.
-
                                 $( '.bbq-loading' ).hide();
                                 $(".bbq-item").show();
                                 resetabs();
@@ -147,17 +145,20 @@
 </head> 
 <body>
 <center>
+    
 	<div id="container">
 	<div id="header">
 		<div id="logo" class="floatleft"></div>
     		<div id="topright" class="floatright">
     	 		<div id="icons" class="floatleft">
-        			<a href="#events" id="events" class="floatleft"><p class="head_text">Events</p></a>
-            			<a href="#" id="home" class="floatleft"><p class="head_text">Home</p></a>
-            			<a id="hospitality" class="floatleft"><p class="head_text">Hospitality</p></a>
-            			<a id="spons" class="floatleft"><p class="head_text">Sponsorship</p></a>
-            			<a href="{{site_url}}user/login" id="login" class="floatleft"><p class="head_text">Login</p></a>
-        		</div>
+    	 		   <div class="floatleft" id="links"><ul class="nav nav-pills"> 
+        					<li><a href="#events" id="events"><p class="head_text">Events</p></a></li>
+            			<li><a href="#" id="home"><p class="head_text">Home</p></a></li>
+            			<li><a id="hospitality"><p class="head_text">Hospitality</p></a></li>
+            			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
+            			<li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li>
+            	</ul></div>
+            </div>
         		<div id="twologos" class="floatright">
         			<div id="tuvnord" class="floatleft"></div>
         			<div id="iitmlogo" class="floatright"></div>
