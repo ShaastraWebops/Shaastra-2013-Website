@@ -12,7 +12,6 @@
         <script type="text/javascript">
         function upload_events_logo(id)
         {
-//            var name = document.forms["AddEventForm"]["display_name"].value;
             var fileInput = document.getElementById('id_events_logo');
             var file = fileInput.files[0];
             var xhr = new XMLHttpRequest();
@@ -20,9 +19,9 @@
             xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
             xhr.setRequestHeader('X-Event-Id', id );
             xhr.setRequestHeader("X-File-Name", file.name);
-//            xhr.setRequestHeader('X-Name', name);
             xhr.onreadystatechange = function () {                      // read ajax onreadystatechange responses
                 if ((xhr.readyState == 4) && (xhr.status == 200)){
+                    alert(xhr.responseText);
                     updateSummary();
                 }
             }

@@ -37,7 +37,7 @@ class Update(models.Model):
 
 class Event(models.Model):
     title = models.CharField(max_length = 30)
-    events_logo = models.ImageField(upload_to = upload_handler('Events'), blank=True, null=True)
+    events_logo = models.FileField(upload_to = upload_handler('Events'), blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank = True, null = True)
     category = models.CharField(max_length=50,choices= EVENT_CATEGORIES)
     updates = models.ManyToManyField(Update, blank = True, null = True)
@@ -107,4 +107,3 @@ class MCQOption(models.Model):
 class MobAppTab(models.Model):
     event = models.OneToOneField(Event, blank = True, null = True)
     text = models.TextField()
-

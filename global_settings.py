@@ -112,4 +112,3 @@ EMAIL_HOST='localhost'
 EMAIL_HOST_PASSWORD='$#aastra20iiw3b0ps'
 #Default: '' (Empty string)
 EMAIL_HOST_USER='shaastra'
-
