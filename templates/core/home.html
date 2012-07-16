@@ -133,11 +133,11 @@
 		<div class="navbar-inner">
 			<div class="container">
          	<div class="left" id="wel"><h3>Welcome {{ request.user }} | <i>{{ request.user.groups.get_query_set.0 }} core</i></h3></div>
-				<div class="right" id="links"><ul class="nav nav-pills">        
-            	<li><a href="{{site_url}}user/editprofile/">Edit Profile</a></li>
-               <li><a href="{{site_url}}user/password_change/">Change Password</a></li>
+				<div class="right" id="links"><ul class="nav nav-pills">
+				    <li><a href="{{site_url}}core/">Core Home</a></li>
+            	    <li><a href="{{site_url}}user/editprofile/">Edit Profile</a></li>
+                    <li><a href="{{site_url}}user/password_change/">Change Password</a></li>
         			<li><a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a></li>
-        <li><a href="{{site_url}}core/dashboard/" class="floatright">Dashboard</a></li>
         			<li><a href="{{site_url}}user/logout/">Logout</a></li></ul></div>
         </div></div></div><hr/>
         <div id="nav">

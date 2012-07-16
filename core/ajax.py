@@ -20,7 +20,7 @@ def updateSummary(request):
     dajax.assign("#summary",'innerHTML',"<table border='1' class='table table-striped table-bordered table-condensed'><thead><tr><th>S.No</th><th>Event Name</th><th>Coords</th></tr></thead><tbody id='event'>")
     event=Event.objects.order_by('id').all()
     for e in event:
-        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a href="+'#editevent/'+str(e.id)+">"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
+        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a href="+'editevent/'+str(e.id)+">"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
         coords=UserProfile.objects.filter(is_coord_of__title=e.title)
         coords=coords.filter(is_core=0)
         for c in coords:

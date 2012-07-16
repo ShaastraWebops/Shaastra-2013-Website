@@ -261,8 +261,9 @@
     <div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-         	<div class="left" id="wel"><h3>Welcome {{request.user}} | <i>{{event}} coord </i></h3></div>
-         <div class="right" id="links"><ul class="nav nav-pills"> 
+         	<div class="left" id="wel"><h3>Welcome {{request.user}} | <i>{% if request.user.get_profile.is_core %}{{ request.user.groups.get_query_set.0 }} core{% else %}{{event}} coord {% endif %}</i></h3></div>
+         <div class="right" id="links"><ul class="nav nav-pills">
+                {% if request.user.get_profile.is_core %}<li><a href="{{site_url}}core/">Core Home</a></li>{% endif %}
                 <li><a href="{{site_url}}user/editprofile/">Edit Profile</a></li>
                 <li><a href="{{site_url}}user/password_change/">Change Password</a></li>
         		    <li><a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a></li>
@@ -276,7 +277,7 @@
         {% csrf_token %}
         <a href='#questions' name='questions' id = 'question' >Questions</a>
         <a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a>
-        <a href="#submissions" name='submissions' id = 'submissions' >Submissions</a>
+        <a href="#submissions" name='submissions' id = 'submissions' >Submissions</button>
         <div name="tabs" id = "tabs">
         </div>
         <a href="#customtabs">Add a Tab</a>
