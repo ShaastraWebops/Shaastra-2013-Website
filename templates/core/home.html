@@ -33,21 +33,6 @@
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.core.add_edit_event(Dajax.process,{'form':data});
         }
-        function edit_event(id)
-        {
-            data=$(".bbq-item :input").serializeObject();
-            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.core.add_edit_event(Dajax.process,{'form':data,'id':id});
-        }
-        function del_event(id)
-        {
-            var press=confirm("Confirm delete?");
-            if (press==true)
-            {
-                $(".bbq-item").append("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-                Dajaxice.core.del_event(Dajax.process,{'id':id});
-            }
-        }
         function add_coord()
         {
             data=$(".bbq-item :input").serializeObject();

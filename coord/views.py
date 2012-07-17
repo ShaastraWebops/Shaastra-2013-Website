@@ -76,7 +76,7 @@ class TabFileSubmit(BaseView):
         tab_id = request.META['HTTP_X_TAB_ID']
         
         tab = Tab.objects.get(id = tab_id)
-        direc = os.path.join(settings.PROJECT_DIR + settings.MEDIA_URL, 'events', str(tab.event.id), tab._meta.object_name, str(tab.id))
+        direc = os.path.join('/home/shaastra/public_html/2013/media', 'events', str(tab.event.id), tab._meta.object_name, str(tab.id))
         # note that event and tab IDs and not their titles have been used to create folders so that renaming does not affect the folders
         if not os.path.exists(direc):
             os.makedirs(direc)
@@ -85,7 +85,7 @@ class TabFileSubmit(BaseView):
         # get_or_create returns a tuple whose second element is a boolean which is True if it is creating a new object.
         # the first element is the object that has been created/found.
         if a[1]:
-            a[0].url = os.path.join(settings.MEDIA_URL, 'events', str(tab.event.id), tab._meta.object_name, str(tab.id), filename)
+            a[0].url = os.path.join('/2013/media', 'events', str(tab.event.id), tab._meta.object_name, str(tab.id), filename)
             f = open(path, 'w')
             with f as dest:
                 req = request
@@ -215,4 +215,3 @@ class MCQAddEdit(BaseView):
         form = MyForm(mcq, options)
         template = 'ajax/coord/mcq_form.html'
         return render_to_response(template, locals(), context_instance = RequestContext(request))
-
