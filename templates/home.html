@@ -37,6 +37,7 @@
             <div id="sidebar" class="span3 columns">
                 <h2>Previous Sponsors</h2>
                 <h6>Shaastra 2011</h6>
+				{% if previous_sponsors %}
                 
                 <div id="myCarousel" class="carousel slide">
                     
@@ -64,6 +65,7 @@
                     <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
                     <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
                 </div><!--/.myCarousel -->
+			{% endif %}
                 <hr>
             </div><!--/.sidebar -->
         </div><!--/.row -->
