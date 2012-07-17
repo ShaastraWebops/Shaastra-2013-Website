@@ -27,9 +27,11 @@
 			{% csrf_token %}
 			<input class="inp" onclick='this.value=""' type="text" name="username">
 			<input value="password" class="inp" onclick='this.value=""' type="password" name="password">
-			<input class="subbut" type="submit" value="Login"> <br/>
-			<a href="{{site_url}}user/register/">Register</a>
-                	<a href="{{site_url}}user/admin/password_reset/">Forgot password?</a> 
+			<input class="subbut" type="submit" value="Login"> <br/><br>
+         <div id="div">
+						<a href="{{site_url}}user/register/">Register</a>
+                	<a href="{{site_url}}user/admin/password_reset/">Forgot password?</a>        
+         </div>			
 		</form>
    <center> <div id="footer">
 	<div id="navcontainer">
@@ -185,6 +187,12 @@ text-align: center;
 	background-color: #CCC;
 }
 
+#div a{
+	text-decoration:none;
+	font-size:20px;
+	color:#183f5a;
+	padding:10px;
+}
 </style>
 
 </body></html>
