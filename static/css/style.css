@@ -48,16 +48,17 @@ body
 
 #topright{
 	height:54px;
-	width:720px;
+	width:740px;
 }
 
 #icons{
-   width:540px;
+   width:560px;
 	height:54px;
 	font-weight:bold;
 	color:#fff;
 	font-size:13px;
-	text-align:center; 	
+	text-align:center;
+	margin-top: -15px; 	
 }
 
 #icons a,a:active{
@@ -66,7 +67,6 @@ body
 	line-height:40px;
 	min-height:45px;
 	vertical-align:bottom;
-	margin-left:30px;
 	opacity:0.7; 
 	filter:alpha(opacity=70);
 	padding-top:25px;
