@@ -6,6 +6,7 @@ from chosen import forms as chosenforms
 from datetime import datetime
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.cache import cache
 import os
 
 EVENT_CATEGORIES = (
@@ -53,6 +54,13 @@ class Tab(models.Model):
     text = models.TextField()
     pref = models.IntegerField(max_length=2,default = 0, blank=False)
     
+    def save(self):
+        cache.set(str(self.id)+"_event", str(self.event), 2592000)
+        cache.set(str(self.id)+"_title", str(self.title), 2592000)
+        cache.set(str(self.id)+"_text", str(self.text), 2592000)
+        cache.set(str(self.id)+"_pref", str(self.pref), 2592000)
+        super(Tab, self).save(*args, **kwargs)
+        
     def delete(self):
         file_list = self.tabfile_set.all()
         for f in file_list:
