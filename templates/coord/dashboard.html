@@ -319,16 +319,22 @@
         		<li><a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a></li>
         		<li><a href="#submissions" name='submissions' id = 'submissions' >Submissions</a></li>
         		<li><a href="#customtabs">Add a Tab</a></li>
-        </ul><br/>
-        <div name="tabs">
+        		<li><a href="" onclick="$('#eventdetails').load('{{site_url}}core/editevent/{{event.id}}',function(){$('.chzn-select').chosen();});return false;">Edit Event</a></li>
+        </ul>
+        </div><br/><br/>
+       <div class="container-fluid">
+      	<div class="row-fluid">
+      		<div name="tabs" class="left span6">
              <ul class="nav nav-pills" id="tabs"></ul>
-        </div>
-        </div>
-        <div id="eventdetails" class="container">
-        <p>Event Name : {{event}}<br>
-           Category   : {{event.category}}<br></p>           
-        </div> 
-        <a href="" onclick="$('#eventdetails').load('{{site_url}}core/editevent/{{event.id}}',function(){$('.chzn-select').chosen();});return false;">Edit Event</a>
+           </div>
+        		<div id="eventdetails" class="right span6">
+        			<p>Event Name : {{event}}<br>
+           			Category   : {{event.category}}<br></p>           
+        		</div> 
+       		
+      	</div>
+       </div>  
+        
         <hr/><br>
         <div class="container"        
         <div class="bbq" id="detail">

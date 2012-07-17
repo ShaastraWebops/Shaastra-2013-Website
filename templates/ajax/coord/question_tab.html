@@ -1,3 +1,4 @@
+<div id="mcq" class="container">
 MCQs:<br/>
 {% for q in mcqs %}
     <div class="span4" class="left">
@@ -6,15 +7,15 @@ MCQs:<br/>
         {{option.option}}:{{option.text}}<br />
     {% endfor %}
     <ul class="nav nav-pills tags">
-      <li><a href="#questions/mcq/{{q.id}}" >Edit</a></li.
+      <li><a href="#questions/mcq/{{q.id}}">Edit</a></li>
       <li><a href="#questions" onclick="delete_mcq({{q.id}});">Delete</a></li>
     </ul>
     </div>
 {% endfor %}
-
-<a href="#questions/mcq" class="btn btn-info q">Add MCQ</a>
-
+<ul class="nav nav-pills"><li><a href="#questions/mcq" class="btn q">Add MCQ</a></li></ul>
+</div>
 <br>
+<div class="container">
 Subjectives:<br />
 {% for q in text_questions %}
    <div class="span4" class="left">
@@ -24,5 +25,6 @@ Subjectives:<br />
     	<li><a href="#questions" onclick="delete_sub({{q.id}});">Delete</a></li></ul><br />
    </div>
 {% endfor %}
-<p>
-<a href="#questions/subj" class="btn btn-info q">Add Subjective</a>
+
+<ul class="nav nav-pills"><li><a href="#questions/subj" class="btn q">Add Subjective</a></li></ul>
+</div>
