@@ -74,6 +74,24 @@
                 </div><!--/.accordion-inner -->
 				                    
                 <div class="accordion-inner span3 pull-right">
+				{% for event1 in event_less_photos %}
+					{% if i == event1 %}
+						{% for j in photos_list %}
+						{% if j.event == i %}
+						<ul class="thumbnails">
+							<li class="span3">
+							<div style="height:200px" align="center">
+							<img src='{{MEDIA_URL}}{{j.image}}' alt="" >
+							</div>
+							</li>
+						</ul>
+						{% endif %}
+						{% endfor %}
+					{% endif %}
+				{% endfor %}
+
+				{% for event2 in event_more_photos %}
+					{% if i == event2 %}
                 <div id="{{i.id}}{{i.id}}" class="carousel slide">
                     <div class="carousel-inner">
                     
@@ -107,6 +125,8 @@
                     <a class="left carousel-control" href="#{{i.id}}{{i.id}}" data-slide="prev">&lsaquo;</a>
                     <a class="right carousel-control" href="#{{i.id}}{{i.id}}" data-slide="next">&rsaquo;</a>					
                 </div>
+				{% endif %}
+				{% endfor %}
                 </div><!--/.accordion-inner -->
                                     
                 <!--<div id="{{i.id}}{{i.id}}" class="carousel slide span3">

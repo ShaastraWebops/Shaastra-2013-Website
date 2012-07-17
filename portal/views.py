@@ -33,6 +33,23 @@ def events(request, category):
 	c = get_object_or_404(Category, url_name = category)
 	events_list = c.events.all()
 	photos_list = EventImage.objects.all()
+	event_less_photos=[]
+	event_more_photos=[]
+	for event in events:
+		photos_event=EventImage.objects.filter(event=event)
+		count=0
+		for photos in photos_event:
+			count+=1
+		if count == 1 or count ==0:
+			event_less_photos.append(event)
+	for event1 in events:
+		photos_event1=EventImage.objects.filter(event=event1)
+		count=0
+		for photos1 in photos_event1:
+			count+=1
+		if count>1:
+			event_more_photos.append(event1)
+
 	return render_to_response("events.html",locals(),context_instance=RequestContext(request))
 
 def topic_details(request,topic_url_name):
