@@ -23,7 +23,7 @@ function reg_done(data)
 
 }
 $(document).ready(function(){
-    html="<td><div id='msg'>Register New College</div><div id='reg'></div></td>"
+    html="<td><div id='msg'>Register New College</div><div id='reg'></div></td>";
     $("table tr:eq(6)").append(html);
 });
 $(document).ready(function(){

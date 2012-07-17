@@ -39,6 +39,18 @@ def updateTabs(request):
         dajax.append("#tabs",'innerHTML',"<li><a href="+'#customtabs/'+str(tab.id)+" name ="+tab.title+" id ="+ str(tab.id)+" >"+tab.title+"</a></li> ")
     dajax.script("window.location.hash='';")
     return dajax.json()
+
+@dajaxice_register
+def add_tag(request, text):
+    dajax = Dajax()
+    if text:
+        new_tag = Tag(name = text)
+        new_tag.save()
+        dajax.assign('#addTag','innerHTML',"");
+        dajax.script("$('#msg').show();$('#id_tags option:last').attr('value'," + str(new_tag.id) + ");$('#id_tags_chzn').remove();$('.chzn-select').chosen();");
+    else:
+        dajax.alert('Tag name required!')
+    return dajax.json()
         
 @dajaxice_register
 def delete_tab(request, tab_id=0):
