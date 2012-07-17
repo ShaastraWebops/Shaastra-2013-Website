@@ -46,7 +46,8 @@ def addevent(request):
             while foo:
                 dest.write( foo )
                 foo = req.read( 1024 )
-        return HttpResponse('Logo Successfully uploaded')
+        html= "<p>Event Name : "+ str(event)+"<br>Category   :"+ event.category +"<br></p>"
+        return HttpResponse(html)
     else:
         event_form=AddEventForm()
     return render_to_response('ajax/core/addevent.html', locals(), context_instance = RequestContext(request))

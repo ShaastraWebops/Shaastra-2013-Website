@@ -47,17 +47,21 @@
             xhr.setRequestHeader("X-File-Name", file.name);
             xhr.onreadystatechange = function () {                      // read ajax onreadystatechange responses
                 if ((xhr.readyState == 4) && (xhr.status == 200)){
-                    $('#eventdetails').attr('innerHTML',xhr.responseText);
-                }
+                    document.getElementById('eventdetails').innerHTML=xhr.responseText;
+                }	
             }
             xhr.send(file);                 // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
-        }
+       }
 
         function edit_event(id)
         {
+            var fileInput = document.getElementById('id_events_logo');
+            var file = fileInput.files[0];
+	    if(file==undefined)
+	    	file=0;
             data=$("#eventdetails :input").serializeObject();
             $("#eventdetails").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.core.add_edit_event(Dajax.process,{'form':data,'id':id});
+            Dajaxice.core.add_edit_event(Dajax.process,{'form':data,'id':id,'upload':file,});
         }
         
         function del_event(id)
