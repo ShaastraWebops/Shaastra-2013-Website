@@ -26,13 +26,15 @@
 .q{
 	text-decoration:none;
 	max-width:90px;
+	max-height:20px;
 	}
 	
 #tabs a{
 	text-decoration: none;
 	color:#000;}
 	
-.tags{
+.tags a,a:link{
 	text-decoration: none;
-	color:#000;}
+	color:#08C;}
 	
+
