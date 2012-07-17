@@ -3,6 +3,8 @@ from django.conf import settings
 from django.contrib.auth import views
 from dajaxice.core import dajaxice_autodiscover
 dajaxice_autodiscover()
+from django.contrib import admin as superuser
+superuser.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'views.home', name = 'home'),
@@ -14,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^submission/', include('submissions.urls')),
     url(r'^DTVPicker/', include('dtvpicker.urls')),
     url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
+    url(r'^superuser/', include(superuser.site.urls)),
 )
 
 urlpatterns += patterns('',
