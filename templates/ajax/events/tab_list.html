@@ -1,0 +1,3 @@
+{% for tab in tabs %}
+<a href="#" name = "{{tab.title}}" id = "{{tab.title}}" onclick = "Dajaxice.events.load_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">{{tab.title}}</a><br/>
+{% endfor %}

@@ -1,0 +1,24 @@
+MCQs:<br /> 
+{% for q in mcqs %}
+{{q.q_number}}.{{q.title}}<br />
+{% for option in q.mcqoption_set.all %}
+{{option.option}}:{{option.text}}<br />
+{% endfor %}
+<a href="#" onclick="Dajaxice.events.manage_options(Dajax.process, {'ques_id':{{q.id}}})">Edit Choices</a>
+<a href="#" onclick="Dajaxice.events.edit_mcq(Dajax.process, {'ques_id':{{q.id}}})">Edit</a>
+<a href="#" onclick="delete_mcq({{q.id}});">Delete</a>
+<br />
+{% endfor %}
+<a href="#" onclick = "Dajaxice.events.add_mcq(Dajax.process)">
+Add MCQ</a>
+<br /><br />
+
+Subjectives:<br />
+{% for q in text_questions %}
+{{q.q_number}}.{{q.title}}
+<a href="#" onclick="Dajaxice.events.edit_subjective(Dajax.process, {'ques_id':{{q.id}}})">Edit</a>
+<a href="#" onclick="delete_sub({{q.id}});">Delete</a><br />
+{% endfor %} 
+<a href="#" onclick = "Dajaxice.events.add_subjective(Dajax.process)">
+Add Subjective</a>
+<br />
