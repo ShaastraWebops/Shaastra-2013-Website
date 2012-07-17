@@ -20,4 +20,4 @@ selected - {% if sub.selected %} Yes {% else %} No {% endif %}<br/>
 </a>
 <form id="score" action="" method="POST">{% csrf_token %}
 Score: <input name="score" type="text" {% if sub.score %}value="{{sub.score}}"{% endif %}/>
-<input type="button" value = "Update Score"onclick="save_score({{sub.id}});"/> 
+<input type="button" value = "Update Score"onclick="save_score({{sub.id}});" class="btn btn-primary"/> 
