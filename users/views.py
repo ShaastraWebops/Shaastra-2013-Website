@@ -1,3 +1,4 @@
+import django
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.models import User, Group
 from django.template.context import Context, RequestContext
@@ -12,7 +13,8 @@ from users.models import UserProfile, College
 from django.utils.translation import ugettext as _
 from users.forms import *
 from django.contrib.sessions.models import Session
-from django.core.mail import send_mail,EmailMessage,SMTPConnection,EmailMultiAlternatives
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.core.mail import send_mail as mailsender
 import sha,random,datetime
 
 def login_get(request):
@@ -88,10 +90,8 @@ def register_post(request):
         body = mail_template.render(Context({'username':new_user.username,
 							 'SITE_URL':settings.SITE_URL,
 							 'activationkey':userprofile.activation_key }))
-        send_mail('Your new Shaastra2013 account confirmation', body,'noreply@shaastra.org', [new_user.email,], fail_silently=False)
+        mailsender('Your new Shaastra2013 account confirmation', body,'noreply@shaastra.org', [new_user.email,], fail_silently=False)
         request.session['registered_user'] = True
-#        new_user = authenticate(username = data['username'], password = data['password'])
-#        auth_login(request, new_user)
         msg='A mail has been sent to the mail id u provided. Please activate your account within 48 hours.'
         form = LoginForm()
         return render_to_response('users/login.html', locals(), context_instance = RequestContext(request))
@@ -221,4 +221,3 @@ def forgot_password(request):
 def events(request):
     event=Event.objects.all()
     return render_to_response('users/events.html',locals(), context_instance= RequestContext(request))
-

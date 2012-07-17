@@ -177,15 +177,6 @@
             return false;
         }
 
-        function add_file(){
-            data = $('#file_form').serializeObject();
-            tab_id=$("#tab_id").attr('value');
-            alert(data['tab_file']);
-            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.coord.add_file(Dajax.process,{'data':data,'tab_id':tab_id,})
-            return false;
-        }
-
         function edit_tab(id){
             data = $('#edit_tab').serializeObject();
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
@@ -194,7 +185,7 @@
         }
 
         function delete_tab(id){
-            var r=confirm("Are you sure you want to delete the tab?"+id);
+            var r=confirm("Are you sure you want to delete the tab?");
             if(r==true)
                 {$(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
                 Dajaxice.coord.delete_tab(Dajax.process,{'tab_id':id})}
@@ -321,7 +312,7 @@
         		<li><a href="#customtabs">Add a Tab</a></li>
         		<li><a href="" onclick="$('#eventdetails').load('{{site_url}}core/editevent/{{event.id}}',function(){$('.chzn-select').chosen();});return false;">Edit Event</a></li>
         </ul>
-        </div><br/><br/>
+        </div>
        <div class="container-fluid">
       	<div class="row-fluid">
       		<div name="tabs" class="left span6">
@@ -336,7 +327,7 @@
        </div>  
         
         <hr/><br>
-        <div class="container"        
+        <div class="container">        
         <div class="bbq" id="detail">
             <div class="bbq-content">
 
