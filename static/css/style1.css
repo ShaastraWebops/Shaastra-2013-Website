@@ -21,7 +21,8 @@
 
 #nav a{
 	text-decoration: none;
-	color:#08C}
+	color:#08C;
+	font-weight:bold;}
 	
 .q{
 	text-decoration:none;
@@ -31,7 +32,7 @@
 	
 #tabs a{
 	text-decoration: none;
-	color:#000;}
+	color:#08C;}
 	
 .tags a,a:link{
 	text-decoration: none;
