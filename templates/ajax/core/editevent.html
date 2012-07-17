@@ -1,7 +1,25 @@
 <center><b>Event Details</center></b><br/>      
-<table>
+<form action="" method="post">
+<table id="EditEventForm">
     {{ event_form.as_table }}
 </table>
 <button class="btn btn-primary" onclick="edit_event({{id}});" >Edit</button>
 <button class="btn btn-primary" onclick="del_event({{id}});" >Delete</button>
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+        html="<td><div id='msg'>Add a tag</div><div id='addTag'></div></td>";
+        $("table tr:eq(2)").append(html);
+       $("#msg").click(function(){
+            $(this).hide();
+            $("#addTag").append("<p>Enter Tag Name: <input type='text' id='addTag_text' / ><button type='button' onclick='add_tag();' id='addTag'>Add</button>");
+       });
+    });
+function add_tag(){
+    text = $('#addTag_text').attr('value');
+    $('#id_tags').removeClass('chzn-done');
+    $('#id_tags').append("<option>"+text+"</option>");
+    Dajaxice.coord.add_tag(Dajax.process,{'text':text,});
+}
+</script>
 
