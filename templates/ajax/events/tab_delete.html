@@ -1,0 +1,4 @@
+are u sure you want to delete tab {{tab.title}}?</br>
+    {{tab.text}}
+    <input type="button" value="Yes" name="delete" id="delete" onclick="Dajaxice.events.delete_tab(Dajax.process, {'tab_id':'{{tab.id}}'})">
+    <input type="button" value="No" name="back" id="back" onclick="Dajaxice.events.load_tab(Dajax.process, {'tab_id':'{{tab.id}}'})">
