@@ -70,7 +70,7 @@ def save_tab(request, data, tab_id=0):
         unsaved_tab.save()
         tab = unsaved_tab
         if not tab_id:
-            dajax.append('#tabs','innerHTML',"<a href="+'#customtabs/'+str(tab.id)+" name ="+str(tab.title)+" id ="+str(tab.id)+" > "+str(tab.title)+"  </a>")
+            dajax.append('#tabs','innerHTML',"<li><a href="+'#customtabs/'+str(tab.id)+" name ="+str(tab.title)+" id ="+str(tab.id)+" > "+str(tab.title)+"  </a></li>")
         dajax.script("window.location.hash='"+'customtabs/'+str(tab.id)+"';")
         return dajax.json()
     else:
