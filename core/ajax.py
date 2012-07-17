@@ -29,7 +29,7 @@ def updateSummary(request):
     return dajax.json()
 
 @dajaxice_register
-def add_edit_event(request,form="",id=0):
+def add_edit_event(request,upload,form="",id=0):
     """
     This function calls the AddEventForm from forms.py
     If a new event is being created, a blank form is displayed and the core can fill in necessary details.
@@ -43,7 +43,11 @@ def add_edit_event(request,form="",id=0):
         event_form = AddEventForm(form)
     if event_form.is_valid():
         event = event_form.save()
-        dajax.script("upload_events_logo(" + str(event.id) + ");")
+        if upload :
+	    dajax.script("upload_events_logo(" + str(event.id) + ");")
+	else:
+	    html= "<p>Event Name : "+ str(event)+"<br>Category   :"+ event.category +"<br></p>"
+	    dajax.assign('#eventdetails','innerHTML',html);
     else:
         template = loader.get_template('ajax/core/addevent.html')
         html=template.render(RequestContext(request,locals()))
