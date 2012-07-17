@@ -1,6 +1,6 @@
 {{q.q_number}}.{{q.title}}
 <form id = "textq_form" action="" method = "POST">{% csrf_token %}
 {{f}}
-<input type="button" value = "Save" onclick="save_edit_subjective({{eve_id}},{{q_id}});"/>
+<input type="button" value = "Save" onclick="save_edit_subjective({{eve_id}},{{q_id}});" class="btn btn-primary"/>
 </form>
 

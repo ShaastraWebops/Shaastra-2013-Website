@@ -36,7 +36,7 @@ def updateTabs(request):
     tabs=get_tabs(event)
     dajax.assign("#tabs", 'innerHTML', '')
     for tab in tabs:
-        dajax.append("#tabs",'innerHTML',"<a href="+'#customtabs/'+str(tab.id)+" name ="+tab.title+" id ="+ str(tab.id)+" >"+tab.title+"</a> ")
+        dajax.append("#tabs",'innerHTML',"<li><a href="+'#customtabs/'+str(tab.id)+" name ="+tab.title+" id ="+ str(tab.id)+" >"+tab.title+"</a></li> ")
     dajax.script("window.location.hash='';")
     return dajax.json()
         
