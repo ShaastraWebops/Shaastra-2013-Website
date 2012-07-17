@@ -9,15 +9,16 @@ from django.core.exceptions import ValidationError
 import os
 
 EVENT_CATEGORIES = (
-	("Category1" , "Design and Build"),
-	("Category2" , "Category2"),
-	("Category3" , "Category3"),
-	("Category4" , "Category4"),
-	("Category5" , "Category5"),
-	("Category6" , "Category6"),
-	("Category7" , "Category7"),
-	("Category8" , "Category8"),
-	("Category9" , "Category9"),
+	("Category1", "Aerofest"),
+	("Category2", "Coding"),
+	("Category3", "Design and Build"),
+	("Category4", "Involve"),
+	("Category5", "Quizzes"),
+	("Category6", "Online"),
+	("Category7", "Department Flagship"),
+	("Category8", "Spotlight"),
+	("Category9", "Workshops"),
+        ("Category10", "Others"),
 )
 # Create your models here.
 def upload_handler(model_name):

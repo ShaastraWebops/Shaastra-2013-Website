@@ -84,6 +84,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (

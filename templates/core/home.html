@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Shaastra 2013 | Core Dashboard</title>
-        {% dajaxice_js_import %}
+{% dajaxice_js_import %}
         <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
@@ -29,9 +29,13 @@
         }
         function add_event()
         {
+            var fileInput = document.getElementById('id_events_logo');
+            var file = fileInput.files[0];
+	    if(file==undefined)
+	    	file=0;
             data=$(".bbq-item :input").serializeObject();
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.core.add_edit_event(Dajax.process,{'form':data});
+            Dajaxice.core.add_edit_event(Dajax.process,{'form':data,'upload':file,});
         }
         function add_coord()
         {
