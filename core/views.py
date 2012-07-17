@@ -52,7 +52,7 @@ def addevent(request):
     return render_to_response('ajax/core/addevent.html', locals(), context_instance = RequestContext(request))
 
 @login_required(login_url=settings.SITE_URL + 'user/login/')
-def editevent(request,id=0):
+def eventdashboard(request,id=0):
     """
         This is the home page view of the superuser
     """
@@ -61,9 +61,18 @@ def editevent(request,id=0):
     profile = request.user.get_profile()
     profile.is_coord_of = Event.objects.get(id = id)
     profile.save()
-    #return render_to_response('ajax/core/editevent.html', locals(), context_instance = RequestContext(request))
     return HttpResponseRedirect(settings.SITE_URL+'coord/')
 
+@login_required(login_url=settings.SITE_URL + 'user/login/')
+def editevent(request,id=0):
+    """
+        This is the home page view of the superuser
+    """
+#    if request.user.get_profile().is_core is False :
+#        return HttpResponseRedirect(settings.SITE_URL)
+    event_form=AddEventForm(instance=Event.objects.get(id=id))
+    return render_to_response('ajax/core/editevent.html', locals(), context_instance = RequestContext(request))
+    
 @login_required(login_url=settings.SITE_URL + 'user/login/')
 def addcoord(request):
     """

@@ -6,6 +6,7 @@
         <link href="{{site_url}}static/css/demo_page.css"  type="text/css" rel="stylesheet">
         <link href="{{site_url}}static/css/demo_table.css"  type="text/css" rel="stylesheet">
         <script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dataTables.js" charset = "utf-8"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
@@ -33,6 +34,40 @@
         html = "<tr>"+html+"</tr>";
         $("#mcq_form tbody").append(html);
         return false;
+        }
+
+        function upload_events_logo(id)
+        {
+            var fileInput = document.getElementById('id_events_logo');
+            var file = fileInput.files[0];
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{site_url}}core/addevent/', true);
+            xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+            xhr.setRequestHeader('X-Event-Id', id );
+            xhr.setRequestHeader("X-File-Name", file.name);
+            xhr.onreadystatechange = function () {                      // read ajax onreadystatechange responses
+                if ((xhr.readyState == 4) && (xhr.status == 200)){
+                    $('#eventdetails').attr('innerHTML',xhr.responseText);
+                }
+            }
+            xhr.send(file);                 // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
+        }
+
+        function edit_event(id)
+        {
+            data=$("#eventdetails :input").serializeObject();
+            $("#eventdetails").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.core.add_edit_event(Dajax.process,{'form':data,'id':id});
+        }
+        
+        function del_event(id)
+        {
+            var press=confirm("Confirm delete?");
+            if (press==true)
+            {
+                $("#eventdetails").append("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+                Dajaxice.core.del_event(Dajax.process,{'id':id});
+            }
         }
         
         function save_score(id){
@@ -256,6 +291,7 @@
         </script>
     <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
     <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
+        <link href="{{site_url}}static/css/chosen.css"  type="text/css" rel="stylesheet">
     </head>
     <body>
     <div class="navbar navbar-fixed-top">
@@ -288,6 +324,7 @@
         <p>Event Name : {{event}}<br>
            Category   : {{event.category}}<br></p>           
         </div> 
+        <a href="" onclick="$('#eventdetails').load('{{site_url}}core/editevent/{{event.id}}',function(){$('.chzn-select').chosen();});return false;">Edit Event</a>
         <hr/><br>
         <div class="container"        
         <div class="bbq" id="detail">
