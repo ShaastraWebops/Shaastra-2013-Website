@@ -81,7 +81,7 @@
                          {% for j in photos_list %}
                        	 {% if j.event == i %}
 							{% ifchanged i %}
-							<div style="height: 200px">
+							<div style="height: 200px" align="center">
                         	 <img src="{{MEDIA_URL}}{{j.image}}" alt="">
 							</div>
 							{% endifchanged %}
@@ -94,7 +94,7 @@
 							{% ifchanged i %}
 							{% else %}
                         		<div class="item">
-									<div style="height: 200px">
+									<div style="height: 200px" align="center">
                             		<img src="{{MEDIA_URL}}{{j.image}}"  alt="">
 									</div>
                        			</div>
