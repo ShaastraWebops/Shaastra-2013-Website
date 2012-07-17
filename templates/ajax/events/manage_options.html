@@ -1,0 +1,11 @@
+question - {{ques.q_number}}.{{ques.title}}<br />
+options - <br />
+{% for option in ques.mcqoption_set.all %}
+{{option.option}}:{{option.text}}
+<a href="#" onclick="delete_option({{option.id}});">Delete</a>
+<a href="#" onclick="Dajaxice.events.edit_option(Dajax.process, {'option_id':{{option.id}}})"">Edit</a>
+<br />
+{% endfor %}
+<div id="option_edit">
+<a href="#" onclick="Dajaxice.events.add_option(Dajax.process, {'ques_id':{{ques.id}}})">Add Options</a>
+</div>

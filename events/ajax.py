@@ -4,6 +4,7 @@ from django.utils import simplejson
 from django.template import loader, Context, RequestContext, Template
 from events.models import *
 from dajaxice.decorators import dajaxice_register
+from django.core.cache import cache
 
 def get_files(tab):
     # gets all files that are related to a particular tab
@@ -130,7 +131,19 @@ def edit_tab(request, tab_id):
 @dajaxice_register
 def load_tab(request, tab_id):
     # loads the tab details of the tab you clicked on
-    tab = Tab.objects.get(id = tab_id)
+    event_name = cache.get(str(tab_id)+"_event")
+    if event_name != None:
+        event = Event.objects.get(title=event_name)
+        title = cache.get(str(tab_id)+"_title")
+        text = cache.get(str(tab_id)+"_text")
+        pref = cache.get(str(tab_id)+"_pref")
+        tab = Tab(event=event, title=title, text=text, pref=int(pref))
+    else:
+        tab = Tab.objects.get(id = tab_id)
+        cache.set(str(unsaved_tab.id)+"_event", str(unsaved_tab.event), 60*15)
+        cache.set(str(unsaved_tab.id)+"_title", str(unsaved_tab.title), 60*15)
+        cache.set(str(unsaved_tab.id)+"_text", str(unsaved_tab.text), 60*15)
+        cache.set(str(unsaved_tab.id)+"_pref", str(unsaved_tab.pref), 60*15)        
     file_list = get_files(tab)
     template = loader.get_template('ajax/events/tab_detail.html')
     t = template.render(RequestContext(request,locals()))

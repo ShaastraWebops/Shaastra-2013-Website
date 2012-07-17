@@ -1,0 +1,9 @@
+<b>Title</b>:{{tab.title}}</br>
+<b>Text</b>:{{tab.text}}</br>
+<b>Files:</b><div id="file">{% for file in file_list %}<a href="{{file.url}}">{{file.title}}</a>
+<a href="#" id="delete_file" onclick="Dajaxice.events.delete_file(Dajax.process,{'tab_id':'{{tab.id}}','file_id':'{{file.id}}'})">delete</a>
+<a href="#" id="rename" onclick="Dajaxice.events.rename_file(Dajax.process,{'tab_id':'{{tab.id}}','file_id':'{{file.id}}'})">rename</a><br/>{% endfor %}</div>
+
+<a href="#" name="edit" id="{{tab.title}}" onclick="Dajaxice.events.edit_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">edit</a>
+<a href="#" name="delete" id="{{tab.title}}" onclick="Dajaxice.events.confirm_delete_tab(Dajax.process,{'tab_id':'{{tab.id}}'})">delete</a>
+<a href="#" name="add_file" id="{{tab.title}}" onclick="Dajaxice.events.add_file(Dajax.process,{'tab_id':'{{tab.id}}'})">add a file</a>
