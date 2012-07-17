@@ -6,10 +6,10 @@
   <option value="interesting">mark as interesting</option>
   <option value="read">mark as read</option>
 </select>
-<input type="button" onclick="send_checklist();" value="Apply">
+<input type="button" onclick="send_checklist();" value="Apply" class="btn btn-info">
 
-
-<table id="submissions_list" border = "2">
+<br>
+<table id="submissions_list" class="table table-striped table-bordered table-condensed" border = "1">
 <thead>
 <tr>
     <th><input type="checkbox" value="toggle" id="toggle" onclick="toggleChecked(this.checked);"/></th>
@@ -35,4 +35,4 @@
 </table>
 </form>
 
-
+<br>

@@ -273,20 +273,21 @@
       </div>
      </div><hr/>
         {% csrf_token %}
-        <div id="nav">
+      <div id="nav"> 
          <ul class="nav nav-pills">
         		<li><a href='#questions' name='questions' id = 'question'>Questions</a></li>
         		<li><a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a></li>
         		<li><a href="#submissions" name='submissions' id = 'submissions' >Submissions</a></li>
         		<li><a href="#customtabs">Add a Tab</a></li>
         </ul><br/>
-        <div name="tabs" id = "tabs">
+        <div name="tabs">
+             <ul class="nav nav-pills" id="tabs"></ul>
         </div>
         </div>
         <div id="eventdetails" class="container">
         <p>Event Name : {{event}}<br>
            Category   : {{event.category}}<br></p>           
-        </div>
+        </div> 
         <hr/><br>
         <div class="container"        
         <div class="bbq" id="detail">
