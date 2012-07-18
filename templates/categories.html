@@ -39,11 +39,7 @@
 
 <!--Thumbnails with short description
 ================================================== -->
-    <style>
-		img{
-			width: 100%;
-		}
-	</style>
+   
     <div id="main" class="span9">
     <hr>
         <h2>Events Galore</h2>
@@ -57,7 +53,7 @@
                         {% for j in photos_list %}
                             {% if j.category == i %}
                             <a href="{{SITE_URL}}category/{{i.url_name}}/#all-events">
-							<div style="width=360px">       
+							<div style="height: 200px" align="center">       
                             <img src="{{MEDIA_URL}}{{j.image}}"  alt="" />
 							</div>
                             </a>  
