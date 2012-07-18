@@ -3,6 +3,7 @@
 <table id="EditEventForm">
     {{ event_form.as_table }}
 </table>
+<br>
 <button class="btn btn-primary" onclick="edit_event({{id}});" >Edit</button>
 <button class="btn btn-primary" onclick="close_event_form();" >Close</button>
 <script type="text/javascript">
@@ -15,7 +16,7 @@ function load_add_tag(){
     	load_add_tag();
        $("#msg").click(function(){
             $(this).hide();
-            $("#addTag").append("<p>Enter Tag Name: <input type='text' id='addTag_text' / ><button type='button' onclick='add_tag();' id='addTag'>Add</button>");
+            $("#addTag").append("<p>Enter Tag Name: <input type='text' id='addTag_text' / ><button type='button' class='btn btn-primary' onclick='add_tag();' id='addTag'>Add</button>");
        });
     });
 function add_tag(){

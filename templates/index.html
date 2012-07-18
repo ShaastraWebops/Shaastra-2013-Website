@@ -148,10 +148,10 @@
             			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
                                 {% if user.is_authenticated %}
                                 		<li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
-                                		
+                                		<li><a id="set"><p class="head_text">Settings</p></a></li>
                                 {% else %}
                                     <li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li> 
-                                    <li><a id="set"><p class="head_text">Settings</p></a></li>
+                                    
                                 {% endif %}
             	 </ul>
             </div>
