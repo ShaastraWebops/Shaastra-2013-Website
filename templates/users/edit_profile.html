@@ -22,10 +22,9 @@
     </h1>
     <form action="" method="POST" class="form-horizontal">
         <fieldset>{% csrf_token %}
-        <div class="control-group error">
         <table>
             {{ editProfileForm.as_table }}
-        </table></div><br>
+        </table><br>
         <input type="submit" value="Update Profile" class="btn btn-info">
         </fieldset>
     </form>
