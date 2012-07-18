@@ -162,7 +162,7 @@ body
 #cont{
 	position:absolute;
 	top:0px;
-	width:175px;
+	width:175px;;
 	background-color: rgba(8, 8, 8, 0.6);
 	left:70%;
 	visibility: hidden;
@@ -170,14 +170,23 @@ body
 
 #cont ul{
 	width: 175px;}
+	
+#cont ul:before,
+#cont ul:after{
+	clear: both;
+}
 #cont li a,a:active,a:link{
 	height:13px;
 	color: #FFF;
 	text-decoration: none;
+	font-family: serif;
+	letter-spacing:1px;
+	margin:0px auto;
 	} 
 #cont li a:hover{
 	text-decoration: underline;
-	cursor:pointer;	
+	cursor:pointer;
+   display:table;
 	}
    
 #footer
