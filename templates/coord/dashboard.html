@@ -3,7 +3,7 @@
     <head>
 	    <title>Shaastra 2013 | Coord Dashboard</title>
         {% dajaxice_js_import %}
-        <link href="{{site_url}}static/css/demo_page.css"  type="text/css" rel="stylesheet">
+        <link href="{{site_url}}static/css/demo_page.css"  type="text/css" rel="stylesheet" >
         <link href="{{site_url}}static/css/demo_table.css"  type="text/css" rel="stylesheet">
         <script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
         <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
@@ -299,13 +299,14 @@
                 <li><a href="{{site_url}}user/password_change/">Change Password</a></li>
         		    <li><a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a></li>
         		    <li><a href="{{site_url}}user/logout/">Logout</a></li></ul>
-        	</div>
+        	</div><br>
          </div>
       </div>
      </div><hr/>
+     <div class="container" id="main">
         {% csrf_token %}
       <div id="nav"> 
-         <ul class="nav nav-pills">
+         <ul class="nav nav-pills left">
         		<li><a href='#questions' name='questions' id = 'question'>Questions</a></li>
         		<li><a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a></li>
         		<li><a href="#submissions" name='submissions' id = 'submissions' >Submissions</a></li>
@@ -313,6 +314,7 @@
         		<li><a href="" onclick="$('#eventdetails').load('{{site_url}}core/editevent/{{event.id}}',function(){$('.chzn-select').chosen();});return false;">Edit Event</a></li>
         </ul>
         </div>
+       
        <div class="container-fluid">
       	<div class="row-fluid">
       		<div name="tabs" class="left span6">
@@ -346,5 +348,6 @@
             </div>
         </div>
         </div>
-    </body>
+      </div>  
+   </body>
 </html>
