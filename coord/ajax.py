@@ -166,6 +166,7 @@ def save_subjective(request, data, ques_id=0):
         template = loader.get_template('ajax/coord/subj_form.html')
         html = template.render(RequestContext(request,locals()))
         dajax.assign('.bbq-item', 'innerHTML', html)
+        dajax.script("niced = new nicEditor().panelInstance('niced_text');")
         return dajax.json()
 
 @dajaxice_register        
