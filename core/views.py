@@ -22,7 +22,7 @@ def addevent(request):
     """
         This is the home page view of the superuser
     """
-    if request.user.get_profile().is_core is False :
+    if request.user.get_profile().is_core is False and not request.user.get_profile().is_coord_of :
         return HttpResponseRedirect(settings.SITE_URL)
     if(request.method=='POST'):
         filename = request.META['HTTP_X_FILE_NAME']

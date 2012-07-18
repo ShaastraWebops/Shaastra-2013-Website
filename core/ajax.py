@@ -20,7 +20,7 @@ def updateSummary(request):
     dajax.assign("#summary",'innerHTML',"<table border='1' class='table table-striped table-bordered table-condensed'><thead><tr><th>S.No</th><th>Event Name</th><th>Coords</th></tr></thead><tbody id='event'>")
     event=Event.objects.order_by('id').all()
     for e in event:
-        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a href="+'dashboard/'+str(e.id)+">"+e.title+"</a></td><td id="+str(e.id)+"></td></tr>")
+        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a href="+'dashboard/'+str(e.id)+">"+e.title+"</a><button class='btn btn-primary' onclick='del_event("+str(e.id)+");' >Delete</button></td><td id="+str(e.id)+"></td></tr>")
         coords=UserProfile.objects.filter(is_coord_of__title=e.title)
         coords=coords.filter(is_core=0)
         for c in coords:
@@ -29,7 +29,7 @@ def updateSummary(request):
     return dajax.json()
 
 @dajaxice_register
-def add_edit_event(request,upload,form="",id=0):
+def add_event(request,upload,form):
     """
     This function calls the AddEventForm from forms.py
     If a new event is being created, a blank form is displayed and the core can fill in necessary details.
@@ -37,24 +37,17 @@ def add_edit_event(request,upload,form="",id=0):
 
     """
     dajax = Dajax()
-    if id:
-        event_form = AddEventForm(form, instance=Event.objects.get(id=id))
-    else:
-        event_form = AddEventForm(form)
+    event_form = AddEventForm(form)
     if event_form.is_valid():
         event = event_form.save()
         if upload :
 	    dajax.script("upload_events_logo(" + str(event.id) + ");")
-	elif id:
-	    html= "<p>Event Name : "+ str(event)+"<br>Category   :"+ event.category +"<br></p>"
-	    dajax.assign('#eventdetails','innerHTML',html);
 	else:
 	    dajax.script("updateSummary();")
     else:
-        template = loader.get_template('ajax/core/addevent.html')
+	template = loader.get_template('ajax/core/addevent.html')
         html=template.render(RequestContext(request,locals()))
         dajax.assign(".bbq-item",'innerHTML',html)
-
     return dajax.json()
 
 @dajaxice_register

@@ -33,10 +33,23 @@
             var file = fileInput.files[0];
 	    if(file==undefined)
 	    	file=0;
+	    else
+	    	file=1;
             data=$(".bbq-item :input").serializeObject();
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.core.add_edit_event(Dajax.process,{'form':data,'upload':file,});
+            Dajaxice.core.add_event(Dajax.process,{'form':data,'upload':file,});
         }
+               
+        function del_event(id)
+        {
+            var press=confirm("Confirm delete?");
+            if (press==true)
+            {
+                $("#summary").append("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+                Dajaxice.core.del_event(Dajax.process,{'id':id});
+            }
+        }
+        
         function add_coord()
         {
             data=$(".bbq-item :input").serializeObject();
@@ -128,6 +141,7 @@
         			<li><a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a></li>
         			<li><a href="{{site_url}}user/logout/">Logout</a></li></ul></div>
         </div></div></div><hr/>
+		<div class="container" id="main">        
         <div id="nav">
         		<ul class="nav nav-pills">
             	<li><a href="#addevent">Add Event</a></li>
@@ -157,5 +171,6 @@
             </div>
 				</div>
         </div></div>
+        </div>
     </body>
 </html>
