@@ -64,7 +64,13 @@
                             <p>
                             {% for j in events %}
                                 {% if j.category == i %}
-                                    <span class="label"><a href="{{SITE_URL}}category/{{i.url_name}}#{{j.id}}">{{j.title}}</a></span>
+									<style type="text/css">
+										#event_title:hover{
+												background-color:rgb(22,63,88);
+												
+													}
+									</style>
+                                    <a href="{{SITE_URL}}category/{{i.url_name}}#{{j.id}}"><span id=event_title class="label label-info">{{j.title}}</span></a>
                                 {% endif %}
                             {% endfor %}
                             </p>
