@@ -243,6 +243,8 @@ body
 	border-bottom-style:ridge;
 	border-bottom-width:thin;
 }
+
+.menulist li a,a:visited{color:#fff;}
 .menulist li.last
 {
 	border-style:none;
