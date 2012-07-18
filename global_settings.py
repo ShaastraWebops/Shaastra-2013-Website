@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'events',
     'submissions',
     'dtvpicker',
+    'fb',
     'dajaxice',
     'dajax',
 )

@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>Shaastra</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+{% load dajaxice_templatetags %}
+{% dajaxice_js_import %}
+    <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
+<script>
+	function getWindowHeight() {
+		var windowHeight = 0;
+		if (typeof(window.innerHeight) == 'number') {
+			windowHeight = window.innerHeight;
+		}
+		else {
+			if (document.documentElement && document.documentElement.clientHeight) {
+				windowHeight = document.documentElement.clientHeight;
+			}
+			else {
+				if (document.body && document.body.clientHeight) {
+					windowHeight = document.body.clientHeight;
+				}
+			}
+		}
+		return windowHeight;
+	}
+	function setContent() {
+		if (document.getElementById) {
+			var windowHeight = getWindowHeight();
+			if (windowHeight > 0) {
+				var contentElement = document.getElementById('container');
+				var contentHeight = contentElement.offsetHeight;
+				if (windowHeight - contentHeight > 0) {
+					contentElement.style.position = 'relative';
+					contentElement.style.top = ((windowHeight / 2) - (contentHeight / 2)) + 'px';
+				}
+				else {
+					loadingElement.style.position = 'static';
+				}
+			}
+		}
+	}
+	window.onload = function() {
+		resetabs();
+		setContent();
+	}
+	window.onresize = function() {
+		setContent();
+		resetabs();
+	}
+	function tab(num){
+		resetabs();
+		document.getElementById(num).style.visibility="visible";
+	}
+	function resetabs()
+	{
+		$(".menu").css('visibility','hidden');
+	}
+</script>
+<script type="text/javascript" src="{{site_url}}static/scripts/hover.js">
+</script>
+		
+<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/style.css"  />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap.css"  />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/prettify.css" />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/eventsstyle.css" />
+<script type="text/javascript" src="{{site_url}}static/scripts/bootstrap-tour.js"></script>
+<script type="text/javascript" src="{{site_url}}static/scripts/jquery.cookie.js"></script>
+<script type="text/javascript" src="{{site_url}}static/scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{site_url}}static/scripts/tour.js"></script>
+<script src="{{site_url}}static/scripts/bootstrap-tooltip.js"></script>
+<script src="{{site_url}}static/scripts/bootstrap-popover.js"></script>
+<script src="{{site_url}}static/scripts/bootstrap-alert.js"></script>
+<script src="{{site_url}}static/scripts/prettify.js"></script> 
+<script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
+<script type="text/javascript" language="javascript">
+        $(function(){
+            // Keep a mapping of url-to-container for caching purposes.
+            var cache = {
+                // If url is '' (no fragment), display this div's content.
+                '': $('.bbq-default').first()
+            };
+
+            // Bind an event to window.onhashchange that, when the history state changes,
+            // gets the url from the hash and displays either our cached content or fetches
+            // new content to be displayed.
+            $(window).bind( 'hashchange', function(e) {
+
+                // Get the hash (fragment) as a string, with any leading # removed. Note that
+                // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+                var url = $.param.fragment();
+                if(url)
+                {
+                    if(url.split('/tab')[1])
+                    {
+                        // Load external content via AJAX. Note that in order to keep this
+                        // example streamlined, only the content in .infobox is shown. You'll
+                        // want to change this based on your needs.
+                        $(".bbq-item #maincontent").load( url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '.bbq-item' ).show();
+                            });
+                    }
+                    else
+                    {
+                        $(".bbq-default").hide();
+
+                        // Show "loading" content while AJAX content loads.
+                        $( '.bbq-loading' ).show();
+                        // Load external content via AJAX. Note that in order to keep this
+                        // example streamlined, only the content in .infobox is shown. You'll
+                        // want to change this based on your needs.
+                        $( '.bbq-item' ).load( url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '.bbq-loading' ).hide();
+                                $(".bbq-item").show();
+                                resetabs();
+                            });
+                    }
+                }
+                else
+                {
+                    $(".bbq-item").hide();
+                    $(".bbq-default").show();
+                }
+            })
+            $(window).trigger('hashchange');
+
+        });
+        </script>
+</head> 
+<body>
+<center>
+    
+	<div id="container">
+	<div id="header">
+		<div id="logo" class="floatleft"></div>
+    		<div id="topright" class="floatright">
+    	 		<div id="icons" class="floatleft">
+    	 		    <ul class="nav nav-pills">
+        					<li><a href="#events" id="events"><p class="head_text">Events</p></a></li>       			
+            			<li><a href="#" id="home"><p class="head_text">Home</p></a></li>		
+            			<li><a id="hospitality"><p class="head_text">Hospitality</p></a></li>
+            			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
+                                {% if user.is_authenticated %}
+                                		<li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
+                                		<li><a id="set"><p class="head_text">Settings</p></a></li>
+                                {% else %}
+                                    <li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li> 
+                                    
+                                {% endif %}
+            	 </ul>
+            </div>
+        		<div id="twologos" class="floatright">
+        			<div id="tuvnord" class="floatleft"></div>
+        			<div id="iitmlogo" class="floatright"></div>
+        		</div>
+    		</div><br>            
+	</div>
+	<div id="body">
+	      <div id="cont" class="menulist">
+            <ul>
+         		 <li><a href="{{site_url}}user/password_change/"><p class="head_text">Change Password</p></a></li>
+         		 <li><a href="{{site_url}}user/editprofile/"><p class="head_text">Edit Profile</p></a></li> 
+      		</ul>
+        </div>			
+        <div id="content" class="bbq" style="width:100%">
+                <div class="bbq-content">
+                <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
+                <div class="bbq-loading" style="display:none;">
+                    <img src="{{site_url}}static/img/loading.gif" alt="Loading"/> Loading content...
+                </div>
+
+                <!-- This content will be shown if no path is specified in the URL fragment. -->
+                <div class="bbq-default">
+                <i> Home page content comes here </i>
+                </div>
+                <div class="bbq-item">
+                </div>
+                </div>
+        </div>
+        {% for category in event_set %}
+       	<div id="menu{{forloop.counter}}"class="menu">
+        	<div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
+            </div>
+            <div id="menulist{{forloop.counter}}" class="menulist">
+            <ul id="menuhead{{forloop.counter}}" class="menuhead">
+            	{{category.0.category}}
+            </ul>
+            <ul>
+                {% for event in category %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
+      		</ul>
+            </div>
+        </div>
+        {% endfor %}
+<!--      <div id="menu2" class="menu">
+        	<div id="menutopcolour2" class="menutopcolour">
+            </div>
+            <div id="menulist2" class="menulist">
+            <ul id="menuhead2" class="menuhead">
+            	{{event_set.1.0.category}}
+            </ul>
+            <ul>
+                {% for event in event_set.1 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
+      		</ul>
+            </div>
+        </div>
+       	<div id="menu3" class="menu">
+        	<div id="menutopcolour3" class="menutopcolour">
+            </div>
+            <div id="menulist3" class="menulist">
+            <ul id="menuhead3" class="menuhead">
+            	{{event_set.2.0.category}}
+            </ul>
+            <ul>
+                {% for event in event_set.2 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
+      		</ul>
+            </div>
+        </div>
+       	<div id="menu4" class="menu">
+        	<div id="menutopcolour4" class="menutopcolour">
+            </div>
+            <div id="menulist4" class="menulist">
+            <ul id="menuhead4" class="menuhead">
+            	{{event_set.3.0.category}}
+            </ul>
+            <ul>
+                {% for event in event_set.3 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
+      		</ul>
+            </div>
+        </div>
+       	<div id="menu5" class="menu">
+        	<div id="menutopcolour5" class="menutopcolour">
+            </div>
+            <div id="menulist5" class="menulist">
+            <ul id="menuhead5" class="menuhead">
+            	{{event_set.4.0.category}}
+            </ul>
+            <ul>
+                {% for event in event_set.4 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
+      		</ul>
+            </div>
+        </div>
+       	<div id="menu6" class="menu">
+        	<div id="menutopcolour6" class="menutopcolour">
+            </div>
+            <div id="menulist6" class="menulist">
+            <ul id="menuhead6" class="menuhead">
+            	{{event_set.5.0.category}}
+            </ul>
+            <ul>
+                {% for event in event_set.5 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
+      		</ul>
+            </div>
+        </div>
+    	<div id="menu7" class="menu">
+        	<div id="menutopcolour7" class="menutopcolour">
+            </div>
+            <div id="menulist7" class="menulist">
+            <ul id="menuhead7" class="menuhead">
+            	{{event_set.6.0.category}}
+            </ul>
+            <ul>
+                {% for event in event_set.6 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
+      		</ul>
+            </div>
+        </div>
+       	<div id="menu8" class="menu">
+        	<div id="menutopcolour8" class="menutopcolour">
+            </div>
+            <div id="menulist8" class="menulist">
+            <ul id="menuhead8" class="menuhead">
+            	{{event_set.7.0.category}}
+            </ul>
+            <ul>
+                {% for event in event_set.7 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
+      		</ul>
+            </div>
+        </div>
+       	<div id="menu9" class="menu">
+        	<div id="menutopcolour9" class="menutopcolour">
+            </div>
+            <div id="menulist9" class="menulist">
+            <ul id="menuhead9" class="menuhead">
+            	{{event_set.8.0.category}}
+            </ul>
+            <ul>
+                {% for event in event_set.8 %}
+         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+                {% endfor %}
+      		</ul>
+            </div>
+        </div>-->
+            <div id="social">
+    	<div id="fb" class="socialapp">
+        </div>
+        <div id="flickr" class="socialapp">
+        </div>
+        <div id="twitter" class="socialapp">
+        </div>
+        <div id="youtube" class="socialapp">
+        </div>
+    </div>
+    </div>
+    <div id="footer">
+    <center>
+    <div id="tabbox">
+    	<div id="tab1" class="tab">
+         <div id="tab1name" class="tabname">
+            Exhibitions
+            </div>
+        </div>
+     <div id="tab2" class="tab">
+            <div id="tab2name" class="tabname">
+            Exhibitions
+            </div>
+        </div>
+     <div id="tab3" class="tab">
+            <div id="tab3name" class="tabname">
+            Exhibitions
+            </div>
+        </div>
+     <div id="tab4" class="tab">
+            <div id="tab4name" class="tabname">
+            Exhibitions
+            </div>
+        </div>
+     <div id="tab5" class="tab">
+            <div id="tab5name" class="tabname">
+            Exhibitions
+            </div>
+        </div>
+     <div id="tab6" class="tab">
+            <div id="tab6name" class="tabname">
+            Exhibitions
+            </div>
+        </div>
+     <div id="tab7" class="tab">
+            <div id="tab7name" class="tabname">
+            Design and Build
+            </div>
+        </div>
+     <div id="tab8" class="tab">
+            <div id="tab8name" class="tabname">
+            Exhibitions
+            </div>
+        </div>
+     <div id="tab9" class="tab">
+            <div id="tab9name" class="tabname">
+            Exhibitions
+            </div>
+        </div>
+    </div>
+    </center>
+    </div>
+    </div>
+    </center>
+</body>
+</html>
