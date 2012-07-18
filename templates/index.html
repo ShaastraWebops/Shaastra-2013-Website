@@ -142,14 +142,16 @@
     		<div id="topright" class="floatright">
     	 		<div id="icons" class="floatleft">
     	 		    <ul class="nav nav-pills">
-        					<li><a href="#events" id="events"><p class="head_text">Events</p></a></li>
-            			<li><a href="#" id="home"><p class="head_text">Home</p></a></li>
+        					<li><a href="#events" id="events"><p class="head_text">Events</p></a></li>       			
+            			<li><a href="#" id="home"><p class="head_text">Home</p></a></li>		
             			<li><a id="hospitality"><p class="head_text">Hospitality</p></a></li>
             			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
                                 {% if user.is_authenticated %}
                                 		<li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
+                                		<li><a id="set"><p class="head_text">Settings</p></a></li>
                                 {% else %}
-                                    <li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li>
+                                    <li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li> 
+                                    
                                 {% endif %}
             	 </ul>
             </div>
@@ -157,9 +159,15 @@
         			<div id="tuvnord" class="floatleft"></div>
         			<div id="iitmlogo" class="floatright"></div>
         		</div>
-    		</div>
+    		</div><br>            
 	</div>
 	<div id="body">
+	      <div id="cont" class="menulist">
+            <ul>
+         		 <li><a href="{{site_url}}user/password_change/"><p class="head_text">Change Password</p></a></li>
+         		 <li><a href="{{site_url}}user/editprofile/"><p class="head_text">Edit Profile</p></a></li> 
+      		</ul>
+        </div>			
         <div id="content" class="bbq" style="width:100%">
                 <div class="bbq-content">
                 <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
