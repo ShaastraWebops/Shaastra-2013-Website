@@ -1,6 +1,21 @@
 @charset "utf-8";
 /* CSS Document */
 
+body
+{
+	margin:0;
+	background:#000;
+	background-image: -webkit-linear-gradient(left, #434343, #313131);
+	background-image: -webkit-gradient(linear, top left, top right, color-stop(0%, #434343), color-stop(100%, #313131));
+	background-image: -moz-linear-gradient(left, #434343, #313131);
+}
+
+#main{
+	box-shadow: 0px 0px 10px rgb(0, 0, 0);
+	min-height:700px;
+	width:80%;
+	background: #FFF;
+}
 .right{
 	float:right;}
 	
@@ -23,6 +38,7 @@
 	text-decoration: none;
 	color:#08C;
 	font-weight:bold;}
+
 	
 .q{
 	text-decoration:none;
@@ -38,4 +54,11 @@
 	text-decoration: none;
 	color:#08C;}
 	
+#eventdetails{
+	font-weight: bold;
+	}
+#nav{
+	width:100%;
+	}
+
 

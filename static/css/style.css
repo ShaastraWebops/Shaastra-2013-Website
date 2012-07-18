@@ -52,7 +52,7 @@ body
 }
 
 #icons{
-   width:560px;
+   width:610px;
 	height:54px;
 	font-weight:bold;
 	color:#fff;
@@ -114,7 +114,20 @@ body
 	background:url(../img/login.png);
 	background-repeat:no-repeat;
 	background-position:top center;
-}  
+}
+
+#set{
+	background:;
+	background-repeat:no-repeat;
+	background-position:top center;
+	opacity:0.7; 
+	filter:alpha(opacity=70);
+}
+
+#set:hover{
+	background: rgba(0, 0, 0, 0.0);
+	opacity:1.0; 
+	filter:alpha(opacity=100);}	  
 
 #twologos{
 	width:105px;
@@ -146,6 +159,27 @@ body
 	overflow:hidden;
 
 }
+#cont{
+	position:absolute;
+	top:0px;
+	width:175px;
+	background-color: rgba(8, 8, 8, 0.6);
+	left:70%;
+	visibility: hidden;
+}
+
+#cont ul{
+	width: 175px;}
+#cont li a,a:active,a:link{
+	height:13px;
+	color: #FFF;
+	text-decoration: none;
+	} 
+#cont li a:hover{
+	text-decoration: underline;
+	cursor:pointer;	
+	}
+   
 #footer
 {
 	width:100%;

@@ -270,5 +270,8 @@ mem1=0;mem2=0;mem3=0;mem4=0;mem5=0;mem6=0;mem7=0;mem8=0;mem9=0;
             		else if(mem1==1){$("#menu1").css({visibility:"visible",bottom:'-320px'}).animate({bottom:'0px'});}	
 				}}
 			);
-
+			
+			$("#set").toggle(
+			function(){$("#cont").css({visibility:"visible"});},
+		   function(){$("#cont").css({visibility:"hidden"});});
 });

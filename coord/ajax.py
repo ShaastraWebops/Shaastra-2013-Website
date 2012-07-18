@@ -4,6 +4,7 @@ from django.utils import simplejson
 from django.template import loader, Context, RequestContext, Template
 from events.models import *
 from coord.forms import *
+from core.forms import AddEventForm
 from dajaxice.decorators import dajaxice_register
 
 def get_files(tab):
@@ -25,6 +26,31 @@ def get_tabs(event):
         return event.tab_set.all()
     except:
         raise Http404()
+
+@dajaxice_register
+def edit_event(request,upload,form,id):
+    """
+    This function calls the AddEventForm from forms.py
+    If a new event is being created, a blank form is displayed and the core can fill in necessary details.
+    If an existing event's details is being edited, the same form is displayed populated with current event details for all fields
+
+    """
+    dajax = Dajax()
+    event_form = AddEventForm(form, instance=Event.objects.get(id=id))
+    if event_form.is_valid():
+        event = event_form.save()
+        if upload :
+	    dajax.script("upload_events_logo(" + str(event.id) + ");")
+	else:
+	    html= "<p>Event Name : "+ str(event)+"<br>Category   :"+ event.category +"<br></p>"
+	    dajax.assign('#eventdetails','innerHTML',html);
+	    dajax.script("$('#editevent').hide();$('#eventdetails').show();")
+    else:
+	template = loader.get_template('ajax/core/editevent.html')
+	html=template.render(RequestContext(request,locals()))
+	dajax.assign("#editevent",'innerHTML',html)
+	dajax.script("load_add_tag();")
+    return dajax.json()
         
 @dajaxice_register
 def updateTabs(request):
@@ -38,6 +64,18 @@ def updateTabs(request):
     for tab in tabs:
         dajax.append("#tabs",'innerHTML',"<li><a href="+'#customtabs/'+str(tab.id)+" name ="+tab.title+" id ="+ str(tab.id)+" >"+tab.title+"</a></li> ")
     dajax.script("window.location.hash='';")
+    return dajax.json()
+
+@dajaxice_register
+def add_tag(request, text):
+    dajax = Dajax()
+    if text:
+        new_tag = Tag(name = text)
+        new_tag.save()
+        dajax.assign('#addTag','innerHTML',"");
+        dajax.script("$('#msg').show();$('#id_tags option:last').attr('value'," + str(new_tag.id) + ");$('#id_tags_chzn').remove();$('.chzn-select').chosen();");
+    else:
+        dajax.alert('Tag name required!')
     return dajax.json()
         
 @dajaxice_register
