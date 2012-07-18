@@ -39,7 +39,9 @@
 
 <!--Thumbnails with short description
 ================================================== -->
-   
+	<style>
+
+	</style>
     <div id="main" class="span9">
     <hr>
         <h2>Events Galore</h2>
@@ -52,7 +54,8 @@
                     <div class="thumbnail">
                         {% for j in photos_list %}
                             {% if j.category == i %}
-                            <a href="{{SITE_URL}}category/{{i.url_name}}/#all-events">
+                            <a id= "thumbnail_photo" href="{{SITE_URL}}category/{{i.url_name}}/#all-events">
+							
 							<div style="height: 200px" align="center">       
                             <img src="{{MEDIA_URL}}{{j.image}}"  alt="" />
 							</div>
@@ -69,6 +72,7 @@
 												background-color:rgb(22,63,88);
 												
 													}
+									
 									</style>
                                     <a href="{{SITE_URL}}category/{{i.url_name}}#{{j.id}}"><span id=event_title class="label label-info">{{j.title}}</span></a>
                                 {% endif %}

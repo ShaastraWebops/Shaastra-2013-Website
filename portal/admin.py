@@ -178,6 +178,9 @@ class TopicAdmin(admin.ModelAdmin):
 class PreviousSponsorAdmin(admin.ModelAdmin):
     list_display = ['name']
     
+
+
+
 """
 Only those classes explicitly registered will
 be displayed.
