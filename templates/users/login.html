@@ -14,11 +14,10 @@
 <div id="main_container">
 	<div id="left" class="floatleft">
 		<img id="splash" src="{{site_url}}static/img/diceNtext.png">
-		<a href="{{site_url}}user/facebook/login/" id="fb">Login via Facebook</a>	
 	</div>
 	<div id="right" class="floatright">
         <div id="triangle"></div> 
-		{{msg}}   	
+		<p>{{msg}}</p>   	
 		<form name="login" id="login_form" action="" method="POST" >
             		<!--<table>
                 		{% csrf_token %}
@@ -29,6 +28,7 @@
 			<input value="password" class="inp" onclick='this.value=""' type="password" name="password">
 			<input class="subbut" type="submit" value="Login"> <br/><br>
          <div id="div">
+         			<a href="{{site_url}}user/facebook/login/" id="fb">Login via Facebook</a>	
 						<a href="{{site_url}}user/register/">Register</a>
                 	<a href="{{site_url}}user/admin/password_reset/">Forgot password?</a>        
          </div>			
@@ -56,7 +56,9 @@ body
 	margin:0;
 	min-width:1200px;
 	min-height: 600px;
-	
+	font-family: "monotype";
+	font-size: 14px;
+	letter-spacing: 1px;	
 	}
 #main_container
 	{
@@ -78,15 +80,11 @@ body
 	background:url({{site_url}}static/img/bggrade.jpg);
 	margin:0; padding:0;
 	}
+	
 #left a{
 	color:#FFF;
-        font-family:serif;
 	line-height:20px;
         text-decoration:none;}
-#fb{
-	position:absolute;
-	top:65%;
-	margin-left:26%;}
 #right
 	{
 	width : 61%;
@@ -104,8 +102,13 @@ body
 	display:block;
 	width : 83.4%;
 	margin:18.3% auto 0 auto;
-	
-	}
+   }
+#right p{
+    top:55%;
+    color:#F00;
+    position:absolute;
+    margin-left :3%;
+ }
 #login_form
 	{
 	position:absolute;	
@@ -132,9 +135,7 @@ body
 	padding :0 5px;
 	border:none;
 	text-indent:5px;
-	font-size : 20px;
 	font-weight:100;
-	font-family : "tahoma";
 	color: #AAA;
 	}
 .subbut
@@ -177,7 +178,6 @@ text-align: center;
 #navcontainer ul li a
 {
 	text-decoration:none;
-	font-size:15px;
 	color:#183f5a;
 	padding:10px;
 }
@@ -189,10 +189,12 @@ text-align: center;
 
 #div a{
 	text-decoration:none;
-	font-size:20px;
 	color:#183f5a;
 	padding:10px;
 }
+
+#div a:hover{
+	text-decoration:underline;}
 </style>
 
 </body></html>
