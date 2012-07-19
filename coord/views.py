@@ -60,6 +60,7 @@ class CoordDashboard(BaseView):
     displays the coord dashboard depending on the logged in coords event
     """
     def handle_GET(self, request, **kwargs):
+        update = Update.objects.all()
         event = request.user.get_profile().is_coord_of
         tabs = self.get_tabs(event)
         return render_to_response('coord/dashboard.html', locals(), context_instance = RequestContext(request))
@@ -215,3 +216,22 @@ class MCQAddEdit(BaseView):
         form = MyForm(mcq, options)
         template = 'ajax/coord/mcq_form.html'
         return render_to_response(template, locals(), context_instance = RequestContext(request))
+
+@login_required(login_url=settings.SITE_URL + 'user/login/')
+def AddUpdate(request):
+    """
+    """
+#    return HttpResponse("blah")
+    update_form=UpdateForm()
+    template = 'ajax/coord/update.html'
+    return render_to_response(template, locals(), context_instance = RequestContext(request))
+
+
+@login_required(login_url=settings.SITE_URL + 'user/login/')
+def EditUpdate(request,id=0):
+    """
+        
+    """
+    update_form=UpdateForm(instance=Update.objects.get(id=id))
+    return render_to_response('ajax/coord/editupdate.html', locals(), context_instance = RequestContext(request))
+

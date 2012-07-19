@@ -1,5 +1,5 @@
 from django import forms
-from events.models import*
+from events.models import *
 from django.forms import ModelForm
 import os
 
@@ -59,4 +59,8 @@ class MCQForm(forms.Form):
             self.fields['%s%s' % (option.id,option.option)] = forms.CharField(initial = '%s' % option.text,label = 'option %s:' % alp[index], max_length = 1000)
             index+=1
         self.fields['opt%s' % alp[index]] = forms.CharField(label = 'option %s:' % alp[index], max_length = 1000)
+
+class UpdateForm(ModelForm):
+    class Meta:
+        model = Update 
 

@@ -227,6 +227,31 @@
             xhr.send(file);                 // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
         }
         }
+        function add_update()
+        {
+            data=$("#updateform :input").serializeObject();
+            $("#updateform").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.add_edit_update(Dajax.process,{'form':data});
+        }
+        function edit_update(id)
+        {
+            data=$("#updateform :input").serializeObject();
+            $("#updateform").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.add_edit_update(Dajax.process,{'form':data,'id':id});
+        }
+        $(document).ready(
+        function()
+        {
+        $('a').click(
+        function()
+        {
+        var i_d =this.id;
+        var url = "{{site_url}}/editupdate/" + i_d + "/"; 
+        $("#updateform").load(url,false)
+        }
+        );
+        }
+        );
         </script>
         <script type="text/javascript" language="javascript">
         $(function(){
@@ -304,6 +329,7 @@
         		<li><a href="#submissions" name='submissions' id = 'submissions' >Submissions</a></li>
         		<li><a href="#customtabs">Add a Tab</a></li>
         		<li><a href="" onclick="$('#editevent').load('{{site_url}}core/editevent/{{event.id}}',function(){$('#eventdetails').hide();$('#editevent').show();$('.chzn-select').chosen();});return false;">Edit Event</a></li>
+                <li><a href="" onclick="$('#updateform').load('{{site_url}}coord/update/',function(){$('#AddUpdate').hide();$('#updateform').show();$('.chzn-select').chosen();});return false;"> Post update </a><li>
         </ul>
         </div>
        
@@ -336,10 +362,18 @@
                 <div class="bbq-default">
                 <i> Click on a Tab you would like to view </i>
                 </div>
-
+                
                 <div class="bbq-item">
                 </div>
             </div>
+        </div>
+        <div id="AddUpdate" class="right span6">
+			<p>Updates<br>
+   			{% for u in update %}
+                <p>{{u.subject}} - {{u.description}}<a href =" " onclick="$('#updateform').load('{{site_url}}coord/editupdate/{{u.id}}',function(){$('#AddUpdate').hide();$('#updateform').show();$('.chzn-select').chosen();});return false;">Edit</a><br></p>
+            {% endfor %}           
+		</div>
+        <div id="updateform" class="right span6">
         </div>
         </div>
       </div>  

@@ -21,6 +21,14 @@ EVENT_CATEGORIES = (
 	("Category9", "Workshops"),
         ("Category10", "Others"),
 )
+
+PRIORITIES = (
+    ("High", "High"),
+    ("Medium", "Medium"),
+    ("Low", "Low"),
+    ("Expired", "Expired"),
+)
+
 # Create your models here.
 def upload_handler(model_name):
     def upload_func(instance, filename):
@@ -36,6 +44,7 @@ class Update(models.Model):
     subject = models.CharField(max_length = 25)
     description = models.TextField()
     date = models.DateField(default = datetime.now)
+    priority = models.CharField(max_length = 15, choices = PRIORITIES)
 
 class Event(models.Model):
     title = models.CharField(max_length = 30)
