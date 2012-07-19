@@ -45,22 +45,22 @@
  
     <div id="events" class="span9 events-pull-right">
     <hr>
-    <h2><center>EVENTS UNDER <span style="text-transform: uppercase">{{c.name}}</span></center></h2>
+    <h1 class="small"><center>EVENTS UNDER <span style="text-transform: uppercase">{{c.name}}</span></center></h1>
     <hr> 
         {% for i in events_list %}
 
-          <div class="accordion span8" id="accordion">
+          <div class="accordion span9" id="accordion">
 			</br>
             <div name="{{i.id}}" id="{{i.id}}" class="accordion-group">
-				
+				<hr>
               <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse"  href="#collapse{{i.id}}" id="external">
-                  <h5 style="font-size:13px; color: rgb(50,50,50);"><span style="text-transform: uppercase" >{{i.title}}</span></h5>
+                  <h5 style="font-size:18px; line-height: 22px; color: rgb(50,50,50);"><span style="text-transform: uppercase" >{{i.title}}</span></h5>
                 </a>
               </div>
               <div id="collapse{{i.id}}" class="accordion-body collapse ">
 				
-                <div class="accordion-inner span4">
+                <div class="accordion-inner span5">
 					<div class="well">
 					{% if i.status == "s" %}
     	                <span class="label label-important">Sold</span>
