@@ -43,28 +43,28 @@ class BaseUserForm(forms.ModelForm):
     
     def clean_age(self):
 	if (self.cleaned_data['age']>80 or self.cleaned_data['age']<12):
-	    raise forms.ValidationError(u'Please enter an acceptable age (12 to 80)')
+	    raise forms.ValidationError(u'<p>Please enter an acceptable age (12 to 80)</p>')
 	else:
 	    return self.cleaned_data['age']
 	    
     def clean_mobile_number(self):
 	if (len(self.cleaned_data['mobile_number'])!=10 or (self.cleaned_data['mobile_number'][0]!='7' and self.cleaned_data['mobile_number'][0]!='8' and self.cleaned_data['mobile_number'][0]!='9') or (not self.cleaned_data['mobile_number'].isdigit())):
-	    raise forms.ValidationError(u'Enter a valid mobile number')
+	    raise forms.ValidationError(u'<p>Enter a valid mobile number</p>')
 	if UserProfile.objects.filter(mobile_number=self.cleaned_data['mobile_number']):
 	    pass    
 	else:
 	  return self.cleaned_data['mobile_number']
-	raise forms.ValidationError('This mobile number is already registered')  
+	raise forms.ValidationError('<p>This mobile number is already registered</p>')  
 	  
     def clean_first_name(self):
 	if not self.cleaned_data['first_name'].replace(' ','').isalpha():
-	    raise forms.ValidationError(u'Names cannot contain anything other than alphabets.')
+	    raise forms.ValidationError(u'<p>Names cannot contain anything other than alphabets.</p>')
 	else:
 	    return self.cleaned_data['first_name']
 	  
     def clean_last_name(self):
 	if not self.cleaned_data['last_name'].replace(' ','').isalpha():
-	    raise forms.ValidationError(u'Names cannot contain anything other than alphabets.')
+	    raise forms.ValidationError(u'<p>Names cannot contain anything other than alphabets.</p>')
 	else:
 	    return self.cleaned_data['last_name']
 

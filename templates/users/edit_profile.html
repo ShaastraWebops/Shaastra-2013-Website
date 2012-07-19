@@ -9,18 +9,38 @@
         <script type="text/javascript" src="{{site_url}}static/js/college.reg.js"></script>
         <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
         <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
+        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style.css">
         <style type="text/css">
-				body{
-					background:#FFF;
-					}
+        #header{
+            width:100%;
+            padding:0%;
+            padding-top:5px;
+            box-shadow: 0px 0px 10px rgb(0, 0, 0);
+         }
 		  </style>
         </head>
 <body>
-  <div class="container">
-    <h1>
-        Edit profile:
-    </h1>
-    <form action="" method="POST" class="form-horizontal">
+  <div id="full" class="container">
+    <div id="header" class="container">
+    <div id="logo" class="floatleft"></div>
+    		<div id="topright" class="floatright">
+    	 		<div id="icons" class="floatleft">
+    	 		    <ul class="nav nav-pills">     			
+            			<li><a href="{{site_url}}" id="home"><p class="head_text">Home</p></a></li>		
+            			<li><a id="hospitality"><p class="head_text">Hospitality</p></a></li>
+            			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
+                     <li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
+            	 </ul>
+            </div>
+        		<div id="twologos" class="floatright">
+        			<div id="tuvnord" class="floatleft"></div>
+        			<div id="iitmlogo" class="floatright"></div>
+        		</div>
+    		</div>
+    </div>
+    <div class="container" id="super">
+    <form action="" method="POST" class="form-horizontal container">
+    	  <h1>Edit profile:</h1><br>
         <fieldset>{% csrf_token %}
         <table>
             {{ editProfileForm.as_table }}
@@ -28,7 +48,7 @@
         <input type="submit" value="Update Profile" class="btn btn-info">
         </fieldset>
     </form>
-    <a href="{{site_url}}" class="btn btn-inverse q">Home</a>
    </div>
+  </div>
 </body>    
 </html>
