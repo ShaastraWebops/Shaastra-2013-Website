@@ -10,6 +10,18 @@ body
 	background-image: -moz-linear-gradient(left, #434343, #313131);
 }
 
+#super{
+	width:100%;
+	background:#FFF;
+	min-height: 700px;
+}
+
+#full{
+	box-shadow: 0px 0px 10px rgb(0, 0, 0);
+	width:80%;
+  }
+	
+
 #main{
 	box-shadow: 0px 0px 10px rgb(0, 0, 0);
 	min-height:700px;
@@ -21,6 +33,13 @@ body
 	
 .left{
 	float:left;}
+	
+.boxA{
+	background: none repeat scroll 0 0 #E5EBF8;
+    border-color: #EEEEEC #A9ACA5 #BABDB6 #EEEEEC;
+    border-radius: 12px 12px 12px 12px;
+    border-style: solid;
+    border-width: 1px;}
 	
 .navbar-inner .container a,a:link{
 	display:block;
