@@ -1,0 +1,97 @@
+{% load dajaxice_templatetags %}
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+    <head>
+        <title>Shaastra 2013</title>
+	<script type="text/javascript">
+	function initialise(){
+ 	FB.api('/me', function(response) {
+	  document.getElementById('header').innerHTML="<h2>Welcome <fb:name uid='1352782765' capitalise='true' /></h2>";
+	});
+	}
+	function test(){
+FB.ui(
+  {
+   method: 'feed',
+   message: 'getting educated about Facebook Connect',
+   name: 'Shaastra',
+   caption: 'The Spirit of Engineering',
+      description: (
+      'Shaastra is the annual Technical festival of IIT Madras.' +
+      'And the first such festival to get an ISO certification! ' +
+      'Visit us @ http://www.shaastra.org'
+   ),
+   link: 'http://www.shaastra.org',
+   picture: 'http://www.shaastra.org/2013/main/test/static/img/shaastralogo.png',
+   actions: [
+        { name: 'shaastra', link: 'http://www.shaastra.org/' }
+   ],
+  user_message_prompt: 'Share your thoughts about RELL'
+  },
+  function(response) {
+    if (response && response.post_id) {
+      alert('Post was published.');
+    } else {
+      alert('Post was not published.');
+    }
+  }
+);
+	}
+	</script>
+    </head>
+    <body>
+	<div id="fb-root"></div>
+	<script>
+	  window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '291744470918252', // App ID
+	      channelUrl : '//WWW.shaastra.org/2013/main/test/static/fb/channel.html', // Channel File
+	      status     : true, // check login status
+	      cookie     : true, // enable cookies to allow the server to access the session
+	      xfbml      : true  // parse XFBML
+	    });
+	
+	    // Additional initialization code here
+		FB.getLoginStatus(function(response) {
+			if(response.status === 'connected')
+			{
+				uid = response.authResponse.userID;
+				accessToken = response.authResponse.accessToken;
+			}
+			else
+				alert(response.status);
+			
+		 });	
+	  };
+	
+	  // Load the SDK Asynchronously
+	  (function(d){
+	     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement('script'); js.id = id; js.async = true;
+	     js.src = "//connect.facebook.net/en_US/all.js";
+	     ref.parentNode.insertBefore(js, ref);
+	   }(document));
+		</script>
+	<div id="header"></div>
+        <a href="{{site_url}}events">Events</a>
+        <button onclick="initialise();">Initialise</button>
+        <button onclick="test();">Test</button>
+        <hr />
+        <div id="nav" style="float:left;width:50%;">
+        {% for category in event_set %}
+        <ul id="menuhead{{forloop.counter}}" class="menuhead">
+        	{{category.0.category}}
+        </ul>
+        <ul>
+            {% for event in category %}
+     		<li>{{event.title}}<fb:like send="true" width="450" show_faces="true" /></li>
+            {% endfor %}
+  		</ul>
+        {% endfor %}
+        </div>
+        <div id="content" style="float:left;">
+        </div>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    </body>
+</html>

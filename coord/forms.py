@@ -60,3 +60,6 @@ class MCQForm(forms.Form):
             index+=1
         self.fields['opt%s' % alp[index]] = forms.CharField(label = 'option %s:' % alp[index], max_length = 1000)
 
+class UpdateForm(ModelForm):
+    class Meta:
+        model = Update

@@ -21,6 +21,14 @@ EVENT_CATEGORIES = (
 	("Category9", "Workshops"),
         ("Category10", "Others"),
 )
+
+PRIORITIES = (
+    ("High", "High"),
+    ("Medium", "Medium"),
+    ("Low", "Low"),
+    ("Expired", "Expired"),
+)
+
 # Create your models here.
 def upload_handler(model_name):
     def upload_func(instance, filename):
@@ -36,6 +44,7 @@ class Update(models.Model):
     subject = models.CharField(max_length = 25)
     description = models.TextField()
     date = models.DateField(default = datetime.now)
+    priority = models.CharField(max_length = 15, choices = PRIORITIES)
 
 class Event(models.Model):
     title = models.CharField(max_length = 30)
@@ -54,13 +63,13 @@ class Tab(models.Model):
     title = models.CharField(max_length = 30)
     text = models.TextField()
     pref = models.IntegerField(max_length=2,default = 0, blank=False)
-    
-    def save(self):
-        cache.set(str(self.id)+"_event", str(self.event), 2592000)
-        cache.set(str(self.id)+"_title", str(self.title), 2592000)
-        cache.set(str(self.id)+"_text", str(self.text), 2592000)
-        cache.set(str(self.id)+"_pref", str(self.pref), 2592000)
-        super(Tab, self).save(*args, **kwargs)
+#    
+#    def save(self):
+#        cache.set(str(self.id)+"_event", str(self.event), 2592000)
+#        cache.set(str(self.id)+"_title", str(self.title), 2592000)
+#        cache.set(str(self.id)+"_text", str(self.text), 2592000)
+#        cache.set(str(self.id)+"_pref", str(self.pref), 2592000)
+#        super(Tab, self).save(*args, **kwargs)
         
     def delete(self):
         file_list = self.tabfile_set.all()

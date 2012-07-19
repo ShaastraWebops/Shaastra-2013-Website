@@ -350,4 +350,36 @@ def add_edit_mobapp_tab(request, form = ''):
         t = template.render(RequestContext(request,locals())) 
         dajax.assign('.bbq-item', 'innerHTML', t)
     return dajax.json()
+
+@dajaxice_register
+def updateAddUpdate(request):
+    """
     
+
+    """
+    dajax = Dajax()
+    dajax.assign("#AddUpdate",'innerHTML',"Updates<br>")
+    update=Update.objects.all()
+    for u in update:
+        dajax.append("#AddUpdate",'innerHTML', u.subject + " - " + u.description + "<br>" + "<a href =" + '#editupdate/' + str(u.id) + '/' + ">" + "Edit" + "</a>")
+    dajax.script("window.location.hash=''")  
+    return dajax.json()
+
+@dajaxice_register
+def add_edit_update(request,form="",id=0):
+    dajax = Dajax()
+    if id:
+        update_form = UpdateForm(form, instance=Update.objects.get(id=id))
+    else:
+        update_form = UpdateForm(form)
+    if update_form.is_valid:
+        update_form.save()
+        update = Update.objects.all()
+        dajax.script("updateAddUpdate();")
+        dajax.assign(".bbq-item","innerHTML"," ")
+        dajax.script("window.location.hash= ' ' ;")
+    else:
+        template = loader.get_template('ajax/coord/addupdate.html')
+        t=template.render(RequestContext(request,locals()))
+        dajax.assign('.bbq-item', 'innerHTML', t)
+    return dajax.json()
