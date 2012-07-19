@@ -2,13 +2,13 @@
  
 {% block navigation %}
                           
-    <li><a href="{{SITE_URL}}">Home</a></li>
+    <li><a href="{{SITE_URL}}"><span style="font-size:18px; line-height:25px;">Home</span></a></li>
                                              
-    <li class="active"><a href="{{SITE_URL}}category/">Events</a></li>
+    <li class="active"><a href="{{SITE_URL}}category/"><span style="font-size:18px; line-height:25px;">Events</span></a></li>
                             
     {% for topic in topics %}
         <li>
-            <a href="{{SITE_URL}}topic/{{topic.url_name}}/">{{topic.title}}</a>
+            <a href="{{SITE_URL}}topic/{{topic.url_name}}/"><span style="font-size:18px; line-height:25px;">{{topic.title}}</span></a>
         </li>    
     {% endfor %}
 
@@ -24,15 +24,15 @@
 	<ul class="nav nav-tabs nav-stacked">
 		{% for i in categories %}
     		<li {% ifequal c.url_name i.url_name %}class="dropdown active"{% endifequal %}{% ifnotequal c.url_name i.url_name %}class="dropdown"{% endifnotequal %}>
-    		    <a href="#category"  data-toggle="collapse" data-target="#side{{i.id}}"><span style="text-transform: uppercase"><strong>{{i.name}}</strong></span></a>
+    		    <a href="#category"  data-toggle="collapse" data-target="#side{{i.id}}"><span style=" text-transform: uppercase; font-size:13px;"><strong>{{i.name}}</strong></span></a>
     		</li>
 			<div id="side{{i.id}}" {% ifequal c.url_name i.url_name %}{% endifequal %}{% ifnotequal c.url_name i.url_name %}class="collapse"{% endifnotequal %}>
 			<ul class="nav nav-pills nav-stacked">
-				<li><a href="{{SITE_URL}}category/{{i.url_name}}#all-events"><b>All Events</b></a></li>
+				<li><a href="{{SITE_URL}}category/{{i.url_name}}#all-events"><b><span style="font-size:13px">All Events</span></b></a></li>
         		<li class="divider"></li>
         		{% for j in events %}
             		{% if j.category == i %}
-                	<li><a href="{{SITE_URL}}category/{{i.url_name}}#{{j.id}}">{{j.title}}</a></li>
+                	<li><a href="{{SITE_URL}}category/{{i.url_name}}#{{j.id}}"><span style="font-size:13px">{{j.title}}</span></a></li>
             		{% endif %}
         		{% endfor %}
 			</ul>
@@ -45,7 +45,7 @@
  
     <div id="events" class="span9 events-pull-right">
     <hr>
-    <h1 class="small"><center>EVENTS UNDER <span style="text-transform: uppercase">{{c.name}}</span></center></h1>
+    <h2><center>EVENTS UNDER <span style="text-transform: uppercase">{{c.name}}</span></center></h2>
     <hr> 
         {% for i in events_list %}
 
@@ -55,7 +55,7 @@
 				<hr>
               <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse"  href="#collapse{{i.id}}" id="external">
-                  <h5 style="font-size:18px; line-height: 22px; color: rgb(50,50,50);"><span style="text-transform: uppercase" >{{i.title}}</span></h5>
+                  <h5 style="font-size:16px; line-height: 22px; color: rgb(50,50,50);"><span style="text-transform: uppercase" >{{i.title}}</span></h5>
                 </a>
               </div>
               <div id="collapse{{i.id}}" class="accordion-body collapse ">

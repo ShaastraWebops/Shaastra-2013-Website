@@ -2,13 +2,13 @@
 
 {% block navigation %}
                           
-    <li class="active"><a href="{{SITE_URL}}">Home</a></li>
+    <li class="active"><a href="{{SITE_URL}}"><span style="font-size:18px; line-height:25px;">Home</home></a></li>
                                              
-    <li><a href="{{SITE_URL}}category/">Events</a></li>
+    <li><a href="{{SITE_URL}}category/"><span style="font-size:18px; line-height:25px;">Events</span></a></li>
                             
     {% for topic in topics %}
         <li>
-            <a href="{{SITE_URL}}topic/{{topic.url_name}}/">{{topic.title}}</a>
+            <a href="{{SITE_URL}}topic/{{topic.url_name}}/"><span style="font-size:18px; line-height:25px;">{{topic.title}}</span></a>
         </li>    
     {% endfor %}
     
@@ -34,7 +34,7 @@
     ================================================== -->
     <section id="carousel">
         <div class="row">
-            <div class="span8 columns">
+            <div class="span8 columns"><br><br>
                 <div class="hero-unit" style="background-color:#3a87ad" >
                     <h1 style="font-family:Yanone Kafeesatz; text-shadow:4px 2px 2px rgb(217,217,217);">Shaastra 2013 <br><small style=" font-size:35px; text-shadow: 1px 1px 0px rgb(245,245,245);">Sponsorship Portal</small></h1>
                 </div>            
@@ -67,7 +67,7 @@
             
             <div id="sidebar" class="span3 columns">
             <br>
-                <h6><font size = "11px">Previous Sponsors</font></h6>
+                <h6><span style="font-size:32px; ">Previous Sponsors</span></h6>
                 <h6>Shaastra 2011</h6>
 				{% if previous_sponsors %}
                 
@@ -108,14 +108,14 @@
                 <marquee behaviour="scroll" direction="up" scrollamount="2">
                 {% for i in quotes %}
                 
-                    <h4><font color="050b3f">{{i.name}}</font></h4>
+                    <h4><span style="font-size:21px; line-height:29px;">{{i.name}}</span></h4>
                     <img src="{{MEDIA_URL}}quotestart.png" alt="">
                     <b><font color="3a87ad">{{i.quote}}</font></b>
                     <img src="{{MEDIA_URL}}quoteend.png" alt="">
                     
                 {% endfor %}
                 </marquee>
-          <br><br><br>      
+          <br><br>     
           <div id="myModal" class="modal hide fade">
 
             <div class="modal-header">
