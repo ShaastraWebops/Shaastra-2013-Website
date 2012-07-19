@@ -159,10 +159,19 @@ def resize_image(image_source,size):
 	"""
 	os.system('convert '+str(settings.MEDIA_ROOT)  + image_source.name +' -resize '+ size + ' ' + str(settings.MEDIA_ROOT) +  image_source.name )
 	
+class Quote(models.Model):
+    name=models.CharField(max_length=100, help_text='Enter company name (Required)')
+    quote=models.CharField(max_length=1000)
+   
+    def __unicode__(self):
+		return self.name
 
 
-
-
-
+class Home(models.Model):
+    info=models.TextField(blank=True)
+    def __unicode__(self):
+		return self.info
+    def display_mySafeField(self):
+        return mark_safe(self.info)    
 
 

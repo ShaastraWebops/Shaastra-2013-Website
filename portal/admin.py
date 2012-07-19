@@ -178,8 +178,11 @@ class TopicAdmin(admin.ModelAdmin):
 class PreviousSponsorAdmin(admin.ModelAdmin):
     list_display = ['name']
     
+class QuoteAdmin(admin.ModelAdmin):
+    list_display = ['name'] 
 
-
+#class HomeAdmin(admin.ModelAdmin):
+#    list_display = ['info'] 
 
 """
 Only those classes explicitly registered will
@@ -194,3 +197,5 @@ admin.site.register(PreviousSponsor, PreviousSponsorAdmin)
 admin.site.register(Topic,TopicAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Event, EventAdmin)
+admin.site.register(Quote, QuoteAdmin)
+#admin.site.register(Home, HomeAdmin)
