@@ -311,7 +311,7 @@
         	</div><br>
          </div>
       </div>
-     </div><br><hr/>
+     </div><hr/>
      <div class="container" id="main">
         {% csrf_token %}
       <div id="nav"> 
@@ -361,10 +361,10 @@
         </div>
         <div id="AddUpdate" class="right span6">
 	    <p>Updates<br>
-   		{% for u in update %}
+   		//{% for u in update %}
                     <p>{{u.subject}} - {{u.description}}<a href = "#editupdate/{{u.id}}">Edit</a><br></p>
                 {% endfor %}           
-	</div>
+	</div> 
         </div>
       </div>  
    </body>
