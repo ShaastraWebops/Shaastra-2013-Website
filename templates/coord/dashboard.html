@@ -239,19 +239,6 @@
             $("#updateform").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.coord.add_edit_update(Dajax.process,{'form':data,'id':id});
         }
-        $(document).ready(
-        function()
-        {
-        $('a').click(
-        function()
-        {
-        var i_d =this.id;
-        var url = "{{site_url}}/editupdate/" + i_d + "/"; 
-        $("#updateform").load(url,false)
-        }
-        );
-        }
-        );
         </script>
         <script type="text/javascript" language="javascript">
         $(function(){
@@ -370,7 +357,7 @@
         <div id="AddUpdate" class="right span6">
 			<p>Updates<br>
    			{% for u in update %}
-                <p>{{u.subject}} - {{u.description}}<a href =" " onclick="$('#updateform').load('{{site_url}}coord/editupdate/{{u.id}}',function(){$('#AddUpdate').hide();$('#updateform').show();$('.chzn-select').chosen();});return false;">Edit</a><br></p>
+                <p>{{u.subject}} - {{u.description}}<a href onclick="$('#updateform').load('{{site_url}}coord/editupdate/{{u.id}}',function(){$('#AddUpdate').hide();$('#updateform').show();$('.chzn-select').chosen();});return false;">Edit</a><br></p>
             {% endfor %}           
 		</div>
         <div id="updateform" class="right span6">
