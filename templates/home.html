@@ -2,13 +2,13 @@
 
 {% block navigation %}
                           
-    <li class="active"><a href="{{SITE_URL}}"><span style="font-size:18px; line-height:25px;">Home</home></a></li>
+    <li class="active"><a href="{{SITE_URL}}"><span style="font-size:16px; line-height:25px;">Home</home></a></li>
                                              
-    <li><a href="{{SITE_URL}}category/"><span style="font-size:18px; line-height:25px;">Events</span></a></li>
+    <li><a href="{{SITE_URL}}category/"><span style="font-size:16px; line-height:25px;">Events</span></a></li>
                             
     {% for topic in topics %}
         <li>
-            <a href="{{SITE_URL}}topic/{{topic.url_name}}/"><span style="font-size:18px; line-height:25px;">{{topic.title}}</span></a>
+            <a href="{{SITE_URL}}topic/{{topic.url_name}}/"><span style="font-size:16px; line-height:25px;">{{topic.title}}</span></a>
         </li>    
     {% endfor %}
     
@@ -17,7 +17,7 @@
 {% block content %}
 <style>
       body {
-        background-color:#e2e2e2;
+        background-color:rgb(247,247,247);
       }     
 			textarea{
         				width: 560px;
@@ -35,9 +35,8 @@
     <section id="carousel">
         <div class="row">
             <div class="span8 columns"><br><br>
-                <div class="hero-unit" style="background-color:#3a87ad" >
-                    <h1 style="font-family:Yanone Kafeesatz; text-shadow:4px 2px 2px rgb(217,217,217);">Shaastra 2013 <br><small style=" font-size:35px; text-shadow: 1px 1px 0px rgb(245,245,245);">Sponsorship Portal</small></h1>
-                </div>            
+            	<h1 style="font-family:Yanone Kafeesatz; "><img src="{{MEDIA_URL}}shaastralogo.png"><small style=" font-size:35px; ">Sponsorship Portal</small></h1>
+               </br></br>          
                 <!-- About Shaastra -->
                     <p> {{home_content.display_mySafeField}}</p><br>
 

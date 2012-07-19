@@ -2,13 +2,13 @@
  
 {% block navigation %}
                           
-    <li><a href="{{SITE_URL}}"><span style="font-size:18px; line-height:25px;">Home</span></a></li>
+    <li><a href="{{SITE_URL}}"><span style="font-size:16px; line-height:25px;">Home</span></a></li>
                                              
-    <li class="active"><a href="{{SITE_URL}}category/"><span style="font-size:18px; line-height:25px;">Events</span></a></li>
+    <li class="active"><a href="{{SITE_URL}}category/"><span style="font-size:16px; line-height:25px;">Events</span></a></li>
                             
     {% for topic in topics %}
         <li>
-            <a href="{{SITE_URL}}topic/{{topic.url_name}}/"><span style="font-size:18px; line-height:25px;">{{topic.title}}</span></a>
+            <a href="{{SITE_URL}}topic/{{topic.url_name}}/"><span style="font-size:16px; line-height:25px;">{{topic.title}}</span></a>
         </li>    
     {% endfor %}
 
@@ -55,7 +55,7 @@
 				<hr>
               <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse"  href="#collapse{{i.id}}" id="external">
-                  <h5 style="font-size:16px; line-height: 22px; color: rgb(50,50,50);"><span style="text-transform: uppercase" >{{i.title}}</span></h5>
+                  <h5 style="font-size:16px; line-height: 22px; color: rgb(50,50,50);"><span  >{{i.title}}</span></h5>
                 </a>
               </div>
               <div id="collapse{{i.id}}" class="accordion-body collapse ">
