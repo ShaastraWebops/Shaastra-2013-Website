@@ -42,6 +42,12 @@
 </div>
 </div>
 <!--Events-->
+	<style>
+		#event_title:hover{
+					font-size:18px;
+					color:rgb(80,80,80);
+						}
+	</style>
  
     <div id="events" class="span9 events-pull-right">
     <hr>
@@ -55,7 +61,7 @@
 				<hr>
               <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse"  href="#collapse{{i.id}}" id="external">
-                  <h5 style="font-size:16px; line-height: 22px; color: rgb(50,50,50);"><span  >{{i.title}}</span></h5>
+                  <h5 style="font-size:16px; line-height: 22px; color: rgb(50,50,50);"><span id="event_title" >{{i.title}}</span></h5>
                 </a>
               </div>
               <div id="collapse{{i.id}}" class="accordion-body collapse ">
