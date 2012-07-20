@@ -166,7 +166,7 @@ def save_subjective(request, data, ques_id=0):
         unsaved_ques = form.save(commit = False)
         unsaved_ques.event = event
         unsaved_ques.save()
-        dajax.script("window.location.hash='questions'")
+        dajax.script("window.location.hash='';")
         return dajax.json()
     else:
         template = loader.get_template('ajax/coord/subj_form.html')

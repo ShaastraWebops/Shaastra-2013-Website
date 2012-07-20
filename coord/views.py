@@ -134,7 +134,7 @@ class Questions(BaseView):
             options = get_options(mcq)
             form = MCQForm(mcq, options)
             template = 'ajax/coord/mcq_form.html'
-        elif path[3] == 'subj':
+        elif path[2] == 'subjective':
             try:
                 ques_id = path[4]
                 ques = SubjectiveQuestion.objects.get(id = ques_id)
