@@ -302,6 +302,15 @@
 
         });
         </script>
+     <script type="text/javascript" >
+           $(document).ready(function(){           
+                 $("#nav a").click(function(){
+                 			$("#nav a").removeClass("on");
+                 			$(this).addClass("on");
+                 	});               
+           });
+           
+    </script>
     <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
     <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
         <link href="{{site_url}}static/css/chosen.css"  type="text/css" rel="stylesheet">
@@ -324,7 +333,7 @@
      <div class="container" id="main">
         {% csrf_token %}
       <div id="nav"> 
-         <ul class="nav nav-pills left">
+         <ul class="nav nav-tabs">
         		<li><a href='#questions' name='questions' id = 'question'>Questions</a></li>
         		<li><a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a></li>
         		<li><a href="#submissions" name='submissions' id = 'submissions' >Submissions</a></li>
