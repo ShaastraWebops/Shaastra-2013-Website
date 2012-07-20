@@ -227,11 +227,6 @@
             xhr.send(file);                 // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
         }
         }
-        function updateAddUpdate()
-        {
-            $("#AddUpdate").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
-            Dajaxice.coord.updateAddUpdate(Dajax.process);
-        }
         function add_update()
         {
             data=$(".bbq-item :input").serializeObject();
@@ -243,6 +238,11 @@
             data=$(".bbq-item :input").serializeObject();
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.coord.add_edit_update(Dajax.process,{'form':data,'id':id});
+        }
+        function close_form()
+        {
+            $('.bbq-item').hide();
+            $('.bbq-default').show();
         }
         </script>
         <script type="text/javascript" language="javascript">
@@ -308,7 +308,7 @@
                 <li><a href="{{site_url}}user/password_change/">Change Password</a></li>
         		    <li><a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a></li>
         		    <li><a href="{{site_url}}user/logout/">Logout</a></li></ul>
-        	</div><br>
+        	</div>
          </div>
       </div>
      </div><hr/>
@@ -321,7 +321,7 @@
         		<li><a href="#submissions" name='submissions' id = 'submissions' >Submissions</a></li>
         		<li><a href="#customtabs">Add a Tab</a></li>
         		<li><a href="" onclick="$('#editevent').load('{{site_url}}core/editevent/{{event.id}}',function(){$('#eventdetails').hide();$('#editevent').show();$('.chzn-select').chosen();});return false;">Edit Event</a></li>
-                        <li><a href='#update' name='update' id = 'update'> Post update </a><li>
+                        <li><a href="#update" id='update'> Post update </a><li>
         </ul>
         </div>
        
@@ -331,8 +331,8 @@
              <ul class="nav nav-pills" id="tabs"></ul>
            </div>
         		<div id="eventdetails" class="right span6">
-        			<p>Event Name : {{event}}<br>
-           			Category   : {{event.category}}<br></p>           
+        			<h2>Event Name : {{event}}<br>
+           			Category   : {{event.category}}<br></h2>           
         		</div>
         		<div id="editevent" class="right span6">
         		</div>  
@@ -342,7 +342,7 @@
         
         <hr/><br>
         <div class="container">        
-        <div class="bbq" id="detail">
+        <div class="bbq" id="detail"  style="float:left;">
             <div class="bbq-content">
 
                 <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
@@ -359,8 +359,18 @@
                 </div>
             </div>
         </div>
+
            
-        </div>
+
+
+        <div id="updates" class="right span5 boxA" style="float:right;">
+	    <p>Updates<br>
+   	    {% for u in update %}
+                <p>{{u.subject}} - {{u.description}}<a href="#editupdate/{{u.id}}">Edit</a><br></p>
+            {% endfor %}           
+	</div>
+	</div>
+
       </div>  
    </body>
 </html>

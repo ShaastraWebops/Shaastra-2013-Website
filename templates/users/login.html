@@ -16,7 +16,11 @@
 		<img id="splash" src="{{site_url}}static/img/diceNtext.png">
 	</div>
 	<div id="right" class="floatright">
-        <div id="triangle"></div> 
+        <div id="triangle"></div>
+      
+      <div id="div">
+				<a href="{{site_url}}user/register/" class="log">register</a>
+                	<a href="{{site_url}}user/admin/password_reset/" class="log">forgot password?</a></div>      	
 		<p>{{msg}}</p>   	
 		<form name="login" id="login_form" action="" method="POST" >
             		<!--<table>
@@ -26,27 +30,24 @@
 			{% csrf_token %}
 			<input class="inp" onclick='this.value=""' type="text" name="username">
 			<input value="password" class="inp" onclick='this.value=""' type="password" name="password">
-			<input class="subbut" type="submit" value="Login"> <br/><br>
-         <div id="div">
-         			<a href="{{site_url}}user/facebook/login/" id="fb">Login via Facebook</a>	
-						<a href="{{site_url}}user/register/">Register</a>
-                	<a href="{{site_url}}user/admin/password_reset/">Forgot password?</a>        
-         </div>			
+			<input class="subbut" type="submit" value="Login"> 
+          <a href="{{site_url}}user/facebook/login/" id="fb" class="log"><img src="{{site_url}}static/img/facebook-login-button.png" /></a>			
+			<br/><br> 
+					
 		</form>
+			   
    <center> <div id="footer">
 	<div id="navcontainer">
 	<ul>
-	<li><a href="http://www.shaastra.org/2011/main/policy/">Privacy Policy</a></li>
-    <li><a href="http://www.shaastra.org/blog/">Blog</a></li>
-    <li><a href="http://shaastra.org/2013/yash/login/splash.html#">Events</a></li>
-    <li><a href="http://shaastra.org/2013/yash/login/splash.html#">Credits</a></li>
-    <li><a href="http://shaastra.org/2013/yash/login/splash.html#">Contact</a></li>
+	<li><a href="http://www.shaastra.org/2011/main/policy/">privacy policy</a></li>
+    <li><a href="http://www.shaastra.org/blog/">blog</a></li>
+    <li><a href="http://shaastra.org/2013/yash/login/splash.html#">events</a></li>
+    <li><a href="http://shaastra.org/2013/yash/login/splash.html#">credits</a></li>
+    <li><a href="http://shaastra.org/2013/yash/login/splash.html#">contact</a></li>
     </ul>
 	</div>
 </div></center>
 
-	</div>
-   
 	<br style="clear:both">
 </div>
 
@@ -57,7 +58,7 @@ body
 	min-width:1200px;
 	min-height: 600px;
 	font-family: "monotype";
-	font-size: 14px;
+	font-size: 16px;
 	letter-spacing: 1px;	
 	}
 #main_container
@@ -184,18 +185,27 @@ text-align: center;
 #navcontainer ul li a:hover
 {
 	color: #183f5a;
-	background-color: #CCC;
+	cursor: pointer;
 }
 
-#div a{
+.log{
 	text-decoration:none;
-	color:#A52A2A;
+	color:#666;
 	padding:10px;
 }
 
-#div a:hover{
-	cursor:pointer;
-	background-color: #CCC;}
+.log a:hover{
+	cursor:pointer;}
+
+
+#div{
+     top:70%;
+	position:absolute;
+	margin-left:20%;
+	text-align:center;
+   }
+
 </style>
+
 
 </body></html>
