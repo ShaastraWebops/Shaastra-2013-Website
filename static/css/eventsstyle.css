@@ -71,67 +71,6 @@ body
 	background:url(../img/texture.jpg);
 	background: rgba(0, 0, 0, 0.5);
 }
-#header{
-	background:url(../img/texture.jpg);
-	background: rgba(0, 0, 0, 0.5);
-	background-repeat:repeat;
-	width:99%;
-	margin:auto;
-	height:66px;
-	padding-top:10px;
-}
-.floatleft{
-	float:left;
-}
-
-.floatright{
-	float:right;
-}
-
-#logo{
-	background:url(../img/shaastralogo.png);
-	width:280px;
-	height:50px;
-	margin: 5px auto auto 20px;
-}
-
-#topright{
-	height:54px;
-	width:740px;
-}
-
-#icons{
-   width:610px;
-	height:54px;
-	font-weight:bold;
-	color:#fff;
-	font-size:13px;
-	text-align:center; 	
-}
-
-#icons a{
-	display:block;
-	height:40px;
-	line-height:40px;
-	min-height:45px;
-
-	vertical-align:bottom;
-	opacity:0.7; 
-	filter:alpha(opacity=70);
-	padding-top:25px;
-}
-
-#icons a:hover{
-	opacity:1.0; 
-	filter:alpha(opacity=100);
-	cursor:pointer;
-	} 
-
-.head_text{
-	font-family:serif;
-	line-height:20px;
-	letter-spacing:1px;
-} 
 
 #events{
 	background:url(../img/events.png);
