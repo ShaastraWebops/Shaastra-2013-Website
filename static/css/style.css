@@ -129,7 +129,7 @@ body
 	filter:alpha(opacity=100);}	  
 
 #forums{
-	background:url(../img/forums.png);
+	background:url(../img/forums.png) transparent;
 	background-repeat:no-repeat;
 	background-position:top center;
 	opacity:0.7; 
