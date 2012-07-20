@@ -14,6 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import os
 import datetime
 from datetime import date
+from operator import attrgetter
 
 # Create your views here.
 
@@ -60,7 +61,8 @@ class CoordDashboard(BaseView):
     displays the coord dashboard depending on the logged in coords event
     """
     def handle_GET(self, request, **kwargs):
-        update = Update.objects.all()
+        initial = Update.objects.all()
+        update = sorted(initial, key=attrgetter('id'), reverse=True)
         event = request.user.get_profile().is_coord_of
         tabs = self.get_tabs(event)
         return render_to_response('coord/dashboard.html', locals(), context_instance = RequestContext(request))
@@ -132,7 +134,7 @@ class Questions(BaseView):
             options = get_options(mcq)
             form = MCQForm(mcq, options)
             template = 'ajax/coord/mcq_form.html'
-        elif path[3] == 'subj':
+        elif path[2] == 'subjective':
             try:
                 ques_id = path[4]
                 ques = SubjectiveQuestion.objects.get(id = ques_id)

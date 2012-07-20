@@ -1,16 +1,14 @@
-{% extends "fb/home.html" %}
 <HTML>
  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# shaastra: http://ogp.me/ns/fb/shaastra#">
 	<TITLE>Shaastra 2013>>Events>>{{event}}</TITLE>
 
   <meta property="fb:app_id" content="291744470918252" /> 
   <meta property="og:type"   content="shaastra:event" /> 
-  <meta property="og:url"    content="Put your own URL to the object here" /> 
+  <meta property="og:url"    content="{{site_url}}#events/{{event.id}}" /> 
   <meta property="og:title"  content="Event" /> 
   <meta property="og:image"  content="https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png" /> 
 </HEAD>
 <BODY>
-{% block events %}
 <div id="sidemenutitle">{{event.title}}<div class="fb-like" data-href="{{site_url}}#events/{{event.id}}" data-send="true" data-width="450" data-show-faces="true"></div></div>
 <div id="maincontent"> {{ event_intro|safe }}
 </div>
@@ -18,6 +16,5 @@
 <div id="gallery">
     <div id="picture"><img src="{{event.events_logo}}" /></div>
 </div>
-{% endblock %}
 </BODY>
 </HTML>

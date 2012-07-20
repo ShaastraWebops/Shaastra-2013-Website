@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^mobapp/$', MobApp()),
     url(r'^tabfile/$', TabFileSubmit()),
     url(r'^update/$', AddUpdate),
+    url(r'^subjective/$', Questions()),
     url(r'^editupdate/(?P<id>\d+)', EditUpdate),
     url(r'^$', CoordDashboard()),
 )

@@ -31,7 +31,7 @@
             );
         }
         function show(event_id){
-            $('#content').load('{{site_url}}fb/events/'+event_id,function(){window.fbAsyncInit();});
+            $('#content').load('{{site_url}}fb/events/'+event_id,function(){FB.XFBML.parse(document.getElementById('content'));});
         }
         function test(){
             alert("Work under progress!");
@@ -87,7 +87,7 @@
             <a href="{{site_url}}events" target="_blank">Events</a>
             <button onclick="test();">Test</button>
             <hr />
-            <div id="nav" style="float:left;width:50%;">
+            <div id="nav" style="float:left;width:20%;">
             Events:<br>
             {% for category in event_set %}
             <ul id="menuhead{{forloop.counter}}" class="menuhead">
@@ -95,12 +95,12 @@
             </ul>
             <ul>
                 {% for event in category %}
-         		<li><a href="{{site_url}}fb/events/{{event.id}}">{{event.title}}</a></li>
+         		<li><a onclick="show({{event.id}});">{{event.title}}</a></li>
                 {% endfor %}
       		</ul>
             {% endfor %}
             </div>
-            <div id="content" style="float:left;width:50%;">{% block events %}Event Details comes here!{% endblock %}
+            <div id="content" style="float:left;width:80%;">Event Details comes here!
             </div>
             <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
