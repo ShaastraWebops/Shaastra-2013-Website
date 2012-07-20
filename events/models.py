@@ -22,10 +22,9 @@ EVENT_CATEGORIES = (
         ("Others", "Others"),
 )
 
-PRIORITIES = (
-    ("High", "High"),
-    ("Medium", "Medium"),
-    ("Low", "Low"),
+CATEGORY = (
+    ("Update", "Update"),
+    ("Announcement", "Announcement"),
     ("Expired", "Expired"),
 )
 
@@ -39,19 +38,12 @@ class Tag(models.Model):
     name = models.CharField(max_length = 25)
     def __unicode__(self,*args,**kwargs):
         return self.name
-    
-class Update(models.Model):
-    subject = models.CharField(max_length = 25)
-    description = models.TextField()
-    date = models.DateField(default = datetime.now)
-    priority = models.CharField(max_length = 15, choices = PRIORITIES)
 
 class Event(models.Model):
     title = models.CharField(max_length = 30)
     events_logo = models.FileField(upload_to = upload_handler('Events'), blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank = True, null = True)
     category = models.CharField(max_length=50,choices= EVENT_CATEGORIES)
-    updates = models.ManyToManyField(Update, blank = True, null = True)
     lock_status = models.CharField(default = 'cannot_be_locked', max_length = 20)
     unlock_reason = models.TextField(default = '', blank = True)
     registrable_online = models.BooleanField(default=False, help_text='Can participants register online?')
@@ -60,6 +52,13 @@ class Event(models.Model):
     
     def __unicode__(self):
         return '%s' % self.title
+    
+class Update(models.Model):
+    subject = models.CharField(max_length = 25)
+    description = models.TextField()
+    date = models.DateField(default = datetime.now)
+    category = models.CharField(max_length = 15, choices = CATEGORY)
+    event = models.ForeignKey(Event, null=True, blank=True)
 
 class Tab(models.Model):
     event = models.ForeignKey(Event, blank = True, null = True)
