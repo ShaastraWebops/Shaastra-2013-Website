@@ -63,3 +63,6 @@ class MCQForm(forms.Form):
 class UpdateForm(ModelForm):
     class Meta:
         model = Update
+        widgets = {
+            'event': forms.HiddenInput(),
+        }

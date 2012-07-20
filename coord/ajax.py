@@ -359,16 +359,39 @@ def add_edit_mobapp_tab(request, form = ''):
 @dajaxice_register
 def add_edit_update(request,form="",id=0):
     dajax = Dajax()
+    event = request.user.get_profile().is_coord_of
+    update = Update.objects.all()
+    u_flag=0
+    a_flag=0
+    for u in update:
+            if u.event == event and u.category == 'Update':
+                u_flag = u_flag+1
+            elif u.event ==event and u.category == 'Announcement':
+                a_flag = a_flag+1
     if id:
         update_form = UpdateForm(form, instance=Update.objects.get(id=id))
     else:
         update_form = UpdateForm(form)
     if update_form.is_valid:
-        update_form.save()
-        dajax.assign("#updates",'innerHTML',"Updates<br>")
+        update_temp = update_form.save(commit=False)
+        update_temp.event = event
+        if u_flag >= 4 and update_temp.category == 'Update' and not id:
+            dajax.alert("This event already has 4 updates. Please set atleast one update's category to Expired before adding a new update")
+            
+        elif a_flag >= 1 and update_temp.category == 'Announcement' and not id: 
+            dajax.alert("This event already has 1 announcement. Please set the announcement category to Expired before adding a new update")
+            
+        else:
+            update_temp.save()
+        dajax.assign("#updates",'innerHTML',"Announcement<br>")
         update = Update.objects.all()
         for u in update:
-            dajax.append("#updates",'innerHTML', u.subject + " - " + u.description + "<br>" + "<a href =" + '#editupdate/' + str(u.id) + '/' + ">" + "Edit" + "</a>")
+            if u.event == event and u.category == 'Announcement':
+                dajax.append("#updates",'innerHTML', u.subject + " - " + u.description + "<br>" + "<a href =" + '#editupdate/' + str(u.id) + '/' + ">" + "Edit" + "</a>")
+        dajax.append("#updates",'innerHTML',"Updates<br>")
+        for u in update:
+            if u.event == event and u.category == 'Update':
+                dajax.append("#updates",'innerHTML', u.subject + " - " + u.description + "<br>" + "<a href =" + '#editupdate/' + str(u.id) + '/' + ">" + "Edit" + "</a>")
         dajax.script("window.location.hash='';")
         dajax.script("$('.bbq-item').hide();$('.bbq-default').show();")
     else:
