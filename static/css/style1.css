@@ -45,6 +45,7 @@ body
 	display:block;
 	color:#999999;
 	line-height: 20px;
+	font-weight: bold;
 }
 
 .headerlinks:hover{
@@ -60,7 +61,9 @@ body
 #nav a:hover{
 	color:#fff;
 	background:#356FCB}
-	
+#nav a.on{
+   color:#fff;
+	background:#356FCB}
 .q{
 	max-width:100px;
 	max-height:20px;
@@ -71,7 +74,6 @@ body
 #tabs a:hover{
 	color:#fff;
 	background:#356FCB}
-	
 	
 #eventdetails{
 	font-weight: bold;
@@ -122,4 +124,9 @@ a,a:active,a:visited,a:link{
 	margin-left:-40px; }
 #msg:hover{
 	cursor:pointer;}
+
+#detail{
+	height:500px;
+	overflow-y:auto;
+	overflow-x:hidden;} 
 
