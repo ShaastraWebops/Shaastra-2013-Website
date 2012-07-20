@@ -54,6 +54,9 @@ class Event(models.Model):
     updates = models.ManyToManyField(Update, blank = True, null = True)
     lock_status = models.CharField(default = 'cannot_be_locked', max_length = 20)
     unlock_reason = models.TextField(default = '', blank = True)
+    registrable_online = models.BooleanField(default=False, help_text='Can participants register online?')
+    begin_registration = models.BooleanField(default=False, help_text='Mark as True to begin online registration')
+    has_questionnaire = models.BooleanField(default = False, help_text='Will the participant have to answer a questionnaire?')
     
     def __unicode__(self):
         return '%s' % self.title
