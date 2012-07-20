@@ -16,11 +16,7 @@
 		<img id="splash" src="{{site_url}}static/img/diceNtext.png">
 	</div>
 	<div id="right" class="floatright">
-        <div id="triangle"></div>
-      
-      <div id="div">
-				<a href="{{site_url}}user/register/" class="log">register</a>
-                	<a href="{{site_url}}user/admin/password_reset/" class="log">forgot password?</a></div>      	
+        <div id="triangle"></div> 	
 		<p>{{msg}}</p>   	
 		<form name="login" id="login_form" action="" method="POST" >
             		<!--<table>
@@ -32,7 +28,11 @@
 			<input value="password" class="inp" onclick='this.value=""' type="password" name="password">
 			<input class="subbut" type="submit" value="Login"> 
           <a href="{{site_url}}user/facebook/login/" id="fb" class="log"><img src="{{site_url}}static/img/facebook-login-button.png" /></a>			
-			<br/><br> 
+			<br/><br>
+			 
+      <div id="div">
+				<a href="{{site_url}}user/register/" class="log">register</a>
+                	<a href="{{site_url}}user/admin/password_reset/" class="log">forgot password?</a></div>      
 					
 		</form>
 			   
