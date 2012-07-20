@@ -1,4 +1,3 @@
-
 MobApp Writeup<br>
 <form action="" method="POST" id="mobapptab_form" accept-charset="utf-8">
     {% csrf_token %}
@@ -6,4 +5,5 @@ MobApp Writeup<br>
         {{form.as_table}}
     </table>
     <input type="button" value="Save" onclick = "save_mobapptab();" class="btn btn-primary">
+    <input type="button" value="Close" class="btn btn-primary" onclick="close_form();" >
 </form>

@@ -114,3 +114,9 @@ EMAIL_HOST='localhost'
 EMAIL_HOST_PASSWORD='$#aastra20iiw3b0ps'
 #Default: '' (Empty string)
 EMAIL_HOST_USER='shaastra'
+CACHES = {
+        'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                            'LOCATION': '127.0.0.1:11211',
+                                }
+}

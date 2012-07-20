@@ -1,7 +1,6 @@
-<div id="sidemenutitle">{{event.title}}</div>
-<div id="maincontent" style="color:#FFF"> Text comes here
+<div id="sidemenutitle">{{event.title}} <fb:like send="true" width="450" show_faces="true" /></div>
+<div id="maincontent"> {{ event_intro|safe }}
 </div>
 <div id="gallery">
     <div id="picture"><img src="{{event.events_logo}}" /></div>
 </div>
-

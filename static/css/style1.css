@@ -89,3 +89,15 @@ body
 	color:#08C;
 	text-decoration: none;
 }
+
+.boxA{
+   height:300px;
+   overflow-y:scroll;
+   background: none repeat scroll 0px 0px rgb(229, 235, 248);
+   border-color: rgb(238, 238, 236) rgb(169, 172, 165) rgb(186, 189, 182) rgb(238, 238, 236);
+   border-style: solid;
+   border-width: 1px;}
+
+textarea,input{
+	 width:400px;
+}

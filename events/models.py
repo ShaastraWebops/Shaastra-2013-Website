@@ -10,16 +10,16 @@ from django.core.cache import cache
 import os
 
 EVENT_CATEGORIES = (
-	("Category1", "Aerofest"),
-	("Category2", "Coding"),
-	("Category3", "Design and Build"),
-	("Category4", "Involve"),
-	("Category5", "Quizzes"),
-	("Category6", "Online"),
-	("Category7", "Department Flagship"),
-	("Category8", "Spotlight"),
-	("Category9", "Workshops"),
-        ("Category10", "Others"),
+	("Aerofest", "Aerofest"),
+	("Coding", "Coding"),
+	("Design and Build", "Design and Build"),
+	("Involve", "Involve"),
+	("Quizzes", "Quizzes"),
+	("Online", "Online"),
+	("Department Flagship", "Department Flagship"),
+	("Spotlight", "Spotlight"),
+	("Workshops", "Workshops"),
+        ("Others", "Others"),
 )
 
 PRIORITIES = (
@@ -63,7 +63,7 @@ class Tab(models.Model):
     title = models.CharField(max_length = 30)
     text = models.TextField()
     pref = models.IntegerField(max_length=2,default = 0, blank=False)
-#    
+    
 #    def save(self):
 #        cache.set(str(self.id)+"_event", str(self.event), 2592000)
 #        cache.set(str(self.id)+"_title", str(self.title), 2592000)
