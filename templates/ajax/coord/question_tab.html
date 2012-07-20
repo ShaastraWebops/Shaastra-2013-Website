@@ -8,11 +8,11 @@ MCQs:<br/>
         {{option.option}}:{{option.text}}<br />
     {% endfor %}
     <ul class="nav nav-pills tags">
-      <li><a href="#questions/mcq/{{q.id}}" class="btn">Edit</a></li>
-      <li><a href="#questions" onclick="delete_mcq({{q.id}});" class="btn">Delete</a></li>
+      <li><a href="#questions/mcq/{{q.id}}" class="btn-primary atag">Edit</a></li>
+      <li><a href="#questions" onclick="delete_mcq({{q.id}});" class="btn-primary atag">Delete</a></li>
     </ul>
     </div>
-{% endfor %}</div><br>
+{% endfor %}</div>
 <ul class="nav nav-pills" id="nav"><li><a href="#questions/mcq" class="btn q">Add MCQ</a></li></ul></div>
 </div>
 <br>
@@ -20,13 +20,13 @@ MCQs:<br/>
 Subjectives:<br />
 <div class="container"></div>
 {% for q in text_questions %}
-   <div class="span4 left boxB">
+   <div class="span3 left boxB">
     {{q.q_number}}.{{q.title}}<br/>
     <ul class="nav nav-pills tags">
-    	<li><a href="#questions/subj/{{q.id}}" class="btn">Edit</a></li>
-    	<li><a href="#questions" onclick="delete_sub({{q.id}});" class="btn">Delete</a></li></ul><br />
+    	<li><a href="#questions/subj/{{q.id}}" class="btn-primary atag">Edit</a></li>
+    	<li><a href="#questions" onclick="delete_sub({{q.id}});" class="btn-primary atag">Delete</a></li></ul><br />
    </div>
 {% endfor %}</div>
 <br>
-<div><ul class="nav nav-pills" id="nav"><li><a href="#questions/subj" class="btn">Add Subjective</a></li></ul></div>
+<div><ul class="nav nav-pills" id="nav"><li><a href="#questions/subj" class="btn q">Add Subjective</a></li></ul></div>
 </div>
