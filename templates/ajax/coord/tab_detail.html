@@ -9,11 +9,11 @@
             <a href="#customtabs/files/rename/{{tab.id}}/{{file.id}}" id="rename">Rename</a><br>
     {% endfor %}
     <p>
-    <a href="#customtabs/files/{{tab.id}}" name="add_file" >Add a file</a>
+    <a href="#customtabs/files/{{tab.id}}" name="add_file" class="btn btn-info atag" style="width:80px;">Add a file</a>
 </div>
 
 <p>
-<ul class="nav nav-pills">
-<li><a href="#customtabs/edit/{{tab.id}}" name="edit" id="{{tab.title}}" >Edit Tab</a></li>
-<li><a href="#" name="delete" onclick="delete_tab({{tab.id}})">Delete Tab</a></li></ul>
+<ul class="nav nav-pills tags">
+<li><a href="#customtabs/edit/{{tab.id}}" name="edit" id="{{tab.title}}" class="btn-info atag" style="width:70px;">Edit Tab</a></li>
+<li><a href="#" name="delete" onclick="delete_tab({{tab.id}})" class="btn-info atag" style="width:70px;">Delete Tab</a></li></ul>
 

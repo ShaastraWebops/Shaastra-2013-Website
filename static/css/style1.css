@@ -115,4 +115,11 @@ a,a:active,a:visited,a:link{
 	text-align:center;
 	color: #FFF;
 	 }
+#msg{
+	display:block;
+	color: #183f5a;
+	font-size:16px;
+	margin-left:-10px; }
+#msg:hover{
+	cursor:pointer;}
 
