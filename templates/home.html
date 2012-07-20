@@ -64,10 +64,10 @@
       
                 
             
-            <div id="sidebar" class="span3 columns">
-            <br>
-				<div align="center">
-                <span  style="font-size:20px;"><b>Previous Sponsors</b></span>
+            <div id="sidebar" class="span3 offset1">
+            <br><br><br>
+				<div>
+                <span  style="font-size:22px;"><b>Previous Sponsors</b></span>
                 <h6>Shaastra 2011</h6>
 				</div>
 				{% if previous_sponsors %}
@@ -110,7 +110,7 @@
                 {% for i in quotes %}
                 
                     <h4><span style="font-size:21px; line-height:29px;">{{i.name}}</span></h4>
-                    <img src="{{MEDIA_URL}}quotestart.gif" alt="">
+                    <img src="{{MEDIA_URL}}quotestart.png" alt="">
                     <b><font color="3a87ad">{{i.quote}}</font></b>
                     <img src="{{MEDIA_URL}}quoteend.png" alt="">
                     
