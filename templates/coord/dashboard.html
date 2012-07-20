@@ -188,6 +188,15 @@
             Dajaxice.coord.rename_file_done(Dajax.process, {'form':data,'file_id':id})
             return false;
         }
+        
+        function delete_file(tab_id, file_id){
+            var r=confirm("Are you sure you want to delete this file?");
+            if(r==true)
+            {
+                $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+                Dajaxice.coord.delete_file(Dajax.process,{'tab_id':tab_id, 'file_id':file_id})
+            }
+        }
 
         function validateForm() {                   //prevents display name from being empty
             var x=document.forms["TabFileForm"]["display_name"].value;
@@ -276,9 +285,7 @@
                         $( '.bbq-item' ).show();
                         if(window.location.hash=='#submissions')
                             $("#submissions_list").dataTable();
-                        if(window.location.hash=='#customtabs')
-                            createNicEdit();
-                        if(window.location.hash=='#mobapp')
+                        if(window.location.hash=='#customtabs' || window.location.hash.indexOf('tabs/edit')>0)
                             createNicEdit();
                         if(window.location.hash=='#subjective')
                             createNicEdit();

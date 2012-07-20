@@ -1,8 +1,0 @@
-<form action="" method="POST" id="edit_option_form" accept-charset="utf-8">
-{% csrf_token %}
-<table>
-    {{f.as_table}}
-</table>
-<input type="button" value="Edit" onclick = "save_editted_option({{option.id}});" class="btn-primary">
-<input type="button" value="Close" class="btn btn-primary" onclick="close_form();" >
-</form>
