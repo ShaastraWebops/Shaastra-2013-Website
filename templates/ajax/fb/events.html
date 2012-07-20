@@ -1,6 +1,19 @@
-<div id="sidemenutitle">{{event.title}} <fb:like send="true" width="450" show_faces="true" /></div>
+<HTML>
+<HEAD>
+	<TITLE>Shaastra 2013>>Events>>{{event}}</TITLE>
+	<meta property="og:title" content="{{event}}" />
+	<meta property="og:type" content="activity" />
+	<meta property="og:url" content="{{site_url}}#events/{{event.id}}" />
+	<meta property="og:image" content="{{event.events_logo}}" />
+	<meta property="og:site_name" content="Shaastra&gt;&gt;Events&gt;&gt;{{event}}" />
+	<meta property="fb:admins" content="1352782765" />
+</HEAD>
+<BODY>
+<div id="sidemenutitle">{{event.title}}<div class="fb-like" data-href="{{site_url}}#events/{{event.id}}" data-send="true" data-width="450" data-show-faces="true"></div></div>
 <div id="maincontent"> {{ event_intro|safe }}
 </div>
 <div id="gallery">
     <div id="picture"><img src="{{event.events_logo}}" /></div>
 </div>
+</BODY>
+</HTML>

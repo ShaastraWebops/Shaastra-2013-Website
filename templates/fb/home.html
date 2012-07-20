@@ -31,7 +31,7 @@
             );
         }
         function show(event_id){
-            $('#content').load('{{site_url}}fb/events/'+event_id,function(){alert("loaded");window.fbAsyncInit();});
+            $('#content').load('{{site_url}}fb/events/'+event_id,function(){window.fbAsyncInit();});
         }
         function test(){
             alert("Work under progress!");
@@ -79,7 +79,7 @@
             <button onclick="test();">Test</button>
             <hr />
             <div id="nav" style="float:left;width:50%;">
-            Events:<fb:like send="true" width="450" show_faces="true" /><br>
+            Events:<br>
             {% for category in event_set %}
             <ul id="menuhead{{forloop.counter}}" class="menuhead">
             	{{category.0.category}}
@@ -92,7 +92,6 @@
             {% endfor %}
             </div>
             <div id="content" style="float:left;">
-            <div class="fb-like" data-href="http://www.shaastra.org" data-send="true" data-width="450" data-show-faces="true" data-action="recommend" data-colorscheme="dark" data-font="verdana"></div>
             </div>
             <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
