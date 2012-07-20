@@ -20,11 +20,11 @@ def updateSummary(request):
     dajax.assign("#summary",'innerHTML',"<table border='1' class='table table-striped table-bordered table-condensed'><thead><tr><th>S.No</th><th>Event Name</th><th>Coords</th></tr></thead><tbody id='event'>")
     event=Event.objects.order_by('id').all()
     for e in event:
-        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a href="+'dashboard/'+str(e.id)+">"+e.title+"</a><button class='btn btn-primary' onclick='del_event("+str(e.id)+");' >Delete</button></td><td id="+str(e.id)+"></td></tr>")
+        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a class='tablelinks left' href="+'dashboard/'+str(e.id)+">"+e.title+"</a><button class='btn btn-primary right' onclick='del_event("+str(e.id)+");' >Delete</button></td><td id="+str(e.id)+"></td></tr>")
         coords=UserProfile.objects.filter(is_coord_of__title=e.title)
         coords=coords.filter(is_core=0)
         for c in coords:
-            dajax.append("#"+str(e.id),'innerHTML',"<li class='coords' id="+str(c.user.username)+"><a href="+'#editcoord/'+str(c.user_id)+">"+str(c.user)+"</a>")
+            dajax.append("#"+str(e.id),'innerHTML',"<li class='coords' id="+str(c.user.username)+"><a class='tablelinks' href="+'#editcoord/'+str(c.user_id)+">"+str(c.user)+"</a>")
     dajax.script("window.location.hash=''")
     return dajax.json()
 
