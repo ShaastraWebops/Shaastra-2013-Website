@@ -14,6 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import os
 import datetime
 from datetime import date
+from operator import attrgetter
 
 # Create your views here.
 
@@ -60,7 +61,8 @@ class CoordDashboard(BaseView):
     displays the coord dashboard depending on the logged in coords event
     """
     def handle_GET(self, request, **kwargs):
-        update = Update.objects.all()
+        initial = Update.objects.all()
+        update = sorted(initial, key=attrgetter('id'), reverse=True)
         event = request.user.get_profile().is_coord_of
         tabs = self.get_tabs(event)
         return render_to_response('coord/dashboard.html', locals(), context_instance = RequestContext(request))

@@ -7,6 +7,7 @@ from coord.forms import *
 from core.forms import AddEventForm
 from dajaxice.decorators import dajaxice_register
 from django.core.cache import cache
+from operator import attrgetter
 
 def get_files(tab):
     # gets all files that are related to a particular tab
@@ -360,10 +361,10 @@ def add_edit_mobapp_tab(request, form = ''):
 def add_edit_update(request,form="",id=0):
     dajax = Dajax()
     event = request.user.get_profile().is_coord_of
-    update = Update.objects.all()
+    initial = Update.objects.all()
     u_flag=0
     a_flag=0
-    for u in update:
+    for u in initial:
             if u.event == event and u.category == 'Update':
                 u_flag = u_flag+1
             elif u.event ==event and u.category == 'Announcement':
@@ -384,7 +385,8 @@ def add_edit_update(request,form="",id=0):
         else:
             update_temp.save()
         dajax.assign("#updates",'innerHTML',"Announcement<br>")
-        update = Update.objects.all()
+        initial = Update.objects.all()
+        update = sorted(initial, key=attrgetter('id'), reverse=True)
         for u in update:
             if u.event == event and u.category == 'Announcement':
                 dajax.append("#updates",'innerHTML', u.subject + " - " + u.description + "<br>" + "<a href =" + '#editupdate/' + str(u.id) + '/' + ">" + "Edit" + "</a>")
