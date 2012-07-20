@@ -41,13 +41,13 @@ body
     border-style: solid;
     border-width: 1px;}
 	
-.navbar-inner .container a,a:link{
+.headerlinks{
 	display:block;
 	color:#999999;
 	line-height: 20px;
 }
 
-.navbar-inner .container a:hover{
+.headerlinks:hover{
 	color:#fff;}
 	
 #wel{
@@ -62,21 +62,16 @@ body
 	background:#356FCB}
 	
 .q{
-	text-decoration:none;
 	max-width:100px;
 	max-height:20px;
 	}
 
 #tabs a{
-	text-decoration: none;
 	color:#A52A2A;}
 #tabs a:hover{
 	color:#fff;
 	background:#356FCB}
 	
-.tags a,a:link{
-	text-decoration: none;}
-
 	
 #eventdetails{
 	font-weight: bold;
@@ -85,10 +80,14 @@ body
 	width:100%;
 	}
 
-.table a,a:active,a:visited,a:link{
-	color:#08C;
+a,a:active,a:visited,a:link{
 	text-decoration: none;
 }
+
+.tablelinks{
+	color:#08C;
+}
+
 
 .boxA{
    height:300px;
@@ -114,6 +113,6 @@ body
 	width:40px;
 	max-height:20px;
 	text-align:center;
+	color: #FFF;
 	 }
-.atag a,a:visited,a:link{
-	color:#FFF;}
+
