@@ -1,4 +1,5 @@
 <div id="file">{% for file in file_list %}<a href="{{file.url}}">{{file.title}}</a>
 <ul class="nav nav-pills">
-<li><a href="#" id="delete_file" onclick="Dajaxice.events.delete_file(Dajax.process,{'tab_id':'{{tab.id}}','file_id':'{{file.id}}'})">delete</a></li>
-<li><a href="#" id="rename" onclick="Dajaxice.events.rename_file(Dajax.process,{'tab_id':'{{tab.id}}','file_id':'{{file.id}}'})">rename</a></li></ul><br/>{% endfor %}</div>
+    <li><a href="#" id="delete_file" onclick="delete_file({{tab.id}}, {{file.id}})">Delete</a>delete</a></li>
+    <li><a href="#customtabs/files/rename/{{tab.id}}/{{file.id}}" id="rename">Rename</a></li>
+</ul><br/>{% endfor %}</div>
