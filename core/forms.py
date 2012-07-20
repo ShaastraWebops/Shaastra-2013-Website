@@ -12,7 +12,7 @@ class AddEventForm(forms.ModelForm):
     class Meta:
         model = Event
         # fields = ('title','events_logo','tags')
-        fields = ('title','events_logo', 'tags', 'category', 'lock_status', 'unlock_reason')
+        fields = ('title','events_logo', 'tags', 'category', 'lock_status', 'unlock_reason', 'registrable_online', 'begin_registration', 'has_questionnaire',)
         widgets = {
             'lock_status' : forms.HiddenInput(),
             'unlock_reason' : forms.HiddenInput(),

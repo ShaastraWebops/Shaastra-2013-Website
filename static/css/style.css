@@ -48,11 +48,11 @@ body
 
 #topright{
 	height:54px;
-	width:740px;
+	width:800px;
 }
 
 #icons{
-   width:610px;
+   width:680px;
 	height:54px;
 	font-weight:bold;
 	color:#fff;
@@ -117,7 +117,7 @@ body
 }
 
 #set{
-	background:;
+	background:url(../img/set.png);
 	background-repeat:no-repeat;
 	background-position:top center;
 	opacity:0.7; 
@@ -125,7 +125,19 @@ body
 }
 
 #set:hover{
-	background: rgba(0, 0, 0, 0.0);
+	opacity:1.0; 
+	filter:alpha(opacity=100);}	  
+
+#forums{
+	background:url(../img/forums.png);
+	background-repeat:no-repeat;
+	background-position:top center;
+	opacity:0.7; 
+	filter:alpha(opacity=70);
+}
+
+#forums:hover{
+	
 	opacity:1.0; 
 	filter:alpha(opacity=100);}	  
 

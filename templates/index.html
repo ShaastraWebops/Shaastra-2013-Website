@@ -100,6 +100,19 @@
 <script src="static/scripts/prettify.js"></script> 
 <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
 <script type="text/javascript" language="javascript">
+
+function save_edit_subjective(eve_id, q_id){
+    data = $('.bbq-item :input').serializeObject();
+    Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
+    return false;
+}
+
+function save_edit_mcq(eve_id, q_id){
+    data = $('.bbq-item :input').serializeObject();
+    Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
+    return false;
+}
+
         $(function(){
             // Keep a mapping of url-to-container for caching purposes.
             var cache = {
@@ -127,6 +140,23 @@
                                 $( '.bbq-item' ).show();
                             });
                     }
+                    else if(url.split('submission/')[1])
+                    {
+                        if (url.split('ques/')[1])
+                        {
+                            $(".bbq-item #q_detail").load( url, function(){
+                                    // Content loaded, hide "loading" content.
+                                    $( '.bbq-item' ).show();
+                                });
+                        }
+                        else 
+                        {
+                            $(".bbq-item #maincontent").load( url, function(){
+                                    // Content loaded, hide "loading" content.
+                                    $( '.bbq-item' ).show();
+                                });
+                        }
+                    } 
                     else
                     {
                         $(".bbq-default").hide();
@@ -168,6 +198,7 @@
             			<li><a href="#" id="home"><p class="head_text">Home</p></a></li>		
             			<li><a id="hospitality"><p class="head_text">Hospitality</p></a></li>
             			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
+            			<li><a id="forums" href="http://forums.shaastra.org"><p class="head_text">Forums</p></a></li>
                                 {% if user.is_authenticated %}
                                 		<li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
                                 		<li><a id="set"><p class="head_text">Settings</p></a></li>

@@ -17,6 +17,11 @@ def home(request):
 
 @csrf_exempt
 def events(request, event_id):
+    event_set=[]
+    for c in EVENT_CATEGORIES :
+        event_category_set = Event.objects.filter(category=c[0])
+        if event_category_set :
+            event_set.append(event_category_set)
     event = Event.objects.get(id = event_id)
     event_intro = event.tab_set.all()[0].text
     return render_to_response('ajax/fb/events.html',locals(), context_instance= RequestContext(request))
