@@ -12,7 +12,6 @@
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/nicEdit.js" charset = "utf-8"></script>
-       <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
         <script type="text/javascript" charset = "utf-8">
         // not documenting this for now. Try n see all the templates in the ajax folder. These functions are called from those templates.
         // make a note of all the div ids. See how the divs are being changed dynamically by dajax.
@@ -363,11 +362,12 @@
            
 
 
-        <div id="updates" class="right span5 boxA" style="float:right;">
-	    <p>Updates<br>
+     <div id="updates" class="right span5 boxA" style="float:right;">
+	    <h4>Updates</h4>
+	    	<div class="container" style="width:90%;">
    	    {% for u in update %}
-                <p>{{u.subject}} - {{u.description}}<a href="#editupdate/{{u.id}}">Edit</a><br></p>
-            {% endfor %}           
+                <p>{{u.subject}} - {{u.description}}<a href="#editupdate/{{u.id}}" class="btn atag">Edit</a><br></p>
+            {% endfor %}</div>           
 	</div>
 	</div>
 

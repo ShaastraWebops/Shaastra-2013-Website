@@ -59,8 +59,17 @@
                         userDetails = response;
                         document.getElementById('header').innerHTML="<h2>Welcome " + userDetails.name + "</h2>";
                     });
-                } else {
-                    alert(response.status);
+                } else if(response.status === 'not_authorized') {
+			FB.login(function(response) {
+			   if (response.authResponse) {
+			     alert('Welcome!  Fetching your information.... ');
+			     FB.api('/me', function(response) {
+			       alert('Good to see you, ' + response.name + '.');
+			     });
+			   } else {
+			     alert('User cancelled login or did not fully authorize.');
+			   }
+			 });
                 }
             });	
         };
@@ -86,12 +95,12 @@
             </ul>
             <ul>
                 {% for event in category %}
-         		<li><a onclick="show({{event.id}});">{{event.title}}</a></li>
+         		<li><a href="{{site_url}}fb/events/{{event.id}}">{{event.title}}</a></li>
                 {% endfor %}
       		</ul>
             {% endfor %}
             </div>
-            <div id="content" style="float:left;">
+            <div id="content" style="float:left;width:50%;">{% block events %}Event Details comes here!{% endblock %}
             </div>
             <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
