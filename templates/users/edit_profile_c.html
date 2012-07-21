@@ -1,0 +1,25 @@
+{% load dajaxice_templatetags %}
+<html>
+    <head>
+        <title>Edit Profile</title>
+        {% dajaxice_js_import %}
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/college.reg.js"></script>
+        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
+        </head>
+<body>
+    <form action="" method="POST" class="form-horizontal container">
+    	  <h1>Edit profile:</h1><br>
+        <fieldset>{% csrf_token %}
+        <table>
+            {{ editProfileForm.as_table }}
+        </table><br>
+        <input type="submit" value="Update Profile" class="btn btn-info">
+        <a href="{{site_url}}" class="btn btn-inverse atag">Home</a>
+        </fieldset>
+    </form
+</body>    
+</html>
