@@ -1,12 +1,14 @@
-<b>Title</b>:{{tab.title}}</br>
+<h6>Title</h6>:{{tab.title}}</br>
 <b>Text</b>:{{tab.text|safe}}</br>
 <b>Files:</b>
 <div id="file">
     {% for file in file_list %}
         <p>
-        <a href="{{file.url}}" >{{file.title}}</a><br>
-        <a href="#" id="delete_file" onclick="delete_file({{tab.id}}, {{file.id}})">Delete</a>
-            <a href="#customtabs/files/rename/{{tab.id}}/{{file.id}}" id="rename">Rename</a><br>
+        <ul class="nav nav-pills"><li><a href="{{file.url}}" class="filetitle">{{file.title}}</a></li></ul>
+		  <ul class="nav nav-pills">
+    			<li><a href="#" id="delete_file" onclick="delete_file({{tab.id}}, {{file.id}})" class="btn-inverse">Delete</a></li>
+    			<li><a href="#customtabs/files/rename/{{tab.id}}/{{file.id}}" id="rename" class="btn-inverse">Rename</a></li>
+		  </ul><br>
     {% endfor %}
     <p>
     <a href="#customtabs/files/{{tab.id}}" name="add_file" class="btn btn-info atag" style="width:80px;">Add a file</a>
