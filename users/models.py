@@ -76,7 +76,7 @@ class UserProfile(models.Model):
 #    registered      = models.ManyToManyField(Event, null=True, related_name='registered_users')        #Events which this user has registered for
     facebook_id     = models.CharField      (max_length=20)
     access_token    = models.CharField      (max_length=250)
-
+    registered_events = models.ManyToManyField(Event, related_name = 'participants', null = True)
     def __unicode__(self):
         return self.user.first_name
 
