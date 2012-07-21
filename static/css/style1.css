@@ -12,8 +12,9 @@ body
 
 #super{
 	width:100%;
-	background:#FFF;
+	color:#FFF;
 	min-height: 700px;
+	background:rgba(0,0,0,0.5);
 }
 
 #full{
