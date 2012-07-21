@@ -7,16 +7,17 @@
 <!-- Pagination below -->
 {% if prev_elem %}
 {% if prev_elem.2 %}
-<a href="#submission/{{eve_id}}/mcques/{{prev_elem.0}}/" id = "Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id': {{eve_id}}, 'q_id': {{prev_elem.0}}})"><{{prev_elem.1}} </a>
+<a href="#submission/{{eve_id}}/mcques/{{prev_elem.0}}/"><{{prev_elem.1}} </a>
 {% else %}
-<a href="#submission/{{eve_id}}/subques/{{prev_elem.0}}/" id = "Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id': {{eve_id}}, 'q_id': {{prev_elem.0}}})"><{{prev_elem.1}} </a>
+<a href="#submission/{{eve_id}}/subques/{{prev_elem.0}}/"><{{prev_elem.1}} </a>
 {% endif %}
 {% endif %}
 
 {% if next_elem %}
 {% if next_elem.2 %}
-<a href="#submission/{{eve_id}}/mcques/{{next_elem.0}}/" id = "Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id': {{eve_id}}, 'q_id': {{next_elem.0}}})"> {{next_elem.1}}></a>
+<a href="#submission/{{eve_id}}/mcques/{{next_elem.0}}/"> {{next_elem.1}}></a>
 {% else %}
-<a href="#submission/{{eve_id}}/subques/{{next_elem.0}}/" id = "Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id': {{eve_id}}, 'q_id': {{next_elem.0}}})"> {{next_elem.1}}></a>
+<a href="#submission/{{eve_id}}/subques/{{next_elem.0}}/"> {{next_elem.1}}></a>
 {% endif %}
 {% endif %}
+
