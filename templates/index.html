@@ -99,6 +99,7 @@
 <script src="static/scripts/bootstrap-alert.js"></script>
 <script src="static/scripts/prettify.js"></script> 
 <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
 <script type="text/javascript" language="javascript">
 
 function save_edit_subjective(eve_id, q_id){
@@ -200,8 +201,8 @@ function save_edit_mcq(eve_id, q_id){
             			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
             			<li><a id="forums" href="http://forums.shaastra.org"><p class="head_text">Forums</p></a></li>
                                 {% if user.is_authenticated %}
+                                    <li><a id="set"><p class="head_text">Settings</p></a></li>
                                 		<li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
-                                		<li><a id="set"><p class="head_text">Settings</p></a></li>
                                 {% else %}
                                     <li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li> 
                                     

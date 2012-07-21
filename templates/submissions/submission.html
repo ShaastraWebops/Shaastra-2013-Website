@@ -1,11 +1,12 @@
-<h4>{{event.title}}'s question list.</h4></div>
+<h4>{{event.title}}'s question list.</h4>
 mcqs:
 <br/>
 {% for q in mcqs %}
-    <li><a href="#submission/{{event.id}}/mcques/{{q.id}}/" id="Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id':{{event.id}},'q_id':{{q.id}}})">{{q.q_number}}</a>
+    <li><a href="#submission/{{event.id}}/mcques/{{q.id}}/">{{q.q_number}}</a></li>
 {% endfor %}<br/>
 text:<br/>
 {% for q in subjectives %}
-    <li><a href="#submission/{{event.id}}/subques/{{q.id}}/" id="Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id':{{event.id}},'q_id':{{q.id}}})">{{q.q_number}}</a>
+    <li><a href="#submission/{{event.id}}/subques/{{q.id}}/">{{q.q_number}}</a></li>
 {% endfor %}
 <div id="q_detail"></div>
+
