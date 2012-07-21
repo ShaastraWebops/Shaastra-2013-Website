@@ -228,8 +228,8 @@ def save_mcq(request, data, ques_id):
     form = MCQForm(mcq, options)
     html = template.render(RequestContext(request,locals()))
     dajax = Dajax()
+    dajax.script("window.location.hash='questions'")
     dajax.script('alert("question saved succesfully");')
-    dajax.assign('.bbq-item', 'innerHTML', html)
     return dajax.json()
     
 @dajaxice_register        
