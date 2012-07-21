@@ -9,17 +9,30 @@
         <script type="text/javascript" src="{{site_url}}static/js/college.reg.js"></script>
         <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
         <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
-        </head>
+        <style type="text/css">
+				label{color:#FFF;}
+				.helptext{color:#999999;}
+				#full{height: 100%;}
+				#super{
+					height: 100%;
+				}
+		  </style>
+    </head>
 <body>
+   <div id="full" class="container">
+		<div id="super">
     <form action="" method="POST" class="form-horizontal container">
+        <br>
     	  <h1>Edit profile:</h1><br>
         <fieldset>{% csrf_token %}
         <table>
             {{ editProfileForm.as_table }}
         </table><br>
         <input type="submit" value="Update Profile" class="btn btn-info">
-        <a href="{{site_url}}" class="btn btn-inverse atag">Home</a>
+        <a href="{{site_url}}" class="btn btn-info atag">Home</a>
         </fieldset>
-    </form
+    </form>		
+		</div>   
+   </div>
 </body>    
 </html>
