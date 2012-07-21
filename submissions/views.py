@@ -53,7 +53,8 @@ def event_submission(request, **kw):
         event = Event.objects.get(id = kw['event_id'])
         if not event.has_questionnaire:
             pro = request.user.get_profile()
-            pro.registered_events = event
+            if event in pro.registered_events.all(): return HttpResponse('You have already registered for this event.')
+            pro.registered_events.add(event)
             pro.save()
             return HttpResponse('Thank you for registering.')
         mcqs = event.objectivequestion_set.all()
