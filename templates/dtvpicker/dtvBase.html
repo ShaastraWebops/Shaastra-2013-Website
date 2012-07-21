@@ -5,8 +5,11 @@
 <title>
     DTV | {% block dtvTitle %}{% endblock %}
 </title>
+</head>
 <body>
+   <div class="container" id="main">
     <h2> {% block onScreenPageTitle %} {% endblock %} </h2>
     {% block dtvBody %} {% endblock %}
+    </div>
 </body>
 </html>
