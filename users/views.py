@@ -133,8 +133,11 @@ def editprofile_get(request):
     values = {  'first_name'       : currentUser.first_name, 
                 'last_name'      : currentUser.last_name,}
     editProfileForm = EditUserForm(instance=currentUserProfile,initial=values)
-    return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))    
-
+    if request.user.get_profile().is_core or request.user.get_profile().is_coord_of :
+        return render_to_response('users/edit_profile_c.html', locals(), context_instance = RequestContext(request))
+    else:
+        return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))
+   
 @login_required(login_url=settings.SITE_URL + "user/login/")
 def editprofile_post(request):
     """
@@ -150,7 +153,10 @@ def editprofile_post(request):
         currentUser.last_name = request.POST['last_name']
         currentUser.save()
         return HttpResponseRedirect (settings.SITE_URL)
-    return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))
+    if request.user.get_profile().is_core or request.user.get_profile().is_coord_of :
+        return render_to_response('users/edit_profile_c.html', locals(), context_instance = RequestContext(request))
+    else:
+        return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))
 
 def activate (request, a_key = None ): 
     """
