@@ -19,15 +19,3 @@ class AddEventForm(forms.ModelForm):
             'category': chosenwidgets.ChosenSelect(),
         }        
 
-class AddCoordForm(forms.ModelForm):
-    """
-    This form is used to add/edit coords
-
-    """
-    event = chosenforms.ChosenModelChoiceField(required = False,queryset = Event.objects.all())
-#    event= forms.ModelChoiceField(queryset=Event.objects.all(),empty_label='----------')
-
-    class Meta:
-        model = User
-        fields=('username', 'email')
-
