@@ -25,7 +25,7 @@ body
 #main{
 	box-shadow: 0px 0px 10px rgb(0, 0, 0);
 	min-height:700px;
-	width:82%;
+	width:90%;
 	background: #FFF;
 }
 .right{
@@ -33,13 +33,6 @@ body
 	
 .left{
 	float:left;}
-	
-.boxA{
-	background: none repeat scroll 0 0 #E5EBF8;
-    border-color: #EEEEEC #A9ACA5 #BABDB6 #EEEEEC;
-    border-radius: 12px 12px 12px 12px;
-    border-style: solid;
-    border-width: 1px;}
 	
 .headerlinks{
 	display:block;
@@ -102,7 +95,7 @@ a,a:active,a:visited,a:link{
    border-style: solid;
    border-width: 1px;}
 .boxB{
-   background: none repeat scroll 0px 0px rgb(229, 235, 248);
+   background:#DDD;
    border-color: rgb(238, 238, 236) rgb(169, 172, 165) rgb(186, 189, 182) rgb(238, 238, 236);
    border-style: solid;
    border-width: 1px;
@@ -124,6 +117,7 @@ a,a:active,a:visited,a:link{
 	color: #183f5a;
 	font-size:16px;
 	margin-left:-40px; }
+	
 #msg:hover{
 	cursor:pointer;}
 
