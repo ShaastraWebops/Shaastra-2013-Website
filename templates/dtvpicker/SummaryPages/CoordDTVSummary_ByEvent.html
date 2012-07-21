@@ -3,27 +3,21 @@
 {% block eventActions %}
     {% ifequal event.lock_status 'locked' %}
         <h4> LOCKED </h4>
-    {% else %}
-      <ul class="nav nav-pills">          
-        <li><a href = '{{site_url}}DTVPicker/{{event}}/AddSubEvent/'> Add Sub-Event </a></li>
-      </ul>
-        <br/>
+    {% else %}          
+ 			<a href = '{{site_url}}DTVPicker/{{event}}/AddSubEvent/' class="btn btn-primary atag" style="width:100px;">Add Sub-Event</a>
         {% for event, subEventList in happenings %}    {# There will be only one tuple here (only one event) #}
-            {% ifequal event.lock_status 'not_locked' %}
-					<ul class="nav nav-pills">                  
-                	<li><a href = '{{site_url}}DTVPicker/{{event}}/LockEvent/'> Lock Event </a></li>
-               </ul>
+            {% ifequal event.lock_status 'not_locked' %}                
+                	<a href = '{{site_url}}DTVPicker/{{event}}/LockEvent/'class="btn btn-primary atag" style="width:100px;">Lock Event</a>
             {% endifequal %}
         {% endfor %}
     {% endifequal %}
-    <br/>
+    <br/><br>
 {% endblock %}
 
 {% block subEventActions %}
      {% ifnotequal event.lock_status 'locked' %}
-         <ul class="nav nav-pills">
-         <li><a href = '{{site_url}}DTVPicker/{{event}}/EditSubEvent/{{subEvent}}/'>Edit</a></li> 
-         <li><a href = '{{site_url}}DTVPicker/{{event}}/DeleteSubEvent/{{subEvent}}/'>Delete</a></li></ul> 
+         <td><a href = '{{site_url}}DTVPicker/{{event}}/EditSubEvent/{{subEvent}}/' class="btn btn-inverse atag" style="height:15px;">Edit</a></td> 
+         <td><a href = '{{site_url}}DTVPicker/{{event}}/DeleteSubEvent/{{subEvent}}/' class="btn btn-inverse atag" style="height:15px;">Delete</a></td> 
     {% endifnotequal %}
 {% endblock %}
 
