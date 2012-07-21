@@ -225,7 +225,7 @@
                     document.getElementById('file_list').innerHTML = xhr.responseText;
                 }
                 if (xhr.readyState == 1){
-                document.getElementById('uploading').innerHTML = "<img src = '/static/img/loading.gif'>";    //loading..loading..
+                document.getElementById('uploading').innerHTML = "<img src = '{{site_url}}static/img/loading.gif'>";    //loading..loading..
                 }
                 if (xhr.readyState == 4){
                 document.getElementById('uploading').innerHTML = "";    //loading done
