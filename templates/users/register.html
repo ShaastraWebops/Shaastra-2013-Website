@@ -55,16 +55,16 @@
 		<img id="splash" src="{{site_url}}static/img/diceNtext.png">
 	 </div>
 	 <div id="right" class="floatright">
-      <div id="form">
+      <div id="form" class="control-group">
         <h1>Register</h1><br/>
-        <form id="form_reg" action="{{ post_url }}" method="POST">
+        <form id="form_reg" action="{{ post_url }}" method="POST" class="form-horizontal">
         <table>
             {% csrf_token %}
             {{ form.as_table }}
         </table>
         <input type="hidden" name="facebook_id" id="facebook_id" value="{{ facebook_id }}" />
         <input type="hidden" name="access_token" id="access_token" value="{{access_token}}" />
-        <input type="button" onclick="forumReg();" id="register" value="Register" class="btn btn-inverse">
+        <input type="button" onclick="forumReg();" id="register" value="Register" class="btn btn-primary">
         <ul class="nav nav-pills">
 				<li><a href="{{ site_url }}" class="btn-inverse">Home</a></li>        
         </ul>
@@ -138,9 +138,27 @@ body
    }
 
 #form{
+   margin-top:10%;
     max-height:80%;
     overflow-y:scroll;
+    border-bottom:1px solid #999999;
+    border-top:1px solid #999999;
+    font-family: "monotype";
+	letter-spacing: 1px;	
+	color:#9d261d;
+	background:#ddd;
  }
+ 
+#msg{
+   font-family: "monotype";
+	letter-spacing: 1px;
+	font-size:16px;
+	color:#183f5a;	}
+#reg{
+   font-family: "monotype";
+	letter-spacing: 1px;
+	font-size:16px;
+	color:#183f5a;	}
 
 #form li{
     text-decoration:none;
@@ -151,13 +169,17 @@ a,a:link,a:active{
 
 label{
   color:#183f5a;
+  font-family: "monotype";
+	font-size: 14px;
+	letter-spacing: 1px;	
 }
 
 #msg:hover{
   cursor:pointer;
-  text-decoration:underline;}
+  background-color: rgb(204, 204, 204);}
 
-span.helptext{color:#666;}
+span.helptext{color:#666;
+              font-size:12px;}
 #footer
 {
 	width:70%;
