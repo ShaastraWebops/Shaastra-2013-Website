@@ -17,14 +17,10 @@ def updateSummary(request):
 
     """
     dajax = Dajax()
-    dajax.assign("#summary",'innerHTML',"<table border='1' class='table table-striped table-bordered table-condensed'><thead><tr><th>S.No</th><th>Event Name</th><th>Coords</th></tr></thead><tbody id='event'>")
+    dajax.assign("#summary",'innerHTML',"<table border='1' class='table table-striped table-bordered table-condensed'><thead><tr><th>S.No</th><th>Event Name</th></tr></thead><tbody id='event'>")
     event=Event.objects.order_by('id').all()
     for e in event:
-        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a class='tablelinks left' href="+'dashboard/'+str(e.id)+">"+e.title+"</a><button class='btn btn-primary right' onclick='del_event("+str(e.id)+");' >Delete</button></td><td id="+str(e.id)+"></td></tr>")
-        coords=UserProfile.objects.filter(is_coord_of__title=e.title)
-        coords=coords.filter(is_core=0)
-        for c in coords:
-            dajax.append("#"+str(e.id),'innerHTML',"<li class='coords' id="+str(c.user.username)+"><a class='tablelinks' href="+'#editcoord/'+str(c.user_id)+">"+str(c.user)+"</a>")
+        dajax.append("#event",'innerHTML',"<tr><td>"+str(e.id)+"</td><td id="+e.title+"><a class='tablelinks left' href="+'dashboard/'+str(e.id)+">"+e.title+"</a><button class='btn btn-primary right' onclick='del_event("+str(e.id)+");' >Delete</button></td></tr>")
     dajax.script("window.location.hash=''")
     return dajax.json()
 
@@ -40,6 +36,15 @@ def add_event(request,upload,form):
     event_form = AddEventForm(form)
     if event_form.is_valid():
         event = event_form.save()
+        user_name = event.title.replace (" ", "_")
+        new_user = User(username = user_name, email = user_name + '@shaastra.org')
+        new_user.set_password('default')
+        new_user.save()
+        userprofile = UserProfile(
+                user = new_user,
+                is_coord_of = event,
+                )
+        userprofile.save()
         if upload :
 	    dajax.script("upload_events_logo(" + str(event.id) + ");")
 	else:
@@ -58,55 +63,13 @@ def del_event(request,id):
     """
     dajax = Dajax()
     event=Event.objects.get(id=id)
+    user_name = event.title.replace (" ", "_")
+    user =User.objects.get(username=user_name)
+    userprofile = UserProfile.objects.get(user = user)
+    userprofile.delete()
+    user.delete()
     event.delete()
     dajax.script("updateSummary();")
     return dajax.json()
 
-@dajaxice_register
-def add_edit_coord(request,form="",id=0):
-    """
-    This function calls the AddCoordForm from forms.py
-    If a new coord is being created, a blank form is displayed and the core can fill in necessary details.
-    If an existing coord's details is being edited, the same form is displayed populated with current coord details for all fields
 
-    """
-    dajax = Dajax()
-    if id:
-        coord_form = AddCoordForm(form, instance=User.objects.get(id=id))
-        if coord_form.is_valid():
-            coord=coord_form.save()
-            coord_profile=coord.get_profile()
-            coord_profile.is_coord_of_id=form['event']
-            coord_profile.save()
-            dajax.script("updateSummary();")
-        else:
-            template = loader.get_template('ajax/core/editcoord.html')
-            html=template.render(RequestContext(request,locals()))
-            dajax.assign(".bbq-item",'innerHTML',html)
-    else:
-        coord_form = AddCoordForm(form)
-        if coord_form.is_valid():
-            coord=coord_form.save()
-            coord.set_password("default")
-            coord.groups.add(request.user.groups.get_query_set()[0])
-            coord.save()
-            coord_profile = UserProfile(user=coord, is_coord_of_id=form['event'])
-            coord_profile.save()
-            dajax.script("updateSummary();")
-        else:
-            template = loader.get_template('ajax/core/addcoord.html')
-            html=template.render(RequestContext(request,locals()))
-            dajax.assign(".bbq-item",'innerHTML',html)
-    return dajax.json()
-
-@dajaxice_register
-def del_coord(request,id):
-    """
-    This function is called when the core wants to delete a coord
-
-    """
-    dajax = Dajax()
-    coord=User.objects.get(id=id)
-    coord.delete()
-    dajax.script("updateSummary();")
-    return dajax.json()

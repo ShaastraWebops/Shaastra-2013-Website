@@ -50,6 +50,7 @@ class Event(models.Model):
     begin_registration = models.BooleanField(default=False, help_text='Mark as True to begin online registration')
     has_questionnaire = models.BooleanField(default = False, help_text='Will the participant have to answer a questionnaire?')
     fb_event_id = models.CharField(max_length=20, null = True) 
+    updated = models.BooleanField(default = False)
     
     def __unicode__(self):
         return '%s' % self.title

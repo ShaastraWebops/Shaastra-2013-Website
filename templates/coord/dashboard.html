@@ -18,7 +18,9 @@
         function createNicEdit(){
         niced = new nicEditor().panelInstance('niced_text');
         }
-        function closeNicEdit(){}
+        function createNicEdit1(){
+        niced = new nicEditor().panelInstance('id_title');
+        }
         
         function add_option_field(){
         var old_opt = $("#mcq_form tr:last input:last").attr("name");   // oldopt = 'optb'
@@ -127,6 +129,7 @@
         }
 
         function save_mcq(id){
+            niced.removeInstance('id_title');
             data = $('#mcq_form').serializeObject();
             if (data.title == null || data.title == ""){alert('Question Title cannot be blank');return false;}
             if (isNaN(data.q_no) || data.q_no == null || data.q_no == ""){alert('Question number must be an integer');return false;}
@@ -152,6 +155,7 @@
         }
 
         function save_subjective(){
+            niced.removeInstance('id_title');
             data = $('#subjective_form').serializeObject();
             ques_id=$("#ques_id").attr('value');
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
@@ -287,8 +291,8 @@
                             $("#submissions_list").dataTable();
                         if(window.location.hash=='#customtabs' || window.location.hash.indexOf('tabs/edit')>0)
                             createNicEdit();
-                        if(window.location.hash=='#subjective')
-                            createNicEdit();
+                        if(window.location.hash.indexOf('questions')>0)
+                            createNicEdit1();
                     });
                 }
                 else
@@ -322,7 +326,6 @@
          	<div class="left" id="wel"><h3>Welcome {{request.user}} | <i>{% if request.user.get_profile.is_core %}{{ request.user.groups.get_query_set.0 }} core{% else %}{{event}} coord {% endif %}</i></h3></div>
          <div class="right" id="links"><ul class="nav nav-pills">
                 {% if request.user.get_profile.is_core %}<li><a href="{{site_url}}core/" class="headerlinks">Core Home</a></li>{% endif %}
-                <li><a href="{{site_url}}user/editprofile/" class="headerlinks">Edit Profile</a></li>
                 <li><a href="{{site_url}}user/password_change/" class="headerlinks">Change Password</a></li>
         		    <li><a href="{{site_url}}DTVPicker/Summary/" class="headerlinks">DTVPicker</a></li>
         		    <li><a href="{{site_url}}user/logout/" class="headerlinks">Logout</a></li></ul>

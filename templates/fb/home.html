@@ -96,7 +96,7 @@
             <ul>
                 {% for event in category %}
          		<li><a onclick="show({{event.id}});">{{event.title}}</a></li>
-			<li><a href="http://www.facebook.com/events/239139736206262">{{event.title}}</a></li>
+			<li><a href="http://www.facebook.com/events/{{event.fb_event_id}}" target = "_blank">{{event.title}}'s FB Event Page</a></li>
                 {% endfor %}
       		</ul>
             {% endfor %}
