@@ -7,8 +7,6 @@ urlpatterns = patterns('',
     url(r'^addevent/', addevent, name='addevent'),
     url(r'^dashboard/(?P<id>\d+)', eventdashboard, name='event-dashboard'),
     url(r'^editevent/(?P<id>\d+)', editevent, name='editevent'),
-    url(r'^addcoord/', addcoord, name='addcoord'),
-    url(r'^editcoord/(?P<id>\d+)', editcoord, name='editcoord'),
     url(r'^dashboard/', include('coord.urls'), name = 'dashboard'),
     url(r'^$', home, name = 'home'),
 )

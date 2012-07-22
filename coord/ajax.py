@@ -166,7 +166,7 @@ def save_subjective(request, data, ques_id=0):
         unsaved_ques = form.save(commit = False)
         unsaved_ques.event = event
         unsaved_ques.save()
-        dajax.script("window.location.hash='';")
+        dajax.script("window.location.hash='questions'")
         return dajax.json()
     else:
         template = loader.get_template('ajax/coord/subj_form.html')
@@ -228,8 +228,8 @@ def save_mcq(request, data, ques_id):
     form = MCQForm(mcq, options)
     html = template.render(RequestContext(request,locals()))
     dajax = Dajax()
+    dajax.script("window.location.hash='questions'")
     dajax.script('alert("question saved succesfully");')
-    dajax.assign('.bbq-item', 'innerHTML', html)
     return dajax.json()
     
 @dajaxice_register        

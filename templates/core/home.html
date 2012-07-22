@@ -49,28 +49,7 @@
                 Dajaxice.core.del_event(Dajax.process,{'id':id});
             }
         }
-        
-        function add_coord()
-        {
-            data=$(".bbq-item :input").serializeObject();
-            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.core.add_edit_coord(Dajax.process,{'form':data});
-        }
-        function edit_coord(id)
-        {
-            data=$(".bbq-item :input").serializeObject();
-            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.core.add_edit_coord(Dajax.process,{'form':data,'id':id});
-        }
-        function del_coord(id)
-        {
-            var press=confirm("Confirm delete?");
-            if (press==true)
-            {
-                $(".bbq-item").append("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-                Dajaxice.core.del_coord(Dajax.process,{'id':id});
-            }
-        }
+               
         function updateSummary()
         {
             $("#summary").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
@@ -144,8 +123,8 @@
 		<div class="container" id="main">        
         <div id="nav">
         		<ul class="nav nav-tabs">
-            	<li><a href="#addevent">Add Event</a></li>
-            	<li><a href="#addcoord">Add Coord</a></li></ul>
+            	<li><a href="#addevent">Add Event</a></li></ul>
+            	
         </div><br>
         <div class="container-fluid">
 			<div class="row-fluid">
