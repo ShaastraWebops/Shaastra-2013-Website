@@ -227,3 +227,6 @@ def forgot_password(request):
 def events(request):
     event=Event.objects.all()
     return render_to_response('users/events.html',locals(), context_instance= RequestContext(request))
+    
+def ajax_login_link(request):
+    return HttpResponse('<a href="%suser/login">Click here to login</a>' % settings.SITE_URL)

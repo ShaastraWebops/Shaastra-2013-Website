@@ -35,18 +35,18 @@ def registrable(eve_id):
     return False
 
 # Create your views here.
-@login_required
+@login_required(login_url=settings.SITE_URL + 'user/ajax_login/')
 def submissions(request):
     subs = request.user.get_profile().is_coord_of.basesubmission_set.all()
     return render_to_response('ajax/submissions/all_submissions.html', locals(), context_instance = RequestContext(request))
 
-@login_required
+@login_required(login_url=settings.SITE_URL + 'user/ajax_login/')
 def all_submissions(request):
     if request.method == 'GET':
         submissions = request.user.get_profile().individualsubmission_set.all()
         return render_to_response('submissions/submission_list.html', locals(), context_instance = RequestContext(request))
         
-@login_required
+@login_required(login_url=settings.SITE_URL + 'user/ajax_login/')
 def event_submission(request, **kw):
     if request.method == 'GET':
         if not registrable(kw['event_id']): return HttpResponse('Registrations are closed')
@@ -61,7 +61,7 @@ def event_submission(request, **kw):
         subjectives = event.subjectivequestion_set.all()
         return render_to_response('submissions/submission.html', locals(), context_instance = RequestContext(request))
 
-@login_required
+@login_required(login_url=settings.SITE_URL + 'user/ajax_login/')
 def save_edit_mcq(request, eve_id, q_id, is_mcq = True):
     if not registrable(eve_id): return HttpResponse('Registrations are closed')
     sub = IndividualSubmission.objects.get_or_create(event_id = eve_id, participant = request.user.get_profile())[0]
@@ -81,7 +81,7 @@ def save_edit_mcq(request, eve_id, q_id, is_mcq = True):
     next_elem = get_elem(index, pag_list, +1)
     return render_to_response('ajax/submissions/mcq_form.html', locals(), context_instance = RequestContext(request))
 
-@login_required        
+@login_required(login_url=settings.SITE_URL + 'user/ajax_login/')        
 def save_edit_subjective(request, eve_id, q_id, is_mcq = False):
     if not registrable(eve_id): return HttpResponse('Registrations are closed')
     sub = IndividualSubmission.objects.get_or_create(event_id = eve_id, participant = request.user.get_profile())[0]

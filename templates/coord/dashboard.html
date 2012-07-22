@@ -337,9 +337,15 @@
         {% csrf_token %}
       <div id="nav"> 
          <ul class="nav nav-tabs">
+         {% if event.registrable_online %}
+                {% if event.has_questionnaire %}
         		<li><a href='#questions' name='questions' id = 'question'>Questions</a></li>
-        		<li><a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a></li>
         		<li><a href="#submissions" name='submissions' id = 'submissions' >Submissions</a></li>
+        		{% else %}
+        		<li><a href='#registrations' name='registrations' id = 'registrations' >Registrations</a></li>
+        		{% endif %}
+         {% endif %}       		
+        		<li><a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a></li>
         		<li><a href="#customtabs">Add a Tab</a></li>
         		<li><a href="" onclick="$('#editevent').load('{{site_url}}core/editevent/{{event.id}}',function(){$('#eventdetails').hide();$('#editevent').show();$('.chzn-select').chosen();});return false;">Edit Event</a></li>
                         <li><a href="#update" id='update'> Post update </a><li>
