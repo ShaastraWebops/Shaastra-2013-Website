@@ -118,12 +118,22 @@ def get_options(mcq):
         return mcq.mcqoption_set.all()
     except:
         return []
+
+class Registrations(BaseView):
+    """
+        displays the questions tab
+    """
+    def handle_GET(self, request, **kwargs):
+        if request.user.get_profile().is_coord_of.has_questionnaire: return HttpReponse("Click on the link 'Submissions' to view the registrations")
+        registrations = request.user.get_profile().is_coord_of.participants.all()
+        return render_to_response('ajax/coord/registrations.html', locals(), context_instance = RequestContext(request))
         
 class Questions(BaseView):
     """
         displays the questions tab
     """
     def handle_GET(self, request, **kwargs):
+        if not request.user.get_profile().is_coord_of.has_questionnaire: return HttpResponse("This event doesn't have a questionnaire")
         path = request.META['PATH_INFO'].split('/')
         if path[3] == 'mcq':
             try:
@@ -203,20 +213,6 @@ class CustomTabs(BaseView):
         else:
             form = TabAddForm()
             template = 'ajax/coord/tab_form.html'
-        return render_to_response(template, locals(), context_instance = RequestContext(request))
-
-class MCQAddEdit(BaseView):
-    """
-    """
-    def handle_GET(self, request, **kwargs):
-        mcq = None
-        ques_id = kwargs['mcq_id']
-        options = []
-        if kwargs['mcq_id']:
-            mcq = ObjectiveQuestion.objects.get(id = kwargs['mcq_id'])
-            options = mcq.mcqoption_set.all()
-        form = MyForm(mcq, options)
-        template = 'ajax/coord/mcq_form.html'
         return render_to_response(template, locals(), context_instance = RequestContext(request))
 
 def AddUpdate(request):
