@@ -12,32 +12,32 @@ import urllib,json
 def home(request):
     event_set = Event.objects.all()
     for event in event_set :
-        if event.fb_event_id :
+        if event.fb_event_id and not event.updated :
             # Event needs to be updated
-            subevents = SubEvent.objects.filter(event = event)[0]
+            subevent = SubEvent.objects.filter(event = event)[0]
             event_data = {  'name' : event.title,
                             'owner' : settings.FACEBOOK_APP_ID,
-                            'description' : event.tab_set.all()[0].text,
-                            'start_time' : subevents.start_date_and_time.isoformat(' '),
-                            'end_time' : subevents.end_date_and_time.isoformat(' '),
-                            'location': subevents.venue,
+                            'description' : event.mobapptab.text,
+                            'start_time' : subevent.start_date_and_time.isoformat(' '),
+                            'end_time' : subevent.end_date_and_time.isoformat(' '),
+                            'location': subevent.venue,
                             'access_token' : '291744470918252|RCjCxoQPQZdXAiWBiURxP81aUm8',}
             target = urllib.urlopen('https://graph.facebook.com/' + event.fb_event_id, urllib.urlencode(event_data)).read()
         elif not event.fb_event_id :
             # Event needs to be created
-            subevents = SubEvent.objects.filter(event = event)[0]
-            event_data = {  'name' : event.title,
-                            'owner' : settings.FACEBOOK_APP_ID,
-                            'description' : event.tab_set.all()[0].text,
-                            'start_time' : subevents.start_date_and_time.isoformat(' '),
-                            'end_time' : subevents.end_date_and_time.isoformat(' '),
-                            'location': subevents.venue,
-                            'access_token' : '291744470918252|RCjCxoQPQZdXAiWBiURxP81aUm8',}
-            target = urllib.urlopen('https://graph.facebook.com/app/events', urllib.urlencode(event_data)).read()
-            response = json.loads(target)
-            event.fb_event_id = response['id']
-#            event.fb_event_id = '392578310798987'
-            event.save()
+            subevent = SubEvent.objects.filter(event = event)[0]
+            if subevent :
+                event_data = {  'name' : event.title,
+                                'owner' : settings.FACEBOOK_APP_ID,
+                                'description' : event.mobapptab.text,
+                                'start_time' : subevent.start_date_and_time.isoformat(' '),
+                                'end_time' : subevent.end_date_and_time.isoformat(' '),
+                                'location': subevent.venue,
+                                'access_token' : '291744470918252|RCjCxoQPQZdXAiWBiURxP81aUm8',}
+                target = urllib.urlopen('https://graph.facebook.com/app/events', urllib.urlencode(event_data)).read()
+                response = json.loads(target)
+                event.fb_event_id = response['id']
+                event.save()
     event_set=[]
     for c in EVENT_CATEGORIES :
         event_category_set = Event.objects.filter(category=c[0])

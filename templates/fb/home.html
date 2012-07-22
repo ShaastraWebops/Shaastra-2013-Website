@@ -1,35 +1,10 @@
 {% load dajaxice_templatetags %}
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+    {% block header %}
     <head>
         <title>Shaastra 2013</title>
+        {% endblock %}
 	    <script type="text/javascript">
-        function post(){
-            FB.ui({
-                    method: 'feed',
-                    message: 'getting educated about Facebook Connect',
-                    name: 'Shaastra',
-                    caption: 'The Spirit of Engineering',
-                    description: (
-                        'Shaastra is the annual Technical festival of IIT Madras.' +
-                        'And the first such festival to get an ISO certification! ' +
-                        'Visit us @ http://www.shaastra.org'
-                    ),
-                    link: 'http://www.shaastra.org',
-                    picture: 'http://www.shaastra.org/2013/main/test/static/img/shaastralogo.png',
-                    actions: [
-                        { name: 'shaastra', link: 'http://www.shaastra.org/' }
-                    ],
-                    user_message_prompt: 'Share your thoughts about Shaastra'
-                },
-                function(response) {
-                    if (response && response.post_id) {
-                        alert('Post was published.');
-                    } else {
-                        alert('Post was not published.');
-                    }
-                }
-            );
-        }
         function show(event_id){
             $('#content').load('{{site_url}}fb/events/'+event_id,function(){FB.XFBML.parse(document.getElementById('content'));});
         }
@@ -95,13 +70,12 @@
             </ul>
             <ul>
                 {% for event in category %}
-         		<li><a onclick="show({{event.id}});">{{event.title}}</a></li>
-			<li><a href="http://www.facebook.com/events/{{event.fb_event_id}}" target = "_blank">{{event.title}}'s FB Event Page</a></li>
+         		<li><a href="{{site_url}}fb/events/{{event.id}}">{{event.title}}</a></li>
                 {% endfor %}
       		</ul>
             {% endfor %}
             </div>
-            <div id="content" style="float:left;width:80%;">Event Details comes here!
+            <div id="content" style="float:left;width:80%;">{% block content %}Event Details comes here!{% endblock %}
             </div>
             <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
