@@ -62,7 +62,7 @@
 	 <div id="right" class="floatright">
       <div id="form" class="control-group">
         <h1>Register</h1><br/>
-        <form id="form_reg" action="{{ post_url }}" method="POST" class="form-horizontal">
+        <form id="form_reg" action="{{ post_url }}" method="POST" class="">
         <table>
             {% csrf_token %}
             {{ form.as_table }}
@@ -217,6 +217,8 @@ text-align: center;
 	color: #183f5a;
 	background-color: #CCC;
 }
+input,select{
+  width:200px;}
 </style>
 
 
