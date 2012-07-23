@@ -8,6 +8,11 @@
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
         <script type="text/javascript" src="{{site_url}}static/js/college.reg.js"></script>
         <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/scroll.css" />   
+	<script type="text/javascript" src="{{site_url}}static/js/jquery-1.5.2-min.js"></script>
+	<script type="text/javascript" src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script>
+	<script type="text/javascript" src="{{site_url}}static/js/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="{{site_url}}static/js/scroll.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
         	if ($("#facebook_id").attr("value"))
@@ -57,7 +62,7 @@
 	 <div id="right" class="floatright">
       <div id="form" class="control-group">
         <h1>Register</h1><br/>
-        <form id="form_reg" action="{{ post_url }}" method="POST" class="form-horizontal">
+        <form id="form_reg" action="{{ post_url }}" method="POST" class="">
         <table>
             {% csrf_token %}
             {{ form.as_table }}
@@ -95,7 +100,7 @@ body
 	font-family: "monotype";
 	font-size: 14px;
 	letter-spacing: 1px;	
-	overflow:hidden;
+	overflow-x: hidden; 
 	}
 #main_container
 	{
@@ -212,6 +217,8 @@ text-align: center;
 	color: #183f5a;
 	background-color: #CCC;
 }
+input,select{
+  width:200px;}
 </style>
 
 
