@@ -2,11 +2,11 @@ Participant - {{sub.individualsubmission.participant.user.username}}<br/>
 Status:</br>
 selected - {% if sub.selected %} Yes {% else %} No {% endif %}<br/>
 {% for ans in mcqs %}
-{{ans.question.q_number}}.{{ans.question.title}}<br/>
+{{ans.question.q_number}}.{{ans.question.title|safe}}<br/>
 {{ans.choice}}<br/>
 {% endfor %}<br/>
 {% for ans in textqs %}
-{{ans.question.q_number}}.{{ans.question.title}}<br/>
+{{ans.question.q_number}}.{{ans.question.title|safe}}<br/>
 {{ans.text}}<br/>
 {% endfor %}
 <a onclick="Dajaxice.submissions.edit_sub(Dajax.process,{'sub_id':{{sub_id}},'attr':'sub_read', 'assign':'{% if sub.sub_read %}false{% else %}true{% endif %}'})">
