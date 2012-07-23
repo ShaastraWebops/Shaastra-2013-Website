@@ -1,4 +1,4 @@
-{{q.q_number}}.{{q.title}}
+{{q.q_number}}.{{q.title|safe}}
 <form id = "textq_form" action="" method = "POST">{% csrf_token %}
 {{f}}
 <input type="button" value = "Save" onclick="save_edit_subjective({{eve_id}},{{q_id}});" class="btn btn-primary"/>

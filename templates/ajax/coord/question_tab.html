@@ -4,7 +4,7 @@
 <div class="container" style="width:95%;">
 {% for q in mcqs %}
     <div class="boxB" style="width:100%;">
-    {{q.q_number}}.{{q.title}}<br />
+    {{q.q_number}}.{{q.title|safe}}<br />
     {% for option in q.mcqoption_set.all %}
         {{option.option}}:{{option.text}}<br />
     {% endfor %}
@@ -21,7 +21,7 @@
 <div class="container" style="width:95%;">
 {% for q in text_questions %}
    <div class="boxB" style="width:99%;margin-right:1%;">
-    {{q.q_number}}.{{q.title}}<br/>
+    {{q.q_number}}.{{q.title|safe}}<br/>
     <ul class="nav nav-pills tags">
     	<li><a href="#questions/subj/{{q.id}}" class="btn-primary atag">Edit</a></li>
     	<li><a href="#questions" onclick="delete_sub({{q.id}});" class="btn-primary atag">Delete</a></li></ul>

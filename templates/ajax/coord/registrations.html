@@ -1,0 +1,7 @@
+<h4>Registered Participants</h4>
+
+<ol>
+{% for registration in registrations  %}
+<li>{{registration.user.username}}</li>
+{% endfor %}
+</ol>

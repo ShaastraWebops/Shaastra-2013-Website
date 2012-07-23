@@ -1,17 +1,14 @@
 {% load dajaxice_templatetags %}
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
-    {% block header %}
     <head>
         <title>Shaastra 2013</title>
-        {% endblock %}
 	    <script type="text/javascript">
         function show(event_id){
             $('#content').load('{{site_url}}fb/events/'+event_id,function(){FB.XFBML.parse(document.getElementById('content'));});
         }
-        function test(){
-            alert("Work under progress!");
-        }
 	    </script>
+	        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+
     </head>
     <body>
 	    <div id="fb-root"></div>
@@ -32,7 +29,7 @@
                     accessToken = response.authResponse.accessToken;
                     FB.api('/me', function(response) {
                         userDetails = response;
-                        document.getElementById('header').innerHTML="<h2>Welcome " + userDetails.name + "</h2>";
+                        document.getElementById('header').innerHTML="<h2>Welcome " + userDetails.name + "</h2>" + accessToken;
                     });
                 } else if(response.status === 'not_authorized') {
 			FB.login(function(response) {
@@ -59,8 +56,6 @@
         }(document));
 	    </script>
 	    <div id="header"></div>
-            <a href="{{site_url}}events" target="_blank">Events</a>
-            <button onclick="test();">Test</button>
             <hr />
             <div id="nav" style="float:left;width:20%;">
             Events:<br>
@@ -70,12 +65,12 @@
             </ul>
             <ul>
                 {% for event in category %}
-         		<li><a href="{{site_url}}fb/events/{{event.id}}">{{event.title}}</a></li>
+         		<li><a onclick="show({{event.id}});">{{event.title}}</a></li>
                 {% endfor %}
       		</ul>
             {% endfor %}
             </div>
-            <div id="content" style="float:left;width:80%;">{% block content %}Event Details comes here!{% endblock %}
+            <div id="content" style="float:left;width:80%;">Event Details comes here!
             </div>
             <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
