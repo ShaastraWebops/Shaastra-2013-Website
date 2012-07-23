@@ -20,13 +20,13 @@
 		<h4>Announcement</h4>
         {% for u in update %}
             {% if u.event == event and u.category == 'Announcement' %}
-                <p>{{u.subject}} - {{u.description}}<br></p>
+                <p><b>{{u.subject}}<b> - {{u.description}}<br></p>
             {% endif %}
         {% endfor %}<br>
         <h4>Updates</h4>
         {% for u in update %}
             {% if u.event == event and u.category == 'Update' %}
-                <p>{{u.subject}} - {{u.description}}<br></p>
+                <p><b>{{u.subject}}</b> - {{u.description}}<br></p>
             {% endif %}
         {% endfor %}   
     </div>

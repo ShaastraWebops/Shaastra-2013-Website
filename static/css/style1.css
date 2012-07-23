@@ -99,7 +99,7 @@ a,a:active,a:visited,a:link{
 
 
 .boxA{
-   height:300px;
+   height:400px;
    overflow-y:auto;
    overflow-x:hidden;
    border-radius:0px;
@@ -108,6 +108,8 @@ a,a:active,a:visited,a:link{
    box-shadow: 0px 0px 10px rgb(0, 0, 0);
    border-style: solid;
    border-width: 1px;}
+ .boxA > h4{
+ 	text-align:center;}
 .boxB{
    background:#DDD;
    border-color: rgb(238, 238, 236) rgb(169, 172, 165) rgb(186, 189, 182) rgb(238, 238, 236);

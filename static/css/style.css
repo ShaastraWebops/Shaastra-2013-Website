@@ -525,3 +525,8 @@ background:url(../img/footer_sprite.jpg) 0 129px;
   overflow-x:hidden;
   overflow-y:auto;
   }
+  
+ #updates p{
+ 	text-align: left;
+   margin-left:5px; 	
+ 	}

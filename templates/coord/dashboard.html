@@ -397,7 +397,7 @@
         <h4>Updates</h4>
         {% for u in update %}
             {% if u.event == request.user.get_profile.is_coord_of and u.category == 'Update' %}
-                <p>{{u.subject}} - {{u.description}}<a href="#editupdate/{{u.id}}" class="btn btn-info atag">Edit</a><br></p>
+                <p><p>{{u.subject}} - {{u.description}}</p><a href="#editupdate/{{u.id}}" class="btn btn-info atag">Edit</a><br></p>
             {% endif %}
         {% endfor %}           
 
