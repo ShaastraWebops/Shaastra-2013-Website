@@ -60,6 +60,8 @@ class CoordDashboard(BaseView):
     """
     displays the coord dashboard depending on the logged in coords event
     """
+    __name__ = "CoordDashboard"
+    
     def handle_GET(self, request, **kwargs):
         initial = Update.objects.all()
         update = sorted(initial, key=attrgetter('id'), reverse=True)
@@ -74,6 +76,7 @@ class TabFileSubmit(BaseView):
     def handle_POST(self, request, **kwargs):
         from django.conf import settings
         # These were the headers set by the function File() to pass additional data. 
+        #raise Http404
         filename = request.META['HTTP_X_FILE_NAME']
         display_name = request.META['HTTP_X_NAME']
         tab_id = request.META['HTTP_X_TAB_ID']
