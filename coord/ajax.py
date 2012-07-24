@@ -72,10 +72,16 @@ def updateTabs(request):
 def add_tag(request, text):
     dajax = Dajax()
     if text:
-        new_tag = Tag(name = text)
-        new_tag.save()
-        dajax.assign('#addTag','innerHTML',"");
-        dajax.script("$('#msg').show();$('#id_tags option:last').attr('value'," + str(new_tag.id) + ");$('#id_tags_chzn').remove();$('.chzn-select').chosen();");
+        try:
+            new_tag = Tag.objects.get(name = text)
+            dajax.append('#alerts','innerHTML',"<li>'"+text+"' already exists!</li>");
+            dajax.assign('#addTag','innerHTML',"");
+            dajax.script("$('#msg').show();");
+        except:    
+            new_tag = Tag(name = text)
+            new_tag.save()
+            dajax.assign('#addTag','innerHTML',"");
+            dajax.script("$('#msg').show();$('#id_tags option:last').attr('value'," + str(new_tag.id) + ");$('#id_tags').trigger('liszt:updated');");
     else:
         dajax.alert('Tag name required!')
     return dajax.json()
