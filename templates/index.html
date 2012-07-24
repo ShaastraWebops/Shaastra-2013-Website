@@ -174,6 +174,7 @@ function save_edit_mcq(eve_id, q_id){
         </script>
 <link rel="stylesheet" type="text/css" href="static/css/prettify.css" />
 <link rel="stylesheet" type="text/css" href="static/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" href="static/css/jquery.autocomplete.css" /><!--For search-->
 <script src="static/scripts/prettify.js"></script> 
 <script type="text/javascript" src="static/scripts/bootstrap-tour.js"></script>
 <script type="text/javascript" src="static/scripts/jquery.cookie.js"></script>
@@ -189,10 +190,15 @@ function save_edit_mcq(eve_id, q_id){
 	<div id="container">
 	<div id="header">
 		<div id="logo" class="floatleft"></div>
-    		<div id="topright" class="floatright">
+		<div class="floatleft" style="margin-left:80px; margin-top:10px;">
+		    <form action="" onsubmit="return false;">
+		        <input type="text" id="search_query" value="Search..." style="width: 250px;" onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" />
+            </form>
+        </div>
+		    <div id="topright" class="floatright">
     	 		<div id="icons" class="floatleft">
     	 		    <ul class="nav nav-pills">
-        					<li><a href="#events" id="events"><p class="head_text">Events</p></a></li>       			
+    	 		        <li><a href="#events" id="events"><p class="head_text">Events</p></a></li>       			
             			<li><a href="#" id="home"><p class="head_text">Home</p></a></li>		
             			<li><a id="hospitality"><p class="head_text">Hospitality</p></a></li>
             			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
@@ -426,5 +432,54 @@ function save_edit_mcq(eve_id, q_id){
     </div>
     </div>
     </center>
+
+<!--Script to search-->
+<script type='text/javascript' src="static/js/jquery.autocomplete.js"></script>
+<script type="text/javascript">
+function findValue(li) {
+	if( li == null ) return alert("No match!");
+
+	// if coming from an AJAX call, using EventID as sValue
+	if( !!li.extra ) var sValue = li.extra[0];
+
+	// otherwise, using EventName
+	else var sValue = li.selectValue;
+    
+    //event details location	    
+	window.location="#events/"+sValue;
+}
+
+function selectItem(li) {
+	findValue(li);
+}
+
+function formatItem(row) {
+	return row[0];
+}
+
+function lookupLocal(){
+	var oSuggest = $("#search_query")[0].autocompleter;
+
+	oSuggest.findValue();
+
+	return false;
+}
+
+$(document).ready(function() {
+	$("#search_query").autocompleteArray(
+		{{ result_list|safe }},
+		{
+			delay:10,
+			minChars:1,
+			onItemSelect:selectItem,
+			onFindValue:findValue,
+			autoFill:false
+
+		}
+	);
+});
+</script>
+<!--End of Search script-->
+
 </body>
 </html>

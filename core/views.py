@@ -46,7 +46,7 @@ def addevent(request):
             while foo:
                 dest.write( foo )
                 foo = req.read( 1024 )
-        html= "<p>Event Name : "+ str(event)+"<br>Category   :"+ event.category +"<br></p>"
+        html= "<h2><p>Event Name : "+ str(event)+"<br>Category   :"+ event.category +"<br></p></h2>"
         return HttpResponse(html)
     else:
         event_form=AddEventForm()
@@ -74,4 +74,3 @@ def editevent(request,id=0):
     event_form=AddEventForm(instance=Event.objects.get(id=id))
     return render_to_response('ajax/core/editevent.html', locals(), context_instance = RequestContext(request))
     
-

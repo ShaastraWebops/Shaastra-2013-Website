@@ -46,12 +46,15 @@
             var file = fileInput.files[0];
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '{{site_url}}core/addevent/', true);
+            xhr.setRequestHeader('Content-Type','image');
             xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
             xhr.setRequestHeader('X-Event-Id', id );
             xhr.setRequestHeader("X-File-Name", file.name);
             xhr.onreadystatechange = function () {                      // read ajax onreadystatechange responses
                 if ((xhr.readyState == 4) && (xhr.status == 200)){
                     document.getElementById('eventdetails').innerHTML=xhr.responseText;
+                    $('#editevent').hide();
+                    $('#eventdetails').show();
                 }	
                 else if (xhr.readyState == 3){
             $("#uploading").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");                
@@ -226,6 +229,7 @@
             var file = fileInput.files[0];
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '{{site_url}}coord/tabfile/', true);
+            xhr.setRequestHeader('Content-Type','text/plain; charset="utf-8"');
             xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
             xhr.setRequestHeader('X-Tab-Id', id);
             xhr.setRequestHeader("X-File-Name", file.name);
@@ -361,9 +365,13 @@
       		<div name="tabs" class="left span6">
              <ul class="nav nav-pills" id="tabs"></ul>
            </div>
-        		<div id="eventdetails" class="right span6">
+        		<div id="eventdetails" class="right span4">
         			<h2>Event Name : {{event}}<br>
-           			Category   : {{event.category}}<br></h2>           
+           			Category   : {{event.category}}<br>  
+           			</h2>         
+        		</div>
+        		<div class="span2">
+			<center><img src="{{event.events_logo}}" /></center>
         		</div>
         		<div id="editevent" class="right span6">
         		</div>  		
