@@ -92,7 +92,7 @@ def register_post(request):
 							 'activationkey':userprofile.activation_key }))
         mailsender('Your new Shaastra2013 account confirmation', body,'noreply@shaastra.org', [new_user.email,], fail_silently=False)
         request.session['registered_user'] = True
-        msg='A mail has been sent to the mail id u provided. Please activate your account within 48 hours.'
+        msg='A mail has been sent to the mail id you provided. Please activate your account within 48 hours.'
         form = LoginForm()
         return render_to_response('users/login.html', locals(), context_instance = RequestContext(request))
     return render_to_response('users/register.html', locals(), context_instance = RequestContext(request))
