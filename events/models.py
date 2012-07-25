@@ -88,7 +88,7 @@ class TabFile(models.Model):
     title = models.CharField(max_length = 50)
     tab_file = models.FileField(upload_to = upload_handler('Events/TabFiles'))
     tab = models.ForeignKey(Tab, blank = True, null = True)
-    url = models.CharField(max_length = 50)
+    url = models.CharField(max_length = 200)
     
     def delete(self):
         os.remove(self.tab_file.name)

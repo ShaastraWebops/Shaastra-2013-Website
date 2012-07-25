@@ -24,7 +24,7 @@
 {% for sub in subs %}
 <tr>
     <td><input type="checkbox" name="sub_checklist" class="checkbox" value="{{sub.id}}" /></td>
-    <td width="150"><a onclick = "Dajaxice.submissions.view_submission(Dajax.process,{'sub_id':{{sub.id}}})">{{sub.individualsubmission.participant.user.username}}</a</td>
+    <td width="150"><a onclick = "Dajaxice.submissions.view_submission(Dajax.process,{'sub_id':{{sub.id}}})">{{sub.individualsubmission.participant.user.username}}</a></td>
     <td width="120">{% if sub.sub_read %} Yes {% else %} No {% endif %}</td>
     <td width="120">{% if sub.selected%} Yes {% else %} No {% endif %}</td>
     <td width="120">{% if sub.interesting%} Yes {% else %} No {% endif %}</td>
@@ -34,5 +34,5 @@
 </tbody>
 </table>
 </form>
-
+<input type="button" value="Close" class="btn btn-primary" onclick="close_form();" >
 <br>

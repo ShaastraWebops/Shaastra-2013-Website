@@ -190,7 +190,7 @@ function save_edit_mcq(eve_id, q_id){
 	<div id="container">
 	<div id="header">
 		<div id="logo" class="floatleft"></div>
-		<div class="floatleft" style="width:150px;margin-left:10px;">
+		<div class="span2">
 		    <form action="" onsubmit="return false;">
 		        <input type="text" id="search_query" value="Search..." style="width:250px;" onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" />
             </form>
@@ -256,118 +256,6 @@ function save_edit_mcq(eve_id, q_id){
             </div>
         </div>
         {% endfor %}
-<!--      <div id="menu2" class="menu">
-        	<div id="menutopcolour2" class="menutopcolour">
-            </div>
-            <div id="menulist2" class="menulist">
-            <ul id="menuhead2" class="menuhead">
-            	{{event_set.1.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.1 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu3" class="menu">
-        	<div id="menutopcolour3" class="menutopcolour">
-            </div>
-            <div id="menulist3" class="menulist">
-            <ul id="menuhead3" class="menuhead">
-            	{{event_set.2.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.2 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu4" class="menu">
-        	<div id="menutopcolour4" class="menutopcolour">
-            </div>
-            <div id="menulist4" class="menulist">
-            <ul id="menuhead4" class="menuhead">
-            	{{event_set.3.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.3 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu5" class="menu">
-        	<div id="menutopcolour5" class="menutopcolour">
-            </div>
-            <div id="menulist5" class="menulist">
-            <ul id="menuhead5" class="menuhead">
-            	{{event_set.4.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.4 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu6" class="menu">
-        	<div id="menutopcolour6" class="menutopcolour">
-            </div>
-            <div id="menulist6" class="menulist">
-            <ul id="menuhead6" class="menuhead">
-            	{{event_set.5.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.5 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-    	<div id="menu7" class="menu">
-        	<div id="menutopcolour7" class="menutopcolour">
-            </div>
-            <div id="menulist7" class="menulist">
-            <ul id="menuhead7" class="menuhead">
-            	{{event_set.6.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.6 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu8" class="menu">
-        	<div id="menutopcolour8" class="menutopcolour">
-            </div>
-            <div id="menulist8" class="menulist">
-            <ul id="menuhead8" class="menuhead">
-            	{{event_set.7.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.7 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu9" class="menu">
-        	<div id="menutopcolour9" class="menutopcolour">
-            </div>
-            <div id="menulist9" class="menulist">
-            <ul id="menuhead9" class="menuhead">
-            	{{event_set.8.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.8 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>-->
             <div id="social">
     	<div id="fb" class="socialapp">
         </div>

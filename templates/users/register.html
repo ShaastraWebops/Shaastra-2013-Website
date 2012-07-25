@@ -75,7 +75,20 @@
         </ul>
        </form>
      </div>
+       <center> <div id="footer">
+			<div id="navcontainer">
+			<ul>
+			<li><a href="http://www.shaastra.org/2011/main/policy/">privacy policy</a></li>
+    		<li><a href="http://www.shaastra.org/blog/">blog</a></li>
+    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">events</a></li>
+    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">credits</a></li>
+    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">contact</a></li>
+    		</ul>
+	      </div>
+		</div></center>
     </div>
+    
+	<br style="clear:both">
   </div>
 </body>
 <style>
@@ -86,8 +99,7 @@ body
 	min-height: 600px;
 	font-family: "monotype";
 	font-size: 14px;
-	letter-spacing: 1px;
-	overflow: hidden;	
+	letter-spacing: 1px;	
 	}
 #main_container
 	{
@@ -130,23 +142,27 @@ body
    }
 
 #form{
-    width:100%;
-    height:100%;
-   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+   margin-top:10%;
+    max-height:80%;
+    overflow-y:scroll;
+    border-bottom:1px solid #999999;
+    border-top:1px solid #999999;
+    font-family: "monotype";
 	letter-spacing: 1px;	
 	color:#9d261d;
+	background:#ddd;
  }
  
 #msg{
    font-family: "monotype";
 	letter-spacing: 1px;
 	font-size:16px;
-	color:#0000A0;	}
+	color:#049cdb;	}
 #reg{
    font-family: "monotype";
 	letter-spacing: 1px;
 	font-size:16px;
-	color:#0000A0;	}
+	color:#049cdb;	}
 
 #form li{
     text-decoration:none;
@@ -168,6 +184,40 @@ label{
 
 span.helptext{color:#666;
               font-size:12px;}
+#footer
+{
+	width:70%;
+	height:40px;
+	position:absolute;
+	bottom:0%;
+	margin-left:auto;
+	margin-right:auto;
+	background-color:transparent;
+	text-align:center;
+	z-index:100;
+}
+#navcontainer ul
+{
+margin: 12px;
+padding: 0;
+list-style-type: none;
+text-align: center;
+}
+
+#navcontainer ul li { display: inline; }
+#navcontainer ul li a
+{
+	text-decoration:none;
+	color:#183f5a;
+	padding:10px;
+}
+#navcontainer ul li a:hover
+{
+	color: #183f5a;
+	background-color: #CCC;
+}
 </style>
+
+
 </html>
 	 
