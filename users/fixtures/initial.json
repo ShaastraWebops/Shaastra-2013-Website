@@ -1,5 +1,13 @@
 [
     {
+        "model": "auth.group",
+        "pk": 1,
+        "fields": {
+            "name": "Events"
+  
+        }
+    },
+    {
         "model": "auth.user",
         "pk": 1,
         "fields": {
@@ -393,7 +401,8 @@
         "fields": {
             "username": "shaastra",
             "email": "webmaster@shaastra.org",
-            "password": "pbkdf2_sha256$10000$JhYBxenid3J3$nbmsiyYzCvlolGaLKoNOy0lFbtrKmCmZNhZGC1wVF1Y="
+            "password": "pbkdf2_sha256$10000$JhYBxenid3J3$nbmsiyYzCvlolGaLKoNOy0lFbtrKmCmZNhZGC1wVF1Y=",
+            "is_superuser": "1" 
   
         }
     },
@@ -411,7 +420,7 @@
         "model": "events.event",
         "pk": 1,
         "fields": {
-            "title": "air_show",
+            "title": "Air Show",
             "category": "Aerofest"
 
         }
@@ -420,7 +429,7 @@
         "model": "events.event",
         "pk": 2,
         "fields": {
-            "title": "wright_design",
+            "title": "Wright Design",
             "category": "Aerofest"
   
         }
@@ -429,7 +438,7 @@
         "model": "events.event",
         "pk": 3,
         "fields": {
-            "title": "paper_planes",
+            "title": "Paper Planes",
             "category": "Aerofest"
   
         }
@@ -438,7 +447,7 @@
         "model": "events.event",
         "pk": 4,
         "fields": {
-            "title": "aerobotics",
+            "title": "Aerobotics",
             "category": "Aerofest"
   
         }
@@ -447,7 +456,7 @@
         "model": "events.event",
         "pk": 5,
         "fields": {
-            "title": "hackfest",
+            "title": "Hackfest",
             "category": "Coding"
   
         }
@@ -456,7 +465,7 @@
         "model": "events.event",
         "pk": 6,
         "fields": {
-            "title": "opc",
+            "title": "Online Programming Contest",
             "category": "Coding"
   
         }
@@ -465,7 +474,7 @@
         "model": "events.event",
         "pk": 7,
         "fields": {
-            "title": "reverse_coding",
+            "title": "Reverse Coding",
             "category": "Coding"
    
         }
@@ -474,7 +483,7 @@
         "model": "events.event",
         "pk": 8,
         "fields": {
-            "title": "robowars",
+            "title": "Robowars",
             "category": "Design and Build"
   
         }
@@ -483,7 +492,7 @@
         "model": "events.event",
         "pk": 9,
         "fields": {
-            "title": "contraption",
+            "title": "Contraptions",
             "category": "Design and Build"
    
         }
@@ -492,7 +501,7 @@
         "model": "events.event",
         "pk": 10,
         "fields": {
-            "title": "fire_n_ice",
+            "title": "Fire n Ice",
             "category": "Design and Build"
   
         }
@@ -501,7 +510,7 @@
         "model": "events.event",
         "pk": 11,
         "fields": {
-            "title": "robotics",
+            "title": "Robotics",
             "category": "Design and Build"
   
         }
@@ -510,7 +519,7 @@
         "model": "events.event",
         "pk": 12,
         "fields": {
-            "title": "junkyard_wars",
+            "title": "Junkyard Wars",
             "category": "Design and Build"
 
         }
@@ -519,7 +528,7 @@
         "model": "events.event",
         "pk": 13,
         "fields": {
-            "title": "ultimate_engineer",
+            "title": "Ultimate Engineer",
             "category": "Design and Build"
   
         }
@@ -528,7 +537,7 @@
         "model": "events.event",
         "pk": 14,
         "fields": {
-            "title": "project_x",
+            "title": "Project X",
             "category": "Involve"
    
         }
@@ -537,7 +546,7 @@
         "model": "events.event",
         "pk": 15,
         "fields": {
-            "title": "shaastra_cube_open",
+            "title": "Shaastra Cube Open",
             "category": "Involve"
    
         }
@@ -546,7 +555,7 @@
         "model": "events.event",
         "pk": 16,
         "fields": {
-            "title": "puzzle_champ",
+            "title": "Puzzle Champ",
             "category": "Involve"
  
         }
@@ -555,7 +564,7 @@
         "model": "events.event",
         "pk": 17,
         "fields": {
-            "title": "math_modelling",
+            "title": "Math Modelling",
             "category": "Involve"
   
         }
@@ -564,7 +573,7 @@
         "model": "events.event",
         "pk": 18,
         "fields": {
-            "title": "fox_hunt",
+            "title": "Fox Hunt",
             "category": "Involve"
   
         }
@@ -573,7 +582,7 @@
         "model": "events.event",
         "pk": 19,
         "fields": {
-            "title": "shaastra_main_quiz",
+            "title": "Shaastra Main Quiz",
             "category": "Quizzes"
   
         }
@@ -582,7 +591,7 @@
         "model": "events.event",
         "pk": 20,
         "fields": {
-            "title": "htw",
+            "title": "How Things Work",
             "category": "Quizzes"
   
         }
@@ -591,7 +600,7 @@
         "model": "events.event",
         "pk": 21,
         "fields": {
-            "title": "auto_quiz",
+            "title": "Auto Quiz",
             "category": "Quizzes"
          
         }
@@ -600,7 +609,7 @@
         "model": "events.event",
         "pk": 22,
         "fields": {
-            "title": "shaastra_junior_quiz",
+            "title": "Shaastra Junior Quiz",
             "category": "Quizzes"
   
         }
@@ -609,7 +618,7 @@
         "model": "events.event",
         "pk": 23,
         "fields": {
-            "title": "online_events",
+            "title": "Online Events",
             "category": "Online"
   
         }
@@ -618,7 +627,7 @@
         "model": "events.event",
         "pk": 24,
         "fields": {
-            "title": "desmod",
+            "title": "Desmod",
             "category": "Department Flagship"
   
         }
@@ -627,7 +636,7 @@
         "model": "events.event",
         "pk": 25,
         "fields": {
-            "title": "scdc",
+            "title": "SCDC",
             "category": "Department Flagship"
   
         }
@@ -636,7 +645,7 @@
         "model": "events.event",
         "pk": 26,
         "fields": {
-            "title": "robo-oceana",
+            "title": "Robo-Oceana",
             "category": "Department Flagship"
   
         }
@@ -645,7 +654,7 @@
         "model": "events.event",
         "pk": 27,
         "fields": {
-            "title": "game_drome",
+            "title": "Game Drome",
             "category": "Spotlight"
   
         }
@@ -654,7 +663,7 @@
         "model": "events.event",
         "pk": 28,
         "fields": {
-            "title": "idp",
+            "title": "IDP",
             "category": "Spotlight"
   
         }
@@ -663,7 +672,7 @@
         "model": "events.event",
         "pk": 29,
         "fields": {
-            "title": "shaastra_junior",
+            "title": "Shaastra Junior",
             "category": "Spotlight"
   
         }
@@ -672,7 +681,7 @@
         "model": "events.event",
         "pk": 30,
         "fields": {
-            "title": "sustainable_cityscape",
+            "title": "Sustainable Cityscape",
             "category": "Spotlight"
   
         }
@@ -681,7 +690,7 @@
         "model": "events.event",
         "pk": 31,
         "fields": {
-            "title": "case_study",
+            "title": "Case Study",
             "category": "Spotlight"
   
         }
@@ -690,7 +699,7 @@
         "model": "events.event",
         "pk": 32,
         "fields": {
-            "title": "magic",
+            "title": "Magic",
             "category": "Spotlight"
   
         }
@@ -699,7 +708,7 @@
         "model": "events.event",
         "pk": 33,
         "fields": {
-            "title": "e-waste",
+            "title": "E-Waste",
             "category": "Spotlight"
   
         }
@@ -708,7 +717,7 @@
         "model": "events.event",
         "pk": 34,
         "fields": {
-            "title": "face_off",
+            "title": "Face Off",
             "category": "Spotlight"
   
         }
@@ -717,7 +726,7 @@
         "model": "events.event",
         "pk": 35,
         "fields": {
-            "title": "sketch_it",
+            "title": "Sketch It",
             "category": "Workshops"
   
         }
@@ -726,7 +735,7 @@
         "model": "events.event",
         "pk": 36,
         "fields": {
-            "title": "pilot_training",
+            "title": "Pilot Training",
             "category": "Workshops"
   
         }
@@ -735,7 +744,7 @@
         "model": "events.event",
         "pk": 37,
         "fields": {
-            "title": "hovercraft",
+            "title": "Hovercraft",
             "category": "Workshops"
   
         }
@@ -744,7 +753,7 @@
         "model": "events.event",
         "pk": 38,
         "fields": {
-            "title": "research_expo",
+            "title": "Research Expo",
             "category": "Others"
   
         }
@@ -753,7 +762,7 @@
         "model": "events.event",
         "pk": 39,
         "fields": {
-            "title": "lectures",
+            "title": "Lectures",
             "category": "Others"
   
         }
@@ -1106,6 +1115,16 @@
         "fields": {
             "user": "39",
             "is_coord_of": "39"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 40,
+        "fields": {
+            "user": "41",
+            "is_core": "1",
+            "group" : "1"
   
         }
     }
