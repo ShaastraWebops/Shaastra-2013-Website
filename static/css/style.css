@@ -7,6 +7,10 @@ body
 	background-image: -webkit-linear-gradient(left, #434343, #313131);
 	background-image: -webkit-gradient(linear, top left, top right, color-stop(0%, #434343), color-stop(100%, #313131));
 	background-image: -moz-linear-gradient(left, #434343, #313131);
+	/* For Internet Explorer 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#434343, endColorStr=##313131, GradientType=1);
+   /* For Internet Explorer 8 */
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#434343, endColorstr=##313131, GradientType=1);
 }
 
 #container
@@ -48,11 +52,11 @@ body
 
 #topright{
 	height:54px;
-	width:830px;
+	width:810px;
 }
 
 #icons{
-   width:710px;
+   width:690px;
 	height:54px;
 	font-weight:bold;
 	color:#fff;
