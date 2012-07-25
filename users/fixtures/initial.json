@@ -412,7 +412,8 @@
         "fields": {
             "username": "eventscore",
             "email": "tanuj1411@gmail.com",
-            "password":"pbkdf2_sha256$10000$comzrAtwP18E$nqG+rlOmGsVUizeJUyUxhLg37B0B4nZwbKs2/IbB55Y="
+            "password":"pbkdf2_sha256$10000$comzrAtwP18E$nqG+rlOmGsVUizeJUyUxhLg37B0B4nZwbKs2/IbB55Y=",
+            "group" : "1"
   
         }
     },
@@ -1123,8 +1124,8 @@
         "pk": 40,
         "fields": {
             "user": "41",
-            "is_core": "1",
-            "group" : "1"
+            "is_core": "1"
+            
   
         }
     }
