@@ -5,16 +5,15 @@
         {% dajaxice_js_import %}
         <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
         <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
-        
         <script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
         <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dataTables.js" charset = "utf-8"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
-        <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script> 
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/nicEdit.js" charset = "utf-8"></script>
         <link href="{{site_url}}static/css/demo_page.css"  type="text/css" rel="stylesheet" >
         <link href="{{site_url}}static/css/demo_table.css"  type="text/css" rel="stylesheet">
-        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/nicEdit.js" charset = "utf-8"></script>
         <script type="text/javascript" charset = "utf-8">
         // not documenting this for now. Try n see all the templates in the ajax folder. These functions are called from those templates.
         // make a note of all the div ids. See how the divs are being changed dynamically by dajax.
@@ -265,6 +264,8 @@
         {
             $('.bbq-item').hide();
             $('.bbq-default').show();
+            window.location.hash='';
+
         }
         </script>
         <script type="text/javascript" language="javascript">
@@ -335,7 +336,7 @@
          <div class="right" id="links"><ul class="nav nav-pills">
                 {% if request.user.get_profile.is_core %}<li><a href="{{site_url}}core/" class="headerlinks">Core Home</a></li>{% endif %}
                 <li><a href="{{site_url}}user/password_change/" class="headerlinks">Change Password</a></li>
-        		    <li><a href="{{site_url}}DTVPicker/Summary/" class="headerlinks">DTVPicker</a></li>
+<!--        		    <li><a href="{{site_url}}DTVPicker/Summary/" class="headerlinks">DTVPicker</a></li> -->
         		    <li><a href="{{site_url}}user/logout/" class="headerlinks">Logout</a></li></ul>
         	</div>
          </div>
@@ -399,22 +400,23 @@
         </div>
 
         <div id="updates" class="right span4 boxA">
-	    <h4>Announcement</h4>
+	<h4>Announcement</h4>
         {% for u in update %}
             {% if u.event == request.user.get_profile.is_coord_of and u.category == 'Announcement' %}
-                <p>{{u.subject}} - {{u.description}}</p><a href="#editupdate/{{u.id}}" class="btn btn-info atag">Edit</a>
+                <p>{{u.subject}} - {{u.description}} <a style="float:right;" href="#editupdate/{{u.id}}" class="btn-mini btn-info atag">Edit </a>
             {% endif %}
         {% endfor %}<br>
         <h4>Updates</h4>
         {% for u in update %}
             {% if u.event == request.user.get_profile.is_coord_of and u.category == 'Update' %}
-                <p><p>{{u.subject}} - {{u.description}}</p><a href="#editupdate/{{u.id}}" class="btn btn-info atag">Edit</a><br></p>
+                <p><p>{{u.subject}} - {{u.description}} <a style="float:right;" href="#editupdate/{{u.id}}" class="btn-mini btn-info atag">Edit </a>
             {% endif %}
         {% endfor %}           
 
 	</div>
 	</div>
 
-      </div>  
+      </div> 
+        
    </body>
 </html>

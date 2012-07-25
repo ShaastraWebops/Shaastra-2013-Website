@@ -390,16 +390,16 @@ def add_edit_update(request,form="",id=0):
             
         else:
             update_temp.save()
-        dajax.assign("#updates",'innerHTML',"Announcement<br>")
+        dajax.assign("#updates",'innerHTML',"<h4>Announcement</h4>")
         initial = Update.objects.all()
         update = sorted(initial, key=attrgetter('id'), reverse=True)
         for u in update:
             if u.event == event and u.category == 'Announcement':
-                dajax.append("#updates",'innerHTML', u.subject + " - " + u.description + "<br>" + "<a href =" + '#editupdate/' + str(u.id) + '/' + ">" + "Edit" + "</a>")
-        dajax.append("#updates",'innerHTML',"Updates<br>")
+                dajax.append("#updates",'innerHTML',"<p>"+u.subject+" - "+u.description+" <a style='float:right;' href="+'#editupdate/'+str(u.id)+" class='btn-mini btn-info atag'>Edit</a> ")
+        dajax.append("#updates",'innerHTML',"<h4>Updates</h4>")
         for u in update:
             if u.event == event and u.category == 'Update':
-                dajax.append("#updates",'innerHTML', u.subject + " - " + u.description + "<br>" + "<a href =" + '#editupdate/' + str(u.id) + '/' + ">" + "Edit" + "</a>")
+                dajax.append("#updates",'innerHTML',"<p>"+u.subject+" - "+u.description+" <a style='float:right;' href="+'#editupdate/'+str(u.id)+" class='btn-mini btn-info atag'>Edit</a> ")
         dajax.script("window.location.hash='';")
         dajax.script("$('.bbq-item').hide();$('.bbq-default').show();")
     else:
