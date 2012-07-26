@@ -161,3 +161,10 @@ a,a:active,a:visited,a:link{
     font-style:italic;
     font-size:12px;
 }
+
+#updates a{
+  margin-right: 10px;
+}
+
+ .tags > li > a{
+	color: #000;}
