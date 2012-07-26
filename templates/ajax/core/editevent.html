@@ -5,7 +5,7 @@
 </table>
 <br>
 <button class="btn btn-primary" onclick="edit_event({{id}});" >Edit</button>
-<button class="btn btn-primary" onclick="close_event_form();" >Close</button>
+<button class="btn btn-primary" onclick="close_form();" >Close</button>
 <script type="text/javascript">
 function load_add_tag(){
     html="<td><div id='msg'>Add a tag</div><div id='addTag'></div><div><ul id='alerts'></ul></div></td>";
@@ -38,9 +38,5 @@ function add_tag(){
     }
     if (flag)
         $("#alerts").append("<li>Empty strings are not valid tags.</li>");
-}
-function close_event_form(){
-	$('#editevent').hide();
-	$('#eventdetails').show();
 }
 </script>
