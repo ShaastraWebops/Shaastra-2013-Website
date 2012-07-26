@@ -371,9 +371,9 @@ def add_edit_update(request,form="",id=0):
     u_flag=0
     a_flag=0
     for u in initial:
-            if u.event == event and u.category == 'Update':
+            if u.event == event and u.category == 'Update' and u.expired is False:
                 u_flag = u_flag+1
-            elif u.event ==event and u.category == 'Announcement':
+            elif u.event ==event and u.category == 'Announcement' and u.expired is False:
                 a_flag = a_flag+1
     if id:
         update_form = UpdateForm(form, instance=Update.objects.get(id=id))
@@ -394,11 +394,11 @@ def add_edit_update(request,form="",id=0):
         initial = Update.objects.all()
         update = sorted(initial, key=attrgetter('id'), reverse=True)
         for u in update:
-            if u.event == event and u.category == 'Announcement':
+            if u.event == event and u.category == 'Announcement' and u.expired is False:
                 dajax.append("#updates",'innerHTML',"<p>"+u.subject+" - "+u.description+" <a style='float:right;' href="+'#editupdate/'+str(u.id)+" class='btn-mini btn-info atag'>Edit</a> ")
         dajax.append("#updates",'innerHTML',"<h4>Updates</h4>")
         for u in update:
-            if u.event == event and u.category == 'Update':
+            if u.event == event and u.category == 'Update' and u.expired is False:
                 dajax.append("#updates",'innerHTML',"<p>"+u.subject+" - "+u.description+" <a style='float:right;' href="+'#editupdate/'+str(u.id)+" class='btn-mini btn-info atag'>Edit</a> ")
         dajax.script("window.location.hash='';")
         dajax.script("$('.bbq-item').hide();$('.bbq-default').show();")
