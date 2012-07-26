@@ -25,10 +25,10 @@ body
 }
 #header{
 	background:url(../img/texture.jpg);
-	background: rgba(0, 0, 0, 0.5);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50000000,endColorstr=#50000000); 
+	background: rgba(8,8,8,0.5);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50080808,endColorstr=#50080808); 
 	background-repeat:repeat;
-	width:99%;
+	width:100%;
 	margin-right: 0.25%;
 	margin-left: 0.15%;
 	height:66px;
@@ -164,6 +164,20 @@ body
 	width:44px;
 	height:52px;
 }
+#search{
+	margin-left: 30px;
+	margin-top: 10px;
+	width:200px;
+	color:#FFF;
+	height: 30px;
+ }
+
+#search input{
+	width:200px;
+	background-color:#2B2B2B;
+	color:#FFF;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80000000,endColorstr=#80000000);}
+	
 #body
 {
 	width:100%;
