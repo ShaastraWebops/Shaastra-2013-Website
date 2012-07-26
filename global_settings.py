@@ -54,6 +54,7 @@ INSTALLED_APPS = (
     'dtvpicker',
     'dajaxice',
     'dajax',
+#    'recaptcha',
 )
 
 # A sample logging configuration. The only tangible logging

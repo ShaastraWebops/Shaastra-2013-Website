@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.template import Template, Context
 from django.utils.safestring import mark_safe
 from users.models import *
+#from recaptcha import fields as recaptcha_fields
 
 import settings
 
@@ -79,7 +80,9 @@ class AddUserForm(BaseUserForm):
     password_again = forms.CharField  (max_length=30,
                                        widget=forms.PasswordInput,
                                        help_text='Enter the same password that you entered above')
-    
+#    recaptcha      = recaptcha_fields.ReCaptchaField (label='Show us that you are not a bot!',
+#                                                      help_text='Enter the words shown in the space provided')
+
     class Meta(BaseUserForm.Meta):
         fields=('first_name', 'last_name', 'username', 'email', 'password', 'password_again', 'college', 'college_roll', 'gender', 'age', 'branch', 'mobile_number')
         #exclude = {'is_coord','coord_event','shaastra_id','activation_key','key_expires','UID','user',}

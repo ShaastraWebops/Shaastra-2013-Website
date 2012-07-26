@@ -27,14 +27,13 @@ def addevent(request):
     if(request.method=='POST'):
         filename = request.META['HTTP_X_FILE_NAME']
         event_id = request.META['HTTP_X_EVENT_ID']
-#        direc = os.path.join('/home/shaastra/public_html/2013/media/events',event_id)
-        direc = os.path.join('/home/mani/webops/events/shaastra/media/events',event_id)
+        direc = os.path.join('/home/shaastra/public_html/2013/media/events',event_id)
         # note that event and tab IDs and not their titles have been used to create folders so that renaming does not affect the folders
         if not os.path.exists(direc):
             os.makedirs(direc)
         path = os.path.join(direc, filename)
         event = Event.objects.get(id = event_id)
-        event.events_logo = path.split('/shaastra')[1]
+        event.events_logo = path.split('/public_html')[1]
         event.save()
         # get_or_create returns a tuple whose second element is a boolean which is True if it is creating a new object.
         # the first element is the object that has been created/found.
@@ -63,4 +62,3 @@ def eventdashboard(request,id=0):
     profile.is_coord_of = Event.objects.get(id = id)
     profile.save()
     return HttpResponseRedirect(settings.SITE_URL+'coord/')
-
