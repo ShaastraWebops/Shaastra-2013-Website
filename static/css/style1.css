@@ -137,8 +137,8 @@ a,a:active,a:visited,a:link{
 	display:block;
 	color: #183f5a;
 	font-size:16px;
-	margin-left:-40px; }
-	
+	margin-left:-30px;
+	margin-top:12px; }
 #msg:hover{
 	cursor:pointer;
 	text-decoration: underline;}
