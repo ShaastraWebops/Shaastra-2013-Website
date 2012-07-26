@@ -157,3 +157,7 @@ a,a:active,a:visited,a:link{
 	 color:#183f5a;
 	 background:#FFF;
 	 cursor: pointer;}
+.helptext{
+    font-style:italic;
+    font-size:12px;
+}

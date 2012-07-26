@@ -6,6 +6,7 @@ from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from events.models import *
 from coord.forms import *
+from core.forms import AddEventForm
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -233,3 +234,14 @@ def EditUpdate(request,id=0):
     """
     update_form=UpdateForm(instance=Update.objects.get(id=id))
     return render_to_response('ajax/coord/editupdate.html', locals(), context_instance = RequestContext(request))
+
+@login_required(login_url=settings.SITE_URL + 'user/login/')
+def editevent(request,id=0):
+    """
+        This is the home page view of the superuser
+    """
+#    if request.user.get_profile().is_core is False :
+#        return HttpResponseRedirect(settings.SITE_URL)
+    event_form=AddEventForm(instance=Event.objects.get(id=id))
+    return render_to_response('ajax/core/editevent.html', locals(), context_instance = RequestContext(request))
+

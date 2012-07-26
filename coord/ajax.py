@@ -42,16 +42,16 @@ def edit_event(request,upload,form,id):
     if event_form.is_valid():
         event = event_form.save()
         if upload :
-	    dajax.script("upload_events_logo(" + str(event.id) + ");")
-	else:
-	    html= "<p>Event Name : "+ str(event)+"<br>Category   :"+ event.category +"<br></p>"
-	    dajax.assign('#eventdetails','innerHTML',html);
-	    dajax.script("$('#editevent').hide();$('#eventdetails').show();")
+            dajax.script("upload_events_logo(" + str(event.id) + ");")
+        else:
+            html= "<div class='right span2'><h2>"+event.category+"<br>"+str(event)+"</h2></div><div class='span2'><center><img src="+str(event.events_logo)+" /></center></div>"
+            dajax.assign('#eventdetails','innerHTML',html);
+            dajax.script("window.location.hash='';")
     else:
-	template = loader.get_template('ajax/core/editevent.html')
-	html=template.render(RequestContext(request,locals()))
-	dajax.assign("#editevent",'innerHTML',html)
-	dajax.script("load_add_tag();")
+        template = loader.get_template('ajax/core/editevent.html')
+        html=template.render(RequestContext(request,locals()))
+        dajax.assign(".bbq-item",'innerHTML',html)
+        dajax.script("load_add_tag();")
     return dajax.json()
         
 @dajaxice_register

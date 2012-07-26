@@ -45,18 +45,14 @@
             var file = fileInput.files[0];
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '{{site_url}}core/addevent/', true);
-            xhr.setRequestHeader('Content-Type','image');
+            xhr.setRequestHeader('Content-Type','text/plain');
             xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
             xhr.setRequestHeader('X-Event-Id', id );
             xhr.setRequestHeader("X-File-Name", file.name);
             xhr.onreadystatechange = function () {                      // read ajax onreadystatechange responses
                 if ((xhr.readyState == 4) && (xhr.status == 200)){
                     document.getElementById('eventdetails').innerHTML=xhr.responseText;
-                    $('#editevent').hide();
-                    $('#eventdetails').show();
-                }	
-                else if (xhr.readyState == 3){
-            $("#uploading").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");                
+                    window.location.hash='';
                 }
             }
             xhr.send(file);                 // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
@@ -66,12 +62,12 @@
         {
             var fileInput = document.getElementById('id_events_logo');
             var file = fileInput.files[0];
-	    if(file==undefined)
-	    	file=0;
-	    else
-	    	file=1;
-            data=$("#editevent :input").serializeObject();
-            $("#editevent").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            if(file==undefined)
+	            file=0;
+            else
+	            file=1;
+            data=$(".bbq-item :input").serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.coord.edit_event(Dajax.process,{'form':data,'id':id,'upload':file,});
         }
       
@@ -304,6 +300,10 @@
                             createNicEdit();
                         if(window.location.hash.indexOf('questions')>0)
                             createNicEdit1();
+                        if($('.bbq-item').find('.chzn-select'))
+                        {
+                            $(".chzn-select").chosen();
+                        }
                     });
                 }
                 else
@@ -356,29 +356,27 @@
          {% endif %}       		
         		<li><a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a></li>
         		<li><a href="#customtabs">Add a Tab</a></li>
-        		<li><a href="" onclick="$('#editevent').load('{{site_url}}core/editevent/{{event.id}}',function(){$('#eventdetails').hide();$('#editevent').show();$('.chzn-select').chosen();});return false;">Edit Event</a></li>
-                        <li><a href="#update" id='update'> Post update </a><li>
+        		<li><a href="#editevent/{{event.id}}">Edit Event</a></li>
+                <li><a href="#update" id='update'> Post update </a><li>
         </ul>
         </div>
        
        <div class="container-fluid">
-      	<div class="row-fluid">
-      		<div name="tabs" class="left span6">
-             <ul class="nav nav-pills" id="tabs"></ul>
-           </div>
-        		<div id="eventdetails" class="right span4">
-        			<h2>Event Name : {{event}}<br>
-           			Category   : {{event.category}}<br>  
-           			</h2>         
-        		</div>
-        		<div class="span2">
-			<center><img src="{{event.events_logo}}" /></center>
-        		</div>
-        		<div id="editevent" class="right span6">
-        		</div>  		
-      	</div>
-       </div>  
-        
+            <div class="row-fluid">
+                <div name="tabs" class="left span8">
+                    <ul class="nav nav-pills" id="tabs"></ul>
+                </div>
+                <div id="eventdetails">
+                    <div class="right span2">
+	                <h2>{{event.category}}<br>  
+                        {{event}}</h2>         
+                    </div>
+                    <div id="events_logo" class="span2">
+                        <center><img src="{{event.events_logo}}" /></center>
+                    </div>
+                </div>
+            </div>
+       </div>
         <hr/><br>
         <div class="container-fluid">        
         <div class="bbq left" id="detail">
