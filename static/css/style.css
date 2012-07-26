@@ -52,11 +52,11 @@ body
 
 #topright{
 	height:54px;
-	width:810px;
+	width:804px;
 }
 
 #icons{
-   width:690px;
+   width:687px;
 	height:54px;
 	font-weight:bold;
 	color:#fff;
@@ -165,15 +165,15 @@ body
 	height:52px;
 }
 #search{
-	margin-left: 30px;
+	margin-left: 25px;
 	margin-top: 10px;
-	width:200px;
+	width:180px;
 	color:#FFF;
 	height: 30px;
  }
 
 #search input{
-	width:200px;
+	width:180px;
 	background-color:#2B2B2B;
 	color:#FFF;
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80000000,endColorstr=#80000000);}
@@ -416,7 +416,7 @@ background:url(../img/footer_sprite.jpg) 0 -516px;
 {
 	background-color: rgba(00, 58, 67, 0.8);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80003A43,endColorstr=#80003A43);
-	font-size:17px;
+	font-size:16px;
 	text-align: center; 
 }
 #tab4name
@@ -438,7 +438,7 @@ background:url(../img/footer_sprite.jpg) 0 -516px;
 {
 	background-color: rgba(35, 33, 00, 0.8);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80232100,endColorstr=#80232100);
-	font-size:17px;
+	font-size:16px;
 	text-align: center; 
 }
 #tab8name
