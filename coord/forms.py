@@ -64,6 +64,7 @@ class MCQForm(forms.Form):
 class UpdateForm(ModelForm):
     class Meta:
         model = Update
+        exclude = ('date',)
         widgets = {
             'event': forms.HiddenInput(),
         }

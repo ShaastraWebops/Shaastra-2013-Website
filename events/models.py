@@ -25,7 +25,6 @@ EVENT_CATEGORIES = (
 CATEGORY = (
     ("Update", "Update"),
     ("Announcement", "Announcement"),
-    ("Expired", "Expired"),
 )
 
 # Create your models here.
@@ -59,14 +58,15 @@ class Update(models.Model):
     subject = models.CharField(max_length = 25)
     description = models.TextField()
     date = models.DateField(default = datetime.now)
-    category = models.CharField(max_length = 15, choices = CATEGORY)
+    category = models.CharField(max_length = 15, choices = CATEGORY, help_text='You can add 4 updates and 1 announcement. Mark as announcement only if the information is of highest importance')
     event = models.ForeignKey(Event, null=True, blank=True)
+    expired = models.BooleanField(default=False, help_text='Mark an update/announcement as expired if it is no longer relevant or you have more than 4 updates (or 1 announcement) ')
 
 class Tab(models.Model):
     event = models.ForeignKey(Event, blank = True, null = True)
     title = models.CharField(max_length = 30)
     text = models.TextField()
-    pref = models.IntegerField(max_length=2,default = 0, blank=False)
+    pref = models.IntegerField(max_length=2,default = 0, blank=False, help_text='This is the order in which your tabs will be displayed on main site.')
     
 #    def save(self):
 #        cache.set(str(self.id)+"_event", str(self.event), 2592000)

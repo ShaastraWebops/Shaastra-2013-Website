@@ -42,16 +42,16 @@ def edit_event(request,upload,form,id):
     if event_form.is_valid():
         event = event_form.save()
         if upload :
-	    dajax.script("upload_events_logo(" + str(event.id) + ");")
-	else:
-	    html= "<p>Event Name : "+ str(event)+"<br>Category   :"+ event.category +"<br></p>"
-	    dajax.assign('#eventdetails','innerHTML',html);
-	    dajax.script("$('#editevent').hide();$('#eventdetails').show();")
+            dajax.script("upload_events_logo(" + str(event.id) + ");")
+        else:
+            html= "<div class='right span2'><h2>"+event.category+"<br>"+str(event)+"</h2></div><div class='span2'><center><img src="+str(event.events_logo)+" /></center></div>"
+            dajax.assign('#eventdetails','innerHTML',html);
+            dajax.script("window.location.hash='';")
     else:
-	template = loader.get_template('ajax/core/editevent.html')
-	html=template.render(RequestContext(request,locals()))
-	dajax.assign("#editevent",'innerHTML',html)
-	dajax.script("load_add_tag();")
+        template = loader.get_template('ajax/core/editevent.html')
+        html=template.render(RequestContext(request,locals()))
+        dajax.assign(".bbq-item",'innerHTML',html)
+        dajax.script("load_add_tag();")
     return dajax.json()
         
 @dajaxice_register
@@ -371,9 +371,9 @@ def add_edit_update(request,form="",id=0):
     u_flag=0
     a_flag=0
     for u in initial:
-            if u.event == event and u.category == 'Update':
+            if u.event == event and u.category == 'Update' and u.expired is False:
                 u_flag = u_flag+1
-            elif u.event ==event and u.category == 'Announcement':
+            elif u.event ==event and u.category == 'Announcement' and u.expired is False:
                 a_flag = a_flag+1
     if id:
         update_form = UpdateForm(form, instance=Update.objects.get(id=id))
@@ -383,10 +383,10 @@ def add_edit_update(request,form="",id=0):
         update_temp = update_form.save(commit=False)
         update_temp.event = event
         if u_flag >= 4 and update_temp.category == 'Update' and not id:
-            dajax.alert("This event already has 4 updates. Please set atleast one update's category to Expired before adding a new update")
+            dajax.alert("This event already has 4 updates. Please mark atleast one update as Expired before adding a new update")
             
         elif a_flag >= 1 and update_temp.category == 'Announcement' and not id: 
-            dajax.alert("This event already has 1 announcement. Please set the announcement category to Expired before adding a new update")
+            dajax.alert("This event already has 1 announcement. Please mark the announcement as Expired before adding a new update")
             
         else:
             update_temp.save()
@@ -394,11 +394,11 @@ def add_edit_update(request,form="",id=0):
         initial = Update.objects.all()
         update = sorted(initial, key=attrgetter('id'), reverse=True)
         for u in update:
-            if u.event == event and u.category == 'Announcement':
+            if u.event == event and u.category == 'Announcement' and u.expired is False:
                 dajax.append("#updates",'innerHTML',"<p>"+u.subject+" - "+u.description+" <a style='float:right;' href="+'#editupdate/'+str(u.id)+" class='btn-mini btn-info atag'>Edit</a> ")
         dajax.append("#updates",'innerHTML',"<h4>Updates</h4>")
         for u in update:
-            if u.event == event and u.category == 'Update':
+            if u.event == event and u.category == 'Update' and u.expired is False:
                 dajax.append("#updates",'innerHTML',"<p>"+u.subject+" - "+u.description+" <a style='float:right;' href="+'#editupdate/'+str(u.id)+" class='btn-mini btn-info atag'>Edit</a> ")
         dajax.script("window.location.hash='';")
         dajax.script("$('.bbq-item').hide();$('.bbq-default').show();")

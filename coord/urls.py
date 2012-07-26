@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^tabfile/$', TabFileSubmit()),
     url(r'^update/$', AddUpdate),
     url(r'^editupdate/(?P<id>\d+)', EditUpdate),
+    url(r'^editevent/(?P<id>\d+)', editevent, name='editevent'),
     url(r'^$', CoordDashboard()),
 )
 

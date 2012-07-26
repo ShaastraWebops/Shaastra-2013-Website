@@ -33,9 +33,12 @@ def add_event(request,form):
 
     """
     dajax = Dajax()
-    tags=[]
-    tags.append(form['tags'])
-    form['tags']=tags
+    try:
+        tags=[]
+        tags.append(form['tags'])
+        form['tags']=tags
+    except:
+        pass
     event_form = AddEventForm(form)
     if event_form.is_valid():
         event = event_form.save()

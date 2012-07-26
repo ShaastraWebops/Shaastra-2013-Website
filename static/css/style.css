@@ -8,9 +8,9 @@ body
 	background-image: -webkit-gradient(linear, top left, top right, color-stop(0%, #434343), color-stop(100%, #313131));
 	background-image: -moz-linear-gradient(left, #434343, #313131);
 	/* For Internet Explorer 5.5 - 7 */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#434343, endColorStr=##313131, GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#434343, endColorStr=#313131, GradientType=1);
    /* For Internet Explorer 8 */
-  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#434343, endColorstr=##313131, GradientType=1);
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#434343, endColorstr=#313131, GradientType=1);
 }
 
 #container
@@ -25,10 +25,10 @@ body
 }
 #header{
 	background:url(../img/texture.jpg);
-	background: rgba(0, 0, 0, 0.5);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50000000,endColorstr=#50000000); 
+	background: rgba(8,8,8,0.5);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50080808,endColorstr=#50080808); 
 	background-repeat:repeat;
-	width:99%;
+	width:100%;
 	margin-right: 0.25%;
 	margin-left: 0.15%;
 	height:66px;
@@ -164,6 +164,23 @@ body
 	width:44px;
 	height:52px;
 }
+#search{
+	margin-left: 30px;
+	margin-top: 10px;
+	width:200px;
+	color:#FFF;
+	height: 30px;
+ }
+
+#search input{
+	width:200px;
+	background-color:#2B2B2B;
+	color:#FFF;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80000000,endColorstr=#80000000);}
+
+#search input:focus{
+	border-color: #FFF;}
+	
 #body
 {
 	width:100%;
@@ -212,6 +229,7 @@ body
 	background-color:rgba(8,8,8,0.5);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50080808,endColorstr=#50080808); 
 	overflow-y:hidden;
+	overflow-x:auto;
 }
 .menu
 {
@@ -329,7 +347,7 @@ body
 }
 #tabbox
 {
-	width:1320px;
+	width:1500px;
 	height:135px;
 	margin: auto auto auto auto;
 	position:relative;
@@ -344,7 +362,7 @@ background:url(../img/footer_sprite.jpg) 0 -129px;
 }
 #tab3
 {
-background:url(../img/footer_sprite.jpg) 0 -258px;
+background:url(../img/footer_sprite.jpg) 0 387px;
 }
 #tab4
 {
@@ -360,7 +378,7 @@ background:url(../img/footer_sprite.jpg) 0 516px;
 }
 #tab7
 {
-background:url(../img/footer_sprite.jpg) 0 387px;
+background:url(../img/footer_sprite.jpg) 0 -258px;
 }
 #tab8
 {
@@ -414,7 +432,9 @@ background:url(../img/footer_sprite.jpg) 0 129px;
 #tab7name
 {
 	background-color: rgba(35, 33, 00, 0.8);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80232100,endColorstr=#80232100); 
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80232100,endColorstr=#80232100);
+	vertical-align: middle;
+	font-size:13px; 
 }
 #tab8name
 {
@@ -425,6 +445,10 @@ background:url(../img/footer_sprite.jpg) 0 129px;
 {
 	background-color: rgba(00, 00, 00, 0.8);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80000000,endColorstr=#80000000); 
+}
+#tab10name{
+	background-color: rgba(33, 70, 00, 0.8);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80214600,endColorstr=#80214600); 
 }
 #sidemenu
 {
