@@ -100,13 +100,13 @@ mem1=0;mem2=0;mem3=0;mem4=0;mem5=0;mem6=0;mem7=0;mem8=0;mem9=0;mem10=0;
 	      	  else{$("#menu9").css({visibility:"hidden"});mem9=0;}
          });
          $("#tab10").click(function(){
-	           if(mem9==0){
+	           if(mem10==0){
 						$(".menu").css({visibility:"hidden"});	           		
-	           		$("#menu10").css({visibility:"visible"});mem9=1;
+	           		$("#menu10").css({visibility:"visible"});mem10=1;
 	           		if(mem2==1){mem2=0;} else if(mem3==1){mem3=0;} else if(mem4==1){mem4=0;} else if(mem5==1){mem5=0;} else if(mem1==1){mem1=0;}
 	           		else if(mem7==1){mem7=0;} else if(mem8==1){mem8=0;} else if(mem6==1){mem6=0;} else if(mem9==1){mem9=0;}
 	           		}
-	      	  else{$("#menu10").css({visibility:"hidden"});mem9=0;}
+	      	  else{$("#menu10").css({visibility:"hidden"});mem10=0;}
          });
          
          $("#tab1").hover(

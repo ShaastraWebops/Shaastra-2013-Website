@@ -28,7 +28,7 @@ body
 	background: rgba(8,8,8,0.5);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50080808,endColorstr=#50080808); 
 	background-repeat:repeat;
-	width:100%;
+	width:99%;
 	margin-right: 0.25%;
 	margin-left: 0.15%;
 	height:66px;
@@ -331,7 +331,7 @@ body
 .tab
 {
 	border: 1px solid #222222;
-	width:129px;
+	width:115px;
 	height:129px;
 	margin: 15px 7px 20px;
 	float:left;
@@ -347,7 +347,7 @@ body
 }
 #tabbox
 {
-	width:1500px;
+	width:1320px;
 	height:135px;
 	margin: auto auto auto auto;
 	position:relative;
@@ -397,7 +397,6 @@ background:url(../img/footer_sprite.jpg) 0 129px;
 	font-family:Arial, Helvetica, sans-serif;
 	position:absolute;
 	bottom:0px;
-	line-height:2.5em;
 }
 #tab1name
 {
@@ -412,7 +411,9 @@ background:url(../img/footer_sprite.jpg) 0 129px;
 #tab3name
 {
 	background-color: rgba(00, 58, 67, 0.8);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80003A43,endColorstr=#80003A43); 
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80003A43,endColorstr=#80003A43);
+	font-size:17px;
+	text-align: center; 
 }
 #tab4name
 {
@@ -433,8 +434,8 @@ background:url(../img/footer_sprite.jpg) 0 129px;
 {
 	background-color: rgba(35, 33, 00, 0.8);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80232100,endColorstr=#80232100);
-	vertical-align: middle;
-	font-size:13px; 
+	font-size:17px;
+	text-align: center; 
 }
 #tab8name
 {
