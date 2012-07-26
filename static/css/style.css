@@ -171,15 +171,20 @@ body
 	color:#FFF;
 	height: 30px;
  }
-
+a:focus {
+    outline: thin dotted rgb(51, 51, 51);
+    outline-offset: -2px;
+}
 #search input{
 	width:180px;
 	background-color:#2B2B2B;
 	color:#FFF;
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80000000,endColorstr=#80000000);}
+	}
 
 #search input:focus{
-	border-color: #FFF;}
+	border-color: #2B2B2B;
+	background: #FFF;
+	color: #000;}
 	
 #body
 {
