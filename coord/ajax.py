@@ -383,10 +383,10 @@ def add_edit_update(request,form="",id=0):
         update_temp = update_form.save(commit=False)
         update_temp.event = event
         if u_flag >= 4 and update_temp.category == 'Update' and not id:
-            dajax.alert("This event already has 4 updates. Please set atleast one update's category to Expired before adding a new update")
+            dajax.alert("This event already has 4 updates. Please mark atleast one update as Expired before adding a new update")
             
         elif a_flag >= 1 and update_temp.category == 'Announcement' and not id: 
-            dajax.alert("This event already has 1 announcement. Please set the announcement category to Expired before adding a new update")
+            dajax.alert("This event already has 1 announcement. Please mark the announcement as Expired before adding a new update")
             
         else:
             update_temp.save()
