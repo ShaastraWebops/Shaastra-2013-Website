@@ -413,7 +413,7 @@
             "username": "eventscore",
             "email": "tanuj1411@gmail.com",
             "password":"pbkdf2_sha256$10000$comzrAtwP18E$nqG+rlOmGsVUizeJUyUxhLg37B0B4nZwbKs2/IbB55Y=",
-            "group" : "1"
+            "groups" : "1"
   
         }
     },
