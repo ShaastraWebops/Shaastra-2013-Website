@@ -177,6 +177,9 @@ body
 	background-color:#2B2B2B;
 	color:#FFF;
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80000000,endColorstr=#80000000);}
+
+#search input:focus{
+	border-color: #FFF;}
 	
 #body
 {
