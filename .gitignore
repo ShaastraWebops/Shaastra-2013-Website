@@ -3,4 +3,3 @@
 settings.py
 *.sw*
 */*.sw*
-urls.py
