@@ -16,10 +16,31 @@ def EventHandler(request,params=None):
     else:
         rendered = dict()
         status = 200
-        if params == None:
+        if params == None or params.startswith('q='):
+            start = None
+            end = None
+            if params != None and params.startswith('q='):
+                params = params[2:]
+                options = params.split('&')
+                try:
+                    for i in range(0,len(options)):
+                        if options[i].split('=')[0] == "start":
+                            start = options[i].split('=')[1]
+                        if options[i].split('=')[0] == "end":
+                            end = options[i].split('=')[1]
+                except:
+                    pass
+            
             rendered['events'] = list()
             try:
-                events = Event.objects.all()
+                if start == None and end == None:
+                    events = Event.objects.all()
+                elif start == None:
+                    events = Event.objects.all()[:end]
+                elif end == None:
+                    events = Event.objects.all()[int(start)-1:]
+                else:
+                    events = Event.objects.all()[int(start)-1:end]
                 for event in events:
                     rendered['events'].append({'title':event.title,'id':event.pk,'category':event.category})
             except:
