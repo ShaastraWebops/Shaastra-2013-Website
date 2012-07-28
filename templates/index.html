@@ -250,7 +250,7 @@ function save_edit_mcq(eve_id, q_id){
             </ul>
             <ul>
                 {% for event in category %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+         		<li><a href="#events/{{event|slugify}}">{{event.title}}</a></li>
                 {% endfor %}
       		</ul>
             </div>
