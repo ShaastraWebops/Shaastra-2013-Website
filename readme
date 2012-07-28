@@ -1,0 +1,15 @@
+API Usage:
+
+Every response has a special key called "status"
+"status":200 - The query ran OK and output is correct.
+"status":500 - The query had a error.
+
+GET:
+/events/ - Returns list of all the event names,event id, event category
+/events/<event_id> - Returns the mobops "introduction",eventformat" tab text. Also returns updates,announcements description of event - event_id
+/events/q= is a query string parameter. the following queries are allowed:
+page=<pagenumber> : returns the <pagenumber> th events. Each page is 10 entries
+start=<number> : returns the events from <number> th event till end.
+end=<number>: returns the events from beginning till <number> th event
+start=<start>&end=<end> : returns the events from <start> th event till <end> th event
+
