@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import Context, RequestContext
+from django.core.paginator import Paginator
 import re,sys
 import json
 from APIs.models import *
@@ -19,6 +20,7 @@ def EventHandler(request,params=None):
         if params == None or params.startswith('q='):
             start = None
             end = None
+            page=None
             if params != None and params.startswith('q='):
                 params = params[2:]
                 options = params.split('&')
@@ -28,12 +30,20 @@ def EventHandler(request,params=None):
                             start = options[i].split('=')[1]
                         if options[i].split('=')[0] == "end":
                             end = options[i].split('=')[1]
+                        if options[i].split('=')[0] == "page":
+                            page = options[i].split('=')[1]
+
                 except:
                     pass
             
             rendered['events'] = list()
             try:
-                if start == None and end == None:
+                if page!=None:
+                    events = Event.objects.all()
+                    pagedEvents = Paginator(events,10)
+                    events = pagedEvents.page(page).object_list
+                    
+                elif start == None and end == None:
                     events = Event.objects.all()
                 elif start == None:
                     events = Event.objects.all()[:end]
