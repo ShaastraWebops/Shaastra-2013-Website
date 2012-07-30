@@ -332,7 +332,7 @@
     <div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-         	<div class="left" id="wel"><h3>Welcome {{request.user}} | <i>{% if request.user.get_profile.is_core %}{{ request.user.groups.get_query_set.0 }} core{% else %}{{event}} coord {% endif %}</i></h3></div>
+         	<div class="left" id="wel"><h3>Welcome {{request.user}} &nbsp;| &nbsp; {% if request.user.get_profile.is_core %}{{ request.user.groups.get_query_set.0 }} core{% else %}{{event}} coord {% endif %}</h3></div>
          <div class="right" id="links"><ul class="nav nav-pills">
                 {% if request.user.get_profile.is_core %}<li><a href="{{site_url}}core/" class="headerlinks">Core Home</a></li>{% endif %}
                 <li><a href="{{site_url}}user/password_change/" class="headerlinks">Change Password</a></li>
