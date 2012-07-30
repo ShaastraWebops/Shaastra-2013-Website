@@ -202,6 +202,7 @@ a:focus {
 	top:0px;
 	width:175px;;
 	background-color: rgba(8, 8, 8, 0.6);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#60080808,endColorstr=#60080808); 
 	left:70%;
 	visibility: hidden;
 }
@@ -242,6 +243,7 @@ a:focus {
 	bottom:0px;
 	width:250px;
 	background-color: rgba(8, 8, 8, 0.6);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#60080808,endColorstr=#60080808); 
 	left:20%;
 }
 
@@ -467,6 +469,7 @@ background:url(../img/footer_sprite.jpg) 0 -516px;
 	background-color:transparent;
 	float:left;
 	background: rgba(0, 0, 0, 0.1);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#10000000,endColorstr=#10000000); 
 	position:relative;
 }
 #sidemenutitle
@@ -502,6 +505,7 @@ background:url(../img/footer_sprite.jpg) 0 -516px;
 	height:370px;
 	width:420px;
 	background-color:rgba(200,200,200,0.1);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#10C8C8C8,endColorstr=#10C8C8C8);
 	float:left;
 	position:relative;
 }
@@ -549,6 +553,8 @@ background:url(../img/footer_sprite.jpg) 0 -516px;
 #sidemenulist li:hover
 {
 	background-color:rgba(200,200,200,0.1);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#10C8C8C8,endColorstr=#10C8C8C8);
+	
 }
 
 #updates{
@@ -560,6 +566,10 @@ background:url(../img/footer_sprite.jpg) 0 -516px;
    background: rgba(0, 0, 0, 0.7);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#70000000,endColorstr=#70000000); 
   box-shadow: 0px 0px 10px rgb(0, 0, 0);
+  /* For IE 8 */
+		-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=180, Color='#000000')";
+		/* For IE 5.5 - 7 */
+		filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, , Color='#000000');
   overflow-x:hidden;
   overflow-y:auto;
   }
