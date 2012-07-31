@@ -1,4 +1,4 @@
-Add Subjective Question:
+<h3>Add Subjective Question:</h3>
 <form action="" method="POST" id="subjective_form" accept-charset="utf-8">
     {% csrf_token %}
         <table>
@@ -6,4 +6,5 @@ Add Subjective Question:
         </table>
     <input type="button" value="Add" onclick = "save_subjective();" class="btn btn-primary">
     <input type="hidden" id="ques_id" value={{ques_id}} >
+    <input type="button" value="Close" class="btn btn-primary" onclick="close_form();" >
 </form>

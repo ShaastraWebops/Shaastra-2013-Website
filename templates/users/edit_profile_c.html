@@ -1,0 +1,47 @@
+{% load dajaxice_templatetags %}
+<html>
+    <head>
+        <title>Edit Profile</title>
+        {% dajaxice_js_import %}
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/college.reg.js"></script>
+        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
+        <style type="text/css">
+           body{overflow:hidden;}
+				label{color:#FFF;
+				      font-size:14px;}
+				.helptext{color:#999999;
+				         font-size:13px;
+				         font-style:italic;}
+				input , select{width:200px;
+									}
+				#full{height: 100%;}
+				#super{
+					height: 100%;
+				}
+				#msg{
+				  color: #fff;}
+				#reg{color:#999999;}
+		  </style>
+    </head>
+<body>
+   <div id="full" class="container">
+		<div id="super">
+    <form action="" method="POST" class="form-horizontal container">
+        <br>
+    	  <h1>Edit profile:</h1><br>
+        <fieldset>{% csrf_token %}
+        <table>
+            {{ editProfileForm.as_table }}
+        </table><br>
+        <input type="submit" value="Update Profile" class="btn btn-info">
+        <a href="{{site_url}}" class="btn btn-info atag">Home</a>
+        </fieldset>
+    </form>		
+		</div>   
+   </div>
+</body>    
+</html>

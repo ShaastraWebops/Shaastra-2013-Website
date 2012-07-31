@@ -4,6 +4,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <title>Shaastra</title>
+<style type="text/css">
+#cont{
+	position:absolute;
+	top:0px;
+	width:175px;
+	background-color: rgba(8, 8, 8, 0.6);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#60080808,endColorstr=#60080808);
+	left:70%;
+	visibility: hidden;
+}
+
+#cont ul{
+	width: 175px;}
+#cont li a,a:active,a:link{
+	height:13px;
+	color: #FFF;
+	text-decoration: none;
+	} 
+#cont li a:hover{
+	text-decoration: underline;
+	cursor:pointer;	
+	}
+</style>
+<link rel="stylesheet" type="text/css" href="static/css/style.css"  />
+<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css"  />
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 {% load dajaxice_templatetags %}
 {% dajaxice_js_import %}
@@ -59,25 +85,23 @@
 		$(".menu").css('visibility','hidden');
 	}
 </script>
-<script type="text/javascript" src="{{site_url}}static/scripts/hover.js">
-</script>
-		
-<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" />
-<link rel="stylesheet" type="text/css" href="static/css/style.css"  />
-<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css"  />
-<link rel="stylesheet" type="text/css" href="static/css/prettify.css" />
-<link rel="stylesheet" type="text/css" href="static/css/bootstrap-responsive.css" />
-<link rel="stylesheet" type="text/css" href="static/css/eventsstyle.css" />
-<script type="text/javascript" src="static/scripts/bootstrap-tour.js"></script>
-<script type="text/javascript" src="static/scripts/jquery.cookie.js"></script>
-<script type="text/javascript" src="static/scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="static/scripts/tour.js"></script>
-<script src="static/scripts/bootstrap-tooltip.js"></script>
-<script src="static/scripts/bootstrap-popover.js"></script>
-<script src="static/scripts/bootstrap-alert.js"></script>
-<script src="static/scripts/prettify.js"></script> 
+<script type="text/javascript" src="{{site_url}}static/scripts/hover.js"></script>
 <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
 <script type="text/javascript" language="javascript">
+
+function save_edit_subjective(eve_id, q_id){
+    data = $('.bbq-item :input').serializeObject();
+    Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
+    return false;
+}
+
+function save_edit_mcq(eve_id, q_id){
+    data = $('.bbq-item :input').serializeObject();
+    Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
+    return false;
+}
+
         $(function(){
             // Keep a mapping of url-to-container for caching purposes.
             var cache = {
@@ -105,6 +129,23 @@
                                 $( '.bbq-item' ).show();
                             });
                     }
+                    else if(url.split('submission/')[1])
+                    {
+                        if (url.split('ques/')[1])
+                        {
+                            $(".bbq-item #q_detail").load( url, function(){
+                                    // Content loaded, hide "loading" content.
+                                    $( '.bbq-item' ).show();
+                                });
+                        }
+                        else 
+                        {
+                            $(".bbq-item #maincontent").load( url, function(){
+                                    // Content loaded, hide "loading" content.
+                                    $( '.bbq-item' ).show();
+                                });
+                        }
+                    } 
                     else
                     {
                         $(".bbq-default").hide();
@@ -132,6 +173,17 @@
 
         });
         </script>
+<link rel="stylesheet" type="text/css" href="static/css/prettify.css" />
+<link rel="stylesheet" type="text/css" href="static/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" href="static/css/jquery.autocomplete.css" /><!--For search-->
+<script src="static/scripts/prettify.js"></script> 
+<script type="text/javascript" src="static/scripts/bootstrap-tour.js"></script>
+<script type="text/javascript" src="static/scripts/jquery.cookie.js"></script>
+<script type="text/javascript" src="static/scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/scripts/tour.js"></script>
+<script src="static/scripts/bootstrap-tooltip.js"></script>
+<script src="static/scripts/bootstrap-popover.js"></script>
+<script src="static/scripts/bootstrap-alert.js"></script>
 </head> 
 <body>
 <center>
@@ -139,19 +191,25 @@
 	<div id="container">
 	<div id="header">
 		<div id="logo" class="floatleft"></div>
-    		<div id="topright" class="floatright">
+		<div class="span2" id="search">
+		    <form action="" onsubmit="return false;">
+		        <input type="text" id="search_query" value="Search..."  onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" />
+            </form>
+        </div>
+		    <div id="topright" class="floatright">
     	 		<div id="icons" class="floatleft">
     	 		    <ul class="nav nav-pills">
-        					<li><a href="#events" id="events"><p class="head_text">Events</p></a></li>       			
+    	 		        <li><a href="#events" id="events"><p class="head_text">Events</p></a></li>       			
             			<li><a href="#" id="home"><p class="head_text">Home</p></a></li>		
             			<li><a id="hospitality"><p class="head_text">Hospitality</p></a></li>
             			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
+            			<li><a id="forums" href="http://forums.shaastra.org"><p class="head_text">Forums</p></a></li>
                                 {% if user.is_authenticated %}
+                                    <li><a id="set"><p class="head_text">Settings</p></a></li>
                                 		<li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
-                                		<li><a id="set"><p class="head_text">Settings</p></a></li>
                                 {% else %}
                                     <li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li> 
-                                    
+                                     
                                 {% endif %}
             	 </ul>
             </div>
@@ -193,124 +251,12 @@
             </ul>
             <ul>
                 {% for event in category %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
+         		<li><a href="#events/{{event|slugify}}">{{event.title}}</a></li>
                 {% endfor %}
       		</ul>
             </div>
         </div>
         {% endfor %}
-<!--      <div id="menu2" class="menu">
-        	<div id="menutopcolour2" class="menutopcolour">
-            </div>
-            <div id="menulist2" class="menulist">
-            <ul id="menuhead2" class="menuhead">
-            	{{event_set.1.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.1 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu3" class="menu">
-        	<div id="menutopcolour3" class="menutopcolour">
-            </div>
-            <div id="menulist3" class="menulist">
-            <ul id="menuhead3" class="menuhead">
-            	{{event_set.2.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.2 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu4" class="menu">
-        	<div id="menutopcolour4" class="menutopcolour">
-            </div>
-            <div id="menulist4" class="menulist">
-            <ul id="menuhead4" class="menuhead">
-            	{{event_set.3.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.3 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu5" class="menu">
-        	<div id="menutopcolour5" class="menutopcolour">
-            </div>
-            <div id="menulist5" class="menulist">
-            <ul id="menuhead5" class="menuhead">
-            	{{event_set.4.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.4 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu6" class="menu">
-        	<div id="menutopcolour6" class="menutopcolour">
-            </div>
-            <div id="menulist6" class="menulist">
-            <ul id="menuhead6" class="menuhead">
-            	{{event_set.5.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.5 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-    	<div id="menu7" class="menu">
-        	<div id="menutopcolour7" class="menutopcolour">
-            </div>
-            <div id="menulist7" class="menulist">
-            <ul id="menuhead7" class="menuhead">
-            	{{event_set.6.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.6 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu8" class="menu">
-        	<div id="menutopcolour8" class="menutopcolour">
-            </div>
-            <div id="menulist8" class="menulist">
-            <ul id="menuhead8" class="menuhead">
-            	{{event_set.7.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.7 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>
-       	<div id="menu9" class="menu">
-        	<div id="menutopcolour9" class="menutopcolour">
-            </div>
-            <div id="menulist9" class="menulist">
-            <ul id="menuhead9" class="menuhead">
-            	{{event_set.8.0.category}}
-            </ul>
-            <ul>
-                {% for event in event_set.8 %}
-         		<li><a href="#events/{{event.id}}">{{event.title}}</a></li>
-                {% endfor %}
-      		</ul>
-            </div>
-        </div>-->
             <div id="social">
     	<div id="fb" class="socialapp">
         </div>
@@ -327,47 +273,52 @@
     <div id="tabbox">
     	<div id="tab1" class="tab">
          <div id="tab1name" class="tabname">
-            Exhibitions
+            Aerofest
             </div>
         </div>
      <div id="tab2" class="tab">
             <div id="tab2name" class="tabname">
-            Exhibitions
+            Coding
             </div>
         </div>
      <div id="tab3" class="tab">
             <div id="tab3name" class="tabname">
-            Exhibitions
+            Design and Build
             </div>
         </div>
      <div id="tab4" class="tab">
             <div id="tab4name" class="tabname">
-            Exhibitions
+            Involve
             </div>
         </div>
      <div id="tab5" class="tab">
             <div id="tab5name" class="tabname">
-            Exhibitions
+            Quizzes
             </div>
         </div>
      <div id="tab6" class="tab">
             <div id="tab6name" class="tabname">
-            Exhibitions
+            Online
             </div>
         </div>
      <div id="tab7" class="tab">
             <div id="tab7name" class="tabname">
-            Design and Build
+            Department Flagship
             </div>
         </div>
      <div id="tab8" class="tab">
             <div id="tab8name" class="tabname">
-            Exhibitions
+            Spotlight
             </div>
         </div>
      <div id="tab9" class="tab">
             <div id="tab9name" class="tabname">
-            Exhibitions
+            Workshops
+            </div>
+        </div>
+      <div id="tab10" class="tab">
+            <div id="tab10name" class="tabname">
+            Others
             </div>
         </div>
     </div>
@@ -375,5 +326,54 @@
     </div>
     </div>
     </center>
+
+<!--Script to search-->
+<script type='text/javascript' src="static/js/jquery.autocomplete.js"></script>
+<script type="text/javascript">
+function findValue(li) {
+	if( li == null ) return alert("No match!");
+
+	// if coming from an AJAX call, using EventID as sValue
+	if( !!li.extra ) var sValue = li.extra[0];
+
+	// otherwise, using EventName
+	else var sValue = li.selectValue;
+    
+    //event details location	    
+	window.location="#events/"+sValue;
+}
+
+function selectItem(li) {
+	findValue(li);
+}
+
+function formatItem(row) {
+	return row[0];
+}
+
+function lookupLocal(){
+	var oSuggest = $("#search_query")[0].autocompleter;
+
+	oSuggest.findValue();
+
+	return false;
+}
+
+$(document).ready(function() {
+	$("#search_query").autocompleteArray(
+		{{ result_list|safe }},
+		{
+			delay:10,
+			minChars:1,
+			onItemSelect:selectItem,
+			onFindValue:findValue,
+			autoFill:false
+
+		}
+	);
+});
+</script>
+<!--End of Search script-->
+
 </body>
 </html>

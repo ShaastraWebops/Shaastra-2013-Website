@@ -8,6 +8,10 @@
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
         <script type="text/javascript" src="{{site_url}}static/js/college.reg.js"></script>
         <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/scroll.css" />   
+	<script type="text/javascript" src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script>
+	<script type="text/javascript" src="{{site_url}}static/js/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="{{site_url}}static/js/scroll.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
         	if ($("#facebook_id").attr("value"))
@@ -42,21 +46,179 @@
 		    xmlhttp.send(data);
 	    }
 	    </script>
+	  <script>
+		window.onload = function()
+		{
+		window.onresize = function(){window.resizeTo(1366,768)};
+		};
+	</script>
     </head>
     <body>
-        Register<br/>
-        <form id="form_reg" action="{{ post_url }}" method="POST">
+<div id="main_container">
+    <div id="left" class="floatleft">
+		<img id="splash" src="{{site_url}}static/img/diceNtext.png">
+	 </div>
+	 <div id="right" class="floatright">
+      <div id="form" class="control-group">
+        <h1>Register</h1><br/>
+        <form id="form_reg" action="{{ post_url }}" method="POST" class="form-horizontal">
         <table>
             {% csrf_token %}
             {{ form.as_table }}
         </table>
         <input type="hidden" name="facebook_id" id="facebook_id" value="{{ facebook_id }}" />
         <input type="hidden" name="access_token" id="access_token" value="{{access_token}}" />
-        <input type="button" onclick="forumReg();" id="register" class="btn btn-primary">Register</input>
+        <input type="button" onclick="forumReg();" id="register" value="Register" class="btn btn-primary">
         <ul class="nav nav-pills">
-				<li><a href="{{ site_url }}">Home</a></li>        
+				<li><a href="{{ site_url }}" class="btn-inverse">Home</a></li>        
         </ul>
-    </form>
-    </body>
+       </form>
+     </div>
+       <center> <div id="footer">
+			<div id="navcontainer">
+			<ul>
+			<li><a href="http://www.shaastra.org/2011/main/policy/">privacy policy</a></li>
+    		<li><a href="http://www.shaastra.org/blog/">blog</a></li>
+    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">events</a></li>
+    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">credits</a></li>
+    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">contact</a></li>
+    		</ul>
+	      </div>
+		</div></center>
+    </div>
+    
+	<br style="clear:both">
+  </div>
+</body>
+<style>
+body
+	{
+	margin:0;
+	min-width:1200px;
+	min-height: 600px;
+	font-family: "monotype";
+	font-size: 14px;
+	letter-spacing: 1px;	
+	}
+#main_container
+	{
+	width : 100%;
+	height: 100%;
+	
+	}
+.floatleft
+	{
+	float:left;
+	}
+.floatright
+	{
+	float:right;
+	}
+#left
+	{
+	width : 39%;
+	height : 100%;
+	background:url({{site_url}}static/img/bggrade.jpg);
+	margin:0; padding:0;
+	}
+#right
+	{
+	width : 61%;
+	height : 100%;
+	background :#ECECEC;
+	background :-moz-linear-gradient(#F7F7F7, #E3E3E3); /* FF 3.6+ */  
+ 	background:-ms-linear-gradient(#F7F7F7, #E3E3E3); /* IE10 */  
+ 	background:-webkit-gradient(linear, left top, right top, from(#F7F7F7), to(#E3E3E3)); /* Safari 4+, Chrome 2+ */  
+  	/*background:#ECECEC -webkit-linear-gradient(#F7F7F7, #E3E3E3); /* Safari 5.1+, Chrome 10+ */  
+  	background:-o-linear-gradient(#F7F7F7, #E3E3E3);
+  	margin:0; padding:0;
+}
+#splash
+	{
+	display:block;
+	width : 83.4%;
+	margin:18.3% auto 0 auto;
+   }
+
+#form{
+   margin-top:10%;
+    max-height:80%;
+    overflow-y:scroll;
+    font-family: "monotype";
+	letter-spacing: 1px;	
+	color:#9d261d;
+ }
+ 
+#msg{
+   font-family: "monotype";
+	letter-spacing: 1px;
+	font-size:16px;
+	color:#0000CD;	}
+#reg{
+   font-family: "monotype";
+	letter-spacing: 1px;
+	font-size:16px;
+	color:#0000CD;	}
+
+#form li{
+    text-decoration:none;
+    margin-left:-38px;
+    }
+a,a:link,a:active{
+   text-decoration:none;}
+
+label{
+  color:#183f5a;
+  font-family: "monotype";
+	font-size: 14px;
+	letter-spacing: 1px;	
+}
+
+#msg:hover{
+  cursor:pointer;
+  background-color: rgb(204, 204, 204);}
+
+span.helptext{color:#666;
+              font-size:11px;
+              font-style:italic;}
+#footer
+{
+	width:70%;
+	height:40px;
+	position:absolute;
+	bottom:0%;
+	margin-left:auto;
+	margin-right:auto;
+	background-color:transparent;
+	text-align:center;
+	z-index:100;
+}
+#navcontainer ul
+{
+margin: 12px;
+padding: 0;
+list-style-type: none;
+text-align: center;
+}
+
+#navcontainer ul li { display: inline; }
+#navcontainer ul li a
+{
+	text-decoration:none;
+	color:#183f5a;
+	padding:10px;
+}
+#navcontainer ul li a:hover
+{
+	color: #183f5a;
+	background-color: #CCC;
+}
+.errorlist{
+   color:#bd362f;
+   font-size:11px;
+   }
+</style>
+
+
 </html>
 	 

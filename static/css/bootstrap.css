@@ -1490,7 +1490,7 @@ table {
 }
 
 .table {
-  width: 70%;
+  width: 90%;
   margin-bottom: 18px;
   margin-left:10px;
 }
@@ -3329,7 +3329,7 @@ input[type="submit"].btn.btn-mini {
 .nav-pills > .active > a,
 .nav-pills > .active > a:hover {
   color: #ffffff;
-  background-color: #0088cc;
+  background-color: #356FCB;
 }
 
 .nav-stacked > li {

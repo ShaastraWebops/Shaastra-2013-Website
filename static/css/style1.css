@@ -8,12 +8,38 @@ body
 	background-image: -webkit-linear-gradient(left, #434343, #313131);
 	background-image: -webkit-gradient(linear, top left, top right, color-stop(0%, #434343), color-stop(100%, #313131));
 	background-image: -moz-linear-gradient(left, #434343, #313131);
+		/* For Internet Explorer 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#434343, endColorStr=#313131, GradientType=1);
+   /* For Internet Explorer 8 */
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#434343, endColorstr=#313131, GradientType=1);
 }
+
+#super{
+	width:100%;
+	color:#FFF;
+	min-height: 700px;
+	background:rgba(0,0,0,0.5);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50000000,endColorstr=#50000000); 
+}
+
+#full{
+	box-shadow: 0px 0px 10px rgb(0, 0, 0);
+	/* For IE 8 */
+		-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=180, Color='#000000')";
+		/* For IE 5.5 - 7 */
+		filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, , Color='#000000');
+	width:80%;
+  }
+	
 
 #main{
 	box-shadow: 0px 0px 10px rgb(0, 0, 0);
+	/* For IE 8 */
+		-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=180, Color='#000000')";
+		/* For IE 5.5 - 7 */
+		filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, , Color='#000000');
 	min-height:700px;
-	width:80%;
+	width:90%;
 	background: #FFF;
 }
 .right{
@@ -22,37 +48,52 @@ body
 .left{
 	float:left;}
 	
-.navbar-inner .container a,a:link{
+.headerlinks{
 	display:block;
 	color:#999999;
 	line-height: 20px;
+	font-weight: bold;
 }
 
-.navbar-inner .container a:hover{
-	color:#fff;}
+.headerlinks:hover{
+	color:#fff;
+	}
 	
 #wel{
     margin-top:5px;}
 
 #nav a{
 	text-decoration: none;
-	color:#08C;
-	font-weight:bold;}
-
-	
+	color:#A52A2A;
+	font-weight:bold;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	border: 1px solid rgb(221, 221, 221);
+ }
+#nav a:hover{
+	color:#fff;
+	background:#356FCB;
+	border: 1px solid #2F5BB7;}
+#nav a.on{
+   color:#fff;
+	background:#356FCB;
+	border: 1px solid #2F5BB7;}
 .q{
-	text-decoration:none;
-	max-width:90px;
+	max-width:100px;
 	max-height:20px;
 	}
-	
+#nav1 a{
+	text-decoration: none;
+	color:#356FCB;}
+
 #tabs a{
-	text-decoration: none;
-	color:#08C;}
-	
-.tags a,a:link{
-	text-decoration: none;
-	color:#08C;}
+	color:#A52A2A;
+	border: 1px solid rgb(221, 221, 221);
+   text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	}
+#tabs a:hover{
+	color:#fff;
+	background:#356FCB;
+	border: 1px solid #2F5BB7;}
 	
 #eventdetails{
 	font-weight: bold;
@@ -61,7 +102,81 @@ body
 	width:100%;
 	}
 
-table a{
-	color;#08C;
+a,a:active,a:visited,a:link{
 	text-decoration: none;
 }
+
+.tablelinks{
+	color:#08C;
+}
+
+
+.boxA{
+   height:400px;
+   overflow-y:auto;
+   overflow-x:hidden;
+   border-radius:0px;
+   background: none repeat scroll 0px 0px rgb(229, 235, 248);
+   border-color: rgb(238, 238, 236) rgb(169, 172, 165) rgb(186, 189, 182) rgb(238, 238, 236);
+   box-shadow: 0px 0px 10px rgb(0, 0, 0);
+   /* For IE 8 */
+		-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=180, Color='#000000')";
+		/* For IE 5.5 - 7 */
+		filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, , Color='#000000');
+   border-style: solid;
+   border-width: 1px;}
+ .boxA > h4{
+ 	text-align:center;}
+.boxB{
+   background:#DDD;
+   border-color: rgb(238, 238, 236) rgb(169, 172, 165) rgb(186, 189, 182) rgb(238, 238, 236);
+   border-style: solid;
+   border-width: 1px;
+   margin-bottom: 10px;   
+   }
+
+
+#detail textarea{
+	width: 400px;}
+
+.atag{
+	width:40px;
+	max-height:20px;
+	text-align:center;
+	color: #FFF;
+	 }
+#msg{
+	display:block;
+	color: #183f5a;
+	font-size:16px;
+	margin-left:-30px;
+	margin-top:12px; }
+#msg:hover{
+	cursor:pointer;
+	text-decoration: underline;}
+
+#detail{
+	height:500px;
+	overflow-y:auto;
+	overflow-x:hidden;} 
+.filetitle{
+	margin-left:-40px;
+	color:#183f5a;
+	font-size: 16px;
+	font-weight:bold;}
+
+.filetitle:hover{
+	 color:#183f5a;
+	 background:#FFF;
+	 cursor: pointer;}
+.helptext{
+    font-style:italic;
+    font-size:12px;
+}
+
+#updates a{
+  margin-right: 10px;
+}
+
+ .tags > li > a{
+	color: #000;}

@@ -1,23 +1,26 @@
-Participant - {{sub.individualsubmission.participant.user.username}}<br/>
-Status:</br>
-selected - {% if sub.selected %} Yes {% else %} No {% endif %}<br/>
+<h3>Participant - {{sub.individualsubmission.participant.user.username}}<br/>
+<b>Status:</b></br></h3>
+<h4>Selected - {% if sub.selected %} Yes {% else %} No {% endif %}</h4><br/>
 {% for ans in mcqs %}
-{{ans.question.q_number}}.{{ans.question.title}}<br/>
+{{ans.question.q_number}}.{{ans.question.title|safe}}<br/>
 {{ans.choice}}<br/>
+<hr>
 {% endfor %}<br/>
 {% for ans in textqs %}
-{{ans.question.q_number}}.{{ans.question.title}}<br/>
+{{ans.question.q_number}}.{{ans.question.title|safe}}<br/>
 {{ans.text}}<br/>
+<hr>
 {% endfor %}
 <a onclick="Dajaxice.submissions.edit_sub(Dajax.process,{'sub_id':{{sub_id}},'attr':'sub_read', 'assign':'{% if sub.sub_read %}false{% else %}true{% endif %}'})">
-{% if sub.sub_read %}Un{% else %}{% endif %}mark as read
+<h4>{% if sub.sub_read %}Un{% else %}{% endif %}Mark as read</h4>
 </a><br/>
 <a onclick="Dajaxice.submissions.edit_sub(Dajax.process,{'sub_id':{{sub_id}},'attr':'selected', 'assign':'{% if sub.selected %}false{% else %}true{% endif %}'})">
-{% if sub.selected %}Un{% else %}{% endif %}mark as selected
+<h4>{% if sub.selected %}Un{% else %}{% endif %}Mark as selected</h4>
 </a><br/>
 <a onclick="Dajaxice.submissions.edit_sub(Dajax.process,{'sub_id':{{sub_id}},'attr':'interesting', 'assign':'{% if sub.interesting %}false{% else %}true{% endif %}'})">
-{% if sub.interesting %}Un{% else %}{% endif %}mark as interesting
+<h4>{% if sub.interesting %}Un{% else %}{% endif %}Mark as interesting</h4>
 </a>
 <form id="score" action="" method="POST">{% csrf_token %}
-Score: <input name="score" type="text" {% if sub.score %}value="{{sub.score}}"{% endif %}/>
+<h4>Score:</h4> <input name="score" type="text" {% if sub.score %}value="{{sub.score}}"{% endif %}/>
 <input type="button" value = "Update Score"onclick="save_score({{sub.id}});" class="btn btn-primary"/> 
+<input type="button" value="Close" class="btn btn-primary" onclick="close_form();" >

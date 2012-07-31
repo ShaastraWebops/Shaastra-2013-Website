@@ -6,6 +6,8 @@ from events.models import *
 from coord.forms import *
 from core.forms import AddEventForm
 from dajaxice.decorators import dajaxice_register
+from django.core.cache import cache
+from operator import attrgetter
 
 def get_files(tab):
     # gets all files that are related to a particular tab
@@ -40,16 +42,16 @@ def edit_event(request,upload,form,id):
     if event_form.is_valid():
         event = event_form.save()
         if upload :
-	    dajax.script("upload_events_logo(" + str(event.id) + ");")
-	else:
-	    html= "<p>Event Name : "+ str(event)+"<br>Category   :"+ event.category +"<br></p>"
-	    dajax.assign('#eventdetails','innerHTML',html);
-	    dajax.script("$('#editevent').hide();$('#eventdetails').show();")
+            dajax.script("upload_events_logo(" + str(event.id) + ");")
+        else:
+            html= "<div class='right span2'><h2>"+event.category+"<br>"+str(event)+"</h2></div><div class='span2'><center><img src="+str(event.events_logo)+" /></center></div>"
+            dajax.assign('#eventdetails','innerHTML',html);
+            dajax.script("window.location.hash='';")
     else:
-	template = loader.get_template('ajax/core/editevent.html')
-	html=template.render(RequestContext(request,locals()))
-	dajax.assign("#editevent",'innerHTML',html)
-	dajax.script("load_add_tag();")
+        template = loader.get_template('ajax/core/editevent.html')
+        html=template.render(RequestContext(request,locals()))
+        dajax.assign(".bbq-item",'innerHTML',html)
+        dajax.script("load_add_tag();")
     return dajax.json()
         
 @dajaxice_register
@@ -70,10 +72,16 @@ def updateTabs(request):
 def add_tag(request, text):
     dajax = Dajax()
     if text:
-        new_tag = Tag(name = text)
-        new_tag.save()
-        dajax.assign('#addTag','innerHTML',"");
-        dajax.script("$('#msg').show();$('#id_tags option:last').attr('value'," + str(new_tag.id) + ");$('#id_tags_chzn').remove();$('.chzn-select').chosen();");
+        try:
+            new_tag = Tag.objects.get(name = text)
+            dajax.append('#alerts','innerHTML',"<li>'"+text+"' already exists!</li>");
+            dajax.assign('#addTag','innerHTML',"");
+            dajax.script("$('#msg').show();");
+        except:    
+            new_tag = Tag(name = text)
+            new_tag.save()
+            dajax.assign('#addTag','innerHTML',"");
+            dajax.script("$('#msg').show();$('#id_tags option:last').attr('value'," + str(new_tag.id) + ");$('#id_tags').trigger('liszt:updated');");
     else:
         dajax.alert('Tag name required!')
     return dajax.json()
@@ -106,6 +114,10 @@ def save_tab(request, data, tab_id=0):
         unsaved_tab = form.save(commit = False)
         unsaved_tab.event = event
         unsaved_tab.save()
+        cache.set(str(unsaved_tab.id)+"_event", str(unsaved_tab.event), 2592000)
+        cache.set(str(unsaved_tab.id)+"_title", str(unsaved_tab.title), 2592000)
+        cache.set(str(unsaved_tab.id)+"_text", str(unsaved_tab.text), 2592000)
+        cache.set(str(unsaved_tab.id)+"_pref", str(unsaved_tab.pref), 2592000)
         tab = unsaved_tab
         if not tab_id:
             dajax.append('#tabs','innerHTML',"<li><a href="+'#customtabs/'+str(tab.id)+" name ="+str(tab.title)+" id ="+str(tab.id)+" > "+str(tab.title)+"  </a></li>")
@@ -222,8 +234,8 @@ def save_mcq(request, data, ques_id):
     form = MCQForm(mcq, options)
     html = template.render(RequestContext(request,locals()))
     dajax = Dajax()
+    dajax.script("window.location.hash='questions'")
     dajax.script('alert("question saved succesfully");')
-    dajax.assign('.bbq-item', 'innerHTML', html)
     return dajax.json()
     
 @dajaxice_register        
@@ -354,19 +366,44 @@ def add_edit_mobapp_tab(request, form = ''):
 @dajaxice_register
 def add_edit_update(request,form="",id=0):
     dajax = Dajax()
+    event = request.user.get_profile().is_coord_of
+    initial = Update.objects.all()
+    u_flag=0
+    a_flag=0
+    for u in initial:
+            if u.event == event and u.category == 'Update' and u.expired is False:
+                u_flag = u_flag+1
+            elif u.event ==event and u.category == 'Announcement' and u.expired is False:
+                a_flag = a_flag+1
     if id:
         update_form = UpdateForm(form, instance=Update.objects.get(id=id))
     else:
         update_form = UpdateForm(form)
     if update_form.is_valid:
-        update_form.save()
-        dajax.assign("#AddUpdate",'innerHTML',"Updates<br>")
-        update = Update.objects.all()
+        update_temp = update_form.save(commit=False)
+        update_temp.event = event
+        if u_flag >= 4 and update_temp.category == 'Update' and not id:
+            dajax.alert("This event already has 4 updates. Please mark atleast one update as Expired before adding a new update")
+            
+        elif a_flag >= 1 and update_temp.category == 'Announcement' and not id: 
+            dajax.alert("This event already has 1 announcement. Please mark the announcement as Expired before adding a new update")
+            
+        else:
+            update_temp.save()
+        dajax.assign("#updates",'innerHTML',"<h4>Announcement</h4>")
+        initial = Update.objects.all()
+        update = sorted(initial, key=attrgetter('id'), reverse=True)
         for u in update:
-            dajax.append("#AddUpdate",'innerHTML', u.subject + " - " + u.description + "<br>" + "<a href =" + '#editupdate/' + str(u.id) + '/' + ">" + "Edit" + "</a>")
-        dajax.script("$('#updateform').hide();$('#AddUpdate').show();")
+            if u.event == event and u.category == 'Announcement' and u.expired is False:
+                dajax.append("#updates",'innerHTML',"<p>"+u.subject+" - "+u.description+" <a style='float:right;' href="+'#editupdate/'+str(u.id)+" class='btn-mini btn-info atag'>Edit</a> ")
+        dajax.append("#updates",'innerHTML',"<h4>Updates</h4>")
+        for u in update:
+            if u.event == event and u.category == 'Update' and u.expired is False:
+                dajax.append("#updates",'innerHTML',"<p>"+u.subject+" - "+u.description+" <a style='float:right;' href="+'#editupdate/'+str(u.id)+" class='btn-mini btn-info atag'>Edit</a> ")
+        dajax.script("window.location.hash='';")
+        dajax.script("$('.bbq-item').hide();$('.bbq-default').show();")
     else:
         template = loader.get_template('ajax/coord/update.html')
         t=template.render(RequestContext(request,locals()))
-        dajax.assign('#updateform', 'innerHTML', t)
+        dajax.assign('.bbq-item', 'innerHTML', t)
     return dajax.json()

@@ -6,6 +6,7 @@ from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from events.models import *
 from coord.forms import *
+from core.forms import AddEventForm
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -14,6 +15,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import os
 import datetime
 from datetime import date
+from operator import attrgetter
 
 # Create your views here.
 
@@ -59,8 +61,11 @@ class CoordDashboard(BaseView):
     """
     displays the coord dashboard depending on the logged in coords event
     """
+    __name__ = "CoordDashboard"
+    
     def handle_GET(self, request, **kwargs):
-        update = Update.objects.all()
+        initial = Update.objects.all()
+        update = sorted(initial, key=attrgetter('id'), reverse=True)
         event = request.user.get_profile().is_coord_of
         tabs = self.get_tabs(event)
         return render_to_response('coord/dashboard.html', locals(), context_instance = RequestContext(request))
@@ -72,6 +77,7 @@ class TabFileSubmit(BaseView):
     def handle_POST(self, request, **kwargs):
         from django.conf import settings
         # These were the headers set by the function File() to pass additional data. 
+        #raise Http404
         filename = request.META['HTTP_X_FILE_NAME']
         display_name = request.META['HTTP_X_NAME']
         tab_id = request.META['HTTP_X_TAB_ID']
@@ -116,12 +122,22 @@ def get_options(mcq):
         return mcq.mcqoption_set.all()
     except:
         return []
+
+class Registrations(BaseView):
+    """
+        displays the questions tab
+    """
+    def handle_GET(self, request, **kwargs):
+        if request.user.get_profile().is_coord_of.has_questionnaire: return HttpReponse("Click on the link 'Submissions' to view the registrations")
+        registrations = request.user.get_profile().is_coord_of.participants.all()
+        return render_to_response('ajax/coord/registrations.html', locals(), context_instance = RequestContext(request))
         
 class Questions(BaseView):
     """
         displays the questions tab
     """
     def handle_GET(self, request, **kwargs):
+        if not request.user.get_profile().is_coord_of.has_questionnaire: return HttpResponse("This event doesn't have a questionnaire")
         path = request.META['PATH_INFO'].split('/')
         if path[3] == 'mcq':
             try:
@@ -203,21 +219,6 @@ class CustomTabs(BaseView):
             template = 'ajax/coord/tab_form.html'
         return render_to_response(template, locals(), context_instance = RequestContext(request))
 
-class MCQAddEdit(BaseView):
-    """
-    """
-    def handle_GET(self, request, **kwargs):
-        mcq = None
-        ques_id = kwargs['mcq_id']
-        options = []
-        if kwargs['mcq_id']:
-            mcq = ObjectiveQuestion.objects.get(id = kwargs['mcq_id'])
-            options = mcq.mcqoption_set.all()
-        form = MyForm(mcq, options)
-        template = 'ajax/coord/mcq_form.html'
-        return render_to_response(template, locals(), context_instance = RequestContext(request))
-
-@login_required(login_url=settings.SITE_URL + 'user/login/')
 def AddUpdate(request):
     """
     """
@@ -226,7 +227,6 @@ def AddUpdate(request):
     template = 'ajax/coord/update.html'
     return render_to_response(template, locals(), context_instance = RequestContext(request))
 
-
 @login_required(login_url=settings.SITE_URL + 'user/login/')
 def EditUpdate(request,id=0):
     """
@@ -234,4 +234,14 @@ def EditUpdate(request,id=0):
     """
     update_form=UpdateForm(instance=Update.objects.get(id=id))
     return render_to_response('ajax/coord/editupdate.html', locals(), context_instance = RequestContext(request))
+
+@login_required(login_url=settings.SITE_URL + 'user/login/')
+def editevent(request,id=0):
+    """
+        This is the home page view of the superuser
+    """
+#    if request.user.get_profile().is_core is False :
+#        return HttpResponseRedirect(settings.SITE_URL)
+    event_form=AddEventForm(instance=Event.objects.get(id=id))
+    return render_to_response('ajax/core/editevent.html', locals(), context_instance = RequestContext(request))
 

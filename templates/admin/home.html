@@ -3,6 +3,8 @@
     <head>
         <title>Shaastra 2013</title>
 	    {% dajaxice_js_import %}
+	    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
@@ -108,8 +110,6 @@
             updateSummary();
          });
 	    </script>
-    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
-    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
@@ -117,13 +117,13 @@
 			<div class="container">
         		<div class="left" id="wel"><h3>Welcome {{ request.user }}</h3></div>
         		<div class="right" id="links"><ul class="nav nav-pills">
-        			<li><a href="{{site_url}}user/logout/" class="right">Logout</a></li>
+        			<li><a href="{{site_url}}user/logout/" class="right headerlinks">Logout</a></li>
         		</ul></div>
 	</div></div></div>
         <hr/>
       <div class="container" id="main">
         <div id="nav">
-            <ul class="nav nav-pills">
+            <ul class="nav nav-tabs">
             <li><a href="#addgroup">Add group</a></li>
             <li><a href="#addcore">Add Core</a></li></ul>
         </div><br>

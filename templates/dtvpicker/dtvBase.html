@@ -5,8 +5,24 @@
 <title>
     DTV | {% block dtvTitle %}{% endblock %}
 </title>
-<body>
+<style type="text/css">
+a,a:link,a:visited{
+	text-decoration: none;
+	font-size: 16px;
+	font-family: "monotype";
+}
+a:hover{
+	cursor:pointer;}
+
+</style>
+<link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
+</head>
+<body style="background:#fff;">
+   <div class="container">
     <h2> {% block onScreenPageTitle %} {% endblock %} </h2>
-    {% block dtvBody %} {% endblock %}
+    {% block dtvBody %} {% endblock %}<br><br>
+    <a href="{{site_url}}" class="btn btn-info atag" style="width:50px;">Home</a>
+    </div>
 </body>
 </html>

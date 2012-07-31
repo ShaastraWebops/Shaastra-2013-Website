@@ -92,7 +92,7 @@ def register_post(request):
 							 'activationkey':userprofile.activation_key }))
         mailsender('Your new Shaastra2013 account confirmation', body,'noreply@shaastra.org', [new_user.email,], fail_silently=False)
         request.session['registered_user'] = True
-        msg='A mail has been sent to the mail id u provided. Please activate your account within 48 hours.'
+        msg='A mail has been sent to the mail id you provided. Please activate your account within 48 hours.'
         form = LoginForm()
         return render_to_response('users/login.html', locals(), context_instance = RequestContext(request))
     return render_to_response('users/register.html', locals(), context_instance = RequestContext(request))
@@ -133,8 +133,11 @@ def editprofile_get(request):
     values = {  'first_name'       : currentUser.first_name, 
                 'last_name'      : currentUser.last_name,}
     editProfileForm = EditUserForm(instance=currentUserProfile,initial=values)
-    return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))    
-
+    if request.user.get_profile().is_core or request.user.get_profile().is_coord_of :
+        return render_to_response('users/edit_profile_c.html', locals(), context_instance = RequestContext(request))
+    else:
+        return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))
+   
 @login_required(login_url=settings.SITE_URL + "user/login/")
 def editprofile_post(request):
     """
@@ -150,7 +153,10 @@ def editprofile_post(request):
         currentUser.last_name = request.POST['last_name']
         currentUser.save()
         return HttpResponseRedirect (settings.SITE_URL)
-    return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))
+    if request.user.get_profile().is_core or request.user.get_profile().is_coord_of :
+        return render_to_response('users/edit_profile_c.html', locals(), context_instance = RequestContext(request))
+    else:
+        return render_to_response('users/edit_profile.html', locals(), context_instance = RequestContext(request))
 
 def activate (request, a_key = None ): 
     """
@@ -221,3 +227,6 @@ def forgot_password(request):
 def events(request):
     event=Event.objects.all()
     return render_to_response('users/events.html',locals(), context_instance= RequestContext(request))
+    
+def ajax_login_link(request):
+    return HttpResponse('<a href="%suser/login">Click here to login</a>' % settings.SITE_URL)

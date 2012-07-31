@@ -3,22 +3,21 @@
 {% block eventActions %}
     {% ifequal event.lock_status 'locked' %}
         <h4> LOCKED </h4>
-    {% else %}
-        <a href = '{{site_url}}DTVPicker/{{event}}/AddSubEvent/'> Add Sub-Event </a>
-        <br/>
+    {% else %}          
+ 			<a href = '{{site_url}}DTVPicker/{{event}}/AddSubEvent/' class="btn btn-primary atag" style="width:100px;">Add Sub-Event</a>
         {% for event, subEventList in happenings %}    {# There will be only one tuple here (only one event) #}
-            {% ifequal event.lock_status 'not_locked' %}
-                <a href = '{{site_url}}DTVPicker/{{event}}/LockEvent/'> Lock Event </a>
+            {% ifequal event.lock_status 'not_locked' %}                
+                	<a href = '{{site_url}}DTVPicker/{{event}}/LockEvent/'class="btn btn-primary atag" style="width:100px;">Lock Event</a>
             {% endifequal %}
         {% endfor %}
     {% endifequal %}
-    <br/>
+    <br/><br>
 {% endblock %}
 
 {% block subEventActions %}
      {% ifnotequal event.lock_status 'locked' %}
-        <td> <a href = '{{site_url}}DTVPicker/{{event}}/EditSubEvent/{{subEvent}}/'> Edit </a> </td>
-        <td> <a href = '{{site_url}}DTVPicker/{{event}}/DeleteSubEvent/{{subEvent}}/'> Delete </a> </td>
+         <td><a href = '{{site_url}}DTVPicker/{{event}}/EditSubEvent/{{subEvent}}/' class="btn btn-inverse atag" style="height:15px;">Edit</a></td> 
+         <td><a href = '{{site_url}}DTVPicker/{{event}}/DeleteSubEvent/{{subEvent}}/' class="btn btn-inverse atag" style="height:15px;">Delete</a></td> 
     {% endifnotequal %}
 {% endblock %}
 
@@ -26,7 +25,7 @@
     {% for event, subEventList in happenings %}    {# There will be only one tuple here (only one event) #}
         {% ifequal event.lock_status 'unlocked_by_core' %}
             <p>
-                Your event has been unlocked by the cores. <br/>
+                <h4>Your event has been unlocked by the cores.</h4> <br/>
                 Reason:
                 {{ event.unlock_reason }}        
             </p>

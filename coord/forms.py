@@ -1,5 +1,5 @@
 from django import forms
-from events.models import *
+from events.models import*
 from django.forms import ModelForm
 import os
 
@@ -41,6 +41,7 @@ class TabAddForm(ModelForm):
         exclude = ('event',)
         
 class MobAppWriteupForm(ModelForm):
+    text = forms.CharField(widget=forms.Textarea(attrs={'id':'niced_text','height':'200','width':'200'}))
     class Meta:
         model = MobAppTab
         exclude = ('event',)
@@ -62,5 +63,8 @@ class MCQForm(forms.Form):
 
 class UpdateForm(ModelForm):
     class Meta:
-        model = Update 
-
+        model = Update
+        exclude = ('date',)
+        widgets = {
+            'event': forms.HiddenInput(),
+        }

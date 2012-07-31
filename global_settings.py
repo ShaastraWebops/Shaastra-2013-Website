@@ -7,7 +7,7 @@ LANGUAGE_CODE = 'en-us'
 # settings that will be common and useful.
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 PROJECT_DIR_NAME = PROJECT_DIR.split('/')[-1] # used in dajaxice.[my_project_folder_name].events.[ajax_function] (see context_processors.py)
-AJAX_TEMPLATE_DIR = os.path.join(PROJECT_DIR, 'templates/events', 'ajax') # path where ajax templates are stored
+AJAX_TEMPLATE_DIR = os.path.join(PROJECT_DIR, 'templates', 'ajax') # path where ajax templates are stored
 FIXTURES_DIR = os.path.dirname(__file__)
 
 
@@ -36,7 +36,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
-
 ROOT_URLCONF = 'urls'
 
 INSTALLED_APPS = (
@@ -53,9 +52,9 @@ INSTALLED_APPS = (
     'events',
     'submissions',
     'dtvpicker',
-    'fb',
     'dajaxice',
     'dajax',
+    'recaptcha',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -109,9 +108,9 @@ DAJAX_MEDIA_PREFIX='dajax'
 DAJAXICE_MEDIA_PREFIX="dajaxice"
 DAJAXICE_DEBUG = True
 
-EMAIL_HOST='localhost'
-#Default: 'localhost'
-#The host to use for sending e-mail.
-EMAIL_HOST_PASSWORD='$#aastra20iiw3b0ps'
-#Default: '' (Empty string)
-EMAIL_HOST_USER='shaastra'
+CACHES = {
+        'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                            'LOCATION': '127.0.0.1:11211',
+                                }
+}

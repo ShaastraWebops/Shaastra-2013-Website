@@ -27,14 +27,13 @@ def addevent(request):
     if(request.method=='POST'):
         filename = request.META['HTTP_X_FILE_NAME']
         event_id = request.META['HTTP_X_EVENT_ID']
-
         direc = os.path.join('/home/shaastra/public_html/2013/media/events',event_id)
         # note that event and tab IDs and not their titles have been used to create folders so that renaming does not affect the folders
         if not os.path.exists(direc):
             os.makedirs(direc)
         path = os.path.join(direc, filename)
         event = Event.objects.get(id = event_id)
-        event.events_logo = '/2013/media'+path.split('/media')[1]
+        event.events_logo = path.split('/public_html')[1]
         event.save()
         # get_or_create returns a tuple whose second element is a boolean which is True if it is creating a new object.
         # the first element is the object that has been created/found.
@@ -46,7 +45,7 @@ def addevent(request):
             while foo:
                 dest.write( foo )
                 foo = req.read( 1024 )
-        html= "<p>Event Name : "+ str(event)+"<br>Category   :"+ event.category +"<br></p>"
+        html= "<div class='right span2'><h2>"+event.category+"<br>"+str(event)+"</h2></div><div class='span2'><center><img src="+str(event.events_logo)+" /></center></div>"
         return HttpResponse(html)
     else:
         event_form=AddEventForm()
@@ -63,34 +62,3 @@ def eventdashboard(request,id=0):
     profile.is_coord_of = Event.objects.get(id = id)
     profile.save()
     return HttpResponseRedirect(settings.SITE_URL+'coord/')
-
-@login_required(login_url=settings.SITE_URL + 'user/login/')
-def editevent(request,id=0):
-    """
-        This is the home page view of the superuser
-    """
-#    if request.user.get_profile().is_core is False :
-#        return HttpResponseRedirect(settings.SITE_URL)
-    event_form=AddEventForm(instance=Event.objects.get(id=id))
-    return render_to_response('ajax/core/editevent.html', locals(), context_instance = RequestContext(request))
-    
-@login_required(login_url=settings.SITE_URL + 'user/login/')
-def addcoord(request):
-    """
-        This is the home page view of the superuser
-    """
-    if request.user.get_profile().is_core is False :
-        return HttpResponseRedirect(settings.SITE_URL)
-    coord_form=AddCoordForm()
-    return render_to_response('ajax/core/addcoord.html', locals(), context_instance = RequestContext(request))
-
-@login_required(login_url=settings.SITE_URL + 'user/login/')
-def editcoord(request,id=0):
-    """
-        This is the home page view of the superuser
-    """
-    if request.user.get_profile().is_core is False :
-        return HttpResponseRedirect(settings.SITE_URL)
-    coord=User.objects.get(id=id)
-    coord_form = AddCoordForm(instance=coord,initial={'event':coord.get_profile().is_coord_of,})
-    return render_to_response('ajax/core/editcoord.html', locals(), context_instance = RequestContext(request))

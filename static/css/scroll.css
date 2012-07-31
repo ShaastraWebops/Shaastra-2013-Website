@@ -1,0 +1,133 @@
+/****** Scrollpane Details ********/
+
+.jspContainer
+{
+	overflow: hidden;
+	position: relative;
+}
+
+#jspPane
+{
+	position: absolute;
+}
+	#jspPane div{
+		text-align:justify;
+	}
+.jspVerticalBar
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 37px;
+	height: 278px;	
+}
+
+.jspHorizontalBar
+{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 16px;
+	background: red;
+}
+
+.jspVerticalBar *,
+.jspHorizontalBar *
+{
+	margin: 0;
+	padding: 0;
+}
+
+.jspCap
+{
+	display: none;
+}
+
+.jspHorizontalBar .jspCap
+{
+	float: left;
+}
+
+.jspTrack
+{
+	position: relative;
+	background-image:url('../img/scrollPane.png');
+	background-repeat:repeat-y;
+	background-position:11px 0px;
+}
+
+.jspDrag
+{
+	background-image:url('../img/scrollBar.png');
+	background-repeat:no-repeat;
+	background-position:-1px 0px;
+	borders-top:solid 0.2mm grey;
+	borders-bottom:solid 0.2mm grey;
+	position: relative;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+	height:37px;
+}
+
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag
+{
+	float: left;
+	height: 100%;
+}
+
+.jspArrow
+{
+	text-indent: -20000px;
+	display: block;
+	cursor: pointer;
+}
+
+.jspArrow.jspDisabled
+{
+	cursor: default;
+	height: 27px;
+}
+
+.jspVerticalBar .jspArrowUp
+{
+	height: 16px;
+	background-image:url('../img/scrollUpArrow.png');
+	background-repeat:no-repeat;
+	background-position:2px 0px;
+	margin-bottom:-3px;
+}
+.jspVerticalBar .jspArrowDown
+{
+	height: 16px;
+	background-image:url('../img/scrollDownArrow.png');
+	background-repeat:no-repeat;
+	background-position:2px 0px;
+}
+
+.jspHorizontalBar .jspArrow
+{
+	width: 16px;
+	float: left;
+	height: 100%;
+}
+
+.jspVerticalBar .jspArrow:focus
+{
+	outline: none;
+}
+
+.jspCorner
+{
+	background: #eeeef4;
+	float: left;
+	height: 100%;
+}
+
+/* ***** IE6 3 pixel bug  ********/
+* html .jspCorner
+{
+	margin: 0 -3px 0 0;
+}

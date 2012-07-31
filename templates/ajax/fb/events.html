@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>Shaastra>>Events>>{{event}}</title>
+<script type="text/javascript" >
+function rsvp() {
+FB.api('/{{event.fb_event_id}}/attending', 'post', function(response) {
+    if(response!=true)
+    	alert("We are temporarily unable to send an invitation, kindly use the join button in the event's page.");
+});
+}
+</script>
+</HEAD>
+<BODY>
+<div id="sidemenutitle">
+    <a href="http://www.facebook.com/events/{{event.fb_event_id}}" onclick="rsvp();" target = "_blank">{{event.title}}</a>
+</div>
+<div id="maincontent"> {{ event.mobapptab.text|safe }}
+</div>
+<div class="fb-comments" data-href="{{site_url}}fb/events/{{event.id}}" data-num-posts="2" data-width="470"></div>
+<div id="gallery">
+    <div id="picture"><img src="{{event.events_logo}}" /></div>
+</div>
+<div class="fb-facepile" data-href="{{site_url}}fb/events/{{event.id}}" data-max-rows="1" data-width="300"></div><br/>
+    <fb:like href="{{site_url}}fb/events/{{event.id}}" show_faces="false" width="450"></fb:like> 
+</BODY>
+</html>

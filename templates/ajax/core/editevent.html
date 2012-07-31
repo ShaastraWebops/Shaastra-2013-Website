@@ -3,11 +3,12 @@
 <table id="EditEventForm">
     {{ event_form.as_table }}
 </table>
+<br>
 <button class="btn btn-primary" onclick="edit_event({{id}});" >Edit</button>
-<button class="btn btn-primary" onclick="close_event_form();" >Close</button>
+<button class="btn btn-primary" onclick="close_form();" >Close</button>
 <script type="text/javascript">
 function load_add_tag(){
-    html="<td><div id='msg'>Add a tag</div><div id='addTag'></div></td>";
+    html="<td><div id='msg'>Add a tag</div><div id='addTag'></div><div><ul id='alerts'></ul></div></td>";
     $("table tr:eq(2)").append(html);
     $('.chzn-select').chosen();
 } 
@@ -15,17 +16,27 @@ function load_add_tag(){
     	load_add_tag();
        $("#msg").click(function(){
             $(this).hide();
-            $("#addTag").append("<p>Enter Tag Name: <input type='text' id='addTag_text' / ><button type='button' onclick='add_tag();' id='addTag'>Add</button>");
+            $("#alerts").html("");
+            $("#addTag").append("<p>Enter Tags separated by commas: <input type='text' id='addTag_text' / ><button type='button' class='btn btn-primary' onclick='add_tag();' id='addTag'>Add</button>");
        });
     });
 function add_tag(){
-    text = $('#addTag_text').attr('value');
-    $('#id_tags').removeClass('chzn-done');
-    $('#id_tags').append("<option>"+text+"</option>");
-    Dajaxice.coord.add_tag(Dajax.process,{'text':text,});
-}
-function close_event_form(){
-	$('#editevent').hide();
-	$('#eventdetails').show();
+    var options = $('#addTag_text').val().toLowerCase().split(','); //lower case for uniformity. Commas enable multiple tag insertion.
+    var flag=0;
+    for (i in options)
+    {
+        var text = $.trim(options[i]); //remove leading and trailing whitespaces
+        if (text) //if text isn't an empty string
+        {
+            //add to tag to django-chosen multiple-select
+            $('#id_tags').removeClass('chzn-done');
+            $('#id_tags').append("<option>"+text+"</option>");
+            Dajaxice.coord.add_tag(Dajax.process,{'text':text,});
+        }
+        else
+            flag=1;
+    }
+    if (flag)
+        $("#alerts").append("<li>Empty strings are not valid tags.</li>");
 }
 </script>

@@ -1,0 +1,78 @@
+{% load dajaxice_templatetags %}
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+    <head>
+        <title>Shaastra 2013</title>
+	    <script type="text/javascript">
+        function show(event_id){
+            $('#content').load('{{site_url}}fb/events/'+event_id,function(){FB.XFBML.parse(document.getElementById('content'));});
+        }
+	    </script>
+	        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+
+    </head>
+    <body>
+	    <div id="fb-root"></div>
+	    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '291744470918252', // App ID
+                channelUrl : '//www.shaastra.org/2013/main/test/static/fb/channel.html', // Channel File
+                status     : true, // check login status
+                cookie     : true, // enable cookies to allow the server to access the session
+                xfbml      : true  // parse XFBML
+            });
+
+            // Additional initialization code here
+            FB.getLoginStatus(function(response) {
+                if(response.status === 'connected') {
+                    uid = response.authResponse.userID;
+                    accessToken = response.authResponse.accessToken;
+                    FB.api('/me', function(response) {
+                        userDetails = response;
+                        document.getElementById('header').innerHTML="<h2>Welcome " + userDetails.name + "</h2>" + accessToken;
+                    });
+                } else if(response.status === 'not_authorized') {
+			FB.login(function(response) {
+			   if (response.authResponse) {
+			     alert('Welcome!  Fetching your information.... ');
+			     FB.api('/me', function(response) {
+			       alert('Good to see you, ' + response.name + '.');
+			     });
+			   } else {
+			     alert('User cancelled login or did not fully authorize.');
+			   }
+			 });
+                }
+            });	
+        };
+
+        // Load the SDK Asynchronously
+        (function(d){
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document));
+	    </script>
+	    <div id="header"></div>
+            <hr />
+            <div id="nav" style="float:left;width:20%;">
+            Events:<br>
+            {% for category in event_set %}
+            <ul id="menuhead{{forloop.counter}}" class="menuhead">
+            	{{category.0.category}}
+            </ul>
+            <ul>
+                {% for event in category %}
+         		<li><a onclick="show({{event.id}});">{{event.title}}</a></li>
+                {% endfor %}
+      		</ul>
+            {% endfor %}
+            </div>
+            <div id="content" style="float:left;width:80%;">Event Details comes here!
+            </div>
+            <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    </body>
+</html>

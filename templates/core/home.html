@@ -3,6 +3,10 @@
     <head>
         <title>Shaastra 2013 | Core Dashboard</title>
 {% dajaxice_js_import %}
+        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
+			<link href="{{site_url}}static/css/demo_page.css"  type="text/css" rel="stylesheet" >
+        <link href="{{site_url}}static/css/demo_table.css"  type="text/css" rel="stylesheet">
         <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
@@ -10,34 +14,11 @@
         <link href="{{site_url}}static/css/chosen.css"  type="text/css" rel="stylesheet">
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
         <script type="text/javascript">
-        function upload_events_logo(id)
-        {
-            var fileInput = document.getElementById('id_events_logo');
-            var file = fileInput.files[0];
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '{{site_url}}core/addevent/', true);
-            xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
-            xhr.setRequestHeader('X-Event-Id', id );
-            xhr.setRequestHeader("X-File-Name", file.name);
-            xhr.onreadystatechange = function () {                      // read ajax onreadystatechange responses
-                if ((xhr.readyState == 4) && (xhr.status == 200)){
-                    alert(xhr.responseText);
-                    updateSummary();
-                }
-            }
-            xhr.send(file);                 // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
-        }
         function add_event()
         {
-            var fileInput = document.getElementById('id_events_logo');
-            var file = fileInput.files[0];
-	    if(file==undefined)
-	    	file=0;
-	    else
-	    	file=1;
             data=$(".bbq-item :input").serializeObject();
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.core.add_event(Dajax.process,{'form':data,'upload':file,});
+            Dajaxice.core.add_event(Dajax.process,{'form':data,});
         }
                
         function del_event(id)
@@ -49,28 +30,7 @@
                 Dajaxice.core.del_event(Dajax.process,{'id':id});
             }
         }
-        
-        function add_coord()
-        {
-            data=$(".bbq-item :input").serializeObject();
-            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.core.add_edit_coord(Dajax.process,{'form':data});
-        }
-        function edit_coord(id)
-        {
-            data=$(".bbq-item :input").serializeObject();
-            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.core.add_edit_coord(Dajax.process,{'form':data,'id':id});
-        }
-        function del_coord(id)
-        {
-            var press=confirm("Confirm delete?");
-            if (press==true)
-            {
-                $(".bbq-item").append("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-                Dajaxice.core.del_coord(Dajax.process,{'id':id});
-            }
-        }
+               
         function updateSummary()
         {
             $("#summary").html("Loading please wait..<br><img src='{{site_url}}static/img/loading.gif'>");            
@@ -126,8 +86,6 @@
           
         });
         </script>
-    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
-    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
     </head>
     <body>
     <div class="navbar navbar-fixed-top">
@@ -135,23 +93,23 @@
 			<div class="container">
          	<div class="left" id="wel"><h3>Welcome {{ request.user }} | <i>{{ request.user.groups.get_query_set.0 }} core</i></h3></div>
 				<div class="right" id="links"><ul class="nav nav-pills">
-				    <li><a href="{{site_url}}core/">Core Home</a></li>
-            	    <li><a href="{{site_url}}user/editprofile/">Edit Profile</a></li>
-                    <li><a href="{{site_url}}user/password_change/">Change Password</a></li>
-        			<li><a href="{{site_url}}DTVPicker/Summary/">DTVPicker</a></li>
-        			<li><a href="{{site_url}}user/logout/">Logout</a></li></ul></div>
+				    <li><a href="{{site_url}}core/" class="headerlinks">Core Home</a></li>
+            	    <li><a href="{{site_url}}user/editprofile/" class="headerlinks">Edit Profile</a></li>
+                    <li><a href="{{site_url}}user/password_change/" class="headerlinks">Change Password</a></li>
+<!--        			<li><a href="{{site_url}}DTVPicker/Summary/" class="headerlinks">DTVPicker</a></li> -->
+        			<li><a href="{{site_url}}user/logout/" class="headerlinks">Logout</a></li></ul></div>
         </div></div></div><hr/>
 		<div class="container" id="main">        
         <div id="nav">
-        		<ul class="nav nav-pills">
-            	<li><a href="#addevent">Add Event</a></li>
-            	<li><a href="#addcoord">Add Coord</a></li></ul>
+        		<ul class="nav nav-tabs">
+            	<li><a href="#addevent">Add Event</a></li></ul>
+            	
         </div><br>
         <div class="container-fluid">
 			<div class="row-fluid">
-            <div id="summary" class="span6">
+            <div id="summary" class="span7">
             </div>
-            <div class="span6">
+            <div class="span5">
             <div class="bbq" id="space">              
                 <div class="bbq-content">
 

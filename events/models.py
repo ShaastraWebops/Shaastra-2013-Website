@@ -10,23 +10,21 @@ from django.core.cache import cache
 import os
 
 EVENT_CATEGORIES = (
-	("Category1", "Aerofest"),
-	("Category2", "Coding"),
-	("Category3", "Design and Build"),
-	("Category4", "Involve"),
-	("Category5", "Quizzes"),
-	("Category6", "Online"),
-	("Category7", "Department Flagship"),
-	("Category8", "Spotlight"),
-	("Category9", "Workshops"),
-        ("Category10", "Others"),
+	("Aerofest", "Aerofest"),
+	("Coding", "Coding"),
+	("Design and Build", "Design and Build"),
+	("Involve", "Involve"),
+	("Quizzes", "Quizzes"),
+	("Online", "Online"),
+	("Department Flagship", "Department Flagship"),
+	("Spotlight", "Spotlight"),
+	("Workshops", "Workshops"),
+        ("Others", "Others"),
 )
 
-PRIORITIES = (
-    ("High", "High"),
-    ("Medium", "Medium"),
-    ("Low", "Low"),
-    ("Expired", "Expired"),
+CATEGORY = (
+    ("Update", "Update"),
+    ("Announcement", "Announcement"),
 )
 
 # Create your models here.
@@ -39,37 +37,43 @@ class Tag(models.Model):
     name = models.CharField(max_length = 25)
     def __unicode__(self,*args,**kwargs):
         return self.name
-    
-class Update(models.Model):
-    subject = models.CharField(max_length = 25)
-    description = models.TextField()
-    date = models.DateField(default = datetime.now)
-    priority = models.CharField(max_length = 15, choices = PRIORITIES)
 
 class Event(models.Model):
     title = models.CharField(max_length = 30)
     events_logo = models.FileField(upload_to = upload_handler('Events'), blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank = True, null = True)
     category = models.CharField(max_length=50,choices= EVENT_CATEGORIES)
-    updates = models.ManyToManyField(Update, blank = True, null = True)
     lock_status = models.CharField(default = 'cannot_be_locked', max_length = 20)
     unlock_reason = models.TextField(default = '', blank = True)
+    registrable_online = models.BooleanField(default=False, help_text='Can participants register online?')
+    begin_registration = models.BooleanField(default=False, help_text='Mark as True to begin online registration')
+    has_questionnaire = models.BooleanField(default = False, help_text='Will the participant have to answer a questionnaire?')
+    fb_event_id = models.CharField(max_length=20, null = True) 
+    updated = models.BooleanField(default = False)
     
     def __unicode__(self):
         return '%s' % self.title
+    
+class Update(models.Model):
+    subject = models.CharField(max_length = 25)
+    description = models.TextField()
+    date = models.DateField(default = datetime.now)
+    category = models.CharField(max_length = 15, choices = CATEGORY, help_text='You can add 4 updates and 1 announcement. Mark as announcement only if the information is of highest importance')
+    event = models.ForeignKey(Event, null=True, blank=True)
+    expired = models.BooleanField(default=False, help_text='Mark an update/announcement as expired if it is no longer relevant or you have more than 4 updates (or 1 announcement) ')
 
 class Tab(models.Model):
     event = models.ForeignKey(Event, blank = True, null = True)
     title = models.CharField(max_length = 30)
     text = models.TextField()
-    pref = models.IntegerField(max_length=2,default = 0, blank=False)
+    pref = models.IntegerField(max_length=2,default = 0, blank=False, help_text='This is the order in which your tabs will be displayed on main site.')
     
-    def save(self):
-        cache.set(str(self.id)+"_event", str(self.event), 2592000)
-        cache.set(str(self.id)+"_title", str(self.title), 2592000)
-        cache.set(str(self.id)+"_text", str(self.text), 2592000)
-        cache.set(str(self.id)+"_pref", str(self.pref), 2592000)
-        super(Tab, self).save(*args, **kwargs)
+#    def save(self):
+#        cache.set(str(self.id)+"_event", str(self.event), 2592000)
+#        cache.set(str(self.id)+"_title", str(self.title), 2592000)
+#        cache.set(str(self.id)+"_text", str(self.text), 2592000)
+#        cache.set(str(self.id)+"_pref", str(self.pref), 2592000)
+#        super(Tab, self).save(*args, **kwargs)
         
     def delete(self):
         file_list = self.tabfile_set.all()
@@ -84,7 +88,7 @@ class TabFile(models.Model):
     title = models.CharField(max_length = 50)
     tab_file = models.FileField(upload_to = upload_handler('Events/TabFiles'))
     tab = models.ForeignKey(Tab, blank = True, null = True)
-    url = models.CharField(max_length = 50)
+    url = models.CharField(max_length = 200)
     
     def delete(self):
         os.remove(self.tab_file.name)

@@ -1,6 +1,7 @@
 <center><b>Event Details</center></b><br/>      
 <form id="AddEventForm" action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    <i> Please add the event logo once the event is created using Edit Event in the dashboard</i>
     <table>
         {{ event_form.as_table }}
     </table>
