@@ -4,3 +4,7 @@
 local_settings.py
 *~
 *.sw*
+*.png
+*.jpg
+*.gif
+
