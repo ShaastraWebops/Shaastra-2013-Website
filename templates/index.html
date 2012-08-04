@@ -124,7 +124,7 @@ function save_edit_mcq(eve_id, q_id){
                         }
                         else 
                         {
-                            $(".bbq-item #maincontent").load( url, function(){
+                            $(".bbq-item #tabtext").load( url, function(){
                                     // Content loaded, hide "loading" content.
                                     $( '.bbq-item' ).show();
                                 });
@@ -141,12 +141,14 @@ function save_edit_mcq(eve_id, q_id){
                         // want to change this based on your needs.
                         $( '.bbq-item' ).load( url.split('/tab')[0], function(){
                                 // Content loaded, hide "loading" content.
-                                $(".bbq-item #maincontent").load( url, function(){
-                                // Content loaded, hide "loading" content.
-                                $( '.bbq-item' ).show();
+                                $(".bbq-item #tabtext").load( url, function(){
+                                        // Content loaded, hide "loading" content.
+                                        $( '.bbq-item' ).show();
+                                    });
                                 $( '.bbq-loading' ).hide();
+                                $(".bbq-item").show();
                                 resetabs();
-                                });
+
                             });
                     }
                 }
@@ -157,6 +159,7 @@ function save_edit_mcq(eve_id, q_id){
                 }
             })
             $(window).trigger('hashchange');
+
         });
         </script>
 <link rel="stylesheet" type="text/css" href="static/css/prettify.css" />
@@ -170,6 +173,7 @@ function save_edit_mcq(eve_id, q_id){
 <script src="static/scripts/bootstrap-tooltip.js"></script>
 <script src="static/scripts/bootstrap-popover.js"></script>
 <script src="static/scripts/bootstrap-alert.js"></script>
+<link rel="Shortcut Icon" href="{{site_url}}favicon.ico">
 </head> 
 <body>
 <center>
@@ -185,8 +189,8 @@ function save_edit_mcq(eve_id, q_id){
 		    <div id="topright" class="floatright">
     	 		<div id="icons" class="floatleft">
     	 		    <ul class="nav nav-pills">
-    	 		        <li><a href="#events" id="events"><p class="head_text">Events</p></a></li>       			
-            			<li><a href="#" id="home"><p class="head_text">Home</p></a></li>		
+    	 		    	  <li><a href="#" id="home"><p class="head_text">Home</p></a></li>
+    	 		        <li><a href="#events" id="events"><p class="head_text">Events</p></a></li>       					
             			<li><a id="hospitality"><p class="head_text">Hospitality</p></a></li>
             			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
             			<li><a id="forums" href="http://forums.shaastra.org"><p class="head_text">Forums</p></a></li>
@@ -227,6 +231,7 @@ function save_edit_mcq(eve_id, q_id){
                 </div>
                 </div>
         </div>
+        
         {% for category in event_set %}
        	<div id="menu{{forloop.counter}}"class="menu">
         	<div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
@@ -241,8 +246,9 @@ function save_edit_mcq(eve_id, q_id){
                 {% endfor %}
       		</ul>
             </div>
-        </div>
+        </div><
         {% endfor %}
+       
             <div id="social">
     	<div id="fb" class="socialapp">
         </div>

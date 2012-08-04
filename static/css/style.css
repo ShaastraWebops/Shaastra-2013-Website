@@ -49,6 +49,9 @@ body
 	height:50px;
 }
 
+#logo:hover{
+	cursor:pointer;}
+
 #topright{
 	height:54px;
 	width:804px;
@@ -239,16 +242,14 @@ a:focus {
 {
 	position:absolute;
 	bottom:0px;
-	width:250px;
+	width:200px;
 	background-color: rgba(8, 8, 8, 0.6);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#60080808,endColorstr=#60080808); 
-	left:20%;
 }
-
 .menutopcolour
 {
 	background-color:#1197ff;
-	width:250px;
+	width:200px;
 	height:20px;
 }
 .menulist
@@ -258,7 +259,7 @@ a:focus {
 }
 .menulist ul
 {
-	width:230px;
+	width:180px;
 	margin:5px auto auto auto;
 	padding:0;
 	color:#1197ff;
@@ -577,3 +578,13 @@ background:url(../img/footer_sprite.jpg) 0 -516px;
  	text-align: left;
    margin-left:5px;
  	}
+#menu1{margin-left:2%;}
+#menu2{margin-left:8%;}
+#menu3{margin-left:18%;}
+#menu4{margin-left:28%;}
+#menu5{margin-left:38%;}
+#menu6{margin-left:48%;}
+#menu7{margin-left:56%;}
+#menu8{margin-left:66%;}
+#menu9{margin-left:76%;}
+#menu10{margin-left:84%;}
