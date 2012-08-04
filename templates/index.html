@@ -103,12 +103,6 @@ function save_edit_mcq(eve_id, q_id){
 }
 
         $(function(){
-            // Keep a mapping of url-to-container for caching purposes.
-            var cache = {
-                // If url is '' (no fragment), display this div's content.
-                '': $('.bbq-default').first()
-            };
-
             // Bind an event to window.onhashchange that, when the history state changes,
             // gets the url from the hash and displays either our cached content or fetches
             // new content to be displayed.
@@ -119,17 +113,7 @@ function save_edit_mcq(eve_id, q_id){
                 var url = $.param.fragment();
                 if(url)
                 {
-                    if(url.split('/tab')[1])
-                    {
-                        // Load external content via AJAX. Note that in order to keep this
-                        // example streamlined, only the content in .infobox is shown. You'll
-                        // want to change this based on your needs.
-                        $(".bbq-item #maincontent").load( url, function(){
-                                // Content loaded, hide "loading" content.
-                                $( '.bbq-item' ).show();
-                            });
-                    }
-                    else if(url.split('submission/')[1])
+                    if(url.split('submission/')[1])
                     {
                         if (url.split('ques/')[1])
                         {
@@ -155,11 +139,14 @@ function save_edit_mcq(eve_id, q_id){
                         // Load external content via AJAX. Note that in order to keep this
                         // example streamlined, only the content in .infobox is shown. You'll
                         // want to change this based on your needs.
-                        $( '.bbq-item' ).load( url, function(){
+                        $( '.bbq-item' ).load( url.split('/tab')[0], function(){
                                 // Content loaded, hide "loading" content.
+                                $(".bbq-item #maincontent").load( url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '.bbq-item' ).show();
                                 $( '.bbq-loading' ).hide();
-                                $(".bbq-item").show();
                                 resetabs();
+                                });
                             });
                     }
                 }
@@ -170,7 +157,6 @@ function save_edit_mcq(eve_id, q_id){
                 }
             })
             $(window).trigger('hashchange');
-
         });
         </script>
 <link rel="stylesheet" type="text/css" href="static/css/prettify.css" />
@@ -251,7 +237,7 @@ function save_edit_mcq(eve_id, q_id){
             </ul>
             <ul>
                 {% for event in category %}
-         		<li><a href="#events/{{event|slugify}}">{{event.title}}</a></li>
+         		<li><a href="#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}">{{event.title}}</a></li>
                 {% endfor %}
       		</ul>
             </div>
