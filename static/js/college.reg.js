@@ -33,4 +33,7 @@ $(document).ready(function(){
         Dajaxice.users.college_register(Dajax.process);            
    });
  });
-
+function close_reg(){
+    $("#reg").html("");
+    $("#msg").show();
+}
