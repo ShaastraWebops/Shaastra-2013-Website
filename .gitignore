@@ -4,4 +4,3 @@
 local_settings.py
 *~
 *.sw*
-static/img/*

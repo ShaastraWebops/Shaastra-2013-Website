@@ -5,7 +5,9 @@
             {% for tab in tab_set %}
      		<li><a href="#events/{{event|slugify}}/tab/{{tab.title|slugify}}">{{tab.title}}</a></li>
             {% endfor %}
-            <li><a href="#submission/{{event.id}}">Register</a></li>
+            {% if event.registrable_online == 1 %}
+                <li><a href="#submission/{{event.id}}">Register</a></li>
+            {% endif %}
         </ul>
     </div>
     <div id="maincontent">

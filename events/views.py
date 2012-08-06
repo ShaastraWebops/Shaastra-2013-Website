@@ -17,6 +17,7 @@ def events(request, event_name):
 
 def tabs(request, event_name, tab_name):
     event_name = event_name.replace("-"," ")
+    tab_name = tab_name.replace("-"," ")
     event = Event.objects.get(title=event_name)
     tab_set = event.tab_set.all()
     tab = tab_set.get(title = tab_name)

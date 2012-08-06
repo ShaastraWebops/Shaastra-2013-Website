@@ -31,6 +31,11 @@
 <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css"  />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" >
+	jQuery(function($) {
+	 $(".menu").css({visibility:"hidden"});
+	 });
+</script>
 {% load dajaxice_templatetags %}
 {% dajaxice_js_import %}
     <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
@@ -68,10 +73,10 @@
 			}
 		}
 	}
-	window.onload = function() {
+   	window.onload = function() {
 		resetabs();
 		setContent();
-	}
+	}	
 	window.onresize = function() {
 		setContent();
 		resetabs();
@@ -124,7 +129,7 @@ function save_edit_mcq(eve_id, q_id){
                         }
                         else 
                         {
-                            $(".bbq-item #tabtext").load( url, function(){
+                            $(".bbq-item #maincontent").load( url, function(){
                                     // Content loaded, hide "loading" content.
                                     $( '.bbq-item' ).show();
                                 });
@@ -133,6 +138,7 @@ function save_edit_mcq(eve_id, q_id){
                     else
                     {
                         $(".bbq-default").hide();
+                        $(".bbq-item").hide();
 
                         // Show "loading" content while AJAX content loads.
                         $( '.bbq-loading' ).show();
@@ -141,14 +147,12 @@ function save_edit_mcq(eve_id, q_id){
                         // want to change this based on your needs.
                         $( '.bbq-item' ).load( url.split('/tab')[0], function(){
                                 // Content loaded, hide "loading" content.
-                                $(".bbq-item #tabtext").load( url, function(){
+                                $(".bbq-item #maincontent").load( url, function(){
                                         // Content loaded, hide "loading" content.
-                                        $( '.bbq-item' ).show();
+	                                $( '.bbq-loading' ).hide();
+	                                $(".bbq-item").show();
+	                                resetabs();
                                     });
-                                $( '.bbq-loading' ).hide();
-                                $(".bbq-item").show();
-                                resetabs();
-
                             });
                     }
                 }
@@ -173,14 +177,14 @@ function save_edit_mcq(eve_id, q_id){
 <script src="static/scripts/bootstrap-tooltip.js"></script>
 <script src="static/scripts/bootstrap-popover.js"></script>
 <script src="static/scripts/bootstrap-alert.js"></script>
-<link rel="Shortcut Icon" href="{{site_url}}favicon.ico">
+<link rel="shortcut icon" href="static/img/favicon.ico" />
 </head> 
 <body>
 <center>
     
 	<div id="container">
 	<div id="header">
-		<div id="logo" class="floatleft"></div>
+		<div id="logo" class="floatleft" onclick="window.location.href='{{site_url}}'"></div>
 		<div class="span2" id="search">
 		    <form action="" onsubmit="return false;">
 		        <input type="text" id="search_query" value="Search..."  onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" />
