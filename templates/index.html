@@ -242,7 +242,7 @@ function save_edit_mcq(eve_id, q_id){
             </ul>
             <ul>
                 {% for event in category %}
-         		<li><a href="#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}">{{event.title}}</a></li>
+         		<li><p onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</p></li>
                 {% endfor %}
       		</ul>
             </div>
