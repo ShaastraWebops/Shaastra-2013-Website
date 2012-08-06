@@ -17,12 +17,8 @@
 
 #cont ul{
 	width: 175px;}
-#cont li a,a:active,a:link{
-	height:13px;
-	color: #FFF;
-	text-decoration: none;
-	} 
-#cont li a:hover{
+
+#cont li p:hover{
 	text-decoration: underline;
 	cursor:pointer;	
 	}
@@ -216,8 +212,8 @@ function save_edit_mcq(eve_id, q_id){
 	<div id="body">
 	      <div id="cont" class="menulist">
             <ul>
-         		 <li><a href="{{site_url}}user/password_change/"><p class="head_text">Change Password</p></a></li>
-         		 <li><a href="{{site_url}}user/editprofile/"><p class="head_text">Edit Profile</p></a></li> 
+         		 <li><p class="head_text" onclick="window.location.href='{{site_url}}user/password_change/'">Change Password</p></li>
+         		 <li><p class="head_text" onclick="window.location.href='{{site_url}}user/editprofile/'">Edit Profile</p></li>  
       		</ul>
         </div>			
         <div id="content" class="bbq" style="width:100%">
