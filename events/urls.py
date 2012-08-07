@@ -8,9 +8,8 @@ from events.views import *
 
 urlpatterns = patterns('',
                        url(r'^sampark/',
-                       direct_to_template,
-                       {'template': 'events/sampark_home.html'},
-                       name='event-home'), url(r'^(?P<event_name>.+)/tab/(?P<tab_name>.+)',
+                       sampark,
+                       name='sampark-home'), url(r'^(?P<event_name>.+)/tab/(?P<tab_name>.+)',
                        tabs, name='tab-list'),
                        url(r'^(?P<event_name>.+)', events,
                        name='event-list'), url(r'^$',

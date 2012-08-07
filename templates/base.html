@@ -235,7 +235,7 @@ function save_edit_mcq(eve_id, q_id){
                 {% endblock %}
                 </div>
         </div>
-        
+        {% block events_menu %}
         {% for category in event_set %}
        	<div id="menu{{forloop.counter}}"class="menu">
         	<div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
@@ -250,8 +250,9 @@ function save_edit_mcq(eve_id, q_id){
                 {% endfor %}
       		</ul>
             </div>
-        </div><
+        </div>
         {% endfor %}
+        {% endblock %}
        
             <div id="social">
     	<div id="fb" class="socialapp">
