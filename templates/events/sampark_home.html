@@ -40,17 +40,17 @@
             <ul>
                 {% if city == 'Bengaluru' %}
                 {% for event in bengaluruevents %}
-         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title.split('_')[1]}}</li>
+         		    <li onclick="window.location.href='{{site_url}}#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Hyderabad' %}
                 {% for event in hyderabadevents %}
-         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
+         		    <li onclick="window.location.href='{{site_url}}#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Pune' %}
                 {% for event in puneevents %}
-         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
+         		    <li onclick="window.location.href='{{site_url}}#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
                 {% endfor %}
                 {% endif %}
       		</ul>
