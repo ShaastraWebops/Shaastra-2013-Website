@@ -24,8 +24,8 @@
 	cursor:pointer;	
 	}
 </style>
-<link rel="stylesheet" type="text/css" href="static/css/style.css"  />
-<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css"  />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/style.css"  />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap.css"  />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" >
@@ -163,18 +163,18 @@ function save_edit_mcq(eve_id, q_id){
 
         });
         </script>
-<link rel="stylesheet" type="text/css" href="static/css/prettify.css" />
-<link rel="stylesheet" type="text/css" href="static/css/bootstrap-responsive.css" />
-<link rel="stylesheet" type="text/css" href="static/css/jquery.autocomplete.css" /><!--For search-->
-<script src="static/scripts/prettify.js"></script> 
-<script type="text/javascript" src="static/scripts/bootstrap-tour.js"></script>
-<script type="text/javascript" src="static/scripts/jquery.cookie.js"></script>
-<script type="text/javascript" src="static/scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="static/scripts/tour.js"></script>
-<script src="static/scripts/bootstrap-tooltip.js"></script>
-<script src="static/scripts/bootstrap-popover.js"></script>
-<script src="static/scripts/bootstrap-alert.js"></script>
-<link rel="shortcut icon" href="static/img/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/prettify.css" />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/jquery.autocomplete.css" /><!--For search-->
+<script src="{{site_url}}static/scripts/prettify.js"></script> 
+<script type="text/javascript" src="{{site_url}}static/scripts/bootstrap-tour.js"></script>
+<script type="text/javascript" src="{{site_url}}static/scripts/jquery.cookie.js"></script>
+<script type="text/javascript" src="{{site_url}}static/scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{site_url}}static/scripts/tour.js"></script>
+<script src="{{site_url}}static/scripts/bootstrap-tooltip.js"></script>
+<script src="{{site_url}}static/scripts/bootstrap-popover.js"></script>
+<script src="{{site_url}}static/scripts/bootstrap-alert.js"></script>
+<link rel="shortcut icon" href="{{site_url}}static/img/favicon.ico" />
 </head> 
 <body>
 <center>
@@ -226,11 +226,13 @@ function save_edit_mcq(eve_id, q_id){
                 </div>
 
                 <!-- This content will be shown if no path is specified in the URL fragment. -->
+                {% block content %}
                 <div class="bbq-default">
                 <i> Home page content comes here </i>
                 </div>
                 <div class="bbq-item">
                 </div>
+                {% endblock %}
                 </div>
         </div>
         
@@ -267,7 +269,7 @@ function save_edit_mcq(eve_id, q_id){
     </center>
 
 <!--Script to search-->
-<script type='text/javascript' src="static/js/jquery.autocomplete.js"></script>
+<script type='text/javascript' src="{{site_url}}static/js/jquery.autocomplete.js"></script>
 <script type="text/javascript">
 function findValue(li) {
 	if( li == null ) return alert("No match!");
