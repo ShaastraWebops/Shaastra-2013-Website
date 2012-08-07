@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>Shaastra</title>
+<style type="text/css">
+#cont{
+	position:absolute;
+	top:0px;
+	width:175px;
+	background-color: rgba(8, 8, 8, 0.6);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#60080808,endColorstr=#60080808);
+	left:70%;
+	visibility: hidden;
+}
+
+#cont ul{
+	width: 175px;}
+
+
+#cont li p:hover{
+	text-decoration: underline;
+	cursor:pointer;	
+	}
+</style>
+<link rel="stylesheet" type="text/css" href="static/css/style.css"  />
+<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css"  />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" >
+	jQuery(function($) {
+	 $(".menu").css({visibility:"hidden"});
+	 });
+</script>
+{% load dajaxice_templatetags %}
+{% dajaxice_js_import %}
+    <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
+<script>
+	function getWindowHeight() {
+		var windowHeight = 0;
+		if (typeof(window.innerHeight) == 'number') {
+			windowHeight = window.innerHeight;
+		}
+		else {
+			if (document.documentElement && document.documentElement.clientHeight) {
+				windowHeight = document.documentElement.clientHeight;
+			}
+			else {
+				if (document.body && document.body.clientHeight) {
+					windowHeight = document.body.clientHeight;
+				}
+			}
+		}
+		return windowHeight;
+	}
+	function setContent() {
+		if (document.getElementById) {
+			var windowHeight = getWindowHeight();
+			if (windowHeight > 0) {
+				var contentElement = document.getElementById('container');
+				var contentHeight = contentElement.offsetHeight;
+				if (windowHeight - contentHeight > 0) {
+					contentElement.style.position = 'relative';
+					contentElement.style.top = ((windowHeight / 2) - (contentHeight / 2)) + 'px';
+				}
+				else {
+					loadingElement.style.position = 'static';
+				}
+			}
+		}
+	}
+   	window.onload = function() {
+		resetabs();
+		setContent();
+	}	
+	window.onresize = function() {
+		setContent();
+		resetabs();
+	}
+	function tab(num){
+		resetabs();
+		document.getElementById(num).style.visibility="visible";
+	}
+	function resetabs()
+	{
+		$(".menu").css('visibility','hidden');
+	}
+</script>
+<script type="text/javascript" src="{{site_url}}static/scripts/hover.js"></script>
+<script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+<script type="text/javascript" language="javascript">
+
+function save_edit_subjective(eve_id, q_id){
+    data = $('.bbq-item :input').serializeObject();
+    Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
+    return false;
+}
+
+function save_edit_mcq(eve_id, q_id){
+    data = $('.bbq-item :input').serializeObject();
+    Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
+    return false;
+}
+
+        $(function(){
+            // Bind an event to window.onhashchange that, when the history state changes,
+            // gets the url from the hash and displays either our cached content or fetches
+            // new content to be displayed.
+            $(window).bind( 'hashchange', function(e) {
+
+                // Get the hash (fragment) as a string, with any leading # removed. Note that
+                // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+                var url = $.param.fragment();
+                if(url)
+                {
+                    if(url.split('submission/')[1])
+                    {
+                        if (url.split('ques/')[1])
+                        {
+                            $(".bbq-item #q_detail").load( url, function(){
+                                    // Content loaded, hide "loading" content.
+                                    $( '.bbq-item' ).show();
+                                });
+                        }
+                        else 
+                        {
+                            $(".bbq-item #maincontent").load( url, function(){
+                                    // Content loaded, hide "loading" content.
+                                    $( '.bbq-item' ).show();
+                                });
+                        }
+                    } 
+                    else
+                    {
+                        $(".bbq-default").hide();
+                        $(".bbq-item").hide();
+
+                        // Show "loading" content while AJAX content loads.
+                        $( '.bbq-loading' ).show();
+                        // Load external content via AJAX. Note that in order to keep this
+                        // example streamlined, only the content in .infobox is shown. You'll
+                        // want to change this based on your needs.
+                        $( '.bbq-item' ).load( url.split('/tab')[0], function(){
+                                // Content loaded, hide "loading" content.
+                                $(".bbq-item #maincontent").load( url, function(){
+                                        // Content loaded, hide "loading" content.
+	                                $( '.bbq-loading' ).hide();
+	                                $(".bbq-item").show();
+	                                resetabs();
+                                    });
+                            });
+                    }
+                }
+                else
+                {
+                    $(".bbq-item").hide();
+                    $(".bbq-default").show();
+                }
+            })
+            $(window).trigger('hashchange');
+
+        });
+        </script>
+<link rel="stylesheet" type="text/css" href="static/css/prettify.css" />
+<link rel="stylesheet" type="text/css" href="static/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" href="static/css/jquery.autocomplete.css" /><!--For search-->
+<script src="static/scripts/prettify.js"></script> 
+<script type="text/javascript" src="static/scripts/bootstrap-tour.js"></script>
+<script type="text/javascript" src="static/scripts/jquery.cookie.js"></script>
+<script type="text/javascript" src="static/scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/scripts/tour.js"></script>
+<script src="static/scripts/bootstrap-tooltip.js"></script>
+<script src="static/scripts/bootstrap-popover.js"></script>
+<script src="static/scripts/bootstrap-alert.js"></script>
+<link rel="shortcut icon" href="static/img/favicon.ico" />
+</head> 
+<body>
+<center>
+    
+	<div id="container">
+	<div id="header">
+		<div id="logo" class="floatleft" onclick="window.location.href='{{site_url}}'"></div>
+		<div class="span2" id="search">
+		    <form action="" onsubmit="return false;">
+		        <input type="text" id="search_query" value="Search..."  onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" />
+            </form>
+        </div>
+		    <div id="topright" class="floatright">
+    	 		<div id="icons" class="floatleft">
+    	 		    <ul class="nav nav-pills">
+    	 		    	  <li><a href="#" id="home"><p class="head_text">Home</p></a></li>
+    	 		        <li><a href="#events" id="events"><p class="head_text">Events</p></a></li>       					
+            			<li><a id="hospitality"><p class="head_text">Hospitality</p></a></li>
+            			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
+            			<li><a id="forums" href="http://forums.shaastra.org"><p class="head_text">Forums</p></a></li>
+                                {% if user.is_authenticated %}
+                                    <li><a id="set"><p class="head_text">Settings</p></a></li>
+                                		<li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
+                                {% else %}
+                                    <li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li> 
+                                     
+                                {% endif %}
+            	 </ul>
+            </div>
+        		<div id="twologos" class="floatright">
+        			<div id="tuvnord" class="floatleft"></div>
+        			<div id="iitmlogo" class="floatright"></div>
+        		</div>
+    		</div><br>            
+	</div>
+	<div id="body">
+	      <div id="cont" class="menulist">
+            <ul>
+         		 <li><p class="head_text" onclick="window.location.href='{{site_url}}user/password_change/'">Change Password</p></li>
+         		 <li><p class="head_text" onclick="window.location.href='{{site_url}}user/editprofile/'">Edit Profile</p></li>  
+      		</ul>
+        </div>			
+        <div id="content" class="bbq" style="width:100%">
+                <div class="bbq-content">
+                <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
+                <div class="bbq-loading" style="display:none;">
+                    <img src="{{site_url}}static/img/loading.gif" alt="Loading"/> Loading content...
+                </div>
+
+                <!-- This content will be shown if no path is specified in the URL fragment. -->
+                <div class="bbq-default">
+                <i> Home page content comes here </i>
+                </div>
+                <div class="bbq-item">
+                </div>
+                </div>
+        </div>
+        
+        {% for category in event_set %}
+       	<div id="menu{{forloop.counter}}"class="menu">
+        	<div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
+            </div>
+            <div id="menulist{{forloop.counter}}" class="menulist">
+            <ul id="menuhead{{forloop.counter}}" class="menuhead">
+            	{{category.0.category}}
+            </ul>
+            <ul>
+                {% for event in category %}
+         		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
+                {% endfor %}
+      		</ul>
+            </div>
+        </div><
+        {% endfor %}
+       
+            <div id="social">
+    	<div id="fb" class="socialapp">
+        </div>
+        <div id="flickr" class="socialapp">
+        </div>
+        <div id="twitter" class="socialapp">
+        </div>
+        <div id="youtube" class="socialapp">
+        </div>
+    </div>
+    </div>
+   {% block footer %}{% endblock %}
+    </div>
+    </center>
+
+<!--Script to search-->
+<script type='text/javascript' src="static/js/jquery.autocomplete.js"></script>
+<script type="text/javascript">
+function findValue(li) {
+	if( li == null ) return alert("No match!");
+
+	// if coming from an AJAX call, using EventID as sValue
+	if( !!li.extra ) var sValue = li.extra[0];
+
+	// otherwise, using EventName
+	else var sValue = li.selectValue;
+    
+    //event details location	    
+	window.location="#events/"+sValue;
+}
+
+function selectItem(li) {
+	findValue(li);
+}
+
+function formatItem(row) {
+	return row[0];
+}
+
+function lookupLocal(){
+	var oSuggest = $("#search_query")[0].autocompleter;
+
+	oSuggest.findValue();
+
+	return false;
+}
+
+$(document).ready(function() {
+	$("#search_query").autocompleteArray(
+		{{ result_list|safe }},
+		{
+			delay:10,
+			minChars:1,
+			onItemSelect:selectItem,
+			onFindValue:findValue,
+			autoFill:false
+
+		}
+	);
+});
+</script>
+<!--End of Search script-->
+
+</body>
+</html>
