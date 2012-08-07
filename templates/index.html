@@ -1,4 +1,22 @@
  {% extends "base.html" %}
+ {% block events_menu %}
+        {% for category in event_set %}
+       	<div id="menu{{forloop.counter}}"class="menu">
+        	<div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
+            </div>
+            <div id="menulist{{forloop.counter}}" class="menulist">
+            <ul id="menuhead{{forloop.counter}}" class="menuhead">
+            	{{category.0.category}}
+            </ul>
+            <ul>
+                {% for event in category %}
+         		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
+                {% endfor %}
+      		</ul>
+            </div>
+        </div>
+        {% endfor %}
+        {% endblock %}
 {% block footer %}
 <!-- index.html -->
  <div id="footer">

@@ -1,19 +1,20 @@
+
 {% extends "base.html" %}
 {% block footer %}
     <div id="footer">
     <center>
-    <div id="tabbox">
-    	<div id="tab1" class="tab">
+    <div id="tabbox" style="width:600px;">
+    	<div id="tab1" class="tab" style="margin-left:60px;">
          <div id="tab1name" class="tabname">
             Bengaluru
             </div>
         </div>
-     <div id="tab2" class="tab">
+     <div id="tab2" class="tab" style="margin-left:60px;">
             <div id="tab2name" class="tabname">
             Hyderabad
             </div>
         </div>
-     <div id="tab3" class="tab">
+     <div id="tab3" class="tab" style="margin-left:60px;">
             <div id="tab3name" class="tabname">
             Pune
             </div>
@@ -30,12 +31,14 @@
 {% endblock %}
 {% block events_menu %}
     {% for city in city_set %}
-    <div id="menu{{forloop.counter}}"class="menu">
+    <div id="menu{{forloop.counter}}" class="menu" style="{% if city == 'Bengaluru' %}margin-left:28%;{% endif %}{% if city == 'Hyderabad' %}margin-left:42%;{% endif %}{% if city == 'Pune' %}margin-left:56%;{% endif %}">
         	<div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
             </div>
             <div id="menulist{{forloop.counter}}" class="menulist">
             <ul id="menuhead{{forloop.counter}}" class="menuhead">
-            
+            {% if city == 'Bengaluru' %}Bengaluru{% endif %}
+            {% if city == 'Hyderabad' %}Hyderabad{% endif %}
+            {% if city == 'Pune' %}Pune{% endif %}
             </ul>
             <ul>
                 {% if city == 'Bengaluru' %}
