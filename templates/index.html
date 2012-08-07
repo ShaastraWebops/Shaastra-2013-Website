@@ -1,41 +1,38 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<title>Shaastra</title>
-<style type="text/css">
-#cont{
-	position:absolute;
-	top:0px;
-	width:175px;
-	background-color: rgba(8, 8, 8, 0.6);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#60080808,endColorstr=#60080808);
-	left:70%;
-	visibility: hidden;
-}
-
-#cont ul{
-	width: 175px;}
-
-#cont li p:hover{
-	text-decoration: underline;
-	cursor:pointer;	
-	}
-</style>
-<link rel="stylesheet" type="text/css" href="static/css/style.css"  />
-<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css"  />
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript" >
-	jQuery(function($) {
-	 $(".menu").css({visibility:"hidden"});
-	 });
-</script>
-{% load dajaxice_templatetags %}
-{% dajaxice_js_import %}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Shaastra</title>
+    <style type="text/css">
+        #cont{
+	        position:absolute;
+	        top:0px;
+	        width:175px;
+	        background-color: rgba(8, 8, 8, 0.6);
+	        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#60080808,endColorstr=#60080808);
+	        left:70%;
+	        visibility: hidden;
+            }
+        #cont ul{
+	        width: 175px;
+            }
+        #cont li p:hover{
+	        text-decoration: underline;
+	        cursor:pointer;	
+	        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="static/css/style.css"  />
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css"  />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" >
+        jQuery(function($){
+             $(".menu").css({visibility:"hidden"});
+         });
+    </script>
+    {% load dajaxice_templatetags %}
+    {% dajaxice_js_import %}
     <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
-<script>
+    <script>
 	function getWindowHeight() {
 		var windowHeight = 0;
 		if (typeof(window.innerHeight) == 'number') {
@@ -85,99 +82,167 @@
 	{
 		$(".menu").css('visibility','hidden');
 	}
-</script>
-<script type="text/javascript" src="{{site_url}}static/scripts/hover.js"></script>
-<script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
-<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
-<script type="text/javascript" language="javascript">
+    </script>
+    <script type="text/javascript" src="{{site_url}}static/scripts/hover.js"></script>
+    <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
+    <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+    <script type="text/javascript" language="javascript">
 
-function save_edit_subjective(eve_id, q_id){
-    data = $('.bbq-item :input').serializeObject();
-    Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
-    return false;
-}
+    function save_edit_subjective(eve_id, q_id){
+        data = $('.bbq-item :input').serializeObject();
+        Dajaxice.submissions.save_edit_subjective(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
+        return false;
+    }
 
-function save_edit_mcq(eve_id, q_id){
-    data = $('.bbq-item :input').serializeObject();
-    Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
-    return false;
-}
+    function save_edit_mcq(eve_id, q_id){
+        data = $('.bbq-item :input').serializeObject();
+        Dajaxice.submissions.save_edit_mcq(Dajax.process,{'eve_id': eve_id, 'q_id': q_id, 'form':data})
+        return false;
+    }
+/*
+$(function(){
+  
+  // Keep a mapping of url-to-container for caching purposes.
+  var cache = {
+    // If url is '' (no fragment), display this div's content.
+    '': $('.bbq-default')
+  };
+  
+  // Bind an event to window.onhashchange that, when the history state changes,
+  // gets the url from the hash and displays either our cached content or fetches
+  // new content to be displayed.
+  $(window).bind( 'hashchange', function(e) {
+    
+    // Get the hash (fragment) as a string, with any leading # removed. Note that
+    // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+    var url = $.param.fragment();
+    
+    // Remove .bbq-current class from any previously "current" link(s).
+    $( 'a.bbq-current' ).removeClass( 'bbq-current' );
+    
+    // Hide any visible ajax content.
+    $( '.bbq-content' ).children( ':visible' ).hide();
+    
+    // Add .bbq-current class to "current" nav link(s), only if url isn't empty.
+    url && $( 'a[href="#' + url + '"]' ).addClass( 'bbq-current' );
+    
+    if ( cache[ url ] ) {
+      // Since the element is already in the cache, it doesn't need to be
+      // created, so instead of creating it again, let's just show it!
+      cache[ url ].show();
+      
+    } else {
+      // Show "loading" content while AJAX content loads.
+      $( '.bbq-loading' ).show();
+      
+      // Create container for this url's content and store a reference to it in
+      // the cache.
+      cache[ url ] = $( '<div class="bbq-item"/ >' )
+        
+        // Append the content container to the parent container.
+        .appendTo( '.bbq-content' )
+        
+        // Load external content via AJAX. Note that in order to keep this
+        // example streamlined, only the content in .infobox is shown. You'll
+        // want to change this based on your needs.
+        .load( url, function(){
+          // Content loaded, hide "loading" content.
+          $( '.bbq-loading' ).hide();
+        });
+    }
+  })
+  
+  // Since the event is only triggered when the hash changes, we need to trigger
+  // the event now, to handle the hash the page may have loaded with.
+  $(window).trigger( 'hashchange' );
+  
+});*/
+    $(function(){
+        // Keep a mapping of url-to-container for caching purposes.
+        var cache = {
+            // If url is '' (no fragment), display this div's content.
+            '': $('.bbq-default')
+        };
 
-        $(function(){
-            // Bind an event to window.onhashchange that, when the history state changes,
-            // gets the url from the hash and displays either our cached content or fetches
-            // new content to be displayed.
-            $(window).bind( 'hashchange', function(e) {
+        // Bind an event to window.onhashchange that, when the history state changes,
+        // gets the url from the hash and displays either our cached content or fetches
+        // new content to be displayed.
+        $(window).bind( 'hashchange', function(e) {
 
-                // Get the hash (fragment) as a string, with any leading # removed. Note that
-                // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
-                var url = $.param.fragment();
-                if(url)
-                {
-                    if(url.split('submission/')[1])
-                    {
-                        if (url.split('ques/')[1])
-                        {
-                            $(".bbq-item #q_detail").load( url, function(){
-                                    // Content loaded, hide "loading" content.
-                                    $( '.bbq-item' ).show();
-                                });
-                        }
-                        else 
-                        {
-                            $(".bbq-item #maincontent").load( url, function(){
-                                    // Content loaded, hide "loading" content.
-                                    $( '.bbq-item' ).show();
-                                });
-                        }
-                    } 
-                    else
-                    {
-                        $(".bbq-default").hide();
-                        $(".bbq-item").hide();
-
-                        // Show "loading" content while AJAX content loads.
-                        $( '.bbq-loading' ).show();
-                        // Load external content via AJAX. Note that in order to keep this
-                        // example streamlined, only the content in .infobox is shown. You'll
-                        // want to change this based on your needs.
-                        $( '.bbq-item' ).load( url.split('/tab')[0], function(){
+            // Get the hash (fragment) as a string, with any leading # removed. Note that
+            // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+            var url = $.param.fragment();
+            $( '.bbq-item,.bbq-default' ).hide();
+            if(!url) {
+                $('.bbq-default').show();
+                return;
+            }
+            var event_name=url.split('/tab')[0];
+            if(cache[event_name]) {
+                var event = cache[event_name];
+                if(cache[url]) {
+                    event.find(".tabtext").html(cache[url]);
+                } else {
+                    event.find(".tabtext").load( url, function(){
                                 // Content loaded, hide "loading" content.
-                                $(".bbq-item #maincontent").load( url, function(){
-                                        // Content loaded, hide "loading" content.
-	                                $( '.bbq-loading' ).hide();
-	                                $(".bbq-item").show();
-	                                resetabs();
-                                    });
+                                $( '.bbq-loading' ).hide();
+                                resetabs();
+                                cache[url] = event.find(".tabtext").html();
+                        });
+                }
+                event.show();
+            } else {
+                if(url.split('submission/')[1]) {
+                    // Show "loading" content while AJAX content loads.
+                    $( '.bbq-loading' ).show();
+                    if (url.split('ques/')[1]) {
+                        $(".bbq-item #q_detail").load( url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '.bbq-item' ).show();
+                            });
+                    } else {
+                        $(".bbq-item #tabtext").load( url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '#tabtext' ).show();
                             });
                     }
-                }
-                else
-                {
-                    $(".bbq-item").hide();
-                    $(".bbq-default").show();
-                }
-            })
-            $(window).trigger('hashchange');
+                } else {
+                    cache[event_name] = $( '<div class="bbq-item"></div>' ).appendTo( '.bbq-content' );
 
-        });
-        </script>
-<link rel="stylesheet" type="text/css" href="static/css/prettify.css" />
-<link rel="stylesheet" type="text/css" href="static/css/bootstrap-responsive.css" />
-<link rel="stylesheet" type="text/css" href="static/css/jquery.autocomplete.css" /><!--For search-->
-<script src="static/scripts/prettify.js"></script> 
-<script type="text/javascript" src="static/scripts/bootstrap-tour.js"></script>
-<script type="text/javascript" src="static/scripts/jquery.cookie.js"></script>
-<script type="text/javascript" src="static/scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="static/scripts/tour.js"></script>
-<script src="static/scripts/bootstrap-tooltip.js"></script>
-<script src="static/scripts/bootstrap-popover.js"></script>
-<script src="static/scripts/bootstrap-alert.js"></script>
-<link rel="shortcut icon" href="static/img/favicon.ico" />
+                    // Load external content via AJAX. Note that in order to keep this
+                    // example streamlined, only the content in .infobox is shown. You'll
+                    // want to change this based on your needs.
+                    cache[event_name].load( event_name, function(){
+
+                        cache[event_name].find(".tabtext").load( url, function(){
+                                    // Content loaded, hide "loading" content.
+                                    $( '.bbq-loading' ).hide();
+                                    resetabs();
+                                    cache[url] = cache[event_name].find(".tabtext").html();
+                            });
+                        });
+                }
+            }
+        })
+        $(window).trigger('hashchange');
+
+    });
+    </script>
+    <link rel="stylesheet" type="text/css" href="static/css/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/jquery.autocomplete.css" /><!--For search-->
+    <script src="static/scripts/prettify.js"></script> 
+    <script type="text/javascript" src="static/scripts/bootstrap-tour.js"></script>
+    <script type="text/javascript" src="static/scripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="static/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="static/scripts/tour.js"></script>
+    <script src="static/scripts/bootstrap-tooltip.js"></script>
+    <script src="static/scripts/bootstrap-popover.js"></script>
+    <script src="static/scripts/bootstrap-alert.js"></script>
+    <link rel="shortcut icon" href="static/img/favicon.ico" />
 </head> 
 <body>
-<center>
-    
+    <center>    
 	<div id="container">
 	<div id="header">
 		<div id="logo" class="floatleft" onclick="window.location.href='{{site_url}}'"></div>
@@ -218,20 +283,19 @@ function save_edit_mcq(eve_id, q_id){
         </div>			
         <div id="content" class="bbq" style="width:100%">
                 <div class="bbq-content">
-                <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
-                <div class="bbq-loading" style="display:none;">
-                    <img src="{{site_url}}static/img/loading.gif" alt="Loading"/> Loading content...
-                </div>
+                    <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
+                    <div class="bbq-loading" style="display:none;">
+                        <img src="{{site_url}}static/img/loading.gif" alt="Loading"/> Loading content...
+                    </div>
 
-                <!-- This content will be shown if no path is specified in the URL fragment. -->
-                <div class="bbq-default">
-                <i> Home page content comes here </i>
+                    <!-- This content will be shown if no path is specified in the URL fragment. -->
+                    <div class="bbq-default">
+                        <i> Home page content comes here </i>
+                    </div>
+                    <div class="bbq-item">
+                    </div>
                 </div>
-                <div class="bbq-item">
-                </div>
-                </div>
-        </div>
-        
+        </div>        
         {% for category in event_set %}
        	<div id="menu{{forloop.counter}}"class="menu">
         	<div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
@@ -246,7 +310,7 @@ function save_edit_mcq(eve_id, q_id){
                 {% endfor %}
       		</ul>
             </div>
-        </div><
+        </div>
         {% endfor %}
        
             <div id="social">
