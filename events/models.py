@@ -22,6 +22,7 @@ EVENT_CATEGORIES = (
     ('Spotlight', 'Spotlight'),
     ('Workshops', 'Workshops'),
     ('Others', 'Others'),
+    ('Sampark', 'Sampark'),
     )
 
 CATEGORY = (('Update', 'Update'), ('Announcement', 'Announcement'))
