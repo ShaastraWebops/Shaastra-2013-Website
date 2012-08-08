@@ -31,6 +31,41 @@
     </script>
     {% load dajaxice_templatetags %}
     {% dajaxice_js_import %}
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>Shaastra</title>
+<style type="text/css">
+#cont{
+	position:absolute;
+	top:0px;
+	width:175px;
+	background-color: rgba(8, 8, 8, 0.6);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#60080808,endColorstr=#60080808);
+	left:70%;
+	visibility: hidden;
+}
+
+#cont ul{
+	width: 175px;}
+
+
+#cont li p:hover{
+	text-decoration: underline;
+	cursor:pointer;	
+	}
+</style>
+<link rel="stylesheet" type="text/css" href="static/css/style.css"  />
+<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css"  />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" >
+	jQuery(function($) {
+	 $(".menu").css({visibility:"hidden"});
+	 });
+</script>
+{% load dajaxice_templatetags %}
+{% dajaxice_js_import %}
     <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
     <script>
 	function getWindowHeight() {
@@ -306,7 +341,7 @@ $(function(){
             </ul>
             <ul>
                 {% for event in category %}
-         		<li><p onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</p></li>
+         		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
                 {% endfor %}
       		</ul>
             </div>
