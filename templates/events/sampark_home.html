@@ -1,0 +1,63 @@
+
+{% extends "base.html" %}
+{% block footer %}
+    <div id="footer">
+    <center>
+    <div id="tabbox" style="width:600px;">
+    	<div id="tab1" class="tab" style="margin-left:60px;">
+         <div id="tab1name" class="tabname">
+            Bengaluru
+            </div>
+        </div>
+     <div id="tab2" class="tab" style="margin-left:60px;">
+            <div id="tab2name" class="tabname">
+            Hyderabad
+            </div>
+        </div>
+     <div id="tab3" class="tab" style="margin-left:60px;">
+            <div id="tab3name" class="tabname">
+            Pune
+            </div>
+        </div>
+     </div>
+    </center>
+{% endblock %}
+{% block content %}
+<div class="bbq-default">
+<i> Sampark Description </i>
+</div>
+<div class="bbq-item">
+</div>
+{% endblock %}
+{% block events_menu %}
+    {% for city in city_set %}
+    <div id="menu{{forloop.counter}}" class="menu" style="{% if city == 'Bengaluru' %}margin-left:28%;{% endif %}{% if city == 'Hyderabad' %}margin-left:42%;{% endif %}{% if city == 'Pune' %}margin-left:56%;{% endif %}">
+        	<div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
+            </div>
+            <div id="menulist{{forloop.counter}}" class="menulist">
+            <ul id="menuhead{{forloop.counter}}" class="menuhead">
+            {% if city == 'Bengaluru' %}Bengaluru{% endif %}
+            {% if city == 'Hyderabad' %}Hyderabad{% endif %}
+            {% if city == 'Pune' %}Pune{% endif %}
+            </ul>
+            <ul>
+                {% if city == 'Bengaluru' %}
+                {% for event in bengaluruevents %}
+         		    <li onclick="window.location.href='{{site_url}}#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
+                {% endfor %}
+                {% endif %}
+                {% if city == 'Hyderabad' %}
+                {% for event in hyderabadevents %}
+         		    <li onclick="window.location.href='{{site_url}}#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
+                {% endfor %}
+                {% endif %}
+                {% if city == 'Pune' %}
+                {% for event in puneevents %}
+         		    <li onclick="window.location.href='{{site_url}}#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
+                {% endfor %}
+                {% endif %}
+      		</ul>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

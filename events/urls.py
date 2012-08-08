@@ -7,7 +7,9 @@ from django.views.generic.simple import direct_to_template
 from events.views import *
 
 urlpatterns = patterns('',
-                       url(r'^(?P<event_name>.+)/tab/(?P<tab_name>.+)',
+                       url(r'^sampark/',
+                       sampark,
+                       name='sampark-home'), url(r'^(?P<event_name>.+)/tab/(?P<tab_name>.+)',
                        tabs, name='tab-list'),
                        url(r'^(?P<event_name>.+)', events,
                        name='event-list'), url(r'^$',
