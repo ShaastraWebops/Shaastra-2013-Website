@@ -6,15 +6,16 @@
      		<li><p onclick="window.location.href='#events/{{event|slugify}}/tab/{{tab.title|slugify}}'">{{tab.title}}</p></li>
             {% endfor %}
             {% if event.registrable_online == 1 %}
-                <li><p onclick="window.location.href='#submission/{{event.id}}'">Register</p></li>
+            <li><p onclick="window.location.href='#submission/{{event.id}}'">Register</p></li>
             {% endif %}
         </ul>
     </div>
     <div id="maincontent">
-    <div id="tabtext" style="color:#FFF">Click on a tab to view it</div>
-    <div id="q_detail"></div>
-    <div id="gallery" class="floatright">
-        <div id="picture"><img src="{{event.events_logo}}" />
+        <div class="tabtext" style="color:#FFF;">Click on a tab to view it</div>
+        <div id="q_detail"></div>
+        <div id="gallery" class="floatright">
+            <div id="picture"><img src="{{event.events_logo}}" />
+            </div>
         </div>
     </div>
   <div id="updates" class="span3" style="background:#111 ! important;">
