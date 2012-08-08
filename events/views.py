@@ -13,8 +13,10 @@ from operator import attrgetter
 def events(request, event_name):
     event_name = event_name.replace('-', ' ')
     event = Event.objects.get(title=event_name)
-    initial = Update.objects.all()
-    update = sorted(initial, key=attrgetter('id'), reverse=True)
+    initial_updates = Update.objects.all(category == 'Update')
+    updates = sorted(initial_updates, key=attrgetter('id'), reverse=True)
+    initial_announcements = Update.objects.all(category == 'Announcement')
+    announcements = sorted(initial_announcements, key=attrgetter('id'), reverse=True)
     tab_set = event.tab_set.all()
     return render_to_response('events/events.html', locals(),
                               context_instance=RequestContext(request))
