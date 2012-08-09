@@ -3,6 +3,7 @@ from django.template.context import Context, RequestContext
 from django.shortcuts import render_to_response
 from django.conf import settings
 from events.models import Event, EVENT_CATEGORIES, Tag
+from django.template.defaultfilters import slugify
 
 def home(request):
     event_set=[]
@@ -18,7 +19,8 @@ def home(request):
         row.append(str(t.name))
         temp=[]
         for x in t.event_set.all():
-            temp.append([str(x),str(x.id)])
+            url = slugify(x) + '/tab/' + x.tab_set.all()[0].title
+            temp.append([str(x),str(url)])
         row.append(temp)
         result_list.append(row)
     #End of search code
