@@ -32,18 +32,16 @@ class LoginForm(forms.Form):
 
 class BaseUserForm(forms.ModelForm):
 
-    first_name = forms.CharField(max_length=30,
-                                 help_text='Enter your first name here.'
-                                 )
-    last_name = forms.CharField(max_length=30,
-                                help_text='Enter your last name here.')
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=30)
 
     class Meta:
 
         model = UserProfile
 
     def clean_age(self):
-        if self.cleaned_data['age'] > 80 or self.cleaned_data['age'] \
+        if self.cleaned_data['age'] > 80 or self.cleaned_datlease enter your current mobile number
+a['age'] \
             < 12:
             raise forms.ValidationError(u'<p>Please enter an acceptable age (12 to 80)</p>'
                     )
@@ -86,10 +84,10 @@ class BaseUserForm(forms.ModelForm):
 class AddUserForm(BaseUserForm):
 
     username = forms.CharField(max_length=30,
-                               help_text='Your Shaastra 2013 username')
+                               help_text='Please select a username.',
+                               label='Shaastra username')
     email = \
-        forms.EmailField(help_text='Enter your e-mail address. eg, someone@gmail.com'
-                         )
+        forms.EmailField()
     password = forms.CharField(min_length=6, max_length=30,
                                widget=forms.PasswordInput,
                                help_text='Enter a password that you can remember'
