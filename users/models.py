@@ -73,9 +73,9 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES,
                               default='F')  # Defaults to 'girl' ;-)
-    age = models.IntegerField(default=18,
-                              help_text='You need to be over 12 and under 80 years of age to participate'
-                              )
+    age = models.IntegerField(default=18)
+                              # help_text='You need to be over 12 and under 80 years of age to participate'
+                              # No age limit now.
     branch = models.CharField(max_length=50, blank=True, null=True,
                               help_text='Your branch of study')
     mobile_number = models.CharField(max_length=15, null=True,

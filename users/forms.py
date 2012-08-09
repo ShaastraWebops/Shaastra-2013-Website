@@ -39,6 +39,10 @@ class BaseUserForm(forms.ModelForm):
 
         model = UserProfile
 
+    # The following code is to clean the a age field and to ensure that age is between 12 and 80.
+    # Age limit has now been removed as demanded in Issue #29. To add it back, uncomment the 
+    # following and also add the help_text in the age field in the model.
+    '''
     def clean_age(self):
         if self.cleaned_data['age'] > 80 or self.cleaned_datlease enter your current mobile number
 a['age'] \
@@ -47,7 +51,8 @@ a['age'] \
                     )
         else:
             return self.cleaned_data['age']
-
+    '''
+    
     def clean_mobile_number(self):
         if len(self.cleaned_data['mobile_number']) != 10 \
             or self.cleaned_data['mobile_number'][0] != '7' \
