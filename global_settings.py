@@ -10,6 +10,10 @@ PROJECT_DIR_NAME = PROJECT_DIR.split('/')[-1] # used in dajaxice.[my_project_fol
 AJAX_TEMPLATE_DIR = os.path.join(PROJECT_DIR, 'templates', 'ajax') # path where ajax templates are stored
 FIXTURES_DIR = os.path.dirname(__file__)
 
+HAYSTACK_SITECONF='search_sites'
+HAYSTACK_SEARCH_ENGINE='whoosh'
+HAYSTACK_WHOOSH_PATH='whoosh/engine'
+HAYSTACK_INCLUDE_SPELLING=True
 
 SITE_ID = 1
 
@@ -51,6 +55,7 @@ INSTALLED_APPS = (
     'dtvpicker',
     'dajaxice',
     'dajax',
+    'haystack',
 #    'recaptcha',
 )
 
