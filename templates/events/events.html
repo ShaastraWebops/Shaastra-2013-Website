@@ -1,6 +1,6 @@
 <div id="body">
    	<div id="sidemenu">
-    	<div id="sidemenutitle">{{event.title}}</div>
+        <div id="sidemenutitle">{{event.title}}</div>
         <ul id="sidemenulist">
             {% for tab in tab_set %}
      		<li><p onclick="window.location.href='#events/{{event|slugify}}/tab/{{tab.title|slugify}}'">{{tab.title}}</p></li>

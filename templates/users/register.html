@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script>
 	<script type="text/javascript" src="{{site_url}}static/js/jquery.mousewheel.js"></script>
 	<script type="text/javascript" src="{{site_url}}static/js/scroll.js"></script>
+    <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
         	if ($("#facebook_id").attr("value"))
@@ -46,12 +47,28 @@
 		    xmlhttp.send(data);
 	    }
 	    </script>
+        <script type="text/javascript">
+        function load_branch(){
+            html="<td><div id='selectbranch'></div></td>";
+            $("table tr:eq(2)").append(html);
+            $('.chzn-select').chosen();
+            } 
+            $(document).ready(function(){
+	            load_branch();
+               $("#selectbranch").click(function(){
+                    $(this).hide();
+                    
+                    
+               });
+            });
+        </script>
 	  <script>
 		window.onload = function()
 		{
 		window.onresize = function(){window.resizeTo(1366,768)};
 		};
 	</script>
+        <link href="{{site_url}}static/css/chosen.css"  type="text/css" rel="stylesheet">
     </head>
     <body>
 <div id="main_container">
@@ -77,11 +94,11 @@
        <center> <div id="footer">
 			<div id="navcontainer">
 			<ul>
-			<li><a href="http://www.shaastra.org/2011/main/policy/">privacy policy</a></li>
-    		<li><a href="http://www.shaastra.org/blog/">blog</a></li>
-    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">events</a></li>
-    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">credits</a></li>
-    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">contact</a></li>
+			<li><a href="http://www.shaastra.org/2011/main/policy/">Privacy Policy</a></li>
+    		<li><a href="http://www.shaastra.org/blog/">Blog</a></li>
+    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">Events</a></li>
+    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">Credits</a></li>
+    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">Contact</a></li>
     		</ul>
 	      </div>
 		</div></center>

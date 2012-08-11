@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.template import Template, Context
 from django.utils.safestring import mark_safe
 from users.models import *
+from chosen import forms as chosenforms
 
 # from recaptcha import fields as recaptcha_fields
 
@@ -21,7 +22,44 @@ alnum_re = re.compile(r'^[\w.-]+$')  # regexp. from jamesodo in #django  [a-zA-Z
 alphanumric = re.compile(r"[a-zA-Z0-9]+$")
 
 GENDER_CHOICES = ((1, 'Male'), (2, 'Female'))
-
+BRANCH_CHOICES = (
+    ('Arts', 'Arts'),
+    ('Accounting', 'Accounting'),
+    ('Applied Mechanics', 'Applied Mechanics'),
+    ('Mechatronics', 'Mechatronics'),
+    ('Aerospace Engineering', 'Aerospace Engineering'),
+    ('Automobile Engineering', 'Automobile Engineering'),
+    ('Biotech / Biochemical / Biomedical', 'Biotech / Biochemical / Biomedical'),
+    ('Biology', 'Biology'),
+    ('Ceramic Engineering', 'Ceramic Engineering'),
+    ('Chemical Engineering', 'Chemical Engineering'),
+    ('Chemistry', 'Chemistry'),
+    ('Design', 'Design'),
+    ('Engineering Design', 'Engineering Design'),
+    ('Civil Engineering', 'Civil Engineering'),
+    ('Computer Science and Engineering', 'Computer Science and Engineering'),
+    ('Electronics and Communications Engineering', 'Electronics and Communications Engineering'),
+    ('Electrical and Electronics Engineering', 'Electrical and Electronics Engineering'),
+    ('Electrical Engineering', 'Electrical Engineering'),
+    ('Electronics and Instrumentation Engineering', 'Electronics and Instrumentation Engineering'),
+    ('Engineering Physics', 'Engineering Physics'),
+    ('Economics', 'Economics'),
+    ('Fashion Technology', 'Fashion Technology'),
+    ('Humanities and Social Sciences', 'Humanities and Social Sciences'),
+    ('Industrial Production', 'Industrial Production'),
+    ('Production', 'Production'),
+    ('Information Technology and Information Science(IT/IS)', 'Information Technology and Information Science(IT/IS)'),
+    ('Management', 'Management'),
+    ('Manufacturing', 'Manufacturing'),
+    ('Mathematics', 'Mathematics'),
+    ('Metallurgy and Material Science', 'Metallurgy and Material Science'),
+    ('Mechanical Engineering', 'Mechanical Engineering'),
+    ('Ocean Engineering and Naval Architecture', 'Ocean Engineering and Naval Architecture'),
+    ('Physics', 'Physics'),
+    ('Telecom', 'Telecom'),
+    ('Textile Engineering', 'Textile Engineering'),
+    ('Others', 'Others'),
+)
 
 class LoginForm(forms.Form):
 
@@ -101,9 +139,7 @@ class AddUserForm(BaseUserForm):
             widget=forms.PasswordInput,
             help_text='Enter the same password that you entered above')
 
-#    recaptcha      = recaptcha_fields.ReCaptchaField (label='Show us that you are not a bot!',
-#                                                      help_text='Enter the words shown in the space provided')
-
+    branch = chosenforms.ChosenChoiceField(overlay="You major in...", choices = BRANCH_CHOICES)
     class Meta(BaseUserForm.Meta):
 
         fields = (
