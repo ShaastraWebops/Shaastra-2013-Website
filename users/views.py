@@ -35,7 +35,11 @@ def login_get(request):
         else:
             return HttpResponseRedirect(settings.SITE_URL)
     form = LoginForm()
-    msg=request.session.get('msg',"")
+    try:
+        msg=request.session['msg']
+        del request.session['msg']
+    except:
+        pass
     return render_to_response('users/login.html', locals(),
                               context_instance=RequestContext(request))
 

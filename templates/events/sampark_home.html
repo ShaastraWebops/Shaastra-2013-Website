@@ -26,7 +26,7 @@
                 if(cache[url]) {
                     event.find(".tabtext").html(cache[url]);
                 } else {
-                    event.find(".tabtext").load( url, function(){
+                    event.find(".tabtext").load("{{site_url}}"+url, function(){
                                 // Content loaded, hide "loading" content.
                                 $( '.bbq-loading' ).hide();
                                 resetabs();
@@ -40,9 +40,9 @@
                 // Load external content via AJAX. Note that in order to keep this
                 // example streamlined, only the content in .infobox is shown. You'll
                 // want to change this based on your needs.
-                cache[event_name].load( event_name, function(){
+                cache[event_name].load("{{site_url}}"+event_name, function(){
 
-                    cache[event_name].find(".tabtext").load( url, function(){
+                    cache[event_name].find(".tabtext").load( "{{site_url}}"+url, function(){
                                 // Content loaded, hide "loading" content.
                                 $( '.bbq-loading' ).hide();
                                 resetabs();
@@ -51,7 +51,7 @@
                     });
             }
         })
-
+        $(window).trigger('hashchange');
     });
 {% endblock %}
 {% block footer %}
@@ -107,18 +107,18 @@
             <ul>
                 {% if city == 'Bengaluru' %}
                 {% for event in bengaluruevents %}
-         		    <li onclick="window.location.href='{{site_url}}#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"B_"}}</li>
+         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"B_"}}</li>
 
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Hyderabad' %}
                 {% for event in hyderabadevents %}
-         		    <li onclick="window.location.href='{{site_url}}#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"H_"}}</li>
+         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"H_"}}</li>
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Pune' %}
                 {% for event in puneevents %}
-         		    <li onclick="window.location.href='{{site_url}}#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"P_"}}</li>
+         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"P_"}}</li>
                 {% endfor %}
                 {% endif %}
       		</ul>
