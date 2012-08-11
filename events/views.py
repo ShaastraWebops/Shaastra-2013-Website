@@ -13,9 +13,9 @@ from operator import attrgetter
 def events(request, event_name):
     event_name = event_name.replace('-', ' ')
     event = Event.objects.get(title=event_name)
-    initial_updates = Update.objects.all(category == 'Update')
+    initial_updates = Update.objects.filter(category = 'Update')
     updates = sorted(initial_updates, key=attrgetter('id'), reverse=True)
-    initial_announcements = Update.objects.all(category == 'Announcement')
+    initial_announcements = Update.objects.filter(category = 'Announcement')
     announcements = sorted(initial_announcements, key=attrgetter('id'), reverse=True)
     tab_set = event.tab_set.all()
     return render_to_response('events/events.html', locals(),
