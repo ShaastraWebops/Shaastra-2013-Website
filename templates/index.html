@@ -1,4 +1,76 @@
 {% extends "base.html" %}
+{% block hash_handler %}
+    $(function(){
+        // Keep a mapping of url-to-container for caching purposes.
+        var cache = {
+            // If url is '' (no fragment), display this div's content.
+            '': $('.bbq-default')
+        };
+
+        // Bind an event to window.onhashchange that, when the history state changes,
+        // gets the url from the hash and displays either our cached content or fetches
+        // new content to be displayed.
+        $(window).bind( 'hashchange', function(e) {
+
+            // Get the hash (fragment) as a string, with any leading # removed. Note that
+            // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+            var url = $.param.fragment();
+            $( '.bbq-item,.bbq-default' ).hide();
+            if(!url) {
+                $('.bbq-default').show();
+                return;
+            }
+            var event_name=url.split('/tab')[0];
+            if(cache[event_name]) {
+                var event = cache[event_name];
+                if(cache[url]) {
+                    event.find(".tabtext").html(cache[url]);
+                } else {
+                    event.find(".tabtext").load( url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '.bbq-loading' ).hide();
+                                resetabs();
+                                cache[url] = event.find(".tabtext").html();
+                        });
+                }
+                event.show();
+            } else {
+                if(url.split('submission/')[1]) {
+                    // Show "loading" content while AJAX content loads.
+                    $( '.bbq-loading' ).show();
+                    if (url.split('ques/')[1]) {
+                        $(".bbq-item #q_detail").load( url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '.bbq-item' ).show();
+                            });
+                    } else {
+                        $(".bbq-item #tabtext").load( url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '#tabtext' ).show();
+                            });
+                    }
+                } else {
+                    cache[event_name] = $( '<div class="bbq-item"></div>' ).appendTo( '.bbq-content' );
+
+                    // Load external content via AJAX. Note that in order to keep this
+                    // example streamlined, only the content in .infobox is shown. You'll
+                    // want to change this based on your needs.
+                    cache[event_name].load( event_name, function(){
+
+                        cache[event_name].find(".tabtext").load( url, function(){
+                                    // Content loaded, hide "loading" content.
+                                    $( '.bbq-loading' ).hide();
+                                    resetabs();
+                                    cache[url] = cache[event_name].find(".tabtext").html();
+                            });
+                        });
+                }
+            }
+        })
+        $(window).trigger('hashchange');
+
+    });
+{% endblock %}
 {% block events_menu %}
     {% for category in event_set %}
     <div id="menu{{forloop.counter}}"class="menu">

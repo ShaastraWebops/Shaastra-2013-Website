@@ -35,6 +35,7 @@ def login_get(request):
         else:
             return HttpResponseRedirect(settings.SITE_URL)
     form = LoginForm()
+    msg=request.session.get('msg',"")
     return render_to_response('users/login.html', locals(),
                               context_instance=RequestContext(request))
 
@@ -110,11 +111,8 @@ def register_post(request):
                    'noreply@shaastra.org', [new_user.email],
                    fail_silently=False)
         request.session['registered_user'] = True
-        msg = \
-            'A mail has been sent to the mail id you provided. Please activate your account within 48 hours.'
-        form = LoginForm()
-        return render_to_response('users/login.html', locals(),
-                                  context_instance=RequestContext(request))
+        request.session['msg']="A mail has been sent to the mail id you provided. Please activate your account within 48 hours."
+        return HttpResponseRedirect(settings.SITE_URL+'user/login')
     return render_to_response('users/register.html', locals(),
                               context_instance=RequestContext(request))
 
