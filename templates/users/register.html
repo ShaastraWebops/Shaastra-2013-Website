@@ -85,10 +85,8 @@
         </table>
         <input type="hidden" name="facebook_id" id="facebook_id" value="{{ facebook_id }}" />
         <input type="hidden" name="access_token" id="access_token" value="{{access_token}}" />
-        <input type="button" onclick="forumReg();" id="register" value="Register" class="btn btn-primary">
-        <ul class="nav nav-pills">
-				<li><a href="{{ site_url }}" class="btn-inverse">Home</a></li>        
-        </ul>
+        <input type="button" onclick="forumReg();" id="register" value="Register" class="btn btn-primary" style="margin-left:5px;">
+        <button onclick="window.location.href='{{site_url}}'" class="btn btn-primary" style="margin-left:5px;">Home</button><br><br>
        </form>
      </div>
        <center> <div id="footer">
@@ -165,7 +163,9 @@ body
 	letter-spacing: 1px;	
 	color:#9d261d;
  }
- 
+ .chzn-container .chzn-results {
+ 		max-height:100px;
+ 		}
 #msg{
    font-family: "monotype";
 	letter-spacing: 1px;
@@ -176,11 +176,6 @@ body
 	letter-spacing: 1px;
 	font-size:16px;
 	color:#0000CD;	}
-
-#form li{
-    text-decoration:none;
-    margin-left:-38px;
-    }
 a,a:link,a:active{
    text-decoration:none;}
 
