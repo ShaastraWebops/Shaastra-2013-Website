@@ -3,7 +3,6 @@ import os
 TIME_ZONE = 'Asia/Calcutta'
 LANGUAGE_CODE = 'en-us'
 
-
 # settings that will be common and useful.
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 PROJECT_DIR_NAME = PROJECT_DIR.split('/')[-1] # used in dajaxice.[my_project_folder_name].events.[ajax_function] (see context_processors.py)
@@ -14,6 +13,7 @@ HAYSTACK_SITECONF='search_sites'
 HAYSTACK_SEARCH_ENGINE='whoosh'
 HAYSTACK_WHOOSH_PATH='whoosh/engine'
 HAYSTACK_INCLUDE_SPELLING=True
+
 
 SITE_ID = 1
 
@@ -39,6 +39,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 INSTALLED_APPS = (
+    'haystack',
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.contenttypes',
@@ -55,7 +56,6 @@ INSTALLED_APPS = (
     'dtvpicker',
     'dajaxice',
     'dajax',
-    'haystack',
 #    'recaptcha',
 )
 
