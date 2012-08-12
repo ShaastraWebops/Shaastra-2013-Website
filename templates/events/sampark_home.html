@@ -104,7 +104,7 @@
             {% if city == 'Hyderabad' %}Hyderabad{% endif %}
             {% if city == 'Pune' %}Pune{% endif %}
             </ul>
-            <ul>
+            <ul id="menus{{forloop.counter}}">
                 {% if city == 'Bengaluru' %}
                 {% for event in bengaluruevents %}
          		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"B_"}}</li>
