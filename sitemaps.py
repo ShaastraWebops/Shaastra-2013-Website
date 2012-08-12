@@ -34,8 +34,9 @@ class EventSitemap(Sitemap):
     def location(self, obj):
 
        # return '/#events/' + slugify(obj.title)
-
-        return '/2013/main/test/#events/' + slugify(obj.title)
+	if obj.title.split('_')[0].__len__() ==1 :
+	    return '/2013/main/test/events/sampark/#events/' + slugify(obj.title) + '/tab/'
+        return '/2013/main/test/#events/' + slugify(obj.title) + '/tab/'
 
 
 class SiteSiteMap(Sitemap):
@@ -205,4 +206,3 @@ class Event_SubmissionSiteMap(Sitemap):
 
 
 # submissions captured parameter urls end here
-
