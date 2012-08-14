@@ -20,6 +20,6 @@ Event url = <a href="/#events/{{priority.title|slugify}}/">URL</a><br>
 Title: {{result.title}}<br>
 Event = {{result.event}}<br>
 Text: {{ result.tabtext }}<br>
-URL = <a href="#events/{{result.event|slugify}}/tab/{{result.title|slugify}}">Click</a><br>
+URL = <a href="/#events/{{result.event|slugify}}/tab/{{result.title|slugify}}">Click</a><br>
 {% endfor %}
 {%endif%}
