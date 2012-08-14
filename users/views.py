@@ -64,7 +64,7 @@ def login_post(request):
                               context_instance=RequestContext(request))
 
 
-@login_required(login_url=settings.SITE_URL + 'user/login/')
+#@login_required(login_url=settings.SITE_URL + 'user/login/')
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect(settings.SITE_URL)
@@ -248,5 +248,3 @@ def events(request):
 def ajax_login_link(request):
     return HttpResponse('<a href="%suser/login">Click here to login</a>'
                          % settings.SITE_URL)
-
-
