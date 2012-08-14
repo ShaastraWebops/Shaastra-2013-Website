@@ -1,24 +1,37 @@
-# Create your views here.
 from haystack.query import *
 from events.models import *
+from django.shortcuts import render_to_response
 
-def searchquery(search_term = None):
-    #skeleton for queries
-    event_titles=SearchQuerySet().filter(content=search_term).models(Event)
-    best_match_title=SearchQuerySet().autocomplete(title_autocomplete=search_term).models(Event)
-    best_match_category=SearchQuerySet().autocomplete(category_autocomplete=search_term).models(Event)
-    #this isn't working currently, some whoosh_backend.py hack is needed?
-    tab_content = SearchQuerySet().filter(content=search_term).models(Tab)
-    print event_titles, best_match_title, best_match_category, tab_content, 'FIN'
-     
-    # Return search results to template here. 
+def search_title(search_term):
+    titles=SearchQuerySet().autocomplete(title=search_term).models(Event)
+    return titles
     
-    spellsuggest1 = SearchQuerySet.spelling_suggestion(search_term)
-    spellsuggest2  = SearchQuerySet.auto_query(search_term).spelling_suggestion()
-    print 'did you mean', spellsuggest, 'or', spellsuggest2
+def search_category(search_term):
+    categories=SearchQuerySet().autocomplete(category=search_term).models(Event)
+    return categories
+
+def search_tabs(search_term):
+    tabs = SearchQuerySet().filter(content=search_term).models(Tab)
+    return tabs
     
-    '''
-    Later modifications include <em> tags for search terms 
-    Currently, the tab model is improperly indexing for some reason.
-    Also, RealtimeSearchIndex everything? Server can handle?
-    '''
+def searchquery(request, search_term=None):
+    eventresults=[]
+    eventresults.append(search_title(search_term)) 
+    eventresults.append(search_category(search_term))
+    tabresults=search_tabs(search_term)
+    if spellsuggest(search_term) is not '':
+        spell=spellsuggest(search_term)
+        try:
+            spell = spell[0].split('|')
+        except:
+            pass
+    print eventresults, tabresults
+    return render_to_response("search/search.html",locals()) 
+    
+def spellsuggest(search_term):
+    spellsuggest1 = SearchQuerySet().spelling_suggestion(search_term)
+    spellsuggest2  = SearchQuerySet().auto_query(search_term).spelling_suggestion()
+    if(spellsuggest1!=spellsuggest2):
+        return spellsuggest1+'|'+spellsuggest2
+    else:
+        return spellsuggest2

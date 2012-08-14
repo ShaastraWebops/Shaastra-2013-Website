@@ -1,0 +1,10 @@
+{% for result in eventresults %}
+{% for priority in result %}
+{{ priority.title }}
+{{ priority.category}}
+{% endfor %}
+{%endfor%}
+
+{% for result in tabresults %}
+{{ result.text }}
+{% endfor %}
