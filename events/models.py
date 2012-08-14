@@ -98,7 +98,7 @@ class Tab(models.Model):
 #        cache.set(str(self.id)+"_text", str(self.text), 2592000)
 #        cache.set(str(self.id)+"_pref", str(self.pref), 2592000)
 #        super(Tab, self).save(*args, **kwargs)
-
+        
     def delete(self):
         file_list = self.tabfile_set.all()
         for f in file_list:
@@ -106,9 +106,8 @@ class Tab(models.Model):
         super(Tab, self).delete()
 
     class Meta:
-
         ordering = ['pref']
-
+    
 
 class TabFile(models.Model):
 

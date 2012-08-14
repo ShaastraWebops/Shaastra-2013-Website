@@ -1,10 +1,17 @@
+<em>Results By title and category:</em><br>
 {% for result in eventresults %}
 {% for priority in result %}
-{{ priority.title }}
-{{ priority.category}}
+Event Title: {{ priority.title }} <br>
+Event Category: {{ priority.category}} <br>
+Event url = <a href="/#events/{{priority.title|slugify}}/">URL</a><br>
+<br><br>
 {% endfor %}
 {%endfor%}
-
+<br>
+<em>Results for text in tabs:</em><br>
+<b> I cant figure out which url to send to? </b><br>
 {% for result in tabresults %}
-{{ result.text }}
+Title: {{result.title}}<br>
+Event = {{result.event}}<br>
+Text: {{ result.tabtext }}<br><br>
 {% endfor %}

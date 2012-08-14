@@ -1,1 +1,4 @@
 {{ object.text }}
+{{ object.tabtext }}
+{{ object.title }}
+{{object.event}}
