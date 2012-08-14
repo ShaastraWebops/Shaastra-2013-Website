@@ -39,8 +39,10 @@ def sampark(request):
     bengaluruevents = []
     hyderabadevents = []
     puneevents = []
+    coimbatoreevents = []
+    chennaievents = []
     event = Event.objects.all()
-    city_set = ['Bengaluru', 'Hyderabad', 'Pune']
+    city_set = ['Bengaluru', 'Hyderabad', 'Pune','Coimbatore','Chennai']
     for e in event:
         if e.title.split('_')[0] == 'B':
             bengaluruevents.append(e)
@@ -48,5 +50,9 @@ def sampark(request):
             hyderabadevents.append(e)
         if e.title.split('_')[0] == 'P':
             puneevents.append(e)
+        if e.title.split('_')[0] == 'C':
+            coimbatoreevents.append(e)
+        if e.title.split('_')[0] == 'Ch':
+            chennaievents.append(e)
     return render_to_response('events/sampark_home.html', locals(), context_instance=RequestContext(request))
         

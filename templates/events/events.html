@@ -3,7 +3,7 @@
         <div id="sidemenutitle"><p>{{event.title}}</p></div>
         <ul id="sidemenulist">
             {% for tab in tab_set %}
-     		<li id="eventtab{{forloop.counter}}"  class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='#events/{{event|slugify}}/tab/{{tab.title|slugify}}'">{{tab.title}}</p></li>
+     		<li class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='#events/{{event|slugify}}/tab/{{tab.title|slugify}}'">{{tab.title}}</p></li>
             {% endfor %}
             {% if event.registrable_online == 1 %}
             <li class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='#submission/{{event.id}}'">Register</p></li>
@@ -41,5 +41,3 @@
       {% endfor %}
   </div>
 </div>
-<script type="text/javascript" >
-</script>
