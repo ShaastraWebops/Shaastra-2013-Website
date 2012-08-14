@@ -1,3 +1,7 @@
+{% if spell %}
+Did you mean <a href="/search/{{spell}}/">{{spell}}</a> ?
+{% endif %}<br><br>
+{% if eventresults %}
 <em>Results By title and category:</em><br>
 {% for result in eventresults %}
 {% for priority in result %}
@@ -8,10 +12,14 @@ Event url = <a href="/#events/{{priority.title|slugify}}/">URL</a><br>
 {% endfor %}
 {%endfor%}
 <br>
+{%endif%}
+{%if tabresults%}
 <em>Results for text in tabs:</em><br>
 <b> I cant figure out which url to send to? </b><br>
 {% for result in tabresults %}
 Title: {{result.title}}<br>
 Event = {{result.event}}<br>
-Text: {{ result.tabtext }}<br><br>
+Text: {{ result.tabtext }}<br>
+URL = <a href="#events/{{result.event|slugify}}/tab/{{result.title|slugify}}">Click</a><br>
 {% endfor %}
+{%endif%}

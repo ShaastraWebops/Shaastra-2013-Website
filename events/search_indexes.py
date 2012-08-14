@@ -11,7 +11,6 @@ class NoteIndexTabs(SearchIndex):
     def prepare_event(self,obj):
         try:
             if(obj.event.title):
-                print   "indexing"
                 return obj.event.title
         except:
             pass

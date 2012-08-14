@@ -21,17 +21,8 @@ def searchquery(request, search_term=None):
     tabresults=search_tabs(search_term)
     if spellsuggest(search_term) is not '':
         spell=spellsuggest(search_term)
-        try:
-            spell = spell[0].split('|')
-        except:
-            pass
-    print eventresults, tabresults
     return render_to_response("search/search.html",locals()) 
     
 def spellsuggest(search_term):
-    spellsuggest1 = SearchQuerySet().spelling_suggestion(search_term)
-    spellsuggest2  = SearchQuerySet().auto_query(search_term).spelling_suggestion()
-    if(spellsuggest1!=spellsuggest2):
-        return spellsuggest1+'|'+spellsuggest2
-    else:
-        return spellsuggest2
+    spellsuggest = SearchQuerySet().auto_query(search_term).spelling_suggestion()
+    return spellsuggest
