@@ -50,6 +50,11 @@ def login_post(request):
     user = authenticate(username=username, password=password)
     if user is not None and user.is_active:
         auth_login(request, user)
+        nextURL = request.GET.get('next', '')
+        if nextURL != '':
+            nextURL = nextURL[1:]  # For removing the leading slash from in front of the next parameter
+            redirectURL = settings.SITE_URL + nextURL
+            return HttpResponseRedirect(redirectURL)
         if user.is_superuser:
             return HttpResponseRedirect(settings.SITE_URL + 'admin/')
         elif user.get_profile().is_core:
