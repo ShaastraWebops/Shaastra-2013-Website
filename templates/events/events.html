@@ -41,3 +41,12 @@
       {% endfor %}
   </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".tablinks").click(function(){
+            window.location.href=$(this).attr('value');
+            $(".tablinks").removeClass("on");
+            $(this).addClass("on");
+        });
+    });
+</script>
