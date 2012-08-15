@@ -142,12 +142,12 @@
                 {% endif %}
                 {% if city == 'Chennai' %}
                 {% for event in chennaievents %}
-         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"P_"}}</li>
+         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"C_"}}</li>
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Coimbatore' %}
                 {% for event in coimbatoreevents %}
-         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"P_"}}</li>
+         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"Ch_"}}</li>
                 {% endfor %}
                 {% endif %}
       		</ul>
