@@ -14,6 +14,8 @@
 <div id="main_container">
 	<div id="left" class="floatleft">
 		<a href="{{ site_url }}"><img id="splash" src="{{site_url}}static/img/diceNtext.png"></a>
+		<div id="dates"><p>5th-8th January,2013</p></div>
+		
 	</div>
 	<div id="right" class="floatright">
         <div id="triangle"></div> 	
@@ -32,16 +34,14 @@
 			 
       <div id="div">
 				<a href="{{site_url}}user/register/" class="log">Register</a>
-                	<a href="{{site_url}}user/admin/password_reset/" class="log">Forgot Password?</a></div>      
-					
+                	<a href="{{site_url}}user/admin/password_reset/" class="log">Forgot Password?</a></div>      			
 		</form>
-			   
    <center> <div id="footer">
 	<div id="navcontainer">
 	<ul>
 	<li><a href="http://www.shaastra.org/2011/main/policy/">Privacy Policy</a></li>
     <li><a href="http://www.shaastra.org/blog/">Blog</a></li>
-    <li><a href="http://shaastra.org/2013/yash/login/splash.html#">Events</a></li>
+    <li><a href="{{site_url}}#events">Events</a></li>
     <li><a href="http://shaastra.org/2013/yash/login/splash.html#">Credits</a></li>
     <li><a href="http://shaastra.org/2013/yash/login/splash.html#">Contact</a></li>
     </ul>
@@ -86,6 +86,19 @@ body
 	color:#FFF;
 	line-height:20px;
         text-decoration:none;}
+#dates{
+	font-size:20px;
+	color:#FFF;
+   font-family:Helvetica;
+   text-align:center;
+ }
+#look{
+	text-align:center;
+	text-decoration:none;
+  color:#fff;
+  font-family:'century gothic';
+}
+# look p:hover{cursor:pointer;}
 #right
 	{
 	width : 61%;
