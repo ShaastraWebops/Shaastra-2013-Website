@@ -7,7 +7,7 @@ Did you mean <a href="/search/{{spell}}/">{{spell}}</a> ?
 {% for priority in result %}
 Event Title: {{ priority.title }} <br>
 Event Category: {{ priority.category}} <br>
-Event url = <a href="/#events/{{priority.title|slugify}}/">URL</a><br>
+Event url = <a href="{{ priority.url }}">URL</a><br>
 <br><br>
 {% endfor %}
 {%endfor%}
