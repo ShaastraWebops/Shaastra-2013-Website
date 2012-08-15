@@ -1,6 +1,6 @@
 <div id="body">
    	<div id="sidemenu">
-        <div id="sidemenutitle"><p>{{event.title}}</p></div>
+        <div id="sidemenutitle"><p>{{event.title|cut:"H_"|cut:"B_"|cut:"P_"|cut:"C_"|cut:"Ch_"}}</p></div>
         <ul id="sidemenulist">
             {% for tab in tab_set %}
      		<li class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='#events/{{event|slugify}}/tab/{{tab.title|slugify}}'">{{tab.title}}</p></li>
