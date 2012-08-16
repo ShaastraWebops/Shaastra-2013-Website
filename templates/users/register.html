@@ -74,6 +74,7 @@
 <div id="main_container">
     <div id="left" class="floatleft">
 		<a href="{{ site_url }}"><img id="splash" src="{{site_url}}static/img/diceNtext.png"></a>
+		<div id="dates"><p>5th-8th January,2013</p></div>
 	 </div>
 	 <div id="right" class="floatright">
       <div id="form" class="control-group">
@@ -94,7 +95,7 @@
 			<ul>
 			<li><a href="http://www.shaastra.org/2011/main/policy/">Privacy Policy</a></li>
     		<li><a href="http://www.shaastra.org/blog/">Blog</a></li>
-    		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">Events</a></li>
+    		<li><a href="{{site_url}}#events">Events</a></li>
     		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">Credits</a></li>
     		<li><a href="http://shaastra.org/2013/yash/login/splash.html#">Contact</a></li>
     		</ul>
@@ -136,6 +137,12 @@ body
 	background:url({{site_url}}static/img/bggrade.jpg);
 	margin:0; padding:0;
 	}
+	#dates{
+	font-size:20px;
+	color:#FFF;
+   font-family:Helvetica;
+   text-align:center;
+ }
 #right
 	{
 	width : 61%;
