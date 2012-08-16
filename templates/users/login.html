@@ -31,7 +31,7 @@ $(window).resize(function(){$('#middle_center').center();});
             </div><br>
             <form name="login" id="login_form" action="" method="POST" >
             {% csrf_token %}	
-                <input onclick='this.value=""' type="text" name="username" class = "input top">
+                <input value="username" onclick='this.value=""' type="text" name="username" class = "input top">
                 <img src="{{site_url}}static/img/hline.jpg" width="200px" height="0px">   
                  <input value = "password" class = "input bottom" onclick='this.value=""' type="password" name="password"><br><br>
                <input type = "submit" class = "rounded" value="Login"><br><br>
