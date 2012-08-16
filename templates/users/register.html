@@ -89,7 +89,7 @@ $(window).resize(function(){$('#container').center();});
 		<button class="icons" onclick="window.location.href='{{site_url}}'">Contact</button><br>	
 		</div>
       <div id="form" class="control-group right">
-        <h1>Sign up</h1><br/>
+        <h1 style="color:#fff;">Sign up</h1><br/>
         <form id="form_reg" action="{{ post_url }}" method="POST" class="form-horizontal">
         <table>
             {% csrf_token %}
@@ -113,11 +113,10 @@ body
     background-repeat : repeat-x;
 	font-family:'Century Gothic',serif ! important;
 	letter-spacing:0.75px ! important;
-	color:#fff ! important;
     }
    #container
     {
-    width : 95%;
+    width : 70%;
     margin:0 auto;
     height: 100%;
     overflow:hidden;
@@ -128,7 +127,7 @@ body
 .left{
 	float:left;
 	margin:30px 30px 0 auto;
-	width:9%;
+	width:15%;
 	}
 
 .icons{
@@ -169,8 +168,7 @@ body
 	}
 #msg:hover{cursor:pointer;}
 #reg{
-   font-family: "century gothic";
-	letter-spacing: 1px;
+   color:#fff;
 	font-size:16px;	
    margin-left:40px;	
 	}
