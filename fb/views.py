@@ -14,6 +14,7 @@ from django.template.defaultfilters import slugify
 
 @csrf_exempt
 def home(request):
+    '''
     event_set = Event.objects.all()
     for event in event_set:
         if event.fb_event_id and not event.updated:
@@ -55,13 +56,15 @@ def home(request):
                 response = json.loads(target)
                 event.fb_event_id = response['id']
                 event.save()
+    '''
     result_list=[]
     for t in Tag.objects.all():
         row=[]
         row.append(str(t.name))
         temp=[]
         for x in t.event_set.all():
-            url = slugify(x) + '/tab/' + x.tab_set.all()[0].title
+            url = x.id
+            print x
             temp.append([str(x),str(url)])
         row.append(temp)
         result_list.append(row)

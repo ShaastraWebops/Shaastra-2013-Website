@@ -4,7 +4,8 @@
         <title>Shaastra 2013</title>
 	    <script type="text/javascript">
         function show(event_id){
-            $('#content').load('{{site_url}}fb/events/'+event_id,function(){FB.XFBML.parse(document.getElementById('content'));});
+            $('#content').fadeOut();
+            $('#content').load('{{site_url}}fb/events/'+event_id,function(){FB.XFBML.parse(document.getElementById('content'));         $('#content').fadeIn();});
         }
         </script>
         <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
@@ -90,6 +91,7 @@
                             </div>
                             </ul>
                             </li>
+                            <li><a href="#" onclick="$('#content').load('{{site_url}}fb/hero/');">Home</a></li>
                             <li><a href="#" target="_blank">Sampark</a></li>
                             <li><a href="#" target="_blank">Hospitality</a></li>
                             <li><a href="#" target="_blank">Sponsorship</a></li>
@@ -102,10 +104,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><br>
             <div id="container" class="row-fluid">
-                <div id="nav" class="span2">
-                <strong>Welcome whomever=P</strong>
+                <div class="span2 well">
+                    <div id="profile" class="row-fluid">
+                    <strong>Welcome whomever=P</strong>
+                    </div>
                 </div>
                 <div class="span10">
                     <div id="content" class="row-fluid">
@@ -120,10 +124,12 @@
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-dropdown.js" charset = "utf-8"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-collapse.js" charset = "utf-8"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-transition.js" charset = "utf-8"></script>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-carousel.js" charset = "utf-8"></script>
         <script type="text/javascript">
         $(document).ready(function(){
             $('.dropdown-toggle').dropdown();
             $(".collapse").collapse();
+            $('#content').load('{{site_url}}fb/hero/',function(){$('.carousel').carousel({interval: 3000});});
         });
 	    </script>
         <!--Script to search-->
@@ -139,7 +145,7 @@
 	        else var sValue = li.selectValue;
             
             //event details location	    
-	        window.location="#events/"+sValue;
+	        show(sValue);
         }
 
         function selectItem(li) {
