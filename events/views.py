@@ -12,6 +12,10 @@ from operator import attrgetter
 
 def events(request, event_name):
     event_name = event_name.replace('-', ' ')
+    if event_name=="robo oceana":
+    	event_name="robo-oceana"
+    elif event_name=="lectures video conferences":
+    	event_name="lectures & video conferences"
     if event_name == 'sampark/' :
         return sampark(request)
     event = Event.objects.get(title=event_name)
