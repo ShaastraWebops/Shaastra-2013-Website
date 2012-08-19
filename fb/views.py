@@ -112,19 +112,19 @@ def hero(request):
                               context_instance=RequestContext(request))
 @csrf_exempt
 def events(request, event_name):
-    try:
-        temp = (request.META['HTTP_REFERER'])[:23]
-        if temp == 'http://www.facebook.com':
-            return HttpResponseRedirect(settings.SITE_URL + '#events/'
-                    + event_id)
-    except:
-        pass
     event_name = event_name.replace('-', ' ')
     if event_name=="robo oceana":
     	event_name="robo-oceana"
     elif event_name=="lectures video conferences":
     	event_name="lectures & video conferences"
     event = Event.objects.get(title=event_name)
+    try:
+        temp = (request.META['HTTP_REFERER'])[:23]
+        if temp == 'http://www.facebook.com':
+            url=settings.SITE_URL + '#events/' + event.title + '/tab/' + event.tab_set.all()[0].title
+            return HttpResponseRedirect(url)
+    except:
+        pass
 #    event_intro = "Desciption comes here!"
     event_intro = event.mobapptab.text
     return render_to_response('ajax/fb/events.html', locals(),

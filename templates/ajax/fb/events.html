@@ -1,5 +1,5 @@
 <html>
-    <head>
+	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# shaastra: http://ogp.me/ns/fb/shaastra#">
         <title>Shaastra>>Events>>{{event}}</title>
         <script type="text/javascript" >
         function rsvp() {
@@ -9,6 +9,13 @@
         });
         }
         </script>
+     <meta property="fb:app_id"               content="291744470918252"> 
+     <meta property="og:type"                 content="shaastra:event"> 
+<!--     <meta property="og:url"                  content="">-->
+     <meta property="og:site_name"            content="Shaastra 2013">
+     <meta property="og:image"                content="{{site_url}}static/img/diceNtext.png">
+     <meta property="og:title"                content="Shaastra 2013>>{{event}}">
+     <meta property="og:description"          content="Come and join the fun!">
     </HEAD>
     <BODY>
         <div class="well">
@@ -22,8 +29,8 @@
             <div id="gallery" class="span5 floatright boxA">
                 <div id="picture"><img src="{{event.events_logo}}" /></div>
             </div>
-<!--            <div class="fb-facepile" data-href="{{site_url}}fb/events/{{event.id}}" data-max-rows="1" data-width="300"></div>
-            <fb:like href="{{site_url}}fb/events/{{event.id}}" show_faces="false" width="450"></fb:like> -->
+<!--            <div class="fb-facepile" data-href="{{site_url}}fb/events/{{event.id}}" data-max-rows="1" data-width="300"></div>-->
+            <fb:like href="{{site_url}}fb/events/{{event.title}}" show_faces="false" width="450"></fb:like> 
         </div>
     </BODY>
 </html>
