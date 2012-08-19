@@ -4,7 +4,8 @@
         <title>Shaastra 2013</title>
 	    <script type="text/javascript">
         function show(event_id){
-            $('#content').load('{{site_url}}fb/events/'+event_id,function(){FB.XFBML.parse(document.getElementById('content'));});
+            $('#content').fadeOut();
+            $('#content').load('{{site_url}}fb/events/'+event_id,function(){FB.XFBML.parse(document.getElementById('content'));         $('#content').fadeIn();});
         }
         </script>
         <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
@@ -28,10 +29,10 @@
                 if(response.status === 'connected') {
                     uid = response.authResponse.userID;
                     accessToken = response.authResponse.accessToken;
+                    $('#profile').html("<fb:profile-pic uid="+uid+" linked='true' />");
                     FB.api('/me', function(response) {
                         userDetails = response;
-                        $("#profile").html("<strong>Welcome " + userDetails.name + "</strong>");
-//                        document.getElementById('header').innerHTML="<h2>Welcome " + userDetails.name + "</h2>";
+                        $("#profile").prepend("<strong>Welcome " + userDetails.name + "</strong>");
                     });
                 } else if(response.status === 'not_authorized') {
 			FB.login(function(response) {
@@ -63,7 +64,8 @@
                     <div class="navbar-inner">
                         <div class="container">
                         <ul class="nav">
-                            <li id="logo"><a href="http://www.shaastra.org/" target="_blank"><img src="{{site_url}}static/img/shaastralogo.png" alt="<h2>Shaastra 2013</h2>"/></a></li>
+                            <li><a href="http://www.shaastra.org/" target="_blank"><img id="logo" src="{{site_url}}static/img/shaastralogo.png" alt="<h2>Shaastra 2013</h2>"/></a></li>
+                            <li><a href="#">Home</a></li>
                             <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Events
@@ -102,10 +104,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><br>
             <div id="container" class="row-fluid">
-                <div id="profile" class="span2">
-                <strong>Welcome whomever=P</strong>
+                <div class="span2 well">
+                    <div id="profile" class="row-fluid">
+
+                    </div>
                 </div>
                 <div class="span10">
                     <div id="content" class="row-fluid">
@@ -120,10 +124,12 @@
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-dropdown.js" charset = "utf-8"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-collapse.js" charset = "utf-8"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-transition.js" charset = "utf-8"></script>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-carousel.js" charset = "utf-8"></script>
         <script type="text/javascript">
         $(document).ready(function(){
             $('.dropdown-toggle').dropdown();
             $(".collapse").collapse();
+            $('#content').load('{{site_url}}fb/hero/',function(){$('.carousel').carousel({interval: 3000});});
         });
 	    </script>
         <!--Script to search-->
