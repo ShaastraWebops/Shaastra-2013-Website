@@ -63,29 +63,57 @@ def home(request):
         row.append(str(t.name))
         temp=[]
         for x in t.event_set.all():
-            url = x.id
+            url = slugify(x)
             temp.append([str(x),str(url)])
         row.append(temp)
         result_list.append(row)
     event_set = []
     for c in EVENT_CATEGORIES:
         event_category_set = Event.objects.filter(category=c[0])
-        if event_category_set:
+        if c[0] == "Sampark":
+            pass
+        elif event_category_set:
             event_set.append(event_category_set)
+    events = Event.objects.all()
+    city_set = ['Bengaluru', 'Hyderabad', 'Pune','Coimbatore','Chennai']
+    sampark_set=[]
+    city_events=[]
+    city_events.append('Bengaluru')
+    city_events.append(events.filter(title__startswith="B_"))
+    sampark_set.append(city_events)
+    city_events=[]
+    city_events.append('Hyderabad')
+    city_events.append(events.filter(title__startswith="H_"))
+    sampark_set.append(city_events)
+    city_events=[]
+    city_events.append('Pune')
+    city_events.append(events.filter(title__startswith="P_"))
+    sampark_set.append(city_events)
+    city_events=[]
+    city_events.append('Coimbatore')
+    city_events.append(events.filter(title__startswith="C_"))
+    sampark_set.append(city_events)
+    city_events=[]
+    city_events.append('Chennai')
+    city_events.append(events.filter(title__startswith="Ch_"))
+    sampark_set.append(city_events)
+#    assert False
     return render_to_response('fb/home.html', locals(),
                               context_instance=RequestContext(request))
 
 @csrf_exempt
 def hero(request):
+    '''
     target = urllib.urlopen('https://graph.facebook.com/384669854912067/photos').read()
     photos = json.loads(target)["data"]
     srcs=[]
     for photo in photos:
     	srcs.append(photo["images"][0]["source"])
+    '''
     return render_to_response('fb/hero.html', locals(),
                               context_instance=RequestContext(request))
 @csrf_exempt
-def events(request, event_id):
+def events(request, event_name):
     try:
         temp = (request.META['HTTP_REFERER'])[:23]
         if temp == 'http://www.facebook.com':
@@ -93,12 +121,12 @@ def events(request, event_id):
                     + event_id)
     except:
         pass
-    event_set = []
-    for c in EVENT_CATEGORIES:
-        event_category_set = Event.objects.filter(category=c[0])
-        if event_category_set:
-            event_set.append(event_category_set)
-    event = Event.objects.get(id=event_id)
+    event_name = event_name.replace('-', ' ')
+    if event_name=="robo oceana":
+    	event_name="robo-oceana"
+    elif event_name=="lectures video conferences":
+    	event_name="lectures & video conferences"
+    event = Event.objects.get(title=event_name)
     event_intro = "Desciption comes here!"
 #    event_intro = event.mobapptab.text
     return render_to_response('ajax/fb/events.html', locals(),
