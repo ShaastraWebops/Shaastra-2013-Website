@@ -24,13 +24,13 @@
             </div>
         </div>
     </div>
-  <div id="updates" class="span3">
+  <div id="updates" style="width:23%;">
       {% for a in announcements %}
           {% if forloop.first %}
-              <h4>Announcements</h4>
+              <h3>Announcements</h3>
           {% endif %}
           {% if a.event == event and a.expired == 0 %}
-              <p><b>{{a.subject}}</b> - {{a.description}}<br></p>
+              <p style="font-size:16px;"><b>{{a.subject}}</b> - {{a.description}}<br></p>
           {% endif %}
           {% if forloop.last %}
               <br>
