@@ -9,6 +9,7 @@ from coord.forms import *
 from core.forms import AddEventForm
 from dajaxice.decorators import dajaxice_register
 from django.core.cache import cache
+from django.contrib.sitemaps import ping_google
 from operator import attrgetter
 
 
@@ -57,6 +58,10 @@ def edit_event(
     event_form = AddEventForm(form, instance=Event.objects.get(id=id))
     if event_form.is_valid():
         event = event_form.save()
+        try:
+            ping_google()
+        except:
+            pass
         if upload:
             dajax.script('upload_events_logo(' + str(event.id) + ');')
         else:

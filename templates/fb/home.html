@@ -4,7 +4,8 @@
         <title>Shaastra 2013</title>
 	    <script type="text/javascript">
         function show(event_id){
-            $('#content').load('{{site_url}}fb/events/'+event_id,function(){FB.XFBML.parse(document.getElementById('content'));});
+            $('#content').fadeOut();
+            $('#content').load('{{site_url}}fb/events/'+event_id,function(){FB.XFBML.parse(document.getElementById('content'));         $('#content').fadeIn();});
         }
         </script>
         <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
@@ -28,10 +29,10 @@
                 if(response.status === 'connected') {
                     uid = response.authResponse.userID;
                     accessToken = response.authResponse.accessToken;
+                    $('#profile').html("<fb:profile-pic uid="+uid+" linked='true' />");
                     FB.api('/me', function(response) {
                         userDetails = response;
-                        $("#header").html("<h2>Welcome " + userDetails.name + "</h2>");
-//                        document.getElementById('header').innerHTML="<h2>Welcome " + userDetails.name + "</h2>";
+                        $("#profile").prepend("<strong>"+ userDetails.name + "</strong>");
                     });
                 } else if(response.status === 'not_authorized') {
 			FB.login(function(response) {
@@ -63,37 +64,67 @@
                     <div class="navbar-inner">
                         <div class="container">
                         <ul class="nav">
-                            <li id="logo"></li>
+                            <li><a href="http://www.shaastra.org/" target="_blank"><img id="logo" src="{{site_url}}static/img/shaastralogo.png" alt="<h2>Shaastra 2013</h2>"/></a></li>
+                            <li><a href="#" onclick="$('#content').load('{{site_url}}fb/hero/',function(){$('.carousel').carousel({interval: 3000});});">Home</a></li>
                             <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Events
-                            <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                            <div class="accordion" id="eventsMenu">
-                            {% for category in event_set %}
-                            <li>
-                            <div class="accordion-group">
-                                <div style="color:black;" class="accordion-heading">
-                                <a class="accordion-toggle" data-toggle="collapse" data-target="#{{category.0.category|slugify}}" data-parent="#eventsMenu">{{category.0.category}}</a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Events
+                                <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                <div class="accordion" id="eventsMenu">
+                                {% for category in event_set %}
+                                <li>
+                                <div class="accordion-group">
+                                    <div style="color:black;" class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-target="#{{category.0.category|slugify}}" data-parent="#eventsMenu">{{category.0.category}}</a>
+                                    </div>
+                                    <div id="{{category.0.category|slugify}}" class="accordion-body collapse">
+                                            <ul>
+                                            {% for event in category %}
+                                     		<li><a href="#" onclick="show('{{event.title|slugify}}');">{{event.title}}</a></li>
+                                            {% endfor %}
+                                            </ul>
+                                    </div>
                                 </div>
-                                <div id="{{category.0.category|slugify}}" class="accordion-body collapse">
-                                        <ul>
-                                        {% for event in category %}
-                                 		<li><a href="#" onclick="show({{event.id}});">{{event.title}}</a></li>
-                                        {% endfor %}
-                                        </ul>
+                                </li>
+                                {% endfor %}
                                 </div>
-                            </div>
+                                </ul>
                             </li>
-                            {% endfor %}
-                            </div>
-                            </ul>
+
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Sampark
+                                <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                <div class="accordion" id="samparkMenu">
+                                {% for city in sampark_set %}
+                                <li>
+                                <div class="accordion-group">
+                                    <div style="color:black;" class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-target="#{{city.0}}" data-parent="#samparkMenu">{{city.0}}</a>
+                                    </div>
+                                    <div id="{{city.0}}" class="accordion-body collapse">
+                                            <ul>
+                                            {% for event in city.1 %}
+                                       		<li><a href="#" onclick="show('{{event.title|slugify}}');">{{event.title}}</a></li>
+                                            {% endfor %}
+                                            </ul>
+                                    </div>
+                                </div>
+                                </li>
+                                {% endfor %}
+                                </div>
+                                </ul>
                             </li>
-                            <li><a href="#" target="_blank">Sampark</a></li>
-                            <li><a href="#" target="_blank">Hospitality</a></li>
-                            <li><a href="#" target="_blank">Sponsorship</a></li>
-                            <li><a href="#" target="_blank">Forums</a></li>
+
+
+                            <li><a href="{{site_url}}events/sampark/" target="_blank">Sampark</a></li>
+                            <li><a href="{{site_url}}" target="_blank">Hospitality</a></li>
+                            <li><a href="{{site_url}}" target="_blank">Sponsorship</a></li>
+                            <li><a href="http://forums.shaastra.org/" target="_blank">Forums</a></li>
                             <li class="divider-vertical"></li>
                             <form class="navbar-search pull-left">
                                 <input id="search_query" type="text" class="search-query" placeholder="Search Events">
@@ -102,10 +133,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><br>
             <div id="container" class="row-fluid">
-                <div id="nav" class="span2">
-                <strong>Welcome whomever=P</strong>
+                <div class="span2 well">
+                    <div id="profile" class="row-fluid">
+
+                    </div>
                 </div>
                 <div class="span10">
                     <div id="content" class="row-fluid">
@@ -120,10 +153,12 @@
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-dropdown.js" charset = "utf-8"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-collapse.js" charset = "utf-8"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-transition.js" charset = "utf-8"></script>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-carousel.js" charset = "utf-8"></script>
         <script type="text/javascript">
         $(document).ready(function(){
             $('.dropdown-toggle').dropdown();
             $(".collapse").collapse();
+            $('#content').load('{{site_url}}fb/hero/',function(){$('.carousel').carousel({interval: 3000});});
         });
 	    </script>
         <!--Script to search-->
@@ -139,7 +174,7 @@
 	        else var sValue = li.selectValue;
             
             //event details location	    
-	        window.location="#events/"+sValue;
+	        show(sValue);
         }
 
         function selectItem(li) {
