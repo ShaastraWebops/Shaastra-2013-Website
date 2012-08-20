@@ -25,6 +25,7 @@
         </div>
     </div>
   <div id="updates" style="width:23%;">
+	<div id="textbox2">
       {% for a in announcements %}
           {% if forloop.first %}
               <h3>Announcements</h3>
@@ -45,6 +46,7 @@
               <p><b>{{u.subject}}</b> - {{u.description}}<br></p>
           {% endif %}
       {% endfor %}
+	</div>
   </div>
 </div>
 <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/scrollevents.js" charset = "utf-8"></script>
