@@ -34,9 +34,13 @@ class EventSitemap(Sitemap):
     def location(self, obj):
 
        # return '/#events/' + slugify(obj.title)
+        try :
+            tab_name=Tab.objects.filter(event=obj).order_by('pref')[0].title
+	except:
+	    tab_name=""
 	if obj.title.split('_')[0].__len__() ==1 :
-	    return '/2013/main/test/events/sampark/#events/' + slugify(obj.title) + '/tab/'
-        return '/2013/main/test/#events/' + slugify(obj.title) + '/tab/'
+	    return '/2013/main/test/events/sampark/#events/' + slugify(obj.title) + '/tab/' + tab_name
+        return '/2013/main/test/#events/' + slugify(obj.title) + '/tab/' + tab_name
 
 
 class SiteSiteMap(Sitemap):
