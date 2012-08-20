@@ -23,6 +23,8 @@
             var event_name=url.split('/tab')[0];
             if(cache[event_name]) {
                 var event = cache[event_name];
+                $('.eventtab').removeClass('on');
+                event.find('#etab1').addClass('on');
                 if(cache[url]) {
                     event.find(".tabtext").html(cache[url]);
                 } else {
@@ -46,6 +48,7 @@
                     } else {
                         $(".bbq-item #tabtext").load( url, function(){
                                 // Content loaded, hide "loading" content.
+                                $('#etab1').addClass('on');
                                 $( '#tabtext' ).show();
                             });
                     }
