@@ -28,6 +28,7 @@
                 if(cache[url]) {
                     event.find(".tabtext").html(cache[url]);
                 } else {
+                    $('.bbq-loading').show();
                     event.find(".tabtext").load( url, function(){
                                 // Content loaded, hide "loading" content.
                                 $( '.bbq-loading' ).hide();
@@ -46,9 +47,11 @@
                                 $( '.bbq-item' ).show();
                             });
                     } else {
+                        $('.bbq-loading').show();
                         $(".bbq-item #tabtext").load( url, function(){
                                 // Content loaded, hide "loading" content.
                                 $('#etab1').addClass('on');
+                                $('.bbq-loading').hide();
                                 $( '#tabtext' ).show();
                             });
                     }
@@ -58,6 +61,7 @@
                     // Load external content via AJAX. Note that in order to keep this
                     // example streamlined, only the content in .infobox is shown. You'll
                     // want to change this based on your needs.
+                    $('.bbq-loading').show();
                     cache[event_name].load( event_name, function(){
 
                         cache[event_name].find(".tabtext").load( url, function(){
@@ -87,7 +91,7 @@
         </ul>
         <ul id="menus{{forloop.counter}}">
             {% for event in category %}
-     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
+     		<li onclick="javascript:scroll();" onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title}}</li>
             {% endfor %}
 	    </ul>
         </div>

@@ -18,6 +18,7 @@ from users.forms import *
 from django.contrib.sessions.models import Session
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.core.mail import send_mail as mailsender
+from recaptcha.client import captcha
 import sha
 import random
 import datetime
@@ -78,6 +79,7 @@ def logout(request):
 def register_get(request):
     form = AddUserForm()
     post_url = settings.SITE_URL + 'user/register/'
+    captcha_response = ''  # Added so that nothing gets displayed in the template if this variable is not set
     return render_to_response('users/register.html', locals(),
                               context_instance=RequestContext(request))
 
@@ -88,40 +90,54 @@ def register_post(request):
     """
 
     form = AddUserForm(request.POST)
-    if form.is_valid():
-        data = form.cleaned_data
-        new_user = User(first_name=data['first_name'],
-                        last_name=data['last_name'],
-                        username=data['username'], email=data['email'])
-        new_user.set_password(data['password'])
-        new_user.is_active = False
-        new_user.save()
-        salt = sha.new(str(random.random())).hexdigest()[:5]
-        activation_key = sha.new(salt + new_user.username).hexdigest()
-        key_expires = datetime.datetime.today() + datetime.timedelta(2)
-        userprofile = UserProfile(
-            user=new_user,
-            activation_key=activation_key,
-            key_expires=key_expires,
-            gender=data['gender'],
-            age=data['age'],
-            branch=data['branch'],
-            mobile_number=data['mobile_number'],
-            college=data['college'],
-            college_roll=data['college_roll'],
-            )
-        userprofile.save()
-        mail_template = get_template('email/activate.html')
-        body = \
-            mail_template.render(Context({'username': new_user.username,
-                                 'SITE_URL': settings.SITE_URL,
-                                 'activationkey': userprofile.activation_key}))
-        mailsender('Your new Shaastra2013 account confirmation', body,
-                   'noreply@shaastra.org', [new_user.email],
-                   fail_silently=False)
-        request.session['registered_user'] = True
-        request.session['msg']="A mail has been sent to the mail id you provided. Please activate your account within 48 hours."
-        return HttpResponseRedirect(settings.SITE_URL+'user/login')
+    captcha_response = ''  # Added so that nothing gets displayed in the template if this variable is not set
+    
+    # talk to the reCAPTCHA service
+    response = captcha.submit(  
+        request.POST.get('recaptcha_challenge_field'),  
+        request.POST.get('recaptcha_response_field'),  
+        settings.RECAPTCHA_PRIVATE_KEY,  
+        request.META['REMOTE_ADDR'],)  
+          
+    # see if the user correctly entered CAPTCHA information  
+    # and handle it accordingly.  
+    if response.is_valid:  
+        if form.is_valid():
+            data = form.cleaned_data
+            new_user = User(first_name=data['first_name'],
+                            last_name=data['last_name'],
+                            username=data['username'], email=data['email'])
+            new_user.set_password(data['password'])
+            new_user.is_active = False
+            new_user.save()
+            salt = sha.new(str(random.random())).hexdigest()[:5]
+            activation_key = sha.new(salt + new_user.username).hexdigest()
+            key_expires = datetime.datetime.today() + datetime.timedelta(2)
+            userprofile = UserProfile(
+                user=new_user,
+                activation_key=activation_key,
+                key_expires=key_expires,
+                gender=data['gender'],
+                age=data['age'],
+                branch=data['branch'],
+                mobile_number=data['mobile_number'],
+                college=data['college'],
+                college_roll=data['college_roll'],
+                )
+            userprofile.save()
+            mail_template = get_template('email/activate.html')
+            body = \
+                mail_template.render(Context({'username': new_user.username,
+                                     'SITE_URL': settings.SITE_URL,
+                                     'activationkey': userprofile.activation_key}))
+            mailsender('Your new Shaastra2013 account confirmation', body,
+                       'noreply@shaastra.org', [new_user.email],
+                       fail_silently=False)
+            request.session['registered_user'] = True
+            request.session['msg']="A mail has been sent to the mail id you provided. Please activate your account within 48 hours."
+            return HttpResponseRedirect(settings.SITE_URL+'user/login')
+    else:
+        captcha_response = response.error_code
     return render_to_response('users/register.html', locals(),
                               context_instance=RequestContext(request))
 
