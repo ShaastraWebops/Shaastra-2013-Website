@@ -25,10 +25,15 @@
                 var event = cache[event_name];
                 if(cache[url]) {
                     event.find(".tabtext").html(cache[url]);
+                    event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                    event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                 } else {
+                    $( '.bbq-loading' ).show();
                     event.find(".tabtext").load("{{site_url}}"+url, function(){
                                 // Content loaded, hide "loading" content.
                                 $( '.bbq-loading' ).hide();
+        		        event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                		event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                                 resetabs();
                                 cache[url] = event.find(".tabtext").html();
                         });
@@ -40,10 +45,13 @@
                 // Load external content via AJAX. Note that in order to keep this
                 // example streamlined, only the content in .infobox is shown. You'll
                 // want to change this based on your needs.
+                $( '.bbq-loading' ).show();
                 cache[event_name].load("{{site_url}}"+event_name, function(){
 
                     cache[event_name].find(".tabtext").load( "{{site_url}}"+url, function(){
                                 // Content loaded, hide "loading" content.
+           		         event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                		 event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                                 $( '.bbq-loading' ).hide();
                                 resetabs();
                                 cache[url] = cache[event_name].find(".tabtext").html();
