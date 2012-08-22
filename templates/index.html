@@ -27,13 +27,13 @@
                 event.find('#etab1').addClass('on');
                 if(cache[url]) {
                     event.find(".tabtext").html(cache[url]);
-                    event.find(".tabtext").jScrollPane({showArrows: true,verticalScroll: true});
+                    event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true});
                 } else {
                     $('.bbq-loading').show();
                     event.find(".tabtext").load( url, function(){
                                 // Content loaded, hide "loading" content.
                                 $( '.bbq-loading' ).hide();
-                                event.find(".tabtext").jScrollPane({showArrows: true,verticalScroll: true});
+                                event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true});
                                 resetabs();
                                 cache[url] = event.find(".tabtext").html();
                         });
@@ -68,7 +68,7 @@
 
                         cache[event_name].find(".tabtext").load( url, function(){
                                     // Content loaded, hide "loading" content.
-                                    cache[event_name].find(".tabtext").jScrollPane({showArrows: true,verticalScroll: true});
+                                    cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true});
                                     $( '.bbq-loading' ).hide();
                                     resetabs();
                                     cache[url] = cache[event_name].find(".tabtext").html();
