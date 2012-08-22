@@ -140,6 +140,8 @@ class AddUserForm(BaseUserForm):
             help_text='Enter the same password that you entered above')
 
     branch = chosenforms.ChosenChoiceField(overlay="You major in...", choices = BRANCH_CHOICES)
+#    college = chosenforms.ChosenChoiceField(overlay="You study at...", queryset=College.objects.all())
+
     class Meta(BaseUserForm.Meta):
 
         fields = (
@@ -195,7 +197,7 @@ class AddUserForm(BaseUserForm):
 
 
 class EditUserForm(BaseUserForm):
-
+    branch = chosenforms.ChosenChoiceField(overlay="You major in...", choices = BRANCH_CHOICES)
     class Meta(BaseUserForm.Meta):
 
         fields = (
@@ -277,5 +279,4 @@ class AddCollegeForm(ModelForm):
 
         model = College
         fields = ('name', 'city', 'state')
-
 
