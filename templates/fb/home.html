@@ -5,7 +5,9 @@
 	    <script type="text/javascript">
         function show(event_id){
             $('#content').fadeOut();
-            $('#content').load('{{site_url}}fb/events/'+event_id,function(){FB.XFBML.parse(document.getElementById('content'));         $('#content').fadeIn();});
+            $('#content').load('{{site_url}}fb/events/'+event_id,function(){
+//FB.XFBML.parse(document.getElementById('content'));
+         $('#content').fadeIn();});
         }
         </script>
         <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
