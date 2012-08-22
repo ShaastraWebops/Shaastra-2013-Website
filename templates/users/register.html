@@ -89,12 +89,29 @@ $(window).resize(function(){$('#container').center();});
 		<button class="icons" onclick="window.location.href='{{site_url}}'">Contact</button><br>	
 		</div>
       <div id="form" class="control-group right">
+        <!-- Add something similar to make the error message for the reCaptcha appear.
+        {% if captcha_response != "" %}
+            {{ captcha_response }}
+        {% endif %}
+        -->
         <h1 style="color:#fff;">Sign up</h1><br/>
         <form id="form_reg" action="{{ post_url }}" method="POST" class="form-horizontal">
         <table>
             {% csrf_token %}
             {{ form.as_table }}
         </table>
+        <!-- Scripts for reCaptcha -> https://developers.google.com/recaptcha/docs/display -->
+        <script type="text/javascript"
+            src="http://www.google.com/recaptcha/api/challenge?k=6Lf1ktUSAAAAALOtemzm08LVwHmfku6yXXCdrMJn">
+        </script>
+        <noscript>
+            <iframe src="http://www.google.com/recaptcha/api/noscript?k=6Lf1ktUSAAAAALOtemzm08LVwHmfku6yXXCdrMJn"
+                height="300" width="500" frameborder="0"></iframe><br>
+            <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+            </textarea>
+            <input type="hidden" name="recaptcha_response_field"
+                value="manual_challenge">
+        </noscript>
         <input type="hidden" name="facebook_id" id="facebook_id" value="{{ facebook_id }}" />
         <input type="hidden" name="access_token" id="access_token" value="{{access_token}}" />
         <input type="button" onclick="forumReg();" id="register" value="Register" class="btn btn-large btn-info" style="margin-left:5px;">

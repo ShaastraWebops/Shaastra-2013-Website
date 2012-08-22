@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'dtvpicker',
     'dajaxice',
     'dajax',
-#    'recaptcha',
+    'recaptcha',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -111,3 +111,6 @@ CACHES = {
                             'LOCATION': '127.0.0.1:11211',
                                 }
 }
+
+RECAPTCHA_PUBLIC_KEY = '6Lf1ktUSAAAAALOtemzm08LVwHmfku6yXXCdrMJn'
+RECAPTCHA_PRIVATE_KEY = '6Lf1ktUSAAAAANLvSSLPiSpgocDrjyK9ApPUvcaF'
