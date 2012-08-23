@@ -24,11 +24,9 @@
 	cursor:pointer;	
 	}
 </style>
-<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/style.css"  />
-<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/scroll.css"  />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/mainstyle.css"  />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
 </script>
-<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap.css"  />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://mktgdept.com/js/jquery-ishovered.js?v0.0.1"></script>
 <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/scrollevents.js" charset = "utf-8"></script>
@@ -116,9 +114,6 @@ function save_edit_mcq(eve_id, q_id){
 {% block hash_handler %}{% endblock %}
 {% block functions %}{% endblock %}
     </script>
-<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/prettify.css" />
-<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap-responsive.css" />
-<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/jquery.autocomplete.css" /><!--For search-->
 <script src="{{site_url}}static/scripts/prettify.js"></script> 
 <script type="text/javascript" src="{{site_url}}static/scripts/bootstrap-tour.js"></script>
 <script type="text/javascript" src="{{site_url}}static/scripts/jquery.cookie.js"></script>
@@ -144,7 +139,7 @@ function save_edit_mcq(eve_id, q_id){
     	 		<div id="icons" class="floatleft">
     	 		    <ul class="nav nav-pills">
     	 		    	  <li onclick="$('#tabbox').css('visibility','hidden');"><a href="{{site_url}}#" id="home"><p class="head_text">Home</p></a></li>
-    	 		        <li onclick="$('#tabbox').css('visibility','visible');"><a href="{{site_url}}#events" id="events"><p class="head_text">Events</p></a></li> 
+    	 		        <li onclick="$('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({left:'0px'});"><a href="{{site_url}}#events" id="events"><p class="head_text">Events</p></a></li> 
                         <li><a href="{{site_url}}events/sampark/" id="events"><p class="head_text">Sampark</p></a></li>       					
             			<li><a id="hospitality" href="{{site_url}}#hospi"><p class="head_text">Hospitality</p></a></li>
             			<!--<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>-->
