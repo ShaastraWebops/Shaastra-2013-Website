@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 {% block hash_handler %}
     $(function(){
@@ -51,8 +50,8 @@
 
                     cache[event_name].find(".tabtext").load( "{{site_url}}"+url, function(){
                                 // Content loaded, hide "loading" content.
-           		         event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                		 event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+           		         cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                		 cache[event_name].find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                                 $( '.bbq-loading' ).hide();
                                 resetabs();
                                 cache[url] = cache[event_name].find(".tabtext").html();
