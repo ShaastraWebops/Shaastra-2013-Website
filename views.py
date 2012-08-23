@@ -36,6 +36,9 @@ def home(request):
     	    return render_to_response('index.html',locals(),context_instance = RequestContext(request))
     else:
     	return render_to_response('index.html',locals(),context_instance = RequestContext(request))
+
+def hospi(request):
+    return render_to_response('hospi/hospi_home.html',locals(),context_instance = RequestContext(request))
 	
 def method_splitter(request, *args, **kwargs):
     get_view = kwargs.pop('GET', None)

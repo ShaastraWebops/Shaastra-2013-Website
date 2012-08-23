@@ -22,11 +22,12 @@
     </div>
   <div id="updates">
 	<div id="textbox2">
+          <h3>Announcements</h3>
+        {% if event.registrable_online == 1 %}
+            Registration for events will be openend soon.
+        {% endif %}
+
       {% for a in announcements %}
-              <h3>Announcements</h3>
-            {% if event.registrable_online == 1 %}
-                Registration for events will be openend soon.
-            {% endif %}
 <!--          {% if forloop.first %}
               <h3>Announcements</h3>
           {% endif %}-->
