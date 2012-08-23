@@ -15,9 +15,17 @@
             // Get the hash (fragment) as a string, with any leading # removed. Note that
             // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
             var url = $.param.fragment();
-            $( '.bbq-item,.bbq-default' ).hide();
+            $( '.bbq-item,.bbq-default,#generalContents' ).hide();
             if(!url) {
                 $('.bbq-default').show();
+                return;
+            }
+            if(url=='events') {
+                $('.bbq-loading').show();
+                $('#generalContents').load(url,function(){
+                    $('.bbq-loading').hide();
+                    $('#generalContents').show();
+                });
                 return;
             }
             var event_name=url.split('/tab')[0];
@@ -38,7 +46,7 @@
                                 $( '.bbq-loading' ).hide();
 				if(height>400)
                                 event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                                event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+//                                event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                                 resetabs();
                                 cache[url] = event.find(".tabtext").html();
                         });
@@ -75,7 +83,7 @@
                                     // Content loaded, hide "loading" content.
 				if($('.tabtext').height()>400)
                                     cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                                    cache[event_name].find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+//                                    cache[event_name].find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                                     $( '.bbq-loading' ).hide();
                                     resetabs();
                                     cache[url] = cache[event_name].find(".tabtext").html();
