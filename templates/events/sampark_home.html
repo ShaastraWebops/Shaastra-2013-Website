@@ -25,15 +25,19 @@
                 var event = cache[event_name];
                 if(cache[url]) {
                     event.find(".tabtext").html(cache[url]);
+                 		var height = $('.tabtext').height();
+                    if(height>400){
                     event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                    event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                    event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
                 } else {
                     $( '.bbq-loading' ).show();
                     event.find(".tabtext").load("{{site_url}}"+url, function(){
                                 // Content loaded, hide "loading" content.
+                                		var height = $('.tabtext').height();
                                 $( '.bbq-loading' ).hide();
+                                if(height>400){
         		        event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                		event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                		event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
                                 resetabs();
                                 cache[url] = event.find(".tabtext").html();
                         });
@@ -50,8 +54,10 @@
 
                     cache[event_name].find(".tabtext").load( "{{site_url}}"+url, function(){
                                 // Content loaded, hide "loading" content.
+                                		var height = $('.tabtext').height();
+                                		if(height>400){
            		         cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                		 cache[event_name].find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                		 cache[event_name].find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
                                 $( '.bbq-loading' ).hide();
                                 resetabs();
                                 cache[url] = cache[event_name].find(".tabtext").html();
