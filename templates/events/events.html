@@ -5,9 +5,9 @@
             {% for tab in tab_set %}
             <li class="eventtab" id="etab{{forloop.counter}}" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='#events/{{event|slugify}}/tab/{{tab.title|slugify}}'">{{tab.title}}</p></li>
             {% endfor %}
-            {% if event.registrable_online == 1 %}
+<!--            {% if event.registrable_online == 1 %}
             <li class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='#submission/{{event.id}}'">Register</p></li>
-            {% endif %}
+            {% endif %}-->
         </ul>
     </div>
     <div id="maincontent">
@@ -23,9 +23,13 @@
   <div id="updates">
 	<div id="textbox2">
       {% for a in announcements %}
-          {% if forloop.first %}
               <h3>Announcements</h3>
-          {% endif %}
+            {% if event.registrable_online == 1 %}
+                Registration for events will be openend soon.
+            {% endif %}
+<!--          {% if forloop.first %}
+              <h3>Announcements</h3>
+          {% endif %}-->
           {% if a.event == event and a.expired == 0 %}
               <p style="font-size:16px;"><b>{{a.subject}}</b> - {{a.description}}<br></p>
           {% endif %}
