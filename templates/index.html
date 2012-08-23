@@ -82,9 +82,9 @@
 
                         cache[event_name].find(".tabtext").load( url, function(){
                                     // Content loaded, hide "loading" content.
-				if($('.tabtext').height()>400)
+				if($('.tabtext').height()>400){
                                     cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-//                                    cache[event_name].find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+//                                    cache[event_name].find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
                                     $( '.bbq-loading' ).hide();
                                     resetabs();
                                     cache[url] = cache[event_name].find(".tabtext").html();
