@@ -38,7 +38,7 @@
 <script type="text/javascript" >
 	jQuery(function($) {
 	 $(".menu").css({visibility:"hidden"});
-	 
+	  $('#tabbox').css('visibility','hidden');
 });
 </script>
 {% load dajaxice_templatetags %}
@@ -94,6 +94,7 @@
 	function resetabs()
 	{
 		$(".menu").css('visibility','hidden');
+		
 	}
 </script>
 <script type="text/javascript" src="{{site_url}}static/scripts/hover.js"></script>
@@ -142,11 +143,11 @@ function save_edit_mcq(eve_id, q_id){
 		    <div id="topright" class="floatright">
     	 		<div id="icons" class="floatleft">
     	 		    <ul class="nav nav-pills">
-    	 		    	  <li><a href="{{site_url}}#" id="home"><p class="head_text">Home</p></a></li>
-    	 		        <li><a href="{{site_url}}#events" id="events"><p class="head_text">Events</p></a></li> 
+    	 		    	  <li onclick="$('#tabbox').css('visibility','hidden');"><a href="{{site_url}}#" id="home"><p class="head_text">Home</p></a></li>
+    	 		        <li onclick="$('#tabbox').css('visibility','visible');"><a href="{{site_url}}#events" id="events"><p class="head_text">Events</p></a></li> 
                         <li><a href="{{site_url}}events/sampark/" id="events"><p class="head_text">Sampark</p></a></li>       					
             			<li><a id="hospitality"><p class="head_text">Hospitality</p></a></li>
-            			<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>
+            			<!--<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>-->
             			<li><a id="forums" href="http://forums.shaastra.org"><p class="head_text">Forums</p></a></li>
                                 {% if user.is_authenticated %}
                                     <li><a id="set"><p class="head_text">Settings</p></a></li>
