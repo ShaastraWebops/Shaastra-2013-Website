@@ -25,7 +25,7 @@
                 var event = cache[event_name];
                 $('.eventtab').removeClass('on');
                 event.find('#etab1').addClass('on');
-		var height = document.getElementById('#textbox').offsetHeight;
+		var height = document.getElementById('#textbox>.tabtext').offsetHeight;
                 if(cache[url]) {
                     event.find(".tabtext").html(cache[url]);
 			if(height>400)
@@ -73,7 +73,7 @@
 
                         cache[event_name].find(".tabtext").load( url, function(){
                                     // Content loaded, hide "loading" content.
-					if(document.getElementById('textbox').offsetHeight>400)
+					if(document.getElementById('#textbox>.tabtext').offsetHeight>400)
                                     cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                                     cache[event_name].find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                                     $( '.bbq-loading' ).hide();
