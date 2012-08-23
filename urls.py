@@ -23,6 +23,7 @@ urlpatterns = patterns(
     url(r'^coord/', include('coord.urls')),
     url(r'^events/', include('events.urls')),
     url(r'^fb/', include('fb.urls')),
+    url(r'^hospi/', 'views.hospi', name='hospi'),
     url(r'^submission/', include('submissions.urls')),
     url(r'^DTVPicker/', include('dtvpicker.urls')),
     url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX,

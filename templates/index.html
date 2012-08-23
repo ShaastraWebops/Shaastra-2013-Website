@@ -20,10 +20,11 @@
                 $('.bbq-default').show();
                 return;
             }
-            if(url=='events') {
+            if(url=='events'||url=='hospi') {
                 $('.bbq-loading').show();
                 $('#generalContents').load(url,function(){
                     $('.bbq-loading').hide();
+                    $('#generalContents').jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                     $('#generalContents').show();
                 });
                 return;
