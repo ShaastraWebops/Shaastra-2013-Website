@@ -83,17 +83,14 @@ $(window).resize(function(){$('#container').center();});
 		<div id = "logo"><img src="{{site_url}}static/img/dice.png" alt=""></div><br>
 		<button class="icons" onclick="window.location.href='{{site_url}}'">Home</button><br>
 		<button class="icons" onclick="window.location.href='{{site_url}}#events'">Events</button><br>	
-		<button class="icons" onclick="window.location.href='{{site_url}}'">Privacy Policy</button><br>
 		<button class="icons" onclick="window.location.href='http://www.shaastra.org/blog/'">Blog</button><br>
+		<button class="icons" onclick="window.location.href='{{site_url}}'">Privacy Policy</button><br>
 		<button class="icons" onclick="window.location.href='{{site_url}}'">Credits</button><br>
 		<button class="icons" onclick="window.location.href='{{site_url}}'">Contact</button><br>	
 		</div>
       <div id="form" class="control-group right">
-        <!-- Add something similar to make the error message for the reCaptcha appear.
-        {% if captcha_response != "" %}
-            {{ captcha_response }}
-        {% endif %}
-        -->
+        <!-- Add something similar to make the error message for the reCaptcha appear.-->
+        
         <h1 style="color:#fff;">Sign up</h1><br/>
         <form id="form_reg" action="{{ post_url }}" method="POST" class="form-horizontal">
         <table>
@@ -106,7 +103,7 @@ $(window).resize(function(){$('#container').center();});
         </script>
         <noscript>
             <iframe src="http://www.google.com/recaptcha/api/noscript?k=6Lf1ktUSAAAAALOtemzm08LVwHmfku6yXXCdrMJn"
-                height="300" width="500" frameborder="0"></iframe><br>
+                height="250" width="450" frameborder="0"></iframe><br>
             <textarea name="recaptcha_challenge_field" rows="3" cols="40">
             </textarea>
             <input type="hidden" name="recaptcha_response_field"
@@ -114,6 +111,9 @@ $(window).resize(function(){$('#container').center();});
         </noscript>
         <input type="hidden" name="facebook_id" id="facebook_id" value="{{ facebook_id }}" />
         <input type="hidden" name="access_token" id="access_token" value="{{access_token}}" />
+        {% if captcha_response != "" %}
+            <p class="errorlist">The words typed did not match the words in the image</p>
+        {% endif %}
         <input type="button" onclick="forumReg();" id="register" value="Register" class="btn btn-large btn-info" style="margin-left:5px;">
        </form>
        <br>
@@ -128,10 +128,10 @@ body
     margin:0;
     background:url({{site_url}}static/img/bg.png) 100% 100%;
     background-repeat : repeat-x;
-	font-family:'Century Gothic',serif ! important;
+	 font-family:'Century Gothic',serif ! important;
 	letter-spacing:0.75px ! important;
     }
-   #container
+ #container
     {
     width : 70%;
     margin:0 auto;
@@ -203,6 +203,12 @@ span.helptext{color:#666;
               font-style:italic;}
 
    input,select{width:200px;}
+  .errorlist{
+  	color:#fff ! important;
+	font-size:13px;
+	font-weight:bold;
+	font-style:italic;  	
+  	}
 </style>
 
 
