@@ -9,6 +9,13 @@ from operator import attrgetter
 
 
 # Create your views here.
+def home(request):
+    events = Event.objects.all()
+    initial_updates = Update.objects.filter(category = 'Update')
+    updates = sorted(initial_updates, key=attrgetter('id'), reverse=True)
+    initial_announcements = Update.objects.filter(category = 'Announcement')
+    announcements = sorted(initial_announcements, key=attrgetter('id'), reverse=True)
+    return render_to_response('events/events_home.html', locals(), context_instance=RequestContext(request))
 
 def events(request, event_name):
     event_name = event_name.replace('-', ' ')

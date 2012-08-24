@@ -12,5 +12,5 @@ urlpatterns = patterns('',
 #                       url(r'^sampark/(?P<event_name>.+)/tab/(?P<tab_name>.+)', tabs, name='tab-list'),
 #                       url(r'^sampark/(?P<event_name>.+)', events, name='event-list'),
                        url(r'^sampark/', sampark, name='sampark-home'),
-                       url(r'^$', direct_to_template, {'template': 'events/events_home.html'}, name='event-home')
+                       url(r'^$', home, name='event-home')
                        )
