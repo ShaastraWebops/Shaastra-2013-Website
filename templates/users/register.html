@@ -6,14 +6,11 @@
 
 <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/scroll.css"  />
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="{{site_url}}static/js/jScrollPane.js"></script>
-	<script src="{{site_url}}static/js/scrollreg.js"></script>	
-	<script src="{{site_url}}static/js/jquery.mousewheel.js"></script>
-	<script src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+	
+
         <script type="text/javascript" src="{{site_url}}static/js/college.reg.js"></script>
         <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap.css">
     <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
@@ -93,10 +90,12 @@ $(window).resize(function(){$('#container').center();});
         
         <h1 style="color:#fff;">Sign up</h1><br/>
         <form id="form_reg" action="{{ post_url }}" method="POST" class="form-horizontal">
+	<div id="formbox">
         <table>
             {% csrf_token %}
             {{ form.as_table }}
         </table>
+	</div>
         <!-- Scripts for reCaptcha -> https://developers.google.com/recaptcha/docs/display -->
         <script type="text/javascript"
             src="http://www.google.com/recaptcha/api/challenge?k=6Lf1ktUSAAAAALOtemzm08LVwHmfku6yXXCdrMJn">
@@ -227,8 +226,15 @@ span.helptext{color:#666;
 	    filter:alpha(opacity=100);
         cursor:pointer;
 	}
+#formbox
+{
+	height:390px;
+}
 </style>
+	<script src="{{site_url}}static/js/jScrollPane.js"></script>
+	<script src="{{site_url}}static/js/jquery.mousewheel.js"></script>
 
-
+	<script src="{{site_url}}static/js/scrollreg.js"></script>
+	<script src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script>
 </html>
 	 
