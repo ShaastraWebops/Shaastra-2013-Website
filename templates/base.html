@@ -131,7 +131,11 @@ function save_edit_mcq(eve_id, q_id){
     	 		<div id="icons" class="floatleft">
     	 		    <ul class="nav nav-pills">
     	 		    	  <li onclick="$('#tabbox').css('visibility','hidden');"><a href="{{site_url}}#" id="home"><p class="head_text">Home</p></a></li>
+<<<<<<< HEAD
     	 		        <li onclick="$('#tabbox').css('visibility','visible');"><a id="events"><p class="head_text">Events</p></a></li> 
+=======
+    	 		        <li onclick="$('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({left:'0px'});"><a href="{{site_url}}#events" id="events"><p class="head_text">Events</p></a></li> 
+>>>>>>> 74d0f317bf3526f23c213d8f1b4280ab52fd1acc
                         <li><a href="{{site_url}}events/sampark/" id="events"><p class="head_text">Sampark</p></a></li>       					
             			<li><a id="hospitality" href="{{site_url}}#hospi"><p class="head_text">Hospitality</p></a></li>
             			<!--<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>-->
@@ -174,9 +178,10 @@ function save_edit_mcq(eve_id, q_id){
 			          <div class="floatleft span6" id="col1">
                       <object id="midblackvid" style="height:350px; width:100%;position:relative;"><iframe width="100%" height="350" src="http://www.youtube.com/embed/JXIQ2hToR7A?rel=0" frameborder="0" allowfullscreen></iframe></object>
                    </div>
-			          <div class="floatright span6" id="col2">
+			          <div class="floatright span6" id="col2"  style="text-align:justify ! important;">
 			          		<img src="{{site_url}}static/img/slogo2.png"><br/>
-			          		<p>Lorem ipsum</p>
+			          		<p>This New Year, watch the power of technology enchant minds at the much awaited technical festival of IIT Madras- Shaastra. The 14th edition of the festival, to be held between 5th and 8th January, focuses on bringing out the spirit of engineering, creating a platform for innovation, ideation and ingenuity. Be it planes soaring, RC engines racing, robots fighting or dominos falling; be prepared to be transported into a world of future.</p>
+			          		<p>Apocalypse will have to wait since Shaastra is all set to Ignite your Imagination, as the best minds of the country redefine the boundaries between dream and reality.</p><p> Tech is in the air, breathe Shaastra.</p>			          
 			          </div>       
                     </div>
                     </div>
