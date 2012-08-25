@@ -163,3 +163,7 @@ if not DEBUG:
         pass
 
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',]
+
+#FACEBOOK_APP_ID = '291744470918252'
+#FACEBOOK_APP_SECRET = '599f13aad496d3acc8ea887a0e889b92'
+#FACEBOOK_SCOPE = 'email'
