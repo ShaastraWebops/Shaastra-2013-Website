@@ -3,7 +3,7 @@
 {% load i18n extra_tags extra_filters markup ui_registry %}
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>{% block fulltitle %}{% block title %}{% endblock %} - {{ settings.APP_SHORT_NAME }}{% endblock %}</title>
+        <title>{% block fulltitle %}{% block title %}{% endblock %} - Shaastra{% endblock %}</title>
         <meta name="description" content="{% block metadescription %}{{ settings.APP_DESCRIPTION }}{% endblock %}">
         <meta name="keywords" content="{% block metakeywords %}{{ settings.APP_KEYWORDS }}{% endblock %}">
         {% block meta %}{% endblock %}
@@ -48,9 +48,6 @@
         </script>
         <script type='text/javascript' src='{% media  "/media/js/osqa.main.js" %}'></script>
         {% if user_messages %}
-        <style type="text/css">
-            body { margin-top:2.4em; }
-        </style>
         <script type="text/javascript">
             $(document).ready(function() {
                 var element = $('#validate_email_alert');
@@ -67,7 +64,8 @@
         {% loadregistry head_content %}{% endloadregistry %}
     </head>
     <body>
-        <div class="notify" style="display:none">
+    <div id="super">
+       <!-- <div class="notify" style="display:none">
             {% autoescape off %}
                 {% if user_messages %}
                     {% for message in user_messages %}
@@ -76,12 +74,12 @@
                 {% endif %}
             {% endautoescape %}
             <a id="close-notify" onclick="notify.close(true)">&times;</a>
-        </div>
-        {% if settings.USE_CUSTOM_HEADER|or_preview:request %}
+        </div> -->
+       <!-- {% if settings.USE_CUSTOM_HEADER|or_preview:request %}
             <div id="custom_header">
                 {{ settings.CUSTOM_HEADER|or_preview:request|static_content:settings.CUSTOM_HEADER_RENDER_MODE }}
             </div>
-        {% endif %}
+        {% endif %}-->
         {% include "header.html" %}
         {% block page_center %}
         <div id="wrapper">
@@ -137,6 +135,7 @@
                 })();
             </script>
         {% endif %}
+   </div>
     </body>
 </html>
 <!-- end template base_content.html -->

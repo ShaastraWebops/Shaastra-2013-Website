@@ -3,13 +3,21 @@
 body {
     /*overflow-y: scroll;
     height: 100%; */
-    background: none repeat scroll 0 0 #FFFFFF;
+    background: #FFF;
     color: #000000;
     font-family: sans-serif;
     font-size: 12px;
-    line-height: 150%;
+    line-height: 100%;
     margin: 0;
     padding: 0;
+}
+
+#super
+{
+	width:990px;
+        margin:0px auto;
+       box-shadow: 0px 0px 10px rgb(0, 0, 0);
+        
 }
 
 div {
@@ -153,6 +161,8 @@ blockquote {
     padding: 0;
     width: 990px;
     background-color: #FFF;
+    left:0px;
+    position:relative;
 }
 
 #roof {
@@ -163,81 +173,107 @@ blockquote {
     background-color: #FFFFFF;
     border-bottom: 1px solid #777777;
     padding: 10px 0;
+    min-height:500px;
 }
 
 #CALeft {
-    float: left;
-    position: relative;
-    width: 740px;
+    float:left;
+    width: 729px;
+    margin-left:10px;
 }
 
 #CARight {
     float: right;
-    width: 240px;
+    width: 232px;
+    margin-top:30px;
+    margin-right:6px;
 }
 
 #CAFull {
     float: left;
     padding: 0 5px;
-    width: 950px;
+    width: 990px;
+   
 }
 
+#CAFull .content{
+	max-width: 950px;}
+
+
+
 #ground {
-    background: none repeat scroll 0 0 #BDCCED;
-    border-top: 1px solid #000000;
+    background-image:url('../images/sprite_h.png');
+    background-repeat: repeat-x;
     padding-bottom: 0;
     padding-top: 6px;
     text-align: center;
     width: 990px;
+    height:100px;
+    
 }
 
 #top {
-    float: right;
+    width:985px;
+    height:30px;
     background-color: #FFFFFF;
     padding: 3px;
     text-align: right;
-    width: 500px;
+    background:#000;
+    left:0px;
+    position:relative;
 }
 
 #top a {
-    color: #333333;
-    font-size: 12px;
-    height: 35px;
+    
+    color:#D3D3D3;
+    font-size: 14px;
     margin-left: 20px;
+    margin-right:5px;
     text-align: right;
-    text-decoration: underline;
+    font-family:Helvetica;
+    font-weight:bold;
+   
+}
+#top a:hover{
+	color:#FFF;
+	text-decoration:none;
 }
 
 #logo {
     float: left;
-    padding: 5px 0 0;
+    padding:5px 0px 0px;
 }
-
+#cont {
+    background-image:url('../images/fluid.jpg');
+    border: 0px solid rgb(229, 229, 229);
+    width: 990px;
+    height: 65px;
+    position: relative;
+    margin-left: 0px;
+}
 #nav {
     float: right;
-    margin: 35px 0px 0px 0px;
-    width: 750px;
+    width: 612px;
+    top:0px;
+    position:relative;
 }
-
 #nav a {
-    background-color: #E5EBF8;
-    border-color: #888888 #888888 -moz-use-text-color;
-    border-style: solid solid none;
-    border-width: 1px 1px medium;
-    color: #333333;
+    background-color: #666FFF;    
+    color: #FFF;
     display: block;
     float: left;
     font-size: 14px;
+    font-family:haveltica;
     font-weight: 400;
     height: 25px;
     line-height: 30px;
     margin-left: 10px;
-    padding: 0 12px 3px;
+    padding: 0px 12px 3px;
     text-decoration: none;
 }
-
 #nav a:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    background:	#A52A2A;
 }
 
 #nav a.on {
@@ -251,29 +287,28 @@ blockquote {
 }
 
 #nav a#nav_ask {
-    float: right;
-    color: #B02B2C;
+    margin-right:4px;
+    color: #FFF;
     font-size: 14px;
     font-weight: bold;
     text-decoration: none;
 }
 
-#nav a#nav_ask:hover {
-    text-decoration: underline;
-}
+
 
 #nav a#nav_ask.on {
    color: #FFFFFF;
 }
+#nav a#nav_ask:hover{
+    text-decoration: none;
+    background:	#A52A2A;
+}
+
 
 #searchBar {
-    text-align: center;
-    background-color: #B6C4E2;
-    border-color: #EEEEEC #A9ACA5 #BABDB6 #EEEEEC;
-    border-style: solid;
-    border-width: 1px;
-    padding: 4px 0 0;
-    width: 988px;
+    background: #009999;
+    padding: 8px 0 0;
+    width: 990px;
 }
 
 #searchBar .content {
@@ -281,22 +316,35 @@ blockquote {
 
 #searchBar .searchInput {
     border: 0px;
-    padding: 3px;
-    font-size: 13px;
+    padding: 6px;
+    font-size: 14px;
     height: 18px;
     width: 400px;
 }
 
 #searchBar .searchBtn {
-    font-size: 14px;
-    height: 26px;
-    width: 80px;
+    display:inline-block;
+	 font-size: 15px;
+     font-weight: bold;
+	 background:#357AE8;
+     text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	border:1px solid #2F5BB7;
+	-webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+	color:#FFF;
+	height:31px;
+	min-width:46px;
+	}
+#searchBar .searchBtn:hover{
+	background:#39F;
 }
 
 #searchBar .options {
-    color: #333333;
+    color: #fff;
     font-size: 120%;
     padding: 3px 0;
+    width:400px;
 }
 
 #searchBar .options input {
@@ -306,6 +354,17 @@ blockquote {
 #searchBar .options input:hover {
     cursor: pointer;
 }
+
+#searchBar #forum{
+	width:150px;
+	margin-left: 30px;
+	margin-top: 10px;
+	margin-bottom: 15px;}
+
+#searchBar form
+{width:500px;
+float:right;
+margin: 5px auto;}
 
 #listA {
     background-color: #FFFFFF;
@@ -406,22 +465,25 @@ blockquote {
 }
 
 .boxA {
-    background: none repeat scroll 0 0 #888A85;
+    background: none repeat scroll 0px 0px rgb(229, 235, 248);
+    border-color: rgb(238, 238, 236) rgb(169, 172, 165) rgb(186, 189, 182) rgb(238, 238, 236);
+    border-style: solid;
+    border-width: 1px;
     margin-bottom: 8px;
-    padding: 6px;
+    padding: 10px;
+    border-radius: 12px 12px 12px 12px;
 }
 
 .boxA h3 {
-    color: #FFFFFF;
-    font-size: 13px;
+    color: #151B8D;
+    font-size: 20px;
     font-weight: 800;
     margin: 0 0 4px;
     padding: 0;
+    text-align:center;
 }
 
 .boxA .body {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #999999;
     font-size: 13px;
     padding: 8px;
 }
@@ -439,6 +501,9 @@ blockquote {
     border-width: 1px;
     margin-bottom: 8px;
     padding: 10px;
+   -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
 }
 
 .boxC p {
@@ -469,6 +534,7 @@ blockquote {
 .paginator {
     font: 12px sans-serif;
     padding: 5px 0 10px;
+    margin-right: 10px;
 }
 
 .paginator .prev a, .paginator .prev a:visited, .paginator .next a, .paginator .next a:visited {
@@ -587,8 +653,10 @@ a.medal:hover {
     border-bottom: 1px solid white;
     clear: both;
     height: 30px;
-    margin-bottom: 3px;
-    width: 100%;
+    margin-bottom: 5px;
+    max-width: 970px;
+    margin-left:5px;
+    position:relative;
 }
 
 .tabsA {
@@ -597,8 +665,11 @@ a.medal:hover {
     float: right;
     font-weight: bold;
     height: 20px;
-    position: relative;
+    position: relative
 }
+
+#mainbar-full{
+	max-width: 970px;}
 
 .tabsA a, .sticky-sort-tabs {
     background: none repeat scroll 0 0 #EEEEEE;
@@ -692,6 +763,8 @@ a.medal:hover {
     margin-bottom: 12px;
     padding: 3px;
     text-align: left;
+    max-width: 950px;
+    margin-left: 5px;
 }
 
 .headUser {
@@ -730,13 +803,13 @@ a.medal:hover {
 }
 
 span.form-error {
-    color: #990000;
+    color: #1000000;
     font-weight: normal;
     margin-left: 5px;
 }
 
 ul.errorlist li {
-    color: #990000;
+    color: #1000000;
     font-weight: normal;
     margin-left: 0px;
     margin-top: 5px;
@@ -861,7 +934,7 @@ table.check-table td {
 }
 
 span.form-error {
-    color: #990000;
+    color: #1000000;
     font-size: 90%;
     font-weight: normal;
     margin-left: 5px;
@@ -873,15 +946,16 @@ span.form-error {
 }
 
 #editor {
-    font-size: 100%;
+    font-size: 15px;
     line-height: 18px;
     min-height: 200px;
-    width: 100%;
+    width: 98%;
+    padding:5px;
 }
 
 .wmd-preview {
     background-color: #F5F5F5;
-    margin-top: 10px;
+    margin: 10px 0px;
     min-height: 20px;
     padding: 6px;
     width: 98%;
@@ -979,7 +1053,12 @@ ins {
 
 .user-details {
     font-size: 13px;
+    margin:5px 0px;
 }
+
+.user-details tr{
+	margin:2px 0px;
+	}
 
 .user-about {
     background-color: #EEEEEE;
@@ -1110,13 +1189,18 @@ ins {
 
 .footerLinks {
     color: #3060A8;
-    font-size: 13px;
+    font-size: 15px;
+    margin-top: 10px;
 }
 
 .footerLinks a {
-    color: #3060A8;
-    font-size: 13px;
+    color: #FFF;
+    margin: 10px 3px;
 }
+
+.footerLinks .link-separator{
+	color:#FFF;
+	}
 
 .user {
     line-height: 140%;
@@ -1138,14 +1222,16 @@ ins {
 }
 
 .message {
-    background-color: #EEEEEE;
+    background: none repeat scroll 0% 0% rgb(241, 241, 241);
+    border: 1px solid rgb(229, 229, 229);
     border: 1px solid #AAAAAA;
     margin: 10px 0;
     padding: 5px;
+    max-width: 970px;
 }
 
 .message p {
-    margin-bottom: 0;
+    margin:5px 0px;
 }
 
 .darkred {
@@ -1153,17 +1239,26 @@ ins {
 }
 
 .submit {
-    background-color: #D4D0C8;
-    border: 1px solid #777777;
-    cursor: pointer;
-    font-size: 120%;
+    border: 1px solid transparent;
+    color: rgb(255, 255, 255);
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.1);
+    background-color: rgb(209, 72, 54);
+    display: inline-block;
+    min-width: 46px;
+    text-align: center;
+    font-size: 15px;
     font-weight: bold;
-    height: 40px;
-    padding-bottom: 4px;
+    height: 27px;
+    padding: 0px 8px;
+   line-height: 27px;
+    border-radius: 2px 2px 2px 2px;
+   -moz-border-radius:2px;
+   -webkit-border-radius:2px;
+   margin-top:4px;
 }
 
 .submit:hover {
-    text-decoration: underline;
+    background:#8B0000;
 }
 
 .ask-body {
@@ -1830,3 +1925,43 @@ div.wmd-button {
 div.wmd-button-bar {
     float:left;
 }
+#ignoredTagAdd{
+	display:inline-block;
+	 background:#357AE8;
+     text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	border:1px solid #2F5BB7;
+	-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+	color:#FFF;
+	height:26px;
+        width:60px;
+        margin-bottom:10px;
+        margin-top:2px;
+	}
+#ignoredTagAdd:hover
+	{
+	background:#39F;}
+#interestingTagAdd{
+	
+	display:inline-block;
+	 background:#357AE8;
+     text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	border:1px solid #2F5BB7;
+	-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+	color:#FFF;
+	height:26px;
+        width:60px;
+	margin-top:2px;
+	}
+#interestingTagAdd:hover{
+	background:#39F;}
+.form-item #id_title{
+  margin:5px 0px;
+   padding:6px;}
+#id_tags{
+ margin:5px 0px;
+ padding: 5px; 
+ }

@@ -7,10 +7,12 @@ from forms import ClassicRegisterForm
 from forum.views.auth import login_and_forward
 from forum.actions import UserJoinsAction
 
+from django.http import HttpResponse
+
 def register(request):
     if request.method == 'POST':
         form = ClassicRegisterForm(request.POST)
-
+    
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
@@ -25,7 +27,7 @@ def register(request):
 
             user_.save()
             UserJoinsAction(user=user_, ip=request.META['REMOTE_ADDR']).save()
-
+#	    return HttpResponse(user_)    
             return login_and_forward(request, user_, None, _("A welcome email has been sent to your email address. "))
     else:
         form = ClassicRegisterForm(initial={'next':'/'})

@@ -21,7 +21,9 @@ APP_PATH = os.path.dirname(__file__)
 core_urls = (
     url(r'^$', app.readers.index, name='index'),
     url(r'^%s(.*)' % _('nimda/'), admin.site.urls),
-                        
+    url(r'^m/(?P<skin>\w+)/media/(?P<path>.*)$', 'forum.views.meta.media' ,name='osqa_media'),
+    url(r'^%s(?P<path>.*)$' %_('upfiles/'), 'django.views.static.serve', {'document_root':os.path.join(os.path.dirname(__file__),'upfiles').replace('\\','/'),}, name='uploaded_file',),
+    
     url(r'^sitemap.xml$', 'forum.sitemap.index', {'sitemaps': sitemaps}),
     url(r'^sitemap-(?P<section>.+)\.xml$', 'forum.sitemap.sitemap', {'sitemaps': sitemaps}),
     

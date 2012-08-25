@@ -66,7 +66,7 @@ def signin_page(request):
         del request.session['auth_error']
     except:
         msg = None
-
+    
     return render_to_response(
             'auth/signin.html',
             {

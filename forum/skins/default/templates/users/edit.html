@@ -47,17 +47,9 @@
         </div>
         
         <div id="askform" style="float:right;width:750px;text-align:left;">
-            {% if request.user.get_profile %}
             <tr>
-                <th colspan="2" align="left"><h3>{% trans "Registered user" %}</h3>
-                <span>{{ request.user.get_profile.UID }}</span></th>
+                <th colspan="2" align="left"><h3>{% trans "Registered user" %}</h3></th>
             </tr>
-            {% else %}
-            <tr>
-                <th colspan="2" align="left"><h2>{% trans "Unregistered user" %}</h2>
-                <a href="/register/user">Register to get Shaastra id</a></th>
-            </tr>
-            {% endif %}
             <table class="user-details">
                 <tr>
                     <th width="100px"></th>

@@ -119,7 +119,7 @@ def media(url):
     url = skins.find_media_source(url)
     if url:
         # Create the URL prefix.
-        url_prefix = settings.FORCE_SCRIPT_NAME + '/m/'
+        url_prefix = '/m/'
 
         # Make sure any duplicate forward slashes are replaced with a single
         # forward slash.

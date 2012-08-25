@@ -2,16 +2,16 @@
 {% load extra_tags ui_registry i18n extra_filters markup %}
 
 	<div id="roof">
-	  
+	  <div id="top"><br/>
+		    {% loadregistry header_links %}{% endloadregistry %}	    
+	  </div>
+	  <div id="cont">
 		<div id="logo">
 			<a href="{% url index %}">
-				<img src="{{ settings.APP_LOGO }}" title="{% trans "back to home page" %}" alt="{{settings.APP_TITLE}} logo"/>
+				<img src="/upfiles/shaastra.png" title="{% trans "Back to home page" %}" alt="Shaastra logo" style="height:60px;width:350px;"  /> 
 			</a>
 		</div>
-	  
-		<div id="top">
-		    {% loadregistry header_links %}{% endloadregistry %}
-		</div>
+		
 
     <div id="nav">
         {% loopregistry page_top_tabs %}{% spaceless %}
@@ -20,12 +20,14 @@
         <a id="nav_ask" href="{% url ask %}" class="special">{% trans "ask a question" %}</a>
     </div>
   </div>
+  </div>
 
   <div class="clear"></div>
   
 	<div id="searchBar">
+      <img id="forum" src="/m/default/media/images/forums.png"/>
     <form action="{% url search %}" method="get">
-        <div>
+        <div style="width:500px;margin-right:60px;">
             <input type="text" class="searchInput" value="{{ keywords }}" name="q" id="keywords" />
             <input type="submit" name="Submit" value="{% trans "search" %}" class="searchBtn" />
         </div>

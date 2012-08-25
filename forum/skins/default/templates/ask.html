@@ -112,7 +112,7 @@
                 {% endif %}
 			{% endif %}
             <div class="form-item">
-                <label for="id_title" ><strong>{{ form.title.label_tag }}:</strong></label> <span class="form-error"></span><br/>
+                <label for="id_title" >{{ form.title.label_tag }}:</label><br/> <span class="form-error"></span><br/>
                 {{ form.title }} {{ form.title.errors }}
                 <div class="title-desc">
                     {{ form.title.help_text }}

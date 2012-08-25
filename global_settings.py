@@ -45,7 +45,6 @@ APPEND_SLASH = True
 
 TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__),'forum','skins').replace('\\','/'),
-    os.path.join(os.path.dirname(__file__),'template').replace('\\','/'),
 )
 
 
@@ -72,7 +71,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': True
 }
 
-INTERNAL_IPS = ('127.0.0.1',)
+# INTERNAL_IPS = ('127.0.0.1',)
 
 CACHE_BACKEND = 'file://%s' % os.path.join(os.path.dirname(__file__),'cache').replace('\\','/')
 #CACHE_BACKEND = 'dummy://'
@@ -81,7 +80,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 # This should be equal to your domain name, plus the web application context.
 # This shouldn't be followed by a trailing slash.
 # I.e., http://www.yoursite.com or http://www.hostedsite.com/yourhostapp
-APP_URL = 'http://127.0.0.1:8000/'
+APP_URL = 'http://www.forums.shaastra.org'
 
 #LOCALIZATIONS
 TIME_ZONE = 'Asia/Calcutta'
@@ -107,14 +106,6 @@ app_url_split = APP_URL.split("://")
 APP_PROTOCOL = app_url_split[0]
 APP_DOMAIN = app_url_split[1].split('/')[0]
 APP_BASE_URL = '%s://%s' % (APP_PROTOCOL, APP_DOMAIN)
-
-FORCE_SCRIPT_NAME = ''
-
-for path in app_url_split[1].split('/')[1:]:
-    FORCE_SCRIPT_NAME = FORCE_SCRIPT_NAME + '/' + path
-
-if FORCE_SCRIPT_NAME.endswith('/'):
-    FORCE_SCRIPT_NAME = FORCE_SCRIPT_NAME[:-1]
 
 #Module system initialization
 MODULES_PACKAGE = 'forum_modules'
@@ -146,9 +137,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sitemaps',
     'django.contrib.markup',
-    'forum',
     'django.contrib.messages',
-    'users',
+    'forum',
 ]
 
 if DEBUG:
@@ -173,10 +163,3 @@ if not DEBUG:
         pass
 
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',]
-
-FACEBOOK_APP_ID = '291744470918252'
-FACEBOOK_APP_SECRET = '599f13aad496d3acc8ea887a0e889b92'
-FACEBOOK_SCOPE = 'email'
-
-AUTH_PROFILE_MODULE = 'users.UserProfile'
-

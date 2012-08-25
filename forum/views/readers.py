@@ -379,6 +379,3 @@ def revisions(request, id):
     'post': post,
     'revisions': rev_ctx,
     }, context_instance=RequestContext(request))
-
-
-

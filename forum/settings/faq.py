@@ -37,8 +37,6 @@ Email notifications are the bedrock of a successful question and answer communit
 
 The success of the community relies upon community member involvement, and members are much more likely to become involved, active participants on the site when they're notified of interesting developments.  That is why this community considers a valid email address as a requirement for participating in the community and using this site.
 
-If you're already a member of this community and haven't validated your email address, you can do so [here](/account/send-validation/ "Validate Email Address").  If you aren't yet a member of this community, join up by [creating a new account](/account/local/register/ "Create a new account").
-
  **Who moderates this community?**
 
 The short answer is: you. This website is moderated by the users. The community features a karma system that allows users to earn rights to perform a variety of moderation tasks.

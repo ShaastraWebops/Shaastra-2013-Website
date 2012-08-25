@@ -18,7 +18,7 @@ widget=Textarea))
 
 QUESTION_TITLE_TIPS = Setting('QUESTION_TITLE_TIPS',
 u"""
- - **ask a question relevant to the |APP_TITLE| community**
+ - ask a question relevant to the community
  - the title must be in the form of a question
  - provide enough details
  - be clear and concise
