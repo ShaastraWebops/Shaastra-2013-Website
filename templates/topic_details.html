@@ -20,6 +20,7 @@
 <hr>
 <h1>{{present_topic.title}}</h1>
 <hr>
+{% ifnotequal topic_url_name "Quotes" %}
 	{% if present_topic_images %}
 	<div class="well">
 	<div class="row">
@@ -54,7 +55,9 @@
 
 <!-- form for editing content -->
 {% if request.user.is_authenticated %}
-	<p>You can edit the above contents here.</p>
+<div>
+	<i class="icon-pencil"></i><font color = "gray"><b>YOU CAN EDIT THE ABOVE CONTENTS HERE.</b></font>
+</div>
     <form class="well" action="" method="POST">
         {% csrf_token %}
 		<div>
@@ -64,5 +67,23 @@
         
     </form>
 {% endif %}
+{% endifnotequal %}
+
+{% ifequal topic_url_name "Quotes" %}
+    <div class="well">
+        {% for i in quotes %}
+            <div>
+                <h3>{{i.name}}</h3>
+                    {{i.quote}}
+                <hr>
+            </div>   
+        {% endfor %} 
+    </div>     
+{% if request.user.is_authenticated %}    
+<div>
+	<i class="icon-pencil"></i><font color = "gray"><b>YOU CAN ADD QUOTES ON THE ADMIN PAGE UNDER PORTAL/QUOTES.</b></font>
+</div>  
+{% endif %}         
+{% endifequal %}
 
 {% endblock %}

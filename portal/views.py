@@ -66,6 +66,7 @@ def topic_details(request,topic_url_name):
 	topic_images=TopicImage.objects.all()
 	present_topic=Topic.objects.get(url_name=topic_url_name)
 	present_topic_images=TopicImage.objects.filter(topic = present_topic)
+	quotes=Quote.objects.all()
 	"""
 	Form for textfield. This is required because usually html is not processed 
 	when displaying on screen. Only plain text will be displayed. 
