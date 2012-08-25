@@ -26,6 +26,9 @@
                     $('.bbq-loading').hide();
                     $('#generalContents').show();
                 });
+                if(url=='events') {
+                    $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({left:'0px'});
+                }
                 return;
             }
             var event_name=url.split('/tab')[0];
@@ -33,23 +36,22 @@
                 var event = cache[event_name];
                 $('.eventtab').removeClass('on');
                 event.find('#etab1').addClass('on');
-		var height = $('.tabtext').height();
-		var height2 = $('#textbox2').height();
+        		var height = event.find('#textbox').height();
+		        var height2 = event.find('#textbox2').height();
+		        if(height2>345)              
+			        event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                 if(cache[url]) {
                     event.find(".tabtext").html(cache[url]);
-			if(height>400)
-                    		event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-			if(height2>345)              
-				event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+			        if(height>400)
+                        event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                 } else {
                     $('.bbq-loading').show();
                     event.find(".tabtext").load( url, function(){
                                 // Content loaded, hide "loading" content.
                                 $( '.bbq-loading' ).hide();
-				if(height>400)
-                                event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-				if(height2>345)
-                                event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                        		var height = event.find('#textbox').height();
+				                if(height>400)
+                                    event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                                 resetabs();
                                 cache[url] = event.find(".tabtext").html();
                         });
@@ -81,20 +83,17 @@
                     // want to change this based on your needs.
                     $('.bbq-loading').show();
                     cache[event_name].load( event_name, function(){
-
+                        var height=cache[event_name].find("#textbox2").height();
+            			if(height>345)
+                            cache[event_name].find("#textbox2").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                         cache[event_name].find(".tabtext").load( url, function(){
-                                    // Content loaded, hide "loading" content.
-
-				if($('.tabtext').height()>400){
-                                    cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
-//                                    cache[event_name].find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
-
-
-			if($('#textbox2').height()>345)
-                                    cache[event_name].find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                                    $( '.bbq-loading' ).hide();
-                                    resetabs();
-                                    cache[url] = cache[event_name].find(".tabtext").html();
+                            // Content loaded, hide "loading" content.
+                            var height2=cache[event_name].find("#textbox").height();
+				            if(height2>400){
+                                cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
+                            $( '.bbq-loading' ).hide();
+                            resetabs();
+                            cache[url] = cache[event_name].find(".tabtext").html();
                             });
                         });
                 }
