@@ -17,7 +17,7 @@
 {% block content %}
 <style>
       body {
-        background-color:rgb(248,248,248);
+        background-color:rgb(249,249,249);
       }     
 			textarea{
         				width: 560px;
@@ -35,7 +35,7 @@
     <section id="carousel">
         <div class="row">
             <div class="span8 columns"><br><br>
-            	<h1 style="font-family:Yanone Kafeesatz; "><img src="{{MEDIA_URL}}shaastralogo.png"><small style=" font-size:35px; ">Sponsorship Portal</small></h1>
+            	<h1 style="font-family:Yanone Kafeesatz; "><img src="{{MEDIA_URL}}shaastralogo.png" width="750px" height="180px" alt=""><small style=" font-size:35px; ">Sponsorship Portal</small></h1>
                </br></br>          
                 <!-- About Shaastra -->
                     <p> {{home_content.display_mySafeField}}</p><br>
@@ -92,7 +92,7 @@
                     {% for i in previous_sponsors %}
 						{% if not forloop.first %}
                         <div class="item" style="height: 200px" align="center">
-                            <img src="{{MEDIA_URL}}{{i.logo}}" width="300px" height="200px" alt="">
+                            <img src="{{MEDIA_URL}}{{i.logo}}" alt="">
                         </div>
 						{% endif %}
                     {% endfor %}
@@ -108,12 +108,15 @@
                 <!--scroll up for quotes from previous sponsors-->
                 <marquee behaviour="scroll" direction="up" scrollamount="2">
                 {% for i in quotes %}
-                
+                	<p>
                     <h4><span style="font-size:21px; line-height:29px;">{{i.name}}</span></h4>
-                    <!--<img src="{{MEDIA_URL}}quotestart.png" alt="">-->
-                    <b><font color="3a87ad">{{i.quote}}</font></b>
-                    <!--<img src="{{MEDIA_URL}}quoteend.png" alt="">-->
-                    
+					<style>
+					
+					</style>
+                    <p><img src="{{MEDIA_URL}}quotestart.png" width="40px" height="40px"alt="" />
+                    <b><font color="3a87ad"> {{i.quote}}</font></b>
+                    <img src="{{MEDIA_URL}}quoteend.png"  align="top" width="40px" height="40px" alt="" /></p>
+                    </p>
                 {% endfor %}
                 </marquee>
           <br><br>     
