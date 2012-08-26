@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block hash_handler %}
+<script type="text/javascript">
     $(function(){
         // Keep a mapping of url-to-container for caching purposes.
         var cache = {
@@ -35,13 +36,13 @@
             var event_name=url.split('/tab')[0];
             if(cache[event_name]) {
                 var event = cache[event_name];
-                $('.eventtab').removeClass('on');
-                event.find('#etab1').addClass('on');
-        		var height = event.find('#textbox').height();
+//                $('.eventtab').removeClass('on');
+//                event.find('#etab1').addClass('on');
 		        var height2 = event.find('#textbox2').height();
 		        if(height2>345)              
-			        event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+			        event.find("#textbox2").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                 if(cache[url]) {
+            		var height = event.find('#textbox').height();
                     event.find(".tabtext").html(cache[url]);
 			        if(height>400)
                         event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
@@ -85,6 +86,7 @@
                     $('.bbq-loading').show();
                     cache[event_name].load( event_name, function(){
                         var height=cache[event_name].find("#textbox2").height();
+                      	cache[event_name].find('.eventtab:first').addClass('on');
             			if(height>345)
                             cache[event_name].find("#textbox2").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                         cache[event_name].find(".tabtext").load( url, function(){
@@ -103,6 +105,7 @@
         $(window).trigger('hashchange');
 
     });
+</script>
 {% endblock %}
 {% block functions %}
 {% endblock %}
@@ -117,7 +120,7 @@
         </ul>
         <ul id="menus{{forloop.counter}}">
             {% for event in category %}
-     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}';scroll();">{{event.title}}</li>
+     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title|slugify}}';scroll();">{{event.title}}</li>
             {% endfor %}
 	    </ul>
         </div>
