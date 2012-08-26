@@ -29,7 +29,7 @@
                 });
                 if(url=='events') {
                     $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({left:'0px'});
-                   // $('#body').addClass('hovr1'); 
+                    $('#body').addClass('bg1'); 
                 }
                 return;
             }
@@ -120,7 +120,7 @@
         </ul>
         <ul id="menus{{forloop.counter}}">
             {% for event in category %}
-     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title|slugify}}';scroll();">{{event.title}}</li>
+     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}';scroll();$('#body').removeClass('bg1');">{{event.title}}</li>
             {% endfor %}
 	    </ul>
         </div>
