@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block hash_handler %}
+<script type="text/javascript">
     $(function(){
         // Keep a mapping of url-to-container for caching purposes.
         var cache = {
@@ -67,6 +68,7 @@
         })
         $(window).trigger('hashchange');
     });
+</script>
 {% endblock %}
 {% block footer %}
     <div id="footer">

@@ -36,70 +36,49 @@
             var event_name=url.split('/tab')[0];
             if(cache[event_name]) {
                 var event = cache[event_name];
-//                $('.eventtab').removeClass('on');
-//                event.find('#etab1').addClass('on');
 		        var height2 = event.find('#textbox2').height();
 		        if(height2>345)              
 			        event.find("#textbox2").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                 if(cache[url]) {
-            		var height = event.find('#textbox').height();
                     event.find(".tabtext").html(cache[url]);
+            		var height = event.find('.tabtext').height();
 			        if(height>400)
                         event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                 } else {
                     $('.bbq-loading').show();
                     event.find(".tabtext").load( url, function(){
-                                // Content loaded, hide "loading" content.
-                                $( '.bbq-loading' ).hide();
-                        		var height = event.find('#textbox').height();
-				                if(height>400)
-                                    event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                                resetabs();
-                                cache[url] = event.find(".tabtext").html();
-                        });
+                        // Content loaded, hide "loading" content.
+                        $( '.bbq-loading' ).hide();
+                		var height = event.find('.tabtext').height();
+		                if(height>400)
+                            event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                        resetabs();
+                        cache[url] = $(this).html();
+                    });
                 }
                 event.show();
             } else {
-                if(url.split('submission/')[1]) {
-                    // Show "loading" content while AJAX content loads.
-                    $( '.bbq-loading' ).show();
-                    if (url.split('ques/')[1]) {
-                        $(".bbq-item #q_detail").load( url, function(){
-                                // Content loaded, hide "loading" content.
-                                $( '.bbq-item' ).show();
-                            });
-                    } else {
-                        $('.bbq-loading').show();
-                        $(".bbq-item #tabtext").load( url, function(){
-                                // Content loaded, hide "loading" content.
-                                $('#etab1').addClass('on');
-                                $('.bbq-loading').hide();
-                                $( '#tabtext' ).show();
-                            });
-                    }
-                } else {
-                    cache[event_name] = $( '<div class="bbq-item"></div>' ).appendTo( '.bbq-content' );
+                cache[event_name] = $( '<div class="bbq-item"></div>' ).appendTo( '.bbq-content' );
 
-                    // Load external content via AJAX. Note that in order to keep this
-                    // example streamlined, only the content in .infobox is shown. You'll
-                    // want to change this based on your needs.
-                    $('.bbq-loading').show();
-                    cache[event_name].load( event_name, function(){
-                        var height=cache[event_name].find("#textbox2").height();
-                      	cache[event_name].find('.eventtab:first').addClass('on');
-            			if(height>345)
-                            cache[event_name].find("#textbox2").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                        cache[event_name].find(".tabtext").load( url, function(){
-                            // Content loaded, hide "loading" content.
-                            var height2=cache[event_name].find("#textbox").height();
-				            if(height2>400){
-                                cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
-                            $( '.bbq-loading' ).hide();
-                            resetabs();
-                            cache[url] = cache[event_name].find(".tabtext").html();
-                            });
+                // Load external content via AJAX. Note that in order to keep this
+                // example streamlined, only the content in .infobox is shown. You'll
+                // want to change this based on your needs.
+                $('.bbq-loading').show();
+                cache[event_name].load( event_name, function(){
+                    var height=cache[event_name].find("#textbox2").height();
+                  	cache[event_name].find('.eventtab:first').addClass('on');
+        			if(height>345)
+                        cache[event_name].find("#textbox2").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                    cache[event_name].find(".tabtext").load( url, function(){
+                        // Content loaded, hide "loading" content.
+                        var height2=$(this).height();
+			            if(height2>400){
+                            cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
+                        $( '.bbq-loading' ).hide();
+                        resetabs();
+                        cache[url] = $(this).html();
                         });
-                }
+                    });
             }
         })
         $(window).trigger('hashchange');
@@ -120,7 +99,7 @@
         </ul>
         <ul id="menus{{forloop.counter}}">
             {% for event in category %}
-     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title|slugify}}';scroll();">{{event.title}}</li>
+     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title|slugify}}';">{{event.title}}</li>
             {% endfor %}
 	    </ul>
         </div>
