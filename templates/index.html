@@ -41,9 +41,11 @@
 			        event.find("#textbox2").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                 if(cache[url]) {
                     event.find(".tabtext").html(cache[url]);
-            		var height = event.find('.tabtext').height();
-			        if(height>400)
+            		var lgth = cache[url].length;
+			        if(lgth>400)
                         event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                    else
+                        event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: false, autoReinitialise: true});
                 } else {
                     $('.bbq-loading').show();
                     event.find(".tabtext").load( url, function(){
@@ -52,6 +54,8 @@
                 		var height = event.find('.tabtext').height();
 		                if(height>400)
                             event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+                        else
+                            event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: false, autoReinitialise: true});
                         resetabs();
                         cache[url] = $(this).html();
                     });
