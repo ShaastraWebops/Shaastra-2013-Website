@@ -3,7 +3,7 @@
         <div id="sidemenutitle"><p>{{event.title|cut:"H_"|cut:"B_"|cut:"P_"|cut:"C_"|cut:"Ch_"}}</p></div>
         <ul id="sidemenulist">
             {% for tab in tab_set %}
-            <li class="eventtab" id="etab{{forloop.counter}}" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='#events/{{event|slugify}}/tab/{{tab.title|slugify}}'">{{tab.title}}</p></li>
+            <li class="eventtab" id="etab{{forloop.counter}}" data-href="#events/{{event|slugify}}/tab/{{tab.title|slugify}}"><p>{{tab.title}}</p></li>
             {% endfor %}
 <!--            {% if event.registrable_online == 1 %}
             <li class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='#submission/{{event.id}}'">Register</p></li>
@@ -60,6 +60,10 @@
 <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.mousewheel.js" charset = "utf-8"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$('.bbq-item:visible').find('.eventtab:first').addClass('on');
+    $('.eventtab').click(function(){
+        $('.eventtab').removeClass('on');
+        $(this).addClass('on');
+        window.location.href=$(this).attr('data-href');
+    });
 });
 </script>
