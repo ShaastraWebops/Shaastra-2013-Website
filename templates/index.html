@@ -42,7 +42,7 @@
                 if(cache[url]) {
                     event.find(".tabtext").html(cache[url]);
             		var lgth = cache[url].length;
-			        if(lgth>400)
+			        if(lgth>600)
                         event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                     else
                         event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: false, autoReinitialise: true});
