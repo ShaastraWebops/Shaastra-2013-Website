@@ -69,5 +69,17 @@ def sampark(request):
             coimbatoreevents.append(e)
         if e.title.split('_')[0] == 'Ch':
             chennaievents.append(e)
+    #Code for search
+    result_list=[]
+    for t in Tag.objects.all():
+        row=[]
+        row.append(str(t.name))
+        temp=[]
+        for x in t.event_set.all():
+            url = slugify(x) + '/tab/' + x.tab_set.all()[0].title
+            temp.append([str(x),str(url)])
+        row.append(temp)
+        result_list.append(row)
+    #End of search code
     return render_to_response('events/sampark_home.html', locals(), context_instance=RequestContext(request))
         
