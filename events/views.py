@@ -58,7 +58,7 @@ def sampark(request):
     coimbatoreevents = []
     chennaievents = []
     event = Event.objects.all()
-    city_set = ['Bengaluru', 'Hyderabad', 'Pune','Coimbatore','Chennai']
+    city_set = ['Bengaluru', 'Hyderabad', 'Coimbatore', 'Pune', 'Chennai']
     for e in event:
         if e.title.split('_')[0] == 'B':
             bengaluruevents.append(e)
