@@ -199,35 +199,9 @@ function save_edit_mcq(eve_id, q_id){
         <div onclick="window.open('http://www.youtube.com/iitmshaastra')" id="youtube" class="socialapp">
         </div>
     </div>
-   
     </div>
    {% block footer %}{% endblock %}
-<div id="myModal" class="modal fade hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="text-align:left;">
-            <div class="modal-header">
-              <h3 id="myModalLabel">Contact us</h3>
-            </div>
-            <div class="modal-body">
-            <p>Student In-Charge</p>
-        
-        <li>Sohan Jawale : +91-9952936437</li>
-        <li style="font-size:14px;" class="pad">cas@smail.iitm.ac.in</li> 
-        
-  		<p>Sponsorship</p>
-        
-        <li>Asha Chigurupati : +91-9543987685</li>        
-        <li>asha@shaastra.org</li>
-        <br />
-        <li>Tejas Balasubramanya : +91-8939336379</li>
-        <li>tejas@shaastra.org</li>
-        
-  		<p>Student Relations</p>
-        <li>Syamantak Basu : +91-9962265947</li>
-        <li style="font-size:14px;">syamantak@shaastra.org</li>
-				</div>
-            <div class="modal-footer">
-              <button class="btn btn-primary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
+{% block modal %}{% endblock %}
     </div>
     </center>
 
@@ -277,8 +251,6 @@ $(document).ready(function() {
 	);
 });
 </script>  
-    <script src="static/js/bootstrap-transition.js"></script>
-    <script src="static/js/bootstrap-modal.js"></script>
 <!--End of Search script-->
 
 </body>
