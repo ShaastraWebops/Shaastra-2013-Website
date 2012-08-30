@@ -32,6 +32,10 @@
                 if(url=='events') {
                     $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({left:'0px'});
                     $('#body').addClass('bg1'); 
+                } else {
+                    $(".menu").css({visibility:"hidden"});
+                    $('#tabbox').css({visibility:"hidden"});
+                    $("#generalContents .tabtext").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
                 }
                 return;
             }

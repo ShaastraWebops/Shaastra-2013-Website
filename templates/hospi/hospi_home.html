@@ -1,5 +1,3 @@
-{% extends "base.html" %}
-{% block content %}
 <div class="container-fluid">
 <div class="row-fluid">
 <ul id="myTab" class="nav nav-tabs">
@@ -292,39 +290,3 @@ Shaastra 2013</p>
 </div>
 </div>
 </div>
-{% endblock %}
-{% block footer %}<div id="footer"></div>{% endblock %}
-{% block modal %}
-<div id="myModal" class="modal fade hide" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="text-align:left;">
-            <div class="modal-body">
-            <h2 id="myModalLabel">Contact us</h2><br>
-            <h3>Student In-Charge</h3><br>        
-        <h4>Sohan Jawale : +91-9952936437</h4>
-        <h5>cas@smail.iitm.ac.in</h5> 
-        <br>
-  		<h3>Sponsorship</h3><br>
-        <h4>Asha Chigurupati : +91-9543987685</h4>        
-        <h5>asha@shaastra.org</h5>
-        <br>
-        <h4>Tejas Balasubramanya : +91-8939336379</h4>
-        <h5>tejas@shaastra.org</h5>
-        <br>
-  		<h3>Student Relations</h3><br>
-        <h4>Syamantak Basu : +91-9962265947</h4>
-        <h5>syamantak@shaastra.org</h5>
-				</div>
-            <div class="modal-footer">
-              <button class="btn btn-primary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-{% endblock %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-tab.js" charset = "utf-8"></script>
-<script src="static/js/bootstrap-transition.js"></script>
-    <script src="static/js/bootstrap-modal.js"></script>
-<script type="text/javascript" >
-	jQuery(function($) {
-	 $(".menu").css({visibility:"hidden"});
-	  $('#tabbox').css('visibility','hidden');
-});
-</script>
