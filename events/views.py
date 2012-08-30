@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response
 from django.conf import settings
 from events.models import *
 from operator import attrgetter
+from django.template.defaultfilters import slugify
 
 
 # Create your views here.
