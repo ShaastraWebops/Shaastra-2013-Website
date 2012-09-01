@@ -10,6 +10,7 @@ from django.contrib import admin
 from django.contrib.auth import logout
 from django.conf import settings
 
+
 def home(request):
 	categories = Category.objects.all()
 	topics=Topic.objects.all()

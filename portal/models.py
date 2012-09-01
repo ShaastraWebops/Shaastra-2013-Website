@@ -57,6 +57,7 @@ class Event(models.Model):
 	title = models.CharField(max_length=30, unique=True)
 	about = models.TextField(blank=True)
 	status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='a')
+	sponsor_image=models.FileField(upload_to='present_sponsors',null=True,blank=True)
  
 	def __unicode__(self):
 		return self.title

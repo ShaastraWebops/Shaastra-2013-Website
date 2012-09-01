@@ -12,6 +12,9 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import GroupAdmin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
+import urllib
+from django.conf import settings
+from settings import MEDIA_URL
 """
 The following custom GroupAdmin is to exclude unnecessary permissions on display
 """
@@ -107,12 +110,32 @@ class CategoryAdmin(admin.ModelAdmin):
         obj.url_name = obj.name.replace(" ","_").replace('!', '').replace('&', '').replace("'", '').replace('-', '').replace("?",'')
         obj.save()
         
+        
 
 class EventAdmin(admin.ModelAdmin):
     inlines = [EventImageInline]
     list_display = ['title','category','status']
     search_fields = ['title','category__name']
     actions = ['make_sold', 'make_available','count_sold']
+
+    def save_model(self,request,obj,form,change):
+        obj.save()
+        if obj.status =='s':
+            args={
+                'event_name':obj.title,
+                'url':MEDIA_URL + str(obj.sponsor_image) ,
+            }  
+        else:
+            args={
+                'event_name':obj.title,
+                'url':''
+            }
+        target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()
+        if target == "True":
+            self.message_user(request,"successful")
+        else:
+            self.message_user(request,"logo not sent")
+
     
     """
     The following actions can be found on the admin
@@ -155,7 +178,7 @@ class EventAdmin(admin.ModelAdmin):
             message = "1 event is"
         else:
             message = "%s events are" % counted
-        self.message_user(request, "%s sold." % message)       
+        self.message_user(request, "%s sold." % message)    
 
 
 class TopicImageInline(admin.TabularInline):
