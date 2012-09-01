@@ -103,6 +103,7 @@ def home(request):
 
 @csrf_exempt
 def hero(request):
+    
     target = urllib.urlopen('https://graph.facebook.com/424935270885525/photos').read()
     photos = json.loads(target)["data"]
     srcs=[]

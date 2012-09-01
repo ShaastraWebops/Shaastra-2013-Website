@@ -7,6 +7,7 @@ from django.conf import settings
 from events.models import *
 from operator import attrgetter
 from django.template.defaultfilters import slugify
+import urllib
 
 
 # Create your views here.
@@ -83,4 +84,13 @@ def sampark(request):
         result_list.append(row)
     #End of search code
     return render_to_response('events/sampark_home.html', locals(), context_instance=RequestContext(request))
+
+def logo(request):
+    event_name = request.GET.get('event_name','')
+    spons_logo_url = request.GET.get('url','')
+    event = Event.objects.get(title=event_name)
+    event.sponsor_logo_url = spons_logo_url
+    event.save()
+    event = Event.objects.get(title=event_name)
+    return True
         
