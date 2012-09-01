@@ -12,20 +12,25 @@ from django.conf import settings
 
 
 def home(request):
-	categories = Category.objects.all()
-	topics=Topic.objects.all()
-	topic_images=TopicImage.objects.all()
-	previous_sponsors=PreviousSponsor.objects.all()
-	quotes=Quote.objects.all()
-	home_content=Home.objects.get(id=1)
-	if request.method == "POST":
-	    form = HomeForm(request.POST, instance=home_content)
-	    if form.is_valid:
-	        form.save()
-	        return HttpResponseRedirect(request.path)
-	else:
-	    form = HomeForm(instance=home_content) 	
-	return render_to_response("home.html",locals(),context_instance=RequestContext(request))    
+    categories = Category.objects.all()
+    topics=Topic.objects.all()
+    topic_images=TopicImage.objects.all()
+    previous_sponsors=PreviousSponsor.objects.all()
+    quotes=Quote.objects.all()
+    one_home_content=Home.objects.filter(id=1)
+    if one_home_content:
+        home_content=Home.objects.get(id=1)
+    else:
+        home_content=Home(info=" ")
+        home_content.save()
+    if request.method == "POST":
+        form = HomeForm(request.POST, instance=home_content)
+        if form.is_valid:
+            form.save()
+            return HttpResponseRedirect(request.path)
+    else:
+        form = HomeForm(instance=home_content) 	
+    return render_to_response("home.html",locals(),context_instance=RequestContext(request))    
     
 def category(request):
     topics=Topic.objects.all()
