@@ -131,11 +131,8 @@ class EventAdmin(admin.ModelAdmin):
                 'url':''
             }
         target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()
-        if target:
-            self.message_user(request,"successful")
-        else:
-            self.message_user(request,"logo not sent")
-
+        
+       
     
     """
     The following actions can be found on the admin
