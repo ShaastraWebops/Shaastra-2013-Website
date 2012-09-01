@@ -6,7 +6,7 @@
         function show(event_id){
             $('#content').fadeOut();
             $('#content').load('{{site_url}}fb/events/'+event_id,function(){
-//FB.XFBML.parse(document.getElementById('content'));
+FB.XFBML.parse(document.getElementById('content'));
          $('#content').fadeIn();});
         }
         </script>
@@ -26,10 +26,10 @@
         window.fbAsyncInit = function() {
             FB.init({
                 appId      : '291744470918252', // App ID
-                channelUrl : '//www.shaastra.org/2013/main/test/static/fb/channel.html', // Channel File
+                channelUrl : '//www.shaastra.org/2013/main/static/fb/channel.html', // Channel File
                 status     : true, // check login status
                 cookie     : true, // enable cookies to allow the server to access the session
-                xfbml      : true  // parse XFBML
+                xfbml      : false  // parse XFBML
             });
 
             // Additional initialization code here
@@ -40,20 +40,23 @@
                     $('#profile').html("<fb:profile-pic uid="+uid+" linked='true' />");
                     FB.api('/me', function(response) {
                         userDetails = response;
-                        $("#profile").prepend("<strong>"+ userDetails.name + "</strong>");
                     });
                 } else if(response.status === 'not_authorized') {
 			FB.login(function(response) {
 			   if (response.authResponse) {
-			     alert('Welcome!  Fetching your information.... ');
+	                    uid = response.authResponse.userID;
+        	            accessToken = response.authResponse.accessToken;
+                	    $('#profile').html("<fb:profile-pic uid="+uid+" linked='true' />");
 			     FB.api('/me', function(response) {
-			       alert('Good to see you, ' + response.name + '.');
+	                     	userDetails = response;
+	                     	$("#profile").prepend("<strong>"+ userDetails.name + "</strong>");
 			     });
 			   } else {
-			     alert('User cancelled login or did not fully authorize.');
+				window.location="http://www.facebook.com/Shaastra";
 			   }
 			 });
                 }
+                FB.XFBML.parse();
             });	
         };
 
