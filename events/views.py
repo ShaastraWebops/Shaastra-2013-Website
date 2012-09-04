@@ -92,5 +92,5 @@ def logo(request):
     event.sponsor_logo_url = spons_logo_url
     event.save()
     event = Event.objects.get(title=event_name)
-    return True
+    return HttpResponse("True")
         
