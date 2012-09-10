@@ -39,8 +39,8 @@ class EventSitemap(Sitemap):
 	except:
 	    tab_name=""
 	if obj.title.split('_')[0].__len__() ==1 :
-	    return '/2013/main/test/events/sampark/#events/' + slugify(obj.title) + '/tab/' + tab_name
-        return '/2013/main/test/#events/' + slugify(obj.title) + '/tab/' + tab_name
+	    return '/2013/main/events/sampark/#events/' + slugify(obj.title) + '/tab/' + tab_name
+        return '/2013/main/#events/' + slugify(obj.title) + '/tab/' + tab_name
 
 
 class SiteSiteMap(Sitemap):

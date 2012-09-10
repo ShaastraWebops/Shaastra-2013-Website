@@ -40,9 +40,9 @@ urlpatterns += patterns('django.views.static', (r'^static/(?P<path>.*)$'
                         {'document_root': settings.STATIC_ROOT,
                         'show_indexes': True}))
 
-base_url_name = '/2013/main/test/'
+base_url_name = '/2013/main/'
 sitelist = [base_url_name, base_url_name + '#events/', base_url_name
-            + 'user/login/', base_url_name + 'events/sampark/']
+            + 'user/login/', base_url_name + 'events/sampark/', base_url_name +'#hospi/']
 
 sitemaps = {'event': EventSitemap, 'sites': Sitemap,
             'pages': SiteSiteMap(sitelist)}
