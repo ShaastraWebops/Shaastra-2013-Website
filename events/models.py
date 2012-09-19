@@ -56,8 +56,16 @@ class Event(models.Model):
     lock_status = models.CharField(default='cannot_be_locked',
                                    max_length=20)
     unlock_reason = models.TextField(default='', blank=True)
+
     registrable_online = models.BooleanField(default=False,
             help_text='Can participants register online?')
+    team_event = models.BooleanField(default=False,
+            help_text='Is this a team event?')
+    team_size_min = models.IntegerField(default=1,
+            verbose_name='Minimum team size')
+    team_size_max = models.IntegerField(default=1,
+            verbose_name='Maximum team size')
+            
     begin_registration = models.BooleanField(default=False,
             help_text='Mark as True to begin online registration')
     has_questionnaire = models.BooleanField(default=False,
@@ -69,6 +77,34 @@ class Event(models.Model):
 
     def __unicode__(self):
         return '%s' % self.title
+        
+    def clean(self):
+        """
+        This method will work to clean the instance of Event created.
+        Custom validations to be performed:
+            * If the event is not a team event, then the team sizes must not be specified.
+            * If team sizes are not specified, they should be set to one each (individual participation).
+            * Minimum team size should not be greater than the maximum team size.
+        """
+        # References:
+        # https://docs.djangoproject.com/en/dev/ref/models/instances/#validating-objects
+        # https://docs.djangoproject.com/en/dev/ref/forms/validation/#cleaning-and-validating-fields-that-depend-on-each-other
+        # http://stackoverflow.com/questions/2117048/django-overriding-the-clean-method-in-forms-question-about-raising-errors
+
+        errors = []
+        super(SubEvent, self).clean()  # Calling clean method of the super class
+        if not team_event:
+            team_size_min = team_size_max = 1
+        if not team_size_min:
+            team_size_min = 1
+        if not team_size_max:
+            team_size_max = 1
+        if team_event:
+            if team_size_min > team_size_max:
+                errors.append('The minimum team size cannot be more than the maximum team size.')
+        if errors:
+            raise ValidationError(errors)
+
 
 
 class Update(models.Model):

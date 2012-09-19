@@ -28,6 +28,9 @@ class AddEventForm(forms.ModelForm):
             'lock_status',
             'unlock_reason',
             'registrable_online',
+            'team_event',
+            'team_size_min',
+            'team_size_max',
             'begin_registration',
             'has_questionnaire',
             )
