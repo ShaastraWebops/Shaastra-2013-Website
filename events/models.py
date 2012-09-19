@@ -92,7 +92,7 @@ class Event(models.Model):
         # http://stackoverflow.com/questions/2117048/django-overriding-the-clean-method-in-forms-question-about-raising-errors
 
         errors = []
-        super(SubEvent, self).clean()  # Calling clean method of the super class
+        super(Event, self).clean()  # Calling clean method of the super class
         if not team_event:
             team_size_min = team_size_max = 1
         if not team_size_min:
