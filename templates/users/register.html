@@ -78,7 +78,9 @@
 })(jQuery);
 </script>
 <script>
-$(document).ready(function(){$('#container').center();});
+$(document).ready(function(){$('#container').center();
+  $("#msg").addClass("btn btn-large btn-primary"); 
+});
 $(window).resize(function(){$('#container').center();});
 </script>
     </head>
@@ -228,7 +230,7 @@ span.helptext{color:#666;
 	}
 #formbox
 {
-	height:390px;
+	height:520px;
 }
 </style>
 	<script src="{{site_url}}static/js/jScrollPane.js"></script>
