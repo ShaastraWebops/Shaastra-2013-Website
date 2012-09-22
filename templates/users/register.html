@@ -4,7 +4,7 @@
         <title>Shaastra 2013</title>
         {% dajaxice_js_import %}
 
-<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/scroll.css"  />
+    <!--<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/scroll.css"  />-->
 
         <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
@@ -89,8 +89,9 @@ $(window).resize(function(){$('#container').center();});
    <button id = "topright" onclick="window.location.href='{{site_url}}'">Home</button>
       <div id="form" class="control-group" style="width:90%;">
         <!-- Add something similar to make the error message for the reCaptcha appear.-->
-        
-        <h1 style="color:#fff;">Sign up</h1><br/>
+        <div id = "logo">
+            	<img src="{{site_url}}static/img/dice.png" alt="">Sign up
+            </div><br> 
         <form id="form_reg" action="{{ post_url }}" method="POST" class="form-horizontal">
 	<div id="formbox">
         <table>
@@ -114,7 +115,7 @@ $(window).resize(function(){$('#container').center();});
         <input type="hidden" name="access_token" id="access_token" value="{{access_token}}" />
         {% if captcha_response != "" %}
             <p class="errorlist">The words typed did not match the words in the image</p>
-        {% endif %}
+        {% endif %}<br>
         <input type="button" onclick="forumReg();" id="register" value="Register" class="btn btn-large btn-info" style="margin-left:5px;">
        </form>
        <br>
@@ -125,19 +126,18 @@ body
     {
     width:100%;
     height:100%;
-    overflow:hidden;
     margin:0;
-    background:url({{site_url}}static/img/bg.png) 100% 100%;
-    background-repeat : repeat-x;
+    background:url({{site_url}}static/img/bg.png); //100% 100%
+    background-repeat : repeat;
 	 font-family:'Century Gothic',serif ! important;
 	letter-spacing:0.75px ! important;
     }
  #container
     {
-    width : 70%;
+    width : 60%;
     margin:0 auto;
     height: 100%;
-    overflow:hidden;
+    //overflow:hidden;
     }  
 .right{float:right;
   width:80%; 
@@ -166,18 +166,21 @@ body
         cursor:pointer;}
 	#logo
     {
-    width:115px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size:30px;
+    color:#fff !important;
+    font-weight: bold;
+    vertical-align:middle;
+    display:table;
     }  
  #logo>img{
  	width: 115px;
- 	height: 65px;} 
+ 	height: 65px;
+ 	margin-right:10px;} 
  .chzn-container .chzn-results {
  		max-height:130px;
  		}
 #msg{
-   font-family: "century gothic";
+   font-family: "century gothic",serif;
 	letter-spacing: 1px;
 	font-size:16px;
 	color:#fff;	
@@ -228,15 +231,15 @@ span.helptext{color:#666;
 	    filter:alpha(opacity=100);
         cursor:pointer;
 	}
-#formbox
+/*#formbox
 {
 	height:520px;
-}
+}*/
 </style>
-	<script src="{{site_url}}static/js/jScrollPane.js"></script>
+	<!-- <script src="{{site_url}}static/js/jScrollPane.js"></script>
 	<script src="{{site_url}}static/js/jquery.mousewheel.js"></script>
 
 	<script src="{{site_url}}static/js/scrollreg.js"></script>
-	<script src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script>
+	<script src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script> -->
 </html>
 	 
