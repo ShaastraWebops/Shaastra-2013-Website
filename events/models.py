@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from users.models import Team
 from django import forms
 from django.forms import ModelForm
 from chosen import forms as chosenforms
@@ -105,7 +106,21 @@ class Event(models.Model):
         if errors:
             raise ValidationError(errors)
 
-
+class EventSingularRegistration(models.Model):
+    
+    user = models.ForeginKey(User)
+    event = models.ForeignKey(Event)
+    
+    def __unicode__(self):
+        return '%s <- User: %s' % (event, user)
+        
+class EventTeamRegistration(models.Model):
+    
+    team = models.ForeignKey(Team)
+    event = models.ForeignKey(Event)
+    
+    def __unicode__(self):
+        return '%s <- Team: %s' % (event, team)
 
 class Update(models.Model):
 

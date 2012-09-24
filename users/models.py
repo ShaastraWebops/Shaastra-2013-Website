@@ -109,7 +109,7 @@ class UserProfile(models.Model):
         pass
 
 class Team(models.Model):
-    name            = models.CharField(max_length = 50) 
+    name            = models.CharField(max_length = 50)
     event           = models.ForeignKey(Event, null = False)
     leader          = models.ForeignKey(User, related_name = 'own_teams', blank = False, null = False)
     members         = models.ManyToManyField(User, related_name = 'joined_teams', blank = True, null = True)
