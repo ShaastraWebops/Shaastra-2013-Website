@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login as auth_login, \
     logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from events.models import Event
+from events.models import Event, EventTeamRegistrations
 from users.models import UserProfile, College
 from django.utils.translation import ugettext as _
 from users.forms import *
@@ -269,3 +269,175 @@ def events(request):
 def ajax_login_link(request):
     return HttpResponse('<a href="%suser/login">Click here to login</a>'
                          % settings.SITE_URL)
+                         
+### Views for teams:
+
+def get_authentic_team(request = None, team_id = None):
+    if team_id is None or request is None:
+        return None
+    try:
+        team = Team.objects.get(pk = int(team_id))
+        try:
+            team.members.get(pk = request.user.id)
+            return team
+        # Non-members fail the test
+        except User.DoesNotExist:
+            return None
+    except Team.DoesNotExist:
+        return None
+    return None
+
+@login_required
+def team_home(request, team_id = None):
+    team = get_authentic_team(request, team_id)
+    if team is not None:
+        add_member_form = AddMemberForm()
+        change_leader_form = ChangeLeaderForm()
+        return render_to_response('users/teams/team_home.html', locals(), context_instance = global_context(request))
+    raise Http404
+
+@login_required
+def create_team(request, event_id = None):
+    if event_id is None:
+        raise Http404
+    user = request.user
+    try:
+        event = Event.objects.get(pk = int(event_id))
+    except:
+        raise Http404
+    form = CreateTeamForm(initial = {'event' : event.id, } )
+    view = "Create"
+    if request.method == 'POST':
+        form = CreateTeamForm(request.POST)
+        if form.is_valid():
+            try:
+                Team.objects.get(members__pk = request.user.id, event = form.cleaned_data['event'])
+                return render_to_response('users/teams/already_part_of_a_team.html', locals(), context_instance = global_context(request))
+            except Team.DoesNotExist:
+                pass
+            team = form.save(commit = False)
+            team.leader = user
+            '''
+            try:
+                team.leader.get_profile().registered.get(pk = team.event.id)
+            except Event.DoesNotExist:
+                team.leader.get_profile().registered.add(team.event)
+            '''
+            team.save()
+            team.members.add(user)
+            return HttpResponseRedirect('%suser/teams/%s/' % (SITE_URL, team.id))
+    return render_to_response('users/teams/create_team.html', locals(), context_instance = global_context(request))
+
+'''
+def join_team(request):
+    user = request.user
+    form = JoinTeamForm()
+    view = "Join"
+    if request.method == 'POST':
+        form = JoinTeamForm(request.POST)
+        if form.is_valid():
+            team = Team.objects.get(name = form.cleaned_data['name'], event = form.cleaned_data['event'])
+            team.join_requests.add(user)
+            return HttpResponseRedirect('%smyshaastra/' % SITE_URL)
+    return render_to_response('myshaastra/team_form.html', locals(), context_instance = global_context['request'])
+'''
+
+@login_required
+def add_member(request, team_id = None):
+    team = get_authentic_team(request, team_id)
+    if team is not None:
+        add_member_form = AddMemberForm()
+        change_leader_form = ChangeLeaderForm()
+        if request.method == 'POST':
+            user = request.user
+            add_member_form = AddMemberForm(request.POST)
+            if add_member_form.is_valid():
+                if user != team.leader:
+                    return render_to_response('users/teams/you_arent_leader.html', locals(), context_instance = global_context(request))
+                member = User.objects.get(username = add_member_form.cleaned_data['member'])
+                '''
+                # autoregister member on addition to the team
+                try:
+                    member.get_profile().registered.get(pk = team.event.id)
+                except Event.DoesNotExist:
+                    member.get_profile().registered.add(team.event)
+                '''
+                team.members.add(member)
+                return HttpResponseRedirect('%suser/teams/%s/' % (SITE_URL, team.id))
+            else:
+                try:
+                    if add_member_form['member'].errors != []:
+                        return render_to_response(
+                            'users/teams/already_part_of_a_team.html', 
+                            { 'user' : request.POST['member'], }, 
+                            context_instance = global_context(request)
+                        )
+                except KeyError:
+                    pass
+        return render_to_response('users/teams/team_home.html', locals(), context_instance = global_context(request))
+    raise Http404
+
+@login_required
+def change_team_leader(request, team_id = None):
+    team = get_authentic_team(request, team_id)
+    if team is not None:
+        change_leader_form = ChangeLeaderForm()
+        add_member_form = AddMemberForm()
+        if request.method == 'POST':
+            user = request.user
+            change_leader_form = ChangeLeaderForm(request.POST)
+            if change_leader_form.is_valid():
+                if user != team.leader:
+                    return render_to_response('users/teams/you_arent_leader.html', locals(), context_instance = global_context(request))
+                new_leader = team.members.get(username = change_leader_form.cleaned_data['new_leader'])
+                team.leader = new_leader
+                team.save()
+                return HttpResponseRedirect('%suser/teams/%s/' % (SITE_URL, team.id))
+        return render_to_response('users/teams/team_home.html', locals(), context_instance = global_context(request))
+    raise Http404
+
+@login_required
+def drop_out(request, team_id = None):
+    team = get_authentic_team(request, team_id)
+    if team is not None:
+        user = request.user
+        if user == team.leader:
+            return render_to_response('users/teams/you_are_leader.html', locals(), context_instance = global_context(request))
+        else:
+            team.members.remove(user)
+            return HttpResponseRedirect('%sevents/' % SITE_URL)
+    raise Http404
+
+@login_required
+def remove_member(request, team_id = None):
+    team = get_authentic_team(request, team_id)
+    if team is not None:
+        change_leader_form = ChangeLeaderForm()            # it is the same form essentially :P
+        add_member_form = AddMemberForm()
+        if request.method == 'POST':
+            user = request.user
+            change_leader_form = ChangeLeaderForm(request.POST)
+            if change_leader_form.is_valid():
+                team = Team.objects.get(pk = change_leader_form.cleaned_data['team_id'])
+                if user != team.leader:
+                    return render_to_response('users/teams/you_arent_leader.html', locals(), context_instance = global_context(request))
+                new_leader = team.members.get(username = change_leader_form.cleaned_data['new_leader'])           
+                team.members.remove(new_leader)                                                # yes i know, it looks bad. but what the hell. i'm lazy.
+                return HttpResponseRedirect('%suser/teams/%s/' % (SITE_URL, team.id))
+        return render_to_response('users/teams/team_home.html', locals(), context_instance = global_context(request))
+    raise Http404
+
+@login_required
+def dissolve_team(request, team_id = None):
+    team = get_authentic_team(request, team_id)
+    if team is not None:
+        if team.members.all().count() > 1:
+            return render_to_response('users/teams/remove_members_first.html', locals(), context_instance = global_context(request))
+        else:
+            if team.leader != request.user:
+                return render_to_response('users/teams/you_arent_leader.html', locals(), context_instance = global_context(request))
+            team.members.clear()
+            team.delete()
+            return HttpResponseRedirect('%sevents/' % SITE_URL)
+    raise Http404
+
