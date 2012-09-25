@@ -102,7 +102,9 @@ class Event(models.Model):
             team_size_max = 1
         if team_event:
             if team_size_min > team_size_max:
-                errors.append('The minimum team size cannot be more than the maximum team size.')
+                errors.append(u'The minimum team size cannot be more than the maximum team size.')
+            if team_size_max == 1:
+                errors.append(u'The maximum team size is 1. Did you mean to make this a non-team event?')
         if errors:
             raise ValidationError(errors)
 
@@ -114,6 +116,7 @@ class EventSingularRegistration(models.Model):
     def __unicode__(self):
         return '%s <- User: %s' % (event, user)
         
+'''
 class EventTeamRegistration(models.Model):
     
     team = models.ForeignKey(Team)
@@ -121,6 +124,7 @@ class EventTeamRegistration(models.Model):
     
     def __unicode__(self):
         return '%s <- Team: %s' % (event, team)
+'''
 
 class Update(models.Model):
 

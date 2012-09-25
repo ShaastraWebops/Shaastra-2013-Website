@@ -117,6 +117,6 @@ class Team(models.Model):
     def __unicode__(self):
         return self.name
     
-    class Admin:
-        pass
+    class Meta:
+        unique_together('name', 'event')
 
