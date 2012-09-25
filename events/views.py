@@ -7,6 +7,7 @@ from django.conf import settings
 from events.models import *
 from operator import attrgetter
 from django.template.defaultfilters import slugify
+from django.contrib.auth.decorators import login_required
 import urllib
 
 
@@ -93,4 +94,79 @@ def logo(request):
     event.save()
     event = Event.objects.get(title=event_name)
     return HttpResponse("True")
+    
+
+### Methods for event registration:
         
+def register_singular_event(request, event):
+    user = request.user
+    userProfile = user.get_profile()
+    singularRegistrations = EventSingularRegistrations.objects.filter(event = event)
+    try:
+        userRegistration = singularRegistrations.filter(user = user)
+    except EventSingularRegistration.DoesNotExist:
+        # This means that the user is not registered.
+        # We must now execute the registration logic.
+        if request.method == 'POST':
+            # If the user submitted the registration form (which is just a confirm button)
+            newRegistrationData = {
+                user : user,
+                event : event,
+            }
+            newRegistration = EventSingularRegistrations(newRegistrationData)
+            newRegistration.save()
+            registration_done_message = u'You have been registered for this event.'
+        else:
+            # If the form has not been submitted, we have to render the form.
+            # TODO: The template below should have a form which allows the user to choose whether he wants to register or not.
+            return render_to_response('events/register_singular_event.html', locals(), context_instance=RequestContext(request))
+    if not registration_done_message:
+        # If registration_done_message exists, then the user just registered. Do not change this message here.
+        # If it does not exist, the user registered earlier. Set the message.
+        registration_done_message = u'You have already registered for this event.'
+    # TODO: The template below should have provisions for the user to cancel his registration for the corresponding event
+    return render_to_response('events/registration_done.html', locals(), context_instance=RequestContext(request))
+
+def register_team_event(request, event):
+    user = request.user
+    userProfile = user.get_profile()
+    teams = Team.objects.filter(event = event)
+    try:
+        userTeamRegistration = teams.filter(members__contains = user)
+    except Team.DoesNotExist:
+        # This means that the user is not a part of any registered team.
+        # We must now execute the team registration logic.
+        # To register for an event, the user must create a team.
+        # If the user wants to join another team, the leader of that team must send the user a request.
+        # Here we must redirect to the create team view.
+        return HttpResponseRedirect(settings.SITE_URL + 'teams/create/' + str(event.id) + '/')
+    # Else the user is already part of a team.
+    render_to_response('events/team_registration_done.html', locals(), context_instance=RequestContext(request))
+
+@login_required
+def register(request, event_id):
+    """ 
+    This is the event registration view.
+    If the event is a singular event, i.e. individual participation, the
+    user will be shown a form asking him to register.
+    If the event is a team event, the user will be redirected to the team
+    selection page
+    """
+    event_id = int(event_id)
+    try:
+        event = Event.objects.get(id = event_id)
+    except Event.DoesNotExist:
+        raise Http404('It seems like you the event you have requested for does not exist.')
+    if not event.registrable_online:
+        return render_to_response('events/register_offline.html', locals(), context_instance=RequestContext(request))
+        #TODO: This template should tell the user that the event cannot be registered for online and that the registration is only on site.
+    if not event.begin_registration:
+        return render_to_response('events/registration_not_started.html', locals(), context_intstance=RequestContext(request))
+        #TODO: This template should tell the user that the event registration is online but has not started yet. Stay tuned for updates.
+    if not event.team_event:  # This means that the event is a singular event.
+        response = register_singular_event(request, event)
+        return response
+    else:  # The event is a team event.
+        response = register_team_event(request, event)
+        return response
+    return HttpResponseRedirect(event.url)
