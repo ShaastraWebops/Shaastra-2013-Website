@@ -118,13 +118,14 @@ def register_singular_event(request, event):
             registration_done_message = u'You have been registered for this event.'
         else:
             # If the form has not been submitted, we have to render the form.
-            # TODO: The template below should have a form which allows the user to choose whether he wants to register or not.
+            # TODO: The template below should have a form which allows the user to choose whether he wants to register or not. TODO done
             return render_to_response('events/register_singular_event.html', locals(), context_instance=RequestContext(request))
     if not registration_done_message:
         # If registration_done_message exists, then the user just registered. Do not change this message here.
         # If it does not exist, the user registered earlier. Set the message.
         registration_done_message = u'You have already registered for this event.'
-    # TODO: The template below should have provisions for the user to cancel his registration for the corresponding event
+    # TODO: The template below should tell the user that he is registered. TODO done
+    # TODO: The template should also allow the user to cancel his registration
     return render_to_response('events/registration_done.html', locals(), context_instance=RequestContext(request))
 
 def register_team_event(request, event):
@@ -159,14 +160,13 @@ def register(request, event_id):
         raise Http404('It seems like you the event you have requested for does not exist.')
     if not event.registrable_online:
         return render_to_response('events/register_offline.html', locals(), context_instance=RequestContext(request))
-        #TODO: This template should tell the user that the event cannot be registered for online and that the registration is only on site.
+        #TODO: This template should tell the user that the event cannot be registered for online and that the registration is only on site. TODO done
     if not event.begin_registration:
         return render_to_response('events/registration_not_started.html', locals(), context_intstance=RequestContext(request))
-        #TODO: This template should tell the user that the event registration is online but has not started yet. Stay tuned for updates.
+        #TODO: This template should tell the user that the event registration is online but has not started yet. Stay tuned for updates. TODO done
     if not event.team_event:  # This means that the event is a singular event.
         response = register_singular_event(request, event)
         return response
     else:  # The event is a team event.
         response = register_team_event(request, event)
         return response
-    return HttpResponseRedirect(event.url)
