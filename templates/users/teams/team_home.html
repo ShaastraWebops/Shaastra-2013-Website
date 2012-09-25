@@ -1,0 +1,148 @@
+{% extends "users/teams/team_base.html" %}
+
+{% block media_location %}
+
+    <style>
+        #list_of_members{
+            width:33%;
+        }
+        #add_member_form{
+            position:absolute;
+            width:30%;
+            left:33%;
+            top:0px;
+        }
+		#change_leader_form{
+            position:absolute;
+            width:30%;
+            left:63%;
+            top:0px;
+		}
+        #leader{
+            position:absolute;
+            width:33%;
+            left:66%;
+            top:-10px;
+        }
+        ul{list-style:none;}
+        li a{text-decoration:none; color:black}
+        h3 {text-decoration:none; font-family: Arial, Helvetica, sans-serif;}
+		#content div { margin:10px; }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+    <div id="list_of_members">
+        <h3>Members:</h3>
+        {% if team.leader == user %}
+            <p>Click to remove a member (you can't remove yourself this way)</p>
+        {% endif %}
+        <table>
+            <tr><td>You</td></tr>
+            {% for member in team.members.all %}
+                {% if member != user %}
+                    {% if team.leader == user %}
+<!--                            <script type="text/javascript">
+                                function submit_form_{{ member.id }}()
+                                {
+                                    document.remove_{{ member.id }}.submit();
+                                }
+                            </script>
+                            <a href="javascript:submit_form_{{ member.id }}">   -->
+                        <tr>
+                            <td>
+                                <div id="member_username_div">
+                                    {{ member.username }}
+                                </div>
+                            </td>
+<!--                            </a>   -->
+                            <td>
+                                <form name="remove_{{ member.id }}" action="{{ SITE_URL }}myshaastra/teams/{{ team.id }}/remove_member/" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="new_leader" value="{{ member.username }}" />
+                                    <input type="hidden" name="team_id" value="{{ team.id }}" />
+                                    <div class="button2">
+                                        <a href="#">
+                                            <input type="submit" value="Remove" />
+                                        </a>
+                                        <span></span>
+                                     </div>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>
+                                <div id="member_username_div">
+                                    {{ member.username }}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+    
+    <br /><br /><br />
+    
+    {% if team.leader == user %}
+        <div id="add_member_form">
+            <p><h3>Add a member:</h3></a>
+            <form name="add_member" action="{{ SITE_URL }}myshaastra/teams/{{ team.id }}/add_member/" method="POST">
+                {% csrf_token %}
+                {{ add_member_form.member.errors }}
+                <label for="id_member">Username:</label>
+                {{ add_member_form.member }} 
+                <input type="hidden" name="team_id" value="{{ team.id }}" />
+                <p>
+                    <div class="button2">
+                        <a href="#">
+                            <input type="submit" value="Add" />
+                        </a>
+                        <span></span>
+                    </div>
+                </p>
+            </form>
+        </div><br /><br />
+    {% else %}
+        <script type="text/javascript">
+            function submit_dropout_form()
+            {
+                document.dropout.submit();
+            }
+        </script>        
+        <form name="dropout" action="{{ SITE_URL }}myshaastra/teams/{{ team.id }}/drop_out/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="team_id" value="{{ team.id }}" />
+        </form>
+        <a href="javascript:submit_dropout_form()">Leave this team</a><br /><br />
+    {% endif %}
+
+    {% if team.leader == user %}
+        <div id="change_leader_form">
+        <h3>Change the team leader</h3>
+            <form action="{{ SITE_URL }}myshaastra/teams/{{ team.id }}/change_leader/" method="POST">
+                {% csrf_token %}
+                {{ change_leader_form.new_leader.errors }}
+                <label for="id_new_leader">Pass on the leadership to:</label>
+                {{ change_leader_form.new_leader }}
+                <input type="hidden" name="team_id" value="{{ team.id }}">
+                <div class="button2">
+                    <a href="#">
+                        <input type="submit" value="Change Leader" />
+                    </a>
+                    <span></span>
+                </div>
+            </form>
+        </div>
+        <br />
+        <div id="dissolve_team">
+            <a href="{{ SITE_URL }}myshaastra/teams/{{ team.id }}/dissolve/">Dissolve this team</a>
+        </div>
+        <br /><br />
+    {% endif %}   
+
+{% endblock %}

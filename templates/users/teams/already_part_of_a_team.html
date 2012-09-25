@@ -1,0 +1,10 @@
+{% extends "users/teams/team_base.html" %}
+
+{% block body %}
+
+    <p>There was an error while trying to add {{ user }} to the team. Please check the following:</p>
+    <p>1. {{ user }} is a valid user, who has registered through the Shaastra 2011 Registration page.</p>
+    <p>2. {{ user }} has activated his/her account</p>
+    <p>3. {{ user }} is not already a part of another team for the same event. In this case, he/she must drop out of the other team in order to create/join a new one.</p>
+
+{% endblock %}
