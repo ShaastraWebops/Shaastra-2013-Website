@@ -38,5 +38,16 @@ urlpatterns = patterns(  #    url(r'^reset/(?P[0-9A-Za-z]+)-(?P.+)/$', 'django.c
     url(r'^events/$', 'users.views.events'),
     url(r'^ajax_login/$', ajax_login_link),
     )
+    
+# URLs for teams
+urlpatterns += patterns(
+    url(r'^teams/(?P<team_id>\d+)/$', team_home),
+    url(r'^teams/create/(?P<event_id>\d+)/$', create_team),
+    url(r'^teams/(?P<team_id>\d+)/add_member/$', add_member),
+    url(r'^teams/(?P<team_id>\d+)/change_leader/$', change_team_leader),
+    url(r'^teams/(?P<team_id>\d+)/drop_out/$', drop_out),
+    url(r'^teams/(?P<team_id>\d+)/remove_member/$', remove_member),
+    url(r'^teams/(?P<team_id>\d+)/dissolve/$', dissolve_team),
+    )
 
 #    url(r'^admin/$','users.views.admin', name="super-user"),
