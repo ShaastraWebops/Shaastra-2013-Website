@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login as auth_login, \
     logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from events.models import Event, EventTeamRegistrations
+from events.models import Event
 from users.models import UserProfile, College
 from django.utils.translation import ugettext as _
 from users.forms import *
