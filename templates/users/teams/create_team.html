@@ -1,9 +1,9 @@
-{% extends "users/teams/team_base.html" %}
+{% extends "users/teams/teams_base.html" %}
 
 {% block body %}
 
     <div id="create_team_form">
-        <p>Create a team to participate in {{ event.display_name }}:</p>
+        <p>Create a team to participate in {{ event.title }}:</p>
         <form action="" method="POST">
             {% csrf_token %}
             <table>

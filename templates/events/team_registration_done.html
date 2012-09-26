@@ -2,6 +2,6 @@
 
 {% block body %}
 
-    <p>You are already registered for this event as a part of the team {{team.name}}.</p>
+    <p>You are already registered for this event as a part of the team '<a href="{{site_url}}user/teams/{{userTeam.id}}/">{{userTeam.name}}</a>.'</p>
     
 {% endblock %}
