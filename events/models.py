@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
-from users.models import Team
+#from users.models import Team
 from django import forms
 from django.forms import ModelForm
 from chosen import forms as chosenforms
@@ -110,7 +110,7 @@ class Event(models.Model):
 
 class EventSingularRegistration(models.Model):
     
-    user = models.ForeginKey(User)
+    user = models.ForeignKey(User)
     event = models.ForeignKey(Event)
     
     def __unicode__(self):
