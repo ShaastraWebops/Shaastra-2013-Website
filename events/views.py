@@ -5,6 +5,7 @@ from django.template.context import Context, RequestContext
 from django.shortcuts import render_to_response
 from django.conf import settings
 from events.models import *
+from users.models import Team
 from operator import attrgetter
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
@@ -101,26 +102,23 @@ def logo(request):
 def register_singular_event(request, event):
     user = request.user
     userProfile = user.get_profile()
-    singularRegistrations = EventSingularRegistrations.objects.filter(event = event)
+    singularRegistrations = EventSingularRegistration.objects.filter(event = event)
+    registration_done_message = None
     try:
-        userRegistration = singularRegistrations.filter(user = user)
-    except EventSingularRegistration.DoesNotExist:
+        userRegistration = singularRegistrations.get(user = user)
+    except:
         # This means that the user is not registered.
         # We must now execute the registration logic.
         if request.method == 'POST':
             # If the user submitted the registration form (which is just a confirm button)
-            newRegistrationData = {
-                user : user,
-                event : event,
-            }
-            newRegistration = EventSingularRegistrations(newRegistrationData)
+            newRegistration = EventSingularRegistration(user = user, event = event)
             newRegistration.save()
             registration_done_message = u'You have been registered for this event.'
         else:
             # If the form has not been submitted, we have to render the form.
             # TODO: The template below should have a form which allows the user to choose whether he wants to register or not. TODO done
             return render_to_response('events/register_singular_event.html', locals(), context_instance=RequestContext(request))
-    if not registration_done_message:
+    if registration_done_message is None:
         # If registration_done_message exists, then the user just registered. Do not change this message here.
         # If it does not exist, the user registered earlier. Set the message.
         registration_done_message = u'You have already registered for this event.'
@@ -133,16 +131,17 @@ def register_team_event(request, event):
     userProfile = user.get_profile()
     teams = Team.objects.filter(event = event)
     try:
-        userTeamRegistration = teams.filter(members__contains = user)
+        userTeam = teams.get(members = user)
     except Team.DoesNotExist:
         # This means that the user is not a part of any registered team.
         # We must now execute the team registration logic.
         # To register for an event, the user must create a team.
         # If the user wants to join another team, the leader of that team must send the user a request.
         # Here we must redirect to the create team view.
-        return HttpResponseRedirect(settings.SITE_URL + 'teams/create/' + str(event.id) + '/')
+        return render_to_response('events/team_registration_required.html', locals(), context_instance=RequestContext(request))
+        #return HttpResponseRedirect(settings.SITE_URL + 'user/teams/create/' + str(event.id) + '/')
     # Else the user is already part of a team.
-    render_to_response('events/team_registration_done.html', locals(), context_instance=RequestContext(request))
+    return render_to_response('events/team_registration_done.html', locals(), context_instance=RequestContext(request))
 
 @login_required
 def register(request, event_id):
@@ -162,7 +161,7 @@ def register(request, event_id):
         return render_to_response('events/register_offline.html', locals(), context_instance=RequestContext(request))
         #TODO: This template should tell the user that the event cannot be registered for online and that the registration is only on site. TODO done
     if not event.begin_registration:
-        return render_to_response('events/registration_not_started.html', locals(), context_intstance=RequestContext(request))
+        return render_to_response('events/registration_not_started.html', locals(), context_instance=RequestContext(request))
         #TODO: This template should tell the user that the event registration is online but has not started yet. Stay tuned for updates. TODO done
     if not event.team_event:  # This means that the event is a singular event.
         response = register_singular_event(request, event)
