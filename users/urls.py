@@ -40,7 +40,7 @@ urlpatterns = patterns(  #    url(r'^reset/(?P[0-9A-Za-z]+)-(?P.+)/$', 'django.c
     )
     
 # URLs for teams
-urlpatterns += patterns(
+urlpatterns += patterns('',
     url(r'^teams/(?P<team_id>\d+)/$', team_home),
     url(r'^teams/create/(?P<event_id>\d+)/$', create_team),
     url(r'^teams/(?P<team_id>\d+)/add_member/$', add_member),
