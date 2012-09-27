@@ -1,5 +1,146 @@
 {% extends "base.html" %}
 {% block hash_handler %}
+<style>
+/* Dock */
+			#dock {
+				display: block;
+				margin: auto;
+				top: 0px;
+				width: 100%;
+				text-align: center;
+				overflow: hidden;
+			}
+
+			#dock ul {
+				margin: 0px -60px;
+				padding: 0px;
+				list-style: none;
+				height: 150px;
+				line-height: 150px;
+				text-align: center;
+				white-space: nowrap;
+				background: url("static/img/dock-middle.png") bottom left repeat-x;
+				-moz-border-radius-topright: 50px;
+				border-top-right-radius: 50px;
+			}
+
+			#dock ul:before,
+			#dock ul:after {
+				content: "";
+				color: transparent;
+				display: inline-block;
+				width: 0px;
+				margin-top: -60px;
+				vertical-align: bottom;
+			}
+
+			#dock ul:before {
+				padding-left: 60px;
+				margin-left: -60px;
+				background: url("static/img/dock-left.png") bottom left repeat-x;
+			} 
+
+			#dock ul:after {
+				padding-right: 60px;
+				margin-right: -60px;
+				background: url("static/img/dock-right.png") bottom right repeat-x;
+			}
+
+			/* Dock Icons */
+			#dock li {
+				display: inline-block;
+				margin: 0px 10px 0px 10px;
+				padding: 0px;
+				position: relative;
+				overflow: visible;
+			}
+
+			#dock li.seperator {
+				background: url("static/img/dock-seperator.png") bottom left no-repeat;
+				width: 20px;
+				height: 158px;
+				position: relative;
+				vertical-align: bottom;
+			}
+
+			#dock li a {
+				height: 153px;
+				width: 110px;
+				display: inline-block;
+				text-align: center;
+				position: relative;
+				vertical-align: bottom;
+				text-decoration: none;
+				color: black;
+				white-space: normal;
+				letter-spacing: normal;	
+				line-height: 1.3em;
+				text-align: center;
+				font-family: Arial;
+				margin-bottom: 5px;
+				overflow: visible;
+			}
+			
+			body.no_js #dock li a:hover {
+				width: 128px !important;
+			}
+
+			#dock li a span {
+				position: relative;
+				line-height: 1.3em;
+				display: none;
+				text-align: center;
+				font-weight: bold;
+				font-size: 80%;
+				padding: 4px 12px;
+				background-color: #EEE;
+				
+				opacity: 0.4;
+				-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+				
+				margin: 0px auto;
+				
+				top: -40px;
+				
+				border-radius: 10px;
+				-moz-border-radius: 10px;
+				-webkit-border-radius: 10px;
+			}
+
+			#dock li a:hover span {
+				display: inline-block;
+			}
+
+			#dock li a:hover span:after {
+				display: block;
+				height: 9px;
+				color: transparent;
+				background: transparent url("static/img/span.png") center top no-repeat;
+				position: absolute;
+				content: "";
+				text-align: center;
+				margin: 0px;
+				padding: 0px;
+				width: 100%;
+				margin-left: -16px;
+			}
+
+			#dock li a img {
+				height: auto;
+				width: 100%;
+				position: absolute;
+				left: 0px;
+				bottom: 10px;
+				text-align: center;
+				border: 0px none;
+				margin-bottom: 15px;
+				
+				box-reflect: below 1px gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(rgba(255,255,255,0.1)));
+				-webkit-box-reflect: below 1px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(rgba(255,255,255,0.1)));
+				-moz-box-reflect: below 1px -moz-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(rgba(255,255,255,0.1)));
+			}
+</style>
+<script src="static/scripts/dock.js"></script>
 <script type="text/javascript">
     $(function(){
         // Keep a mapping of url-to-container for caching purposes.
@@ -121,36 +262,20 @@
  <div id="footer">
     
     <div id="tabbox">
-    	<div id="tab1" class="tab">
-         
-        </div>
-     <div id="tab2" class="tab">
-            
-        </div>
-     <div id="tab3" class="tab">
-            
-        </div>
-     <div id="tab4" class="tab">
-            
-        </div>
-     <div id="tab5" class="tab">
-            
-        </div>
-     <div id="tab6" class="tab">
-            
-        </div>
-     <div id="tab7" class="tab">
-            
-        </div>
-     <div id="tab8" class="tab">
-            
-        </div>
-     <div id="tab9" class="tab">
-            
-        </div>
-      <div id="tab10" class="tab">
-            
-        </div>
+	<div id="dock">
+		<ul>
+			<li><a href="#aerofest" id="tab1"><img src="static/img/tab1.png" /></a></li><!--
+			--><li><a href="#coding" id="tab2"><img src="static/img/tab2.png" /></a></li><!--
+			--><li><a href="#designbuild" id="tab3"><img src="static/img/tab3.png" /></a></li><!--
+			--><li class="active"><a href="#chat" id="tab4"><span>Chat</span><img src="static/img/tab4.png" /></a></li><!--
+			--><li class="active"><a href="#music" id="tab5"><span>Music</span><img src="static/img/tab5.png" /></a></li><!--
+			--><li><a href="#photo" id="tab6"><span>Photo</span><img src="static/img/tab6.png" /></a></li><!--
+			--><li><a href="#text" id="tab7"><span>Text</span><img src="static/img/tab7.png" /></a></li><!--
+			--><li><a href="#folder?src=/apps/" id="tab8"><span>Applications</span><img src="static/img/tab8.png" /></a></li><!--			
+			--><li><a href="#folder?src=/pictures/" id="tab9"><span>Pictures</span><img src="static/img/tab9.png" /></a></li><!--
+			--><li><a href="#folder?src=/documents/" id="tab10"><span>Documents</span><img src="static/img/tab10.png" /></a></li>
+			</ul>
+	</div>
     </div>
     
     </div>
