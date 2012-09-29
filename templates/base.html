@@ -31,6 +31,10 @@
 <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/style.css"  />
 <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/stylemain.css"  />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script src="http://jqueryui.com/latest/ui/effects.core.js"></script>
+<script src="http://jqueryui.com/latest/ui/effects.fold.js"></script>
 <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/scriptmain.js" charset = "utf-8"></script>
 <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/scripts/hover.js" charset = "utf-8"></script>
 <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-tab.js" charset = "utf-8"></script>
@@ -146,10 +150,10 @@ _gaq.push(['_trackPageview']);
 		    <div id="topright" class="floatright">
     	 		<div id="icons" class="floatleft">
     	 		    <ul class="nav nav-pills">
-    	 		    	  <li><a href="{{site_url}}#" id="home"><p class="head_text">Home</p></a></li>
-    	 		        <li><a href="{{site_url}}#events" id="events"><p class="head_text">Events</p></a></li> 
+    	 		    	  <li><a href="{{site_url}}#" id="home" onclick="$('#trans').removeClass('bg1');"><p class="head_text">Home</p></a></li>
+    	 		        <li><a href="{{site_url}}#events" id="events" onclick="$('#trans').show('fold', {}, 500);"><p class="head_text">Events</p></a></li> 
                         <li><a href="{{site_url}}events/sampark/" id="events"><p class="head_text">Sampark</p></a></li>       					
-            			<li><a id="hospitality" href="{{site_url}}#hospi" onclick="$('#body').removeClass('bg1');"><p class="head_text">Hospitality</p></a></li>
+            			<li><a id="hospitality" href="{{site_url}}#hospi" onclick="$('#trans').removeClass('bg1');"><p class="head_text">Hospitality</p></a></li>
             			<li><a id="login" href="{{site_url}}user/register/" class="head_text"><p class="head_text">Register</p></a></li>
             			<li><a id="sampark" data-toggle="modal" href="#myModal"><p class="head_text">Contact us</p></a></li>
             			<!--<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>-->
@@ -170,7 +174,7 @@ _gaq.push(['_trackPageview']);
     		</div><br>            
 	</div>
 	<div id="body">
-
+        <div id="trans" style="width:100%;height:100%;">
 	      <div id="cont" class="menulist">
             <ul>
          		 <li><p class="head_text" onclick="window.location.href='{{site_url}}user/password_change/'">Change Password</p></li>
@@ -219,6 +223,7 @@ _gaq.push(['_trackPageview']);
         </div>
         <div onclick="window.open('http://www.youtube.com/iitmshaastra')" id="youtube" class="socialapp">
         </div>
+    </div>
     </div>
     </div>
    {% block footer %}{% endblock %}
