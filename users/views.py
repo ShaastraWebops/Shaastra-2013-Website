@@ -293,6 +293,14 @@ def team_home(request, team_id = None):
     if team is not None:
         add_member_form = AddMemberForm()
         change_leader_form = ChangeLeaderForm()
+        event = team.event
+        team_size = team.members.count()
+        if team_size > event.team_size_max:
+            team_size_message = 'big'
+        elif team_size < event.team_size_min:
+            team_size_message = 'small'
+        else:
+            team_size_message = 'correct'
         return render_to_response('users/teams/team_home.html', locals(), context_instance = RequestContext(request))
     raise Http404
 
@@ -304,7 +312,9 @@ def create_team(request, event_id = None):
     try:
         event = Event.objects.get(pk = int(event_id))
     except:
-        raise Http404
+        raise Http404('You have requested for an invalid event.')
+    if not event.begin_registration:
+        raise Http404('The registrations for this event have closed. New teams can no longer be registered.')
     form = CreateTeamForm(initial = {'event' : event.id, } )
     view = "Create"
     if request.method == 'POST':
@@ -346,6 +356,10 @@ def join_team(request):
 def add_member(request, team_id = None):
     team = get_authentic_team(request, team_id)
     if team is not None:
+        event = team.event
+        team_size = team.members.count()
+        if team_size == event.team_size_max:
+            raise Http404('Your team is already of the maximum permitted size. You cannot add more people to the team without removing someone.')
         add_member_form = AddMemberForm()
         change_leader_form = ChangeLeaderForm()
         if request.method == 'POST':

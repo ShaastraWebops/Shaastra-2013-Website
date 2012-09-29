@@ -33,7 +33,18 @@
 {% endblock %}
 
 {% block body %}
-
+    <p>{{team.name}} home</p>
+    <p>
+        {% ifequal team_size_message 'big' %}
+            Your team has too many members. The maximum number allowable is {{event.team_size_max}}.
+        {% else %}
+            {% ifequal team_size_message 'small' %}
+                Your team needs more members to participate. The minimum number required is {{event.team_size_min}}.
+            {% else %}
+                Your team is ready to participate in {{event.title}}.
+            {% endifequal %}
+        {% endifequal %}
+    </p>    
     <div id="list_of_members">
         <h3>Members:</h3>
         {% if team.leader == user %}
