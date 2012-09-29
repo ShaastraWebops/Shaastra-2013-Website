@@ -362,6 +362,14 @@ def add_member(request, team_id = None):
             raise Http404('Your team is already of the maximum permitted size. You cannot add more people to the team without removing someone.')
         add_member_form = AddMemberForm()
         change_leader_form = ChangeLeaderForm()
+
+        if team_size > event.team_size_max:
+            team_size_message = 'big'
+        elif team_size < event.team_size_min:
+            team_size_message = 'small'
+        else:
+            team_size_message = 'correct'
+
         if request.method == 'POST':
             user = request.user
             add_member_form = AddMemberForm(request.POST)
