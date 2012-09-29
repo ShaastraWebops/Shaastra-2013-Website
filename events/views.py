@@ -169,3 +169,32 @@ def register(request, event_id):
     else:  # The event is a team event.
         response = register_team_event(request, event)
         return response
+
+@login_required        
+def cancel_registration(request, event_id):
+    """
+    This view cancels a users registration for an event.
+    """
+    event_id = int(event_id)
+    user = request.user
+    try:
+        event = Event.objects.get(id = event_id)
+    except Event.DoesNotExist:
+        raise Http404('It seems like you the event you have requested for does not exist.')
+    if event.team_event:
+        # TODO: This template should tell the user how to deregister from a team event TODO done
+        return render_to_response('events/team_deregister.html', locals(), context_instance=RequestContext(request))
+    try:
+        user_registration = EventSingularRegistration.objects.filter(event=event).get(user=user)
+    except:
+        return HttP404('You are not registered for this event.')
+    
+    if request.method == 'POST':
+        # If the user submitted the registration cancellation form (which is just a confirm button)
+        user_registration.delete()
+        return render_to_response('events/deregistration_done.html', locals(), context_instance=RequestContext(request))
+    else:
+        # If the form has not been submitted, we have to render the form.
+        # TODO: The template below should have a form which allows the user to choose whether he wants to cancel registration or not. TODO done
+        return render_to_response('events/deregister_singular_event.html', locals(), context_instance=RequestContext(request))
+

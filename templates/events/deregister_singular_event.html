@@ -1,0 +1,14 @@
+{% extends "events/registration_base.html" %}
+
+{% block body %}
+
+    To deregister, click the button.
+    
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="De-Register">
+    </form>
+    
+    <a href = '{{site_url}}events/{{event.title}}/'> Cancel </a>
+    
+{% endblock %}
