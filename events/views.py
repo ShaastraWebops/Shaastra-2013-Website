@@ -187,7 +187,7 @@ def cancel_registration(request, event_id):
     try:
         user_registration = EventSingularRegistration.objects.filter(event=event).get(user=user)
     except:
-        return HttP404('You are not registered for this event.')
+        raise Http404('You are not registered for this event.')
     
     if request.method == 'POST':
         # If the user submitted the registration cancellation form (which is just a confirm button)
