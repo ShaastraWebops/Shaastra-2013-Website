@@ -51,7 +51,7 @@
             <p>Click to remove a member (you can't remove yourself this way)</p>
         {% endif %}
         <table>
-            <tr><td>You</td></tr>
+            <tr><td>You ({{request.user.username}})</td></tr>
             {% for member in team.members.all %}
                 {% if member != user %}
                     {% if team.leader == user %}
