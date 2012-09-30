@@ -151,17 +151,16 @@ _gaq.push(['_trackPageview']);
     	 		        <li><a href="{{site_url}}#events" id="events"><p class="head_text">Events</p></a></li> 
                         <li><a href="{{site_url}}events/sampark/" id="events"><p class="head_text">Sampark</p></a></li>       					
             			<li><a id="hospitality" href="{{site_url}}#hospi"><p class="head_text">Hospitality</p></a></li>
-            			<li><a id="login" href="{{site_url}}user/register/" class="head_text"><p class="head_text">Register</p></a></li>
-            			<li><a id="sampark" data-toggle="modal" href="#myModal"><p class="head_text">Contact us</p></a></li>
             			<!--<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>-->
             			<!--<li><a id="forums" href="http://forums.shaastra.org" target="_blank"><p class="head_text">Forums</p></a></li>-->
-                        <!--        {% if user.is_authenticated %}
-                                    <li><a id="set"><p class="head_text">Settings</p></a></li>
+                                {% if user.is_authenticated %}
+                            <!--        <li><a id="set"><p class="head_text">Settings</p></a></li>-->
                                 		<li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
                                 {% else %}
                                     <li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li> 
-                                     
-                                {% endif %} -->
+                                     <li><a id="login" href="{{site_url}}user/register/" class="head_text"><p class="head_text">Register</p></a></li>
+                                {% endif %}
+                      <li><a id="sampark" data-toggle="modal" href="#myModal"><p class="head_text">Contact us</p></a></li>
             	 </ul>
             </div>
         		<div id="twologos" class="floatright">

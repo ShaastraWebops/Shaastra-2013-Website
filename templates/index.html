@@ -194,6 +194,9 @@
                     $('.bbq-loading').hide();
                     $('#generalContents').show();
                 });
+		if(url=='hospi'){
+                    $("#body").removeClass('bg1');
+                }
                 if(url=='events') {
                     $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({left:'0px'});
                     $('#body').addClass('bg1'); 
