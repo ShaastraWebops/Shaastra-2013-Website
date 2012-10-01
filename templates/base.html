@@ -190,7 +190,18 @@ _gaq.push(['_trackPageview']);
                     <div class="container-fluid" style="margin-top:15px;margin-right:50px;width:90%;">
                     <div class="row-fluid">
 			          <div class="floatleft span6" id="col1">
-                      <object id="midblackvid" style="height:350px; width:100%;position:relative;"><iframe width="100%" height="350" src="http://www.youtube.com/embed/JXIQ2hToR7A?rel=0&wmode=opaque" frameborder="0" allowfullscreen></iframe></object>
+                      <!--<object id="midblackvid" style="height:350px; width:100%;position:relative;"><iframe width="100%" height="350" src="http://www.youtube.com/embed/JXIQ2hToR7A?rel=0&wmode=opaque" frameborder="0" allowfullscreen></iframe></object>-->
+                      <div id="updates">
+			<div id="textbox2">
+          <h3>Announcements</h3>
+
+      {% for a in announcements %}
+	      <p style="font-size:18px;"><b>{{a.event}}</b><br>
+              <p style="font-size:16px;"><b>{{a.announcement.subject}}</b> - {{a.announcement.description}}<br></p>
+      {% endfor %}
+	</div>
+  </div>
+
                    </div>
 			          <div class="floatright span6" id="col2"  style="text-align:justify ! important;">
 			          		<img src="{{site_url}}static/img/slogo2.png"><br/>
