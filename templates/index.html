@@ -112,7 +112,7 @@
         </ul>
         <ul id="menus{{forloop.counter}}">
             {% for event in category %}
-     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title|slugify}}';$('#body').removeClass('bg1');">{{event.title}}</li>
+     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title|slugify}}'">{{event.title}}</li>
             {% endfor %}
 	    </ul>
         </div>
@@ -124,18 +124,6 @@
  <div id="footer">
     
     <div id="tabbox">
-    <!--<ul>
-     <li><a id="tab1" class="tab"></a></li>
-     <li><a id="tab2" class="tab"></a></li>
-     <li><a id="tab3" class="tab"></a></li>
-     <li><a id="tab4" class="tab"></a></li>
-     <li><a id="tab5" class="tab"></a></li>
-     <li><a id="tab6" class="tab"></a></li>
-     <li><a id="tab7" class="tab"></a></li>
-     <li><a id="tab8" class="tab"></a></li>
-     <li><a id="tab9" class="tab"></a></li>
-     <li><a id="tab10" class="tab"></a></li>
-    </ul>-->
     	<div id="tab1" class="tab">
          
         </div>
