@@ -1,15 +1,7 @@
 function college_reg()
 {
     data=$("#reg input,#reg select").serializeObject();
-    reg_html = document.getElementById("reg").innerHTML
-    var loading_text = new Array('P','r','o','c','e','s','s','i','n','g')
-    for (i=0; i<10; i=i+1) {
-        if (reg_html[i] != loading_text[i]) {
-            $("#reg").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
-            break;
-        }
-    }
-
+    $("#reg").prepend("Processing please wait..<br><img src='/static/img/loading.gif'>");
     Dajaxice.users.college_register(Dajax.process,{'form':data});
 }
 function reg_done(data)
