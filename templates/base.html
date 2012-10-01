@@ -187,11 +187,17 @@ _gaq.push(['_trackPageview']);
                 <!-- This content will be shown if no path is specified in the URL fragment. -->
                 <div class="bbq-default">
                    <div id="new" onclick="window.location.href='{{site_url}}#events'"><b><p style="color:white;size=60px;"><marquee>Problem Statments have been released for Wright Design, Top Gun, Contraptions, Robowars, Robo Lagori, Modern Warfare, Fire n Ice, Online Events, Desmod, SCDC, Robo-Oceana</marquee></p></b></div>
+                   {% for a in announcements %}
+		    <p><b>{{a.event}} :</b>
+		    <p>{{a.announcement.description}}<br></p>
+		    {% endfor %}</marquee>
+</b></div>
+>>>>>>> e2b12fcf8f49e93d5c8d925e0bf18f8f115fd031
                     <div class="container-fluid" style="margin-top:15px;margin-right:50px;width:90%;">
                     <div class="row-fluid">
 			          <div class="floatleft span6" id="col1">
                       <object id="midblackvid" style="height:350px; width:100%;position:relative;"><iframe width="100%" height="350" src="http://www.youtube.com/embed/JXIQ2hToR7A?rel=0&wmode=opaque" frameborder="0" allowfullscreen></iframe></object>
-                   </div>
+	                   </div>
 			          <div class="floatright span6" id="col2"  style="text-align:justify ! important;">
 			          		<img src="{{site_url}}static/img/slogo2.png"><br/>
 			          		<b>Shaastra will now be held between 5th and 8th January</b>
