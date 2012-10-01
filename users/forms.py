@@ -133,7 +133,7 @@ class AddUserForm(BaseUserForm):
         forms.EmailField()
     password = forms.CharField(min_length=6, max_length=30,
                                widget=forms.PasswordInput,
-                               help_text='Enter a password that you can remember'
+                               help_text='Passwords need to be atleast 6 characters long.'
                                )
     password_again = forms.CharField(max_length=30,
             widget=forms.PasswordInput,
@@ -198,6 +198,7 @@ class AddUserForm(BaseUserForm):
 
 class EditUserForm(BaseUserForm):
     branch = chosenforms.ChosenChoiceField(overlay="You major in...", choices = BRANCH_CHOICES)
+    college = chosenforms.ChosenModelChoiceField(overlay="You study at...", queryset=College.objects.all())
     class Meta(BaseUserForm.Meta):
 
         fields = (
