@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template.context import Context, RequestContext
 from django.shortcuts import render_to_response
 from django.conf import settings
-from events.models import Event, EVENT_CATEGORIES, Tag
+from events.models import Event, EVENT_CATEGORIES, Tag, Update
 from django.template.defaultfilters import slugify
 
 def home(request):
@@ -24,7 +24,16 @@ def home(request):
         row.append(temp)
         result_list.append(row)
     #End of search code
-    
+    # adding code for announcements on main page
+    events = Event.objects.all()
+    announcements = []
+    for e in events:
+      try:
+	data = {'event':e,'announcement':Update.objects.get(event = e, category = "Announcement"),}
+	announcements.append(data)
+      except:
+	pass
+    # end announcements code
     if request.user.is_authenticated():
         if request.user.is_superuser:
             return HttpResponseRedirect(settings.SITE_URL + 'admin/')
