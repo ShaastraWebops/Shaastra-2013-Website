@@ -3,10 +3,9 @@
 {% block body %}
 
     To register, click the button.
-    
     <form action="" method="POST">
         {% csrf_token %}
-        <input type="submit" value="Register">
+        <input type="submit" class="btn btn-large btn-info" value="Register">
     </form>
     
     <a href = '{{site_url}}events/{{event.title}}/'> Cancel </a>
