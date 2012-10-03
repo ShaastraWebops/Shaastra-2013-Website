@@ -22,6 +22,7 @@ EVENT_CATEGORIES = (
     ('Spotlight', 'Spotlight'),
     ('Workshops', 'Workshops'),
     ('Exhibitions', 'Exhibitions'),
+    ('Associated Events', 'Associated Events'),    
     ('Sampark', 'Sampark'),
     )
 

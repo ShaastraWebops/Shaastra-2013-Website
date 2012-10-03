@@ -253,6 +253,9 @@ def activate(request, a_key=None):
             else:
                 user = user_profile.user
                 user.is_active = True
+                x = (100000 + user.id) % 10000
+                user_profile.shaastra_id = "SHA13"+ x
+                user_profile.save()
                 user.save()
                 request.session['registered'] = True
                 activated = True
