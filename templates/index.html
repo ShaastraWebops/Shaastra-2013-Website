@@ -112,7 +112,7 @@
         </ul>
         <ul id="menus{{forloop.counter}}">
             {% for event in category %}
-     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title|slugify}}';$('#body').removeClass('bg1');">{{event.title}}</li>
+     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title|slugify}}';$('#body').removeClass('bg1');$('#content').addClass('back');">{{event.title}}</li>
             {% endfor %}
 	    </ul>
         </div>
