@@ -2,11 +2,11 @@
 
 {% block body %}
 
-    To deregister, click the button.
+<span id="msg">    To deregister, click the button. </span>
     
     <form action="" method="POST">
         {% csrf_token %}
-        <input type="submit" value="De-Register">
+        <input type="submit" class="btn btn-large btn-info" value="De-Register">
     </form>
     
     <a href = '{{site_url}}events/{{event.title}}/'> Cancel </a>
