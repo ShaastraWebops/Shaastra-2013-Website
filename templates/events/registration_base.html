@@ -4,10 +4,12 @@
 <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap.css">
 </head>
 <body>
+<div id = "container">
 {% block body %}
 {% endblock %}
+</div>
 </body>
-<style>gi
+<style>
 body
     {
     width:100%;
@@ -19,5 +21,14 @@ body
 	 font-family:'Century Gothic',serif ! important;
 	letter-spacing:0.75px ! important;
     }
+#container
+    {
+    width : 70%;
+    margin:0 auto;
+    height: 100%;
+    overflow:hidden;
+	left:10%;
+	top:10%;
+    }  
 </style>
 </html>
