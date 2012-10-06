@@ -49,18 +49,8 @@ class SubEventAdd(SubEventAddEditDeleteABC):
                 # Event was a hidden field, how can it get updated? Some malicious posting has happened. Raise error.
                 raise Http404('How did the event get updated? Malicious POSTing huh?! You shouldn\'t be allowed to continue.')
             
-            newSubEvent = form.save(commit=False)
-            newSubEvent.save()
-            form.save_m2m()
-            
-            '''
-            newSubEvent = SubEvent()
             self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
-            '''
             return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
-            #TODO(Anant): Replace the above redirect with the one below. 
-            #return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/%s/EditSubEvent/%s/' % (newSubEvent.event.title, newSubEvent.title))
-            # Redirecting to the edit sub-event page for the newly registered sub-event. This is to allow storing of other details.
         
         form_mode = 'add'  # For re-using the template (only difference: add/edit button)
         return render_to_response ('dtvpicker/SubeventPages/addEditSubEvent.html', locals(), context_instance = RequestContext(request))
@@ -110,11 +100,7 @@ class SubEventEdit(SubEventAddEditDeleteABC):
                 # Event was a hidden field, how can it get updated? Some malicious posting has happened. Raise error.
                 raise Http404('How did the event get updated? Malicious POSTing huh?!')
             
-            newSubEvent = form.save(commit=False)
-            newSubEvent.save()
-            form.save_m2m()
-            
-            #self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
+            self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
             return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
 
         form_mode = 'edit'  # For re-using the template (only difference: add/edit button)

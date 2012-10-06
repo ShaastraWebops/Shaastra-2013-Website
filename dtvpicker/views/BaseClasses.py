@@ -141,14 +141,8 @@ class SubEventAddEditDeleteABC(CoordProtectedView):
         eventToUpdate.save()
     
     def updateAndSaveSubEvent(self, subEventObject, newSubEventData):
-        try:
-            subEventObject.start_date_and_time = newSubEventData['start_date_and_time']
-            subEventObject.end_date_and_time = newSubEventData['end_date_and_time']
-            subEventObject.venue = newSubEventData['venue']  #TODO(Anant): Will this work?
-        except KeyError:
-            subEventObject = SubEvent()
-        subEventObject.title = newSubEventData['title']
-        subEventObject.event = newSubEventData['event']
-        subEventObject.save()
+        newSubEvent = form.save(commit=False)
+        newSubEvent.save()
+        form.save_m2m()
         self.updateEventLockStatus(subEventObject.event)
 
