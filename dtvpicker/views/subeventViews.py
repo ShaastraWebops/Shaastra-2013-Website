@@ -49,7 +49,7 @@ class SubEventAdd(SubEventAddEditDeleteABC):
                 # Event was a hidden field, how can it get updated? Some malicious posting has happened. Raise error.
                 raise Http404('How did the event get updated? Malicious POSTing huh?! You shouldn\'t be allowed to continue.')
             
-            self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
+            self.updateAndSaveSubEvent(form)
             return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
         
         form_mode = 'add'  # For re-using the template (only difference: add/edit button)
@@ -100,7 +100,7 @@ class SubEventEdit(SubEventAddEditDeleteABC):
                 # Event was a hidden field, how can it get updated? Some malicious posting has happened. Raise error.
                 raise Http404('How did the event get updated? Malicious POSTing huh?!')
             
-            self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
+            self.updateAndSaveSubEvent(form)
             return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
 
         form_mode = 'edit'  # For re-using the template (only difference: add/edit button)
