@@ -9,7 +9,7 @@ from django.conf import settings
 
 from dtvpicker.models import SubEvent
 from events.models import Event
-from dtvpicker.forms import AddSubEventForm, UpdateSubEventDetailsForm
+from dtvpicker.forms import SubEventForm
 from django.contrib.sitemaps import ping_google
 
 class SubEventAdd(SubEventAddEditDeleteABC):
@@ -28,7 +28,7 @@ class SubEventAdd(SubEventAddEditDeleteABC):
         
         eventRequested = self.getEvent(kwargs['event'])
         
-        form = AddSubEventForm(initial = {'event' : '%d' % eventRequested.id, })
+        form = SubEventForm(initial = {'event' : '%d' % eventRequested.id, })
         form_mode = 'add'  # For re-using the template (only difference: add/edit button)
         return render_to_response ('dtvpicker/SubeventPages/addEditSubEvent.html', locals(), context_instance = RequestContext(request))
     
@@ -40,7 +40,7 @@ class SubEventAdd(SubEventAddEditDeleteABC):
         
         formDataReceived = request.POST.copy()
         
-        form = AddSubEventForm(formDataReceived)
+        form = SubEventForm(formDataReceived)
         
         if form.is_valid():
             newSubEventData = form.cleaned_data
@@ -48,9 +48,15 @@ class SubEventAdd(SubEventAddEditDeleteABC):
             if newSubEventData['event'] != eventRequested:
                 # Event was a hidden field, how can it get updated? Some malicious posting has happened. Raise error.
                 raise Http404('How did the event get updated? Malicious POSTing huh?! You shouldn\'t be allowed to continue.')
-
+            
+            newSubEvent = form.save(commit=False)
+            newSubEvent.save()
+            form.save_m2m()
+            
+            '''
             newSubEvent = SubEvent()
             self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
+            '''
             return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
             #TODO(Anant): Replace the above redirect with the one below. 
             #return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/%s/EditSubEvent/%s/' % (newSubEvent.event.title, newSubEvent.title))
@@ -71,12 +77,11 @@ class SubEventEdit(SubEventAddEditDeleteABC):
 
         eventRequested = self.getEvent(kwargs['event'])
         subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
-
-        form = UpdateSubEventDetailsForm(initial = {'title'                  : subeventRequested.title,
-                                                    'start_date_and_time'    : subeventRequested.start_date_and_time,
-                                                    'end_date_and_time'      : subeventRequested.end_date_and_time,
-                                                    'venue'                  : subeventRequested.venue,
-                                                    'event'                  : eventRequested, })
+        form = SubEventForm(initial = {'title'                  : subeventRequested.title,
+                                       'start_date_and_time'    : subeventRequested.start_date_and_time,
+                                       'end_date_and_time'      : subeventRequested.end_date_and_time,
+                                       'venue'                  : subeventRequested.venue.all(),
+                                       'event'                  : eventRequested, })
         form_mode = 'edit'  # For re-using the template (only difference: add/edit button)
         return render_to_response ('dtvpicker/SubeventPages/addEditSubEvent.html', locals(), context_instance = RequestContext(request))
     
@@ -88,7 +93,7 @@ class SubEventEdit(SubEventAddEditDeleteABC):
 
         formDataReceived = request.POST.copy()
 
-        form = UpdateSubEventDetailsForm(formDataReceived, instance = self.getSubEvent(kwargs['subevent'], kwargs['event']))
+        form = SubEventForm(formDataReceived, instance = self.getSubEvent(kwargs['subevent'], kwargs['event']))
                 # Here I have not set the instance as subeventRequested 
                 # (although I use it for almost everything else)
                 # but rather I have called the getSubEvent method again
