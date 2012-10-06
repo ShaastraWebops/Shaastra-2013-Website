@@ -29,7 +29,7 @@
                     <td> {{ subEvent.start_date_and_time|date:"P"|upper }} </td> {# Displays time as 11:15 A.M. or 11 A.M. or NOON #}
                     <td> {{ subEvent.end_date_and_time|date:"D, d M Y" }} </td> 
                     <td> {{ subEvent.end_date_and_time|date:"P"|upper }} </td> {# If NOON is creating trouble, change back to "f A" #}
-                    <td> {{ subEvent.venue }} </td>
+                    <td> {{ subEvent.venue.all }} </td>
                     <td> {{ subEvent.last_modified }} </td>
                     {% block subEventActions %} {% endblock %}
                 </tr>

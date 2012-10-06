@@ -90,7 +90,7 @@ class SubEventEdit(SubEventAddEditDeleteABC):
             return HttpResponseForbidden()
 
         eventRequested = self.getEvent(kwargs['event'])
-
+        subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
         formDataReceived = request.POST.copy()
 
         form = SubEventForm(formDataReceived, instance = self.getSubEvent(kwargs['subevent'], kwargs['event']))

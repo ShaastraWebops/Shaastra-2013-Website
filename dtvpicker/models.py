@@ -109,7 +109,7 @@ class SubEvent(models.Model):
 
         # The sub-event's title must be unique under its event.
         if self.title:
-            # Ensures that the title is valid
+            # Ensures that the title is present
             subEventList = SubEvent.objects.filter(event = self.event)
             if self.id:
                 subEventList = subEventList.exclude(id = self.id)
@@ -130,7 +130,8 @@ class SubEvent(models.Model):
             
             # The venues chosen must be in the same block
             if self.venue:
-                blockList = [v.block for v in self.venue]
+                blockList = [v.block for v in self.venue.all()]
+                assert False
                 blockList = list(set(blockList))  # Converting the blockList to a set removes the duplicates. Then convert it back to a list.
                 if len(blockList) > 1:  # If there is more than one block now, then they are distinct and this is an error.
                     errors.append(u'You have selected venues from more than one block. Are you sure you want to have venues that far apart?')
@@ -148,7 +149,7 @@ class SubEvent(models.Model):
                     
                 # The DTV of the sub-event must not clash with any other sub-event's DTV.
                 if self.venue:
-                    # Ensures that event is valid
+                    # Ensures that venue is present
                     # Already checked validity of start and end dates and times
                     subEventDTVClashErrorMsgs = self.checkSubEventDTVClash(self.venue, self.start_date_and_time, self.end_date_and_time)
                     if subEventDTVClashErrorMsgs is not None:
