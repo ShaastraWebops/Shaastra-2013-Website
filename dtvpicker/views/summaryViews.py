@@ -17,7 +17,7 @@ def dtvSummaryHandler(request):
     """
     This is the handler for the DTV Summary.
     If a Coord logs in, it redirects him to the By Event Page.
-    If a Core logs in, and all the events are unlocked, it gives three options to see the DTV Summary by Event / Venue / Date.
+    If a Core logs in, and all the events are locked, it gives three options to see the DTV Summary by Event / Venue / Date.
     If all events are not locked, the Core is redirected to the By Event Page.
     """
     try:
