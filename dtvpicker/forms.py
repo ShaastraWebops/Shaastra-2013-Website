@@ -10,8 +10,6 @@ class SubEventForm(ModelForm):
             'event' : forms.HiddenInput(),  # The event field should be populated automatically depending on which coord requests the form.
         }
         
-        
-        
     def checkSubEventDTVClash(self, venuesChosenList, startChosen, endChosen):
         """
         Checks if the sub-event submitted clashes with any other sub-event (under any event) in the database.
