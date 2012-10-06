@@ -110,8 +110,11 @@ class SubEventEdit(SubEventAddEditDeleteABC):
                 # Event was a hidden field, how can it get updated? Some malicious posting has happened. Raise error.
                 raise Http404('How did the event get updated? Malicious POSTing huh?!')
             
-            newSubEvent = subeventRequested  # We want to update this SubEvent instance
-            self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
+            newSubEvent = form.save(commit=False)
+            newSubEvent.save()
+            form.save_m2m()
+            
+            #self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
             return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
 
         form_mode = 'edit'  # For re-using the template (only difference: add/edit button)
