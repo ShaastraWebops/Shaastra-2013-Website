@@ -48,12 +48,12 @@
     </p>    
 </div>
     <div id="list_of_members">
-        <h3>Members:</h3>
+        <span id="msg">Members:</span>
         {% if team.leader == user %}
-            <p>Click to remove a member (you can't remove yourself this way)</p>
+            <p id="msg">Click to remove a member (you can't remove yourself this way)</p>
         {% endif %}
         <table>
-            <tr><td>You ({{request.user.username}})</td></tr>
+            <tr><td><span id="msg">You ({{request.user.username}})</span></td></tr>
             {% for member in team.members.all %}
                 {% if member != user %}
                     {% if team.leader == user %}
@@ -67,7 +67,7 @@
                         <tr>
                             <td>
                                 <div id="member_username_div">
-                                    {{ member.username }}
+                                    <span id="msg">{{ member.username }}</span>
                                 </div>
                             </td>
 <!--                            </a>   -->
@@ -89,7 +89,7 @@
                         <tr>
                             <td>
                                 <div id="member_username_div">
-                                    {{ member.username }}
+                                    <span id="msg">{{ member.username }}</span>
                                 </div>
                             </td>
                         </tr>
@@ -103,11 +103,11 @@
     
     {% if team.leader == user %}
         <div id="add_member_form">
-            <p><h3>Add a member:</h3></a>
+            <p><span id="msg">Add a member:</span></a>
             <form name="add_member" action="{{ site_url }}user/teams/{{ team.id }}/add_member/" method="POST">
                 {% csrf_token %}
                 {{ add_member_form.member.errors }}
-                <label for="id_member">Username:</label>
+                <label for="id_member"><span id="msg">Username:</span></label>
                 {{ add_member_form.member }} 
                 <input type="hidden" name="team_id" value="{{ team.id }}" />
                 <p>

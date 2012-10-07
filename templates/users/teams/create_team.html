@@ -3,11 +3,12 @@
 {% block body %}
 
     <div id="create_team_form">
-        <p>Create a team to participate in {{ event.title }}:</p>
+        <p id="msg">Create a team to participate in {{ event.title }}:</p>
         <form action="" method="POST">
             {% csrf_token %}
-            <table>
+            <table><span id="msg">
                 {{ form.as_table }}
+			</span>
                 <tr><td>
                     <div class="button2">
                         <a href="#">
