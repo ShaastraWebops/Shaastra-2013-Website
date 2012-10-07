@@ -107,7 +107,7 @@
             <form name="add_member" action="{{ site_url }}user/teams/{{ team.id }}/add_member/" method="POST">
                 {% csrf_token %}
                 {{ add_member_form.member.errors }}
-                <label for="id_member"><span id="msg">Username:</span></label>
+                <label for="id_member"><span class="floatleft" id="msg">Username:</span></label>
                 {{ add_member_form.member }} 
                 <input type="hidden" name="team_id" value="{{ team.id }}" />
                 <p>
@@ -138,14 +138,14 @@
         <div id="change_leader_form">
         <h3>Change the team leader</h3>
             <form action="{{ site_url }}user/teams/{{ team.id }}/change_leader/" method="POST">
-                {% csrf_token %}
-                {{ change_leader_form.new_leader.errors }}
-                <label for="id_new_leader">Pass on the leadership to:</label>
+              <span id="msg">  {% csrf_token %}
+                {{ change_leader_form.new_leader.errors }}</span>
+                <label for="id_new_leader"><span id="msg" class="floatleft">Pass on the leadership to:</span></label>
                 {{ change_leader_form.new_leader }}
                 <input type="hidden" name="team_id" class="btn btn-large btn-info" value="{{ team.id }}">
                 <div class="button2">
                     <a href="#">
-                        <input type="submit" value="Change Leader" />
+                        <input type="submit" class="btn btn-large btn-info" value="Change Leader" />
                     </a>
                     <span></span>
                 </div>
