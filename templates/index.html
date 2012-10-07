@@ -17,7 +17,7 @@
             // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
             var url = $.param.fragment();
             $( '.bbq-item,.bbq-default,#generalContents' ).hide();
-            if(!url) {
+            if(!url || url=='_=_') {
                 $('.bbq-default').show();
                 $('#tabbox').css('visibility','hidden');
                 $('#body').removeClass('bg1');
