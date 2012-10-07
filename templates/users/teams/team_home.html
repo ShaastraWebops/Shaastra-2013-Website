@@ -33,6 +33,7 @@
 {% endblock %}
 
 {% block body %}
+<div id="msg">
     <p>{{team.name}} home</p>
     <p>
         {% ifequal team_size_message 'big' %}
@@ -45,6 +46,7 @@
             {% endifequal %}
         {% endifequal %}
     </p>    
+</div>
     <div id="list_of_members">
         <h3>Members:</h3>
         {% if team.leader == user %}
@@ -76,7 +78,7 @@
                                     <input type="hidden" name="team_id" value="{{ team.id }}" />
                                     <div class="button2">
                                         <a href="#">
-                                            <input type="submit" value="Remove" />
+                                            <input type="submit" class="btn btn-large btn-info" value="Remove" />
                                         </a>
                                         <span></span>
                                      </div>
@@ -111,7 +113,7 @@
                 <p>
                     <div class="button2">
                         <a href="#">
-                            <input type="submit" value="Add" />
+                            <input type="submit" class="btn btn-large btn-info" value="Add" />
                         </a>
                         <span></span>
                     </div>
@@ -127,7 +129,7 @@
         </script>        
         <form name="dropout" action="{{ site_url }}user/teams/{{ team.id }}/drop_out/" method="POST">
             {% csrf_token %}
-            <input type="hidden" name="team_id" value="{{ team.id }}" />
+            <input type="hidden" name="team_id" class="btn btn-large btn-info" value="{{ team.id }}" />
         </form>
         <a href="javascript:submit_dropout_form()">Leave this team</a><br /><br />
     {% endif %}
@@ -140,7 +142,7 @@
                 {{ change_leader_form.new_leader.errors }}
                 <label for="id_new_leader">Pass on the leadership to:</label>
                 {{ change_leader_form.new_leader }}
-                <input type="hidden" name="team_id" value="{{ team.id }}">
+                <input type="hidden" name="team_id" class="btn btn-large btn-info" value="{{ team.id }}">
                 <div class="button2">
                     <a href="#">
                         <input type="submit" value="Change Leader" />

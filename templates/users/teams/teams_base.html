@@ -5,10 +5,13 @@
 $(document).ready(function(){$('#container').center();});
 $(window).resize(function(){$('#container').center();});
 </script>
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap.css">
 </head>
 <body>
+<div id="container">
 {% block body %}
 {% endblock %}
+</div>
 </body>
 
 <style>
@@ -30,6 +33,18 @@ body
     height: 100%;
     overflow:hidden;
     }  
+#msg{
+   font-family: "century gothic";
+	letter-spacing: 1px;
+	font-size:16px;
+	color:#fff;	
+	margin-left:0px;
+	display:block;	
+	}
+a,a:link,a:active{
+   text-decoration:none;}
+
+
 </style>
 
 </html>
