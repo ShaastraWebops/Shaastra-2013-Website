@@ -136,7 +136,7 @@
 
     {% if team.leader == user %}
         <div id="change_leader_form">
-        <h3>Change the team leader</h3>
+        <h3 id="msg">Change the team leader</h3>
             <form action="{{ site_url }}user/teams/{{ team.id }}/change_leader/" method="POST">
               <span id="msg">  {% csrf_token %}
                 {{ change_leader_form.new_leader.errors }}</span>
