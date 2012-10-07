@@ -134,7 +134,7 @@ def register_post(request):
                        'noreply@shaastra.org', [new_user.email],
                        fail_silently=False)
             request.session['registered_user'] = True
-            request.session['msg']="A mail has been sent to the mail id you provided. Please activate your account within 48 hours."
+            request.session['msg']="A mail has been sent to the mail id you provided. Please activate your account within 48 hours. Check your spam folder if you do not receive the mail in your inbox."
             return HttpResponseRedirect(settings.SITE_URL+'user/login')
     else:
         captcha_response = response.error_code
