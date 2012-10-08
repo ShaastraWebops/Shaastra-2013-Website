@@ -35,7 +35,7 @@ def events(request, event_name):
     tab_set = event.tab_set.all()
     return render_to_response('events/events.html', locals(), context_instance=RequestContext(request))
 
-
+'''
 def tabs(request, event_name, tab_name):
     event_name = event_name.replace('-', ' ')
     tab_name = tab_name.replace('-', ' ')
@@ -48,7 +48,7 @@ def tabs(request, event_name, tab_name):
     tab = tab_set.get(title=tab_name)
     file_set = tab.tabfile_set.all()
     return render_to_response('events/tabs.html', locals(), context_instance=RequestContext(request))
-
+'''
 def sampark(request):
 #    if path:
 #        assert False
