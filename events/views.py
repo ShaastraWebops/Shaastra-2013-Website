@@ -35,8 +35,6 @@ def events(request, event_name):
     tab_set = event.tab_set.all()
     files_set = [tab.tabfile_set.all() for tab in tab_set]
     tabs = zip(tab_set,files_set)
-    t = tabs[0]
-    f = tabs[1]
     #assert False
     return render_to_response('events/events.html', locals(), context_instance=RequestContext(request))
 

@@ -105,7 +105,7 @@ class TabFileSubmit(BaseView):
         tab_id = request.META['HTTP_X_TAB_ID']
 
         tab = Tab.objects.get(id=tab_id)
-        direc = os.path.join('/home/mani/webops/events/static',
+        direc = os.path.join('/home/shaastra/public_html/2013/media',
                              'events', str(tab.event.id),
                              tab._meta.object_name, str(tab.id))
 
@@ -121,7 +121,7 @@ class TabFileSubmit(BaseView):
 
         if a[1]:
             a[0].url = os.path.join(
-                '/static',
+                '/2013/media',
                 'events',
                 str(tab.event.id),
                 tab._meta.object_name,
