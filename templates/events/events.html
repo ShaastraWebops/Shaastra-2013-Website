@@ -14,6 +14,7 @@
     <div id="textbox">
     {% for tab in tabs %}
       <div class="tabtext" style="color:#FFF;">
+      <div class="wrapper">
       <!-- Tabs -->
       {{tab.0.text|safe}}
       {% if tab.1 %}
@@ -26,12 +27,8 @@
 	</ul>
       {% endif %}
       </div>
-    {% endfor %}
-    </div>
-    <div id="q_detail"></div>
-    <div id="gallery" class="floatright">
-      <div id="picture"><img src="{{event.events_logo}}" />
       </div>
+    {% endfor %}
     </div>
   </div>
   <div id="updates">
@@ -77,8 +74,11 @@ function openEvent(){
   $(".bbq-current .tabtext:first").show();
   $(".bbq-current .eventtab").removeClass('on');
   $(".bbq-current .eventtab:first").addClass('on');
-  var height=$(".tabtext").height();
-  if(height>400){
-                  $(".tabtext").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
+  $(".bbq-current .tabtext").each(function(index){
+    var height = $(this).children(".wrapper").height();
+    if(height>300){
+      $(this).jScrollPane({showArrows: true,verticalScroll: true});
+    }
+  });
 }
 </script>
