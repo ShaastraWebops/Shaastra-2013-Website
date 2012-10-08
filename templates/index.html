@@ -40,12 +40,14 @@
 	}
 	return;
       }
-      
+      $(".bbq-item").removeClass("bbq-current");
       if(cache[url]) {
 	cache[url].show();
+	cache[url].addClass("bbq-current");
+	openEvent();
 	$('.bbq-loading').hide();
       } else {
-	cache[url] = $( '<div class="bbq-item"></div>' ).appendTo( '.bbq-content' );
+	cache[url] = $( '<div class="bbq-item bbq-current"></div>' ).appendTo( '.bbq-content' );
 
 	// Load external content via AJAX. Note that in order to keep this
 	// example streamlined, only the content in .infobox is shown. You'll
@@ -58,6 +60,14 @@
     })
     $(window).trigger('hashchange');
   });
+  /*$(document).ready(function(){
+    $('.eventtab').click(function(){
+      $('.eventtab').removeClass('on');
+      $(this).addClass('on');
+      $(".bbq-current .tabtext").hide();
+      $(".bbq-current .tabtext ."+$(this).attr('value')+")").show();
+    });
+  });*/
 </script>
 {% endblock %}
 {% block functions %}{% endblock %}
