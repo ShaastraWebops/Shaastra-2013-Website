@@ -1,73 +1,65 @@
 {% extends "base.html" %}
 {% block hash_handler %}
 <script type="text/javascript">
-    $(function(){
-        // Keep a mapping of url-to-container for caching purposes.
-        var cache = {
-            // If url is '' (no fragment), display this div's content.
-            '': $('.bbq-default')
-        };
+  $(function(){
+    // Keep a mapping of url-to-container for caching purposes.
+    var cache = {
+      // If url is '' (no fragment), display this div's content.
+      '': $('.bbq-default')
+    };
+    // Bind an event to window.onhashchange that, when the history state changes,
+    // gets the url from the hash and displays either our cached content or fetches
+    // new content to be displayed.
+    $(window).bind( 'hashchange', function(e) {
+      // Get the hash (fragment) as a string, with any leading # removed. Note that
+      // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+      var url = $.param.fragment();
+      $( '.bbq-item,.bbq-default,#generalContents' ).hide();
+      if(!url || url=='_=_') {
+	$('.bbq-default').show();
+	$('#tabbox').css('visibility','hidden');
+	$('#body').removeClass('bg1');
+	return;
+      }
+      $('.bbq-loading').show();
+      if(url=='events'||url=='hospi') {
+	$('#generalContents').load(url,function(){
+	  $('.bbq-loading').hide();
+	  $('#generalContents').show();
+	});
+	if(url=='hospi'){
+	  $("#body").removeClass('bg1');
+	}
+	if(url=='events') {
+	  $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
+	  $('#body').addClass('bg1');
+	} else {
+	  $(".menu").css({visibility:"hidden"});
+	  $('#tabbox').css({visibility:"hidden"});
+	 // $("#generalContents .tabtext").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+	}
+	return;
+      }
+      $(".bbq-item").removeClass("bbq-current");
+      if(cache[url]) {
+	cache[url].show();
+	cache[url].addClass("bbq-current");
+	openEvent();
+	$('.bbq-loading').hide();
+      } else {
+	cache[url] = $( '<div class="bbq-item bbq-current"></div>' ).appendTo( '.bbq-content' );
 
-        // Bind an event to window.onhashchange that, when the history state changes,
-        // gets the url from the hash and displays either our cached content or fetches
-        // new content to be displayed.
-        $(window).bind( 'hashchange', function(e) {
-
-            // Get the hash (fragment) as a string, with any leading # removed. Note that
-            // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
-            var url = $.param.fragment();
-            $( '.bbq-item,.bbq-default' ).hide();
-            if(!url) {
-                $('.bbq-default').show();
-                return;
-            }
-            var event_name=url.split('/tab')[0];
-            if(cache[event_name]) {
-                var event = cache[event_name];
-                if(cache[url]) {
-                    event.find(".tabtext").html(cache[url]);
-                 		var height = $('.tabtext').height();
-                    if(height>400){
-                    event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                    event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
-                } else {
-                    $( '.bbq-loading' ).show();
-                    event.find(".tabtext").load("{{site_url}}"+url, function(){
-                                // Content loaded, hide "loading" content.
-                                		var height = $('.tabtext').height();
-                                $( '.bbq-loading' ).hide();
-                                if(height>400){
-        		        event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                		event.find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
-                                resetabs();
-                                cache[url] = event.find(".tabtext").html();
-                        });
-                }
-                event.show();
-            } else {
-                cache[event_name] = $( '<div class="bbq-item"></div>' ).appendTo( '.bbq-content' );
-
-                // Load external content via AJAX. Note that in order to keep this
-                // example streamlined, only the content in .infobox is shown. You'll
-                // want to change this based on your needs.
-                $( '.bbq-loading' ).show();
-                cache[event_name].load("{{site_url}}"+event_name, function(){
-
-                    cache[event_name].find(".tabtext").load( "{{site_url}}"+url, function(){
-                                // Content loaded, hide "loading" content.
-                                		var height = $('.tabtext').height();
-                                		if(height>400){
-           		         cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                		 cache[event_name].find("#updates").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
-                                $( '.bbq-loading' ).hide();
-                                resetabs();
-                                cache[url] = cache[event_name].find(".tabtext").html();
-                        });
-                    });
-            }
-        })
-        $(window).trigger('hashchange');
-    });
+	// Load external content via AJAX. Note that in order to keep this
+	// example streamlined, only the content in .infobox is shown. You'll
+	// want to change this based on your needs.
+	cache[url].load( "{{site_url}}events/"+url, function(){
+	  $( '.bbq-loading' ).hide();
+	  resetabs();
+	});
+      }
+    })
+    $(window).trigger('hashchange');
+  });
 </script>
 {% endblock %}
 {% block footer %}
@@ -197,28 +189,28 @@
             <ul id="menus{{forloop.counter}}">
                 {% if city == 'Bengaluru' %}
                 {% for event in bengaluruevents %}
-         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"B_"}}</li>
+         		    <li onclick="window.location.href='#{{event|slugify}}'">{{event.title|cut:"B_"}}</li>
 
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Hyderabad' %}
                 {% for event in hyderabadevents %}
-         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"H_"}}</li>
+         		    <li onclick="window.location.href='#{{event|slugify}}'">{{event.title|cut:"H_"}}</li>
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Pune' %}
                 {% for event in puneevents %}
-         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"P_"}}</li>
+         		    <li onclick="window.location.href='#{{event|slugify}}'">{{event.title|cut:"P_"}}</li>
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Chennai' %}
                 {% for event in chennaievents %}
-         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"Ch_"}}</li>
+         		    <li onclick="window.location.href='#{{event|slugify}}'">{{event.title|cut:"Ch_"}}</li>
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Coimbatore' %}
                 {% for event in coimbatoreevents %}
-         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"C_"}}</li>
+         		    <li onclick="window.location.href='#{{event|slugify}}'">{{event.title|cut:"C_"}}</li>
                 {% endfor %}
                 {% endif %}
       		</ul>
