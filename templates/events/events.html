@@ -78,10 +78,14 @@ function openEvent(){
   $(".bbq-current .eventtab:first").addClass('on');
   $(".bbq-current .tabtext").each(function(index){
     var height = $(this).height();
-    if(height>300){
-      $(this).css({'height':'300px'});
-      $(this).jScrollPane({showArrows: true,verticalScroll: true});
+    if(height>375){
+      $(this).css({'height':'375px'});
+      $(this).jScrollPane({showArrows: true,verticalScroll: true,autoReinitialise: true});
     }
+    var height2 = $("#textbox2").height();
+    if(height2>300){
+      $("#textbox2").css({'height':'300px'});
+      $("#textbox2").jScrollPane({showArrows: true,verticalScroll: true});          }
   });
   
 }
