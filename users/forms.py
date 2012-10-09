@@ -48,7 +48,7 @@ BRANCH_CHOICES = (
     ('Humanities and Social Sciences', 'Humanities and Social Sciences'),
     ('Industrial Production', 'Industrial Production'),
     ('Production', 'Production'),
-    ('Information Technology and Information Science', 'Information Technology and Information Science(IT/IS)'),
+    ('Information Technology and Information Science', 'Information Technology and Sciences'),
     ('Management', 'Management'),
     ('Manufacturing', 'Manufacturing'),
     ('Mathematics', 'Mathematics'),
