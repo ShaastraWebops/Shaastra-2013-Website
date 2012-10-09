@@ -1,166 +1,109 @@
 {% extends "base.html" %}
 {% block hash_handler %}
 <script type="text/javascript">
-    $(function(){
-        // Keep a mapping of url-to-container for caching purposes.
-        var cache = {
-            // If url is '' (no fragment), display this div's content.
-            '': $('.bbq-default')
-        };
+  $(function(){
+    // Keep a mapping of url-to-container for caching purposes.
+    var cache = {
+      // If url is '' (no fragment), display this div's content.
+      '': $('.bbq-default')
+    };
+    // Bind an event to window.onhashchange that, when the history state changes,
+    // gets the url from the hash and displays either our cached content or fetches
+    // new content to be displayed.
+    $(window).bind( 'hashchange', function(e) {
+      // Get the hash (fragment) as a string, with any leading # removed. Note that
+      // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+      var url = $.param.fragment();
+      $( '.bbq-item,.bbq-default,#generalContents' ).hide();
+      if(!url || url=='_=_') {
+	$('.bbq-default').show();
+	$('#tabbox').css('visibility','hidden');
+	$('#body').removeClass('bg1');
+	return;
+      }
+      $('.bbq-loading').show();
+      if(url=='events'||url=='hospi') {
+	$('#generalContents').load(url,function(){
+	  $('.bbq-loading').hide();
+	  $('#generalContents').show();
+	});
+	if(url=='hospi'){
+	  $("#body").removeClass('bg1');
+	}
+	if(url=='events') {
+	  $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
+	  $('#body').addClass('bg1');
+	} else {
+	  $(".menu").css({visibility:"hidden"});
+	  $('#tabbox').css({visibility:"hidden"});
+	 // $("#generalContents .tabtext").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
+	}
+	return;
+      }
+      $(".bbq-item").removeClass("bbq-current");
+      if(cache[url]) {
+	cache[url].show();
+	cache[url].addClass("bbq-current");
+	openEvent();
+	$('.bbq-loading').hide();
+      } else {
+	cache[url] = $( '<div class="bbq-item bbq-current"></div>' ).appendTo( '.bbq-content' );
 
-        // Bind an event to window.onhashchange that, when the history state changes,
-        // gets the url from the hash and displays either our cached content or fetches
-        // new content to be displayed.
-        $(window).bind( 'hashchange', function(e) {
-
-            // Get the hash (fragment) as a string, with any leading # removed. Note that
-            // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
-            var url = $.param.fragment();
-            $( '.bbq-item,.bbq-default,#generalContents' ).hide();
-            if(!url || url=='_=_') {
-                $('.bbq-default').show();
-                $('#tabbox').css('visibility','hidden');
-                $('#body').removeClass('bg1');
-                return;
-            }
-            if(url=='events'||url=='hospi') {
-                $('.bbq-loading').show();
-                $('#generalContents').load(url,function(){
-                    $('.bbq-loading').hide();
-                    $('#generalContents').show();
-                });
-		if(url=='hospi'){
-                    $("#body").removeClass('bg1');
-                }
-                if(url=='events') {
-                    $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
-                    $('#body').addClass('bg1');
-                } else {
-                    $(".menu").css({visibility:"hidden"});
-                    $('#tabbox').css({visibility:"hidden"});
-                    $("#generalContents .tabtext").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                }
-                return;
-            }
-            var event_name=url.split('/tab')[0];
-            if(cache[event_name]) {
-                var event = cache[event_name];
-		        var height2 = event.find('#textbox2').height();
-		        if(height2>345)              
-			        event.find("#textbox2").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                if(cache[url]) {
-                    event.find(".tabtext").html(cache[url]);
-            		var lgth = cache[url].length;
-			        if(lgth>600)
-                        event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                    else
-                        event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: false, autoReinitialise: true});
-                } else {
-                    $('.bbq-loading').show();
-                    event.find(".tabtext").load( url, function(){
-                        // Content loaded, hide "loading" content.
-                        $( '.bbq-loading' ).hide();
-                		var height = event.find('.tabtext').height();
-		                if(height>400)
-                            event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                        else
-                            event.find("#textbox").jScrollPane({showArrows: true,verticalScroll: false, autoReinitialise: true});
-                        resetabs();
-                        cache[url] = $(this).html();
-                    });
-                }
-                event.show();
-            } else {
-                cache[event_name] = $( '<div class="bbq-item"></div>' ).appendTo( '.bbq-content' );
-
-                // Load external content via AJAX. Note that in order to keep this
-                // example streamlined, only the content in .infobox is shown. You'll
-                // want to change this based on your needs.
-                $('.bbq-loading').show();
-                cache[event_name].load( event_name, function(){
-                    var height=cache[event_name].find("#textbox2").height();
-                  	cache[event_name].find('.eventtab:first').addClass('on');
-        			if(height>345)
-                        cache[event_name].find("#textbox2").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
-                    cache[event_name].find(".tabtext").load( url, function(){
-                        // Content loaded, hide "loading" content.
-                        var height2=$(this).height();
-			            if(height2>400){
-                            cache[event_name].find("#textbox").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});}
-                        $( '.bbq-loading' ).hide();
-                        resetabs();
-                        cache[url] = $(this).html();
-                        });
-                    });
-            }
-        })
-        $(window).trigger('hashchange');
-
-    });
+	// Load external content via AJAX. Note that in order to keep this
+	// example streamlined, only the content in .infobox is shown. You'll
+	// want to change this based on your needs.
+	cache[url].load( url, function(){
+	  $( '.bbq-loading' ).hide();
+	  resetabs();
+	});
+      }
+    })
+    $(window).trigger('hashchange');
+  });
 </script>
 {% endblock %}
-{% block functions %}
-{% endblock %}
+{% block functions %}{% endblock %}
 {% block events_menu %}
-    {% for category in event_set %}
-    <div id="menu{{forloop.counter}}"class="menu mentab{{forloop.counter}}">
-	    <div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
-        </div>
-        <div id="menulist{{forloop.counter}}" class="menulist">
-        <ul id="menuhead{{forloop.counter}}" class="menuhead">
-        	{{category.0.category}}
-        </ul>
-        <ul id="menus{{forloop.counter}}">
-            {% for event in category %}
-     		<li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title|slugify}}';$('#body').removeClass('bg1');$('#content').addClass('back');">{{event.title}}</li>
-            {% endfor %}
-	    </ul>
-        </div>
+  {% for category in event_set %}
+  <div id="menu{{forloop.counter}}" class="menu mentab{{forloop.counter}}">
+    <div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
     </div>
-    {% endfor %}
+    <div id="menulist{{forloop.counter}}" class="menulist">
+      <ul id="menuhead{{forloop.counter}}" class="menuhead">{{category.0.category}}</ul>
+      <ul id="menus{{forloop.counter}}">
+      {% for event in category %}
+	<li onclick="window.location.href='#events/{{event|slugify}}';$('#body').removeClass('bg1');$('#content').addClass('back');">{{event.title}}</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endfor %}
 {% endblock %}
 {% block footer %}
-
- <div id="footer">
-    
-    <div id="tabbox">
-    	<div id="tab1" class="tab">
-         
-        </div>
-     <div id="tab2" class="tab">
-            
-        </div>
-     <div id="tab3" class="tab">
-            
-        </div>
-     <div id="tab4" class="tab">
-            
-        </div>
-     <div id="tab5" class="tab">
-            
-        </div>
-     <div id="tab6" class="tab">
-            
-        </div>
-     <div id="tab7" class="tab">
-            
-        </div>
-     <div id="tab8" class="tab">
-            
-        </div>
-     <div id="tab9" class="tab">
-            
-        </div>
-      <div id="tab10" class="tab">
-            
-       </div>
-       <div id="tab11" class="tab"
-       </div>
+<div id="footer">
+  <div id="tabbox">
+    <div id="tab1" class="tab">
     </div>
-    
+    <div id="tab2" class="tab">
     </div>
-
+    <div id="tab3" class="tab">
+    </div>
+    <div id="tab4" class="tab">
+    </div>
+    <div id="tab5" class="tab">
+    </div>
+    <div id="tab6" class="tab">
+    </div>
+    <div id="tab7" class="tab">
+    </div>
+    <div id="tab8" class="tab">
+    </div>
+    <div id="tab9" class="tab">
+    </div>
+    <div id="tab10" class="tab">
+    </div>
+    <div id="tab11" class="tab">
+    </div>
+  </div>
+</div>
 {% endblock %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="static/js/bootstrap-transition.js"></script>
-    <script src="static/js/bootstrap-modal.js"></script>

@@ -33,9 +33,12 @@ def events(request, event_name):
     initial_announcements = Update.objects.filter(category = 'Announcement')
     announcements = sorted(initial_announcements, key=attrgetter('id'), reverse=True)
     tab_set = event.tab_set.all()
+    files_set = [tab.tabfile_set.all() for tab in tab_set]
+    tabs = zip(tab_set,files_set)
+    #assert False
     return render_to_response('events/events.html', locals(), context_instance=RequestContext(request))
 
-
+'''
 def tabs(request, event_name, tab_name):
     event_name = event_name.replace('-', ' ')
     tab_name = tab_name.replace('-', ' ')
@@ -48,7 +51,7 @@ def tabs(request, event_name, tab_name):
     tab = tab_set.get(title=tab_name)
     file_set = tab.tabfile_set.all()
     return render_to_response('events/tabs.html', locals(), context_instance=RequestContext(request))
-
+'''
 def sampark(request):
 #    if path:
 #        assert False
