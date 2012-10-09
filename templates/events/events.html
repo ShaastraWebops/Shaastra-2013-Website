@@ -14,19 +14,21 @@
     <div id="textbox">
     {% for tab in tabs %}
       <div class="tabtext" style="color:#FFF;">
-      <div class="wrapper">
-      <!-- Tabs -->
-      {{tab.0.text|safe}}
-      {% if tab.1 %}
-	<hr/>
-	Downloads:<br>
-	<ul>
-	{% for file in tab.1 %}
-	    <li><a href="{{file.url}}" style="color:#FFF;">{{file.title}}</a></li>
-	{% endfor %}
-	</ul>
-      {% endif %}
-      </div>
+	<div class="wrapper">
+	<!-- Tabs -->
+	<p>
+	{{tab.0.text|safe}}
+	{% if tab.1 %}
+	  <hr/>
+	  Downloads:<br>
+	  <ul>
+	  {% for file in tab.1 %}
+	      <li><a href="{{file.url}}" style="color:#FFF;">{{file.title}}</a></li>
+	  {% endfor %}
+	  </ul>
+	{% endif %}
+	</p>
+	</div>
       </div>
     {% endfor %}
     </div>
@@ -75,10 +77,12 @@ function openEvent(){
   $(".bbq-current .eventtab").removeClass('on');
   $(".bbq-current .eventtab:first").addClass('on');
   $(".bbq-current .tabtext").each(function(index){
-    var height = $(this).children(".wrapper").height();
+    var height = $(this).height();
     if(height>300){
+      $(this).css({'height':'300px'});
       $(this).jScrollPane({showArrows: true,verticalScroll: true});
     }
   });
+  
 }
 </script>
