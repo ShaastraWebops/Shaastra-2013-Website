@@ -1,0 +1,11 @@
+{% extends "events/registration_base.html" %}
+
+{% block body %}
+
+    <p>{{registration_done_message}}</p>
+    
+    <p>
+        <a href="{{site_url}}events/{{event.id}}/cancelregistration/">Click here to cancel registration.</a>
+    </p>
+    
+{% endblock %}

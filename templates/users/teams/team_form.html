@@ -1,0 +1,29 @@
+{% extends "users/teams/teams_base.html" %}
+
+{% block body %}
+
+    <div id="team_form">
+        <div class="button2">
+            <a href="#">    
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <table>
+                        {{ form.as_table }}
+                        <tr>
+                            <td>
+                                <div class="button2">
+                                    <a href="#">
+                                        <input type="submit" value="{{ view }}" />
+                                    </a>
+                                    <span></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </a>
+            <span></span>
+        </div>
+    </div>	
+
+{% endblock %}
