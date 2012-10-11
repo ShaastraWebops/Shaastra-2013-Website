@@ -18,6 +18,7 @@
       if(!url || url=='_=_') {
 	$('.bbq-default').show();
 	$('#tabbox').css('visibility','hidden');
+	$('#tabbox2').css('visibility','hidden');
 	$('#body').removeClass('bg1');
 	return;
       }
@@ -29,10 +30,12 @@
 	});
 	if(url=='hospi'){
 	  $("#body").removeClass('bg1');
+	  $('#tabbox2').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
 	}
 	if(url=='events') {
 	  $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
 	  $('#body').addClass('bg1');
+	  $("#tabbox2").css({'visibility':'hidden'});
 	} else {
 	  $(".menu").css({visibility:"hidden"});
 	  $('#tabbox').css({visibility:"hidden"});
@@ -81,7 +84,7 @@
 {% endblock %}
 {% block footer %}
 <div id="footer">
-  <div id="tabbox">
+  <div id="tabbox" class="tabbox">
     <div id="tab1" class="tab">
     </div>
     <div id="tab2" class="tab">
@@ -103,6 +106,32 @@
     <div id="tab10" class="tab">
     </div>
     <div id="tab11" class="tab">
+    </div>
+  </div>
+    <div id="tabbox2" class="tabbox">
+    <div id="htab1" class="htab">
+    </div>
+    <div id="htab2" class="htab">
+    </div>
+    <div id="htab3" class="htab">
+    </div>
+    <div id="htab4" class="htab">
+    </div>
+    <div id="htab5" class="htab">
+    </div>
+    <div id="htab6" class="htab">
+    </div>
+    <div id="htab7" class="htab">
+    </div>
+    <div id="htab8" class="htab">
+    </div>
+    <div id="htab9" class="htab">
+    </div>
+    <div id="htab10" class="htab">
+    </div>
+    <div id="htab11" class="htab">
+    </div>
+     <div id="htab12" class="htab">
     </div>
   </div>
 </div>
