@@ -43,6 +43,9 @@
 	}
 	return;
       }
+      $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
+      $('#body').addClass('bg1');
+      $("#content").addClass('back');
       $(".bbq-item").removeClass("bbq-current");
       if(cache[url]) {
 	cache[url].show();
