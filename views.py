@@ -19,7 +19,7 @@ def home(request):
         row.append(str(t.name))
         temp=[]
         for x in t.event_set.all():
-            url = slugify(x) + '/tab/' + x.tab_set.all()[0].title
+            url = slugify(x)
             temp.append([str(x),str(url)])
         row.append(temp)
         result_list.append(row)
