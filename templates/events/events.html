@@ -1,9 +1,9 @@
-<div id="body">
+<div id="body" name="{{event}}">
   <div id="sidemenu">
     <div id="sidemenutitle"><p>{{event.title|cut:"H_"|cut:"B_"|cut:"P_"|cut:"C_"|cut:"Ch_"}}</p></div>
     <ul id="sidemenulist">
     {% for tab in tab_set %}
-      <li class="eventtab" id="etab{{forloop.counter}}" value="{{forloop.counter0}}"><p>{{tab.title}}</p></li>
+      <li class="eventtab" id="etab{{forloop.counter}}" name="{{tab.title|slugify}}"><p>{{tab.title}}</p></li>
     {% endfor %}
 <!--            {% if event.registrable_online == 1 %}
             <li class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='#submission/{{event.id}}'">Register</p></li>
@@ -13,7 +13,7 @@
   <div id="maincontent">
     <div id="textbox">
     {% for tab in tabs %}
-      <div class="tabtext" style="color:#FFF;">
+      <div class="tabtext" id="{{tab.0.title|slugify}}" style="color:#FFF;">
 	<div class="wrapper">
 	<!-- Tabs -->
 	<p>
@@ -65,10 +65,12 @@ $(document).ready(function(){
   $(".menu").css({visibility:"hidden"});
   openEvent();
   $('.eventtab').click(function(){
+    //$(".bbq-current .tabtext").hide();
+    //alert(".bbq-current .tabtext #"+$(this).attr('name'));
+    //$(".bbq-current").find("#"+$(this).attr('name')).show();
     $('.eventtab').removeClass('on');
     $(this).addClass('on');
-    $(".bbq-current .tabtext").hide();
-    $(".bbq-current .tabtext:eq("+$(this).attr('value')+")").show();
+    window.location.hash = "events/{{event|slugify}}/" + $(this).attr('name');
   });
 });
 function openEvent(){
@@ -82,11 +84,11 @@ function openEvent(){
       $(this).css({'height':'375px'});
       $(this).jScrollPane({showArrows: true,verticalScroll: true,autoReinitialise: true});
     }
-    var height2 = $("#textbox2").height();
-    if(height2>300){
-      $("#textbox2").css({'height':'300px'});
-      $("#textbox2").jScrollPane({showArrows: true,verticalScroll: true});          }
   });
-  
+  var height2 = $("#textbox2").height();
+  if(height2>300){
+    $("#textbox2").css({'height':'300px'});
+    $("#textbox2").jScrollPane({showArrows: true,verticalScroll: true});
+  }  
 }
 </script>
