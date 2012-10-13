@@ -37,13 +37,14 @@
 	  $('#body').addClass('bg1').animate('1000','easeOutBack');
 	  $("#tabbox2").css({'visibility':'hidden'});
 	} else {
-	  $(".menu").css({visibility:"hidden"});
-	  $('#tabbox').css({visibility:"hidden"});
+	  $(".menu").css({'visibility':"hidden"});
+	  $('#tabbox').css({'visibility':"hidden"});
 	 // $("#generalContents .tabtext").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
 	}
 	return;
       }
       $('#tabbox').css({'visibility':'visible'});
+       $('#tabbox2').css({'visibility':'hidden'});
       $('#body').addClass('bg1');
       $("#content").addClass('back');
       $(".bbq-item").removeClass("bbq-current");
