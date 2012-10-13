@@ -30,11 +30,11 @@
 	});
 	if(url=='hospi'){
 	  $("#body").removeClass('bg1');
-	  $('#tabbox2').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
+	  $('#tabbox2').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'},'500','easeOutBack');
 	}
 	if(url=='events') {
-	  $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
-	  $('#body').addClass('bg1');
+	  $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'},'500','easeOutBack');
+	  $('#body').addClass('bg1').animate('1000','easeOutBack');
 	  $("#tabbox2").css({'visibility':'hidden'});
 	} else {
 	  $(".menu").css({visibility:"hidden"});
