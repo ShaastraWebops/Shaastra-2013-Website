@@ -110,6 +110,7 @@ def register_post(request):
             new_user.set_password(data['password'])
             new_user.is_active = False
             new_user.save()
+            x = 1300000 + new_user.id 
             salt = sha.new(str(random.random())).hexdigest()[:5]
             activation_key = sha.new(salt + new_user.username).hexdigest()
             key_expires = datetime.datetime.today() + datetime.timedelta(2)
@@ -123,6 +124,7 @@ def register_post(request):
                 mobile_number=data['mobile_number'],
                 college=data['college'],
                 college_roll=data['college_roll'],
+                shaastra_id= ("SHA" + str(x)),
                 )
             userprofile.save()
             mail_template = get_template('email/activate.html')
@@ -157,6 +159,7 @@ def register_post_fb(request):
                         username=data['username'], email=data['email'])
         new_user.set_password('default')
         new_user.save()
+        x = 1300000 + new_user.id 
         userprofile = UserProfile(
             user=new_user,
             gender=data['gender'],
@@ -167,6 +170,7 @@ def register_post_fb(request):
             college_roll=data['college_roll'],
             facebook_id=facebook_id,
             access_token=access_token,
+            shaastra_id = "SHA" + str(x),
             )
         userprofile.save()
         new_user = authenticate(username=data['username'],
@@ -253,8 +257,8 @@ def activate(request, a_key=None):
             else:
                 user = user_profile.user
                 user.is_active = True
-                x = (100000 + user.id) % 10000
-                user_profile.shaastra_id = "SHA13"+ x
+                x = 1300000 + user.id 
+                user_profile.shaastra_id = "SHA"+ str(x)
                 user_profile.save()
                 user.save()
                 request.session['registered'] = True

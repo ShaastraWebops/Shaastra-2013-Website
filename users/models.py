@@ -83,11 +83,11 @@ class UserProfile(models.Model):
     college = models.ForeignKey(College, null=True, blank=True)
     college_roll = models.CharField(max_length=40, null=True)
 
-#    shaastra_id ....= models.CharField........(max_length = 20, unique = True, null=True)
+    shaastra_id = models.CharField(max_length = 20, unique = True, null=True)
 
     activation_key = models.CharField(max_length=40, null=True)
     key_expires = models.DateTimeField(null=True)
-    want_hospi = models.BooleanField(default=False)
+    want_hospi = models.BooleanField(default=False, help_text = "If you need accomodation during Shaastra, please check this.")
     is_core = models.BooleanField(default=False)
 
 #    is_coord        = models.BooleanField....(default = False)
