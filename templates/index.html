@@ -14,6 +14,7 @@
       // Get the hash (fragment) as a string, with any leading # removed. Note that
       // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
       var url = $.param.fragment();
+      var event_name = url.split('/')[0] + '/' + url.split('/')[1], tab_name = url.split('/')[2];
       $( '.bbq-item,.bbq-default,#generalContents' ).hide();
       if(!url || url=='_=_') {
 	$('.bbq-default').show();
@@ -29,36 +30,47 @@
 	  $('#generalContents').show();
 	});
 	if(url=='hospi'){
-	  $("#body").removeClass('bg1');
+	  $('#body').removeClass('bg1');
 	  $('#tabbox2').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
 	}
 	if(url=='events') {
 	  $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
 	  $('#body').addClass('bg1');
-	  $("#tabbox2").css({'visibility':'hidden'});
+	  $('#tabbox2').css({'visibility':'hidden'});
 	} else {
-	  $(".menu").css({visibility:"hidden"});
-	  $('#tabbox').css({visibility:"hidden"});
+	  $('.menu').css({visibility:'hidden'});
+	  $('#tabbox').css({visibility:'hidden'});
 	 // $("#generalContents .tabtext").jScrollPane({showArrows: true,verticalScroll: true, autoReinitialise: true});
 	}
 	return;
       }
       $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
       $('#body').addClass('bg1');
-      $("#content").addClass('back');
-      $(".bbq-item").removeClass("bbq-current");
-      if(cache[url]) {
-	cache[url].show();
-	cache[url].addClass("bbq-current");
-	openEvent();
-	$('.bbq-loading').hide();
+      $('#content').addClass('back');
+      $('.bbq-item').removeClass('bbq-current');
+      if(cache[event_name]) {
+	cache[event_name].show();
+	cache[event_name].addClass('bbq-current');
+	if(tab_name){
+	  $(".bbq-current .tabtext").hide();
+	  $(".bbq-current").find("#"+tab_name).show();
+	}else{
+	  openEvent();
+	}
+	$( '.bbq-loading' ).hide();
       } else {
-	cache[url] = $( '<div class="bbq-item bbq-current"></div>' ).appendTo( '.bbq-content' );
+	cache[event_name] = $( '<div class="bbq-item bbq-current"></div>' ).appendTo( '.bbq-content' );
 
 	// Load external content via AJAX. Note that in order to keep this
 	// example streamlined, only the content in .infobox is shown. You'll
 	// want to change this based on your needs.
-	cache[url].load( url, function(){
+	cache[event_name].load( event_name, function(){
+	  if(tab_name){
+	    $(".bbq-current .tabtext").hide();
+	    $(".bbq-current").find("#"+tab_name).show();
+	  }else{
+	    openEvent();
+	  }
 	  $( '.bbq-loading' ).hide();
 	  resetabs();
 	});

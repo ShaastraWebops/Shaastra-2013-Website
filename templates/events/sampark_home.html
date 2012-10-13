@@ -14,6 +14,12 @@
       // Get the hash (fragment) as a string, with any leading # removed. Note that
       // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
       var url = $.param.fragment();
+      var event_name = url.split('/')[0] + '/' + url.split('/')[1], tab_name = url.split('/')[2];
+      if(tab_name){
+	$(".bbq-current .tabtext").hide();
+	$(".bbq-current").find("#"+tab_name).show();
+	return;
+      }
       $( '.bbq-item,.bbq-default,#generalContents' ).hide();
       if(!url || url=='_=_') {
 	$('.bbq-default').show();
@@ -41,18 +47,18 @@
 	return;
       }
       $(".bbq-item").removeClass("bbq-current");
-      if(cache[url]) {
-	cache[url].show();
-	cache[url].addClass("bbq-current");
+      if(cache[event_name]) {
+	cache[event_name].show();
+	cache[event_name].addClass("bbq-current");
 	openEvent();
 	$('.bbq-loading').hide();
       } else {
-	cache[url] = $( '<div class="bbq-item bbq-current"></div>' ).appendTo( '.bbq-content' );
+	cache[event_name] = $( '<div class="bbq-item bbq-current"></div>' ).appendTo( '.bbq-content' );
 
 	// Load external content via AJAX. Note that in order to keep this
 	// example streamlined, only the content in .infobox is shown. You'll
 	// want to change this based on your needs.
-	cache[url].load( "{{site_url}}events/"+url, function(){
+	cache[event_name].load( "{{site_url}}" + event_name, function(){
 	  $( '.bbq-loading' ).hide();
 	  resetabs();
 	});
@@ -189,28 +195,28 @@
             <ul id="menus{{forloop.counter}}">
                 {% if city == 'Bengaluru' %}
                 {% for event in bengaluruevents %}
-         		    <li onclick="window.location.href='#{{event|slugify}}'">{{event.title|cut:"B_"}}</li>
+         		    <li onclick="window.location.href='#events/{{event|slugify}}'">{{event.title|cut:"B_"}}</li>
 
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Hyderabad' %}
                 {% for event in hyderabadevents %}
-         		    <li onclick="window.location.href='#{{event|slugify}}'">{{event.title|cut:"H_"}}</li>
+         		    <li onclick="window.location.href='#events/{{event|slugify}}'">{{event.title|cut:"H_"}}</li>
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Pune' %}
                 {% for event in puneevents %}
-         		    <li onclick="window.location.href='#{{event|slugify}}'">{{event.title|cut:"P_"}}</li>
+         		    <li onclick="window.location.href='#events/{{event|slugify}}'">{{event.title|cut:"P_"}}</li>
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Chennai' %}
                 {% for event in chennaievents %}
-         		    <li onclick="window.location.href='#{{event|slugify}}'">{{event.title|cut:"Ch_"}}</li>
+         		    <li onclick="window.location.href='#events/{{event|slugify}}'">{{event.title|cut:"Ch_"}}</li>
                 {% endfor %}
                 {% endif %}
                 {% if city == 'Coimbatore' %}
                 {% for event in coimbatoreevents %}
-         		    <li onclick="window.location.href='#{{event|slugify}}'">{{event.title|cut:"C_"}}</li>
+         		    <li onclick="window.location.href='#events/{{event|slugify}}'">{{event.title|cut:"C_"}}</li>
                 {% endfor %}
                 {% endif %}
       		</ul>
