@@ -87,7 +87,7 @@ class UserProfile(models.Model):
 
     activation_key = models.CharField(max_length=40, null=True)
     key_expires = models.DateTimeField(null=True)
-    want_accomodation = models.BooleanField(default=False, help_text = "If you need accomodation during Shaastra, please check this.")
+    want_accomodation = models.BooleanField(default=False, help_text = "This doesn't guarantee accommodation during Shaastra.")
     is_core = models.BooleanField(default=False)
 
 #    is_coord        = models.BooleanField....(default = False)
