@@ -125,6 +125,7 @@ def register_post(request):
                 college=data['college'],
                 college_roll=data['college_roll'],
                 shaastra_id= ("SHA" + str(x)),
+                want_accomodation = data['want_accomodation'],
                 )
             userprofile.save()
             mail_template = get_template('email/activate.html')

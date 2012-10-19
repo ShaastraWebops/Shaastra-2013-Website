@@ -157,7 +157,7 @@ class AddUserForm(BaseUserForm):
             'age',
             'branch',
             'mobile_number',
-            'want_hospi',
+            'want_accomodation',
             )
 
         # exclude = {'is_coord','coord_event','shaastra_id','activation_key','key_expires','UID','user',}
@@ -211,7 +211,7 @@ class EditUserForm(BaseUserForm):
             'mobile_number',
             'college',
             'college_roll',
-            'want_hospi',
+            'want_accomodation',
             )
 
         # exclude = ('user', 'facebook_id', 'activation_key', 'key_expires', 'is_coord', 'access_token', 'username', 'email',)
