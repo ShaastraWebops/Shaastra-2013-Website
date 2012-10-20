@@ -95,17 +95,18 @@ class Event(models.Model):
 
         errors = []
         super(Event, self).clean()  # Calling clean method of the super class
-        if not team_event:
-            team_size_min = team_size_max = 1
         if not team_size_min:
             team_size_min = 1
         if not team_size_max:
             team_size_max = 1
-        if team_event:
-            if team_size_min > team_size_max:
-                errors.append(u'The minimum team size cannot be more than the maximum team size.')
-            if team_size_max == 1:
-                errors.append(u'The maximum team size is 1. Did you mean to make this a non-team event?')
+        try:
+	  team_event
+	  if team_size_min > team_size_max:
+	      errors.append(u'The minimum team size cannot be more than the maximum team size.')
+	  if team_size_max == 1:
+	      errors.append(u'The maximum team size is 1. Did you mean to make this a non-team event?')
+	except:
+	  team_size_min = team_size_max = 1
         if errors:
             raise ValidationError(errors)
 
