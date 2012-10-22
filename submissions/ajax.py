@@ -73,7 +73,7 @@ def save_edit_subjective(
 
 
 # coord related ajax views start from here
-
+@dajaxice_register
 def submission_list(request):
     dajax = Dajax()
     evt = request.user.get_profile().is_coord_of
@@ -127,7 +127,7 @@ def edit_sub(
 
 @dajaxice_register
 def send_checklist(request, form):
-#    return HttpResponse('blah')
+#    return dajax.json()
     dajax = Dajax()
     assign = True
     if form['action'] == 'sub_read':
