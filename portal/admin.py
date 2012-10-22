@@ -33,6 +33,7 @@ The following custom UserAdmin is to exclude unnecessary columns on display
 class MyUserAdmin(UserAdmin):
     #normally staff status is also displayed, but since all are staff, there is no need
     list_display = ['username','email','first_name','last_name']
+
     #makes more sense to filter by group than the default "kind of user"
     list_filter = ['groups',]
     """
@@ -118,7 +119,26 @@ class EventAdmin(admin.ModelAdmin):
     exclude = ['sponsor_image',]
     search_fields = ['title','category__name']
     actions = ['make_sold', 'make_available','count_sold']
-
+    
+    """
+    def save_model(self,request,obj,form,change):
+        obj.save()
+        if obj.status =='s':
+            args={
+                'event_name':obj.title,
+                'url':MEDIA_URL + str(obj.sponsor_image) ,
+            }  
+        else:
+            args={
+                'event_name':obj.title,
+                'url':''
+            }
+        target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()
+        if target == "True":
+            self.message_user(request,"successful")
+        else:
+            self.message_user(request,"logo not sent")
+    """            
     """
     The following actions can be found on the admin
     site. When certain objects are selected by 
@@ -196,7 +216,11 @@ class SponsorAdmin(admin.ModelAdmin):
                 'about':obj.about,
                 #'events':obj.sponsored_events,                
         }
-        target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()    
+        target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()  
+        if target == "True":
+            self.message_user(request,"successful")
+        else:
+            self.message_user(request,"logo not sent")          
  
         
 class QuoteAdmin(admin.ModelAdmin):
