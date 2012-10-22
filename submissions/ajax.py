@@ -79,7 +79,7 @@ def submission_list(request):
     subs = \
         request.user.get_profile().is_coord_of.basesubmission_set.all()
     template = \
-        loader.get_template('ajax/submissions/all_submissions.html')
+        loader.get_template('ajax/submissions/all_tdp_submissions.html')
     html = template.render(RequestContext(request, locals()))
     dajax.assign('.bbq-item', 'innerHTML', html)
     dajax.script("$('#submissions_list').dataTable();")
@@ -127,6 +127,7 @@ def edit_sub(
 
 @dajaxice_register
 def send_checklist(request, form):
+    return HttpResponse('blah')
     dajax = Dajax()
     assign = True
     if form['action'] == 'sub_read':

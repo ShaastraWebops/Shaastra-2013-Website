@@ -4,7 +4,7 @@ from django.db import models
 from users.models import *
 from events.models import *
 from django.forms import ModelForm
-
+from datetime import datetime
 
 # Create your models here.
 
@@ -27,6 +27,17 @@ class BaseSubmission(models.Model):
 
         ordering = ['id']
 
+
+def get_upload_path(instance, filename):
+	dir_path = settings.MEDIA_ROOT + 'TDPSubmissions/' + instance.basesub.event.construct_dir_path()
+	return dir_path + filename
+    
+class TDPSubmissions(models.Model):
+    basesub       = models.ForeignKey(BaseSubmission)
+    tdp_upload    = models.FileField(upload_to=get_upload_path,blank=True,null=True)
+    post_time     = models.DateTimeField(default = datetime.now)
+    team          = models.ForeignKey(Team, null = True)
+    participant   = models.ForeignKey(User, null = True)
 
 class IndividualSubmission(BaseSubmission):
 
@@ -87,5 +98,4 @@ class Answer_MCQ_Form(ModelForm):
         queryset = kwargs.pop('queryset')
         super(Answer_MCQ_Form, self).__init__(*args, **kwargs)
         self.fields['choice'].queryset = queryset
-
 
