@@ -209,8 +209,11 @@ def submittdp(request,event_id):
 
 @login_required(login_url=settings.LOGIN_URL)
 def ViewTdpSubmissions(request):
-    evt = request.user.get_profile().is_coord_of
-    subs = TDPSubmissions.objects.filter(basesub__event = evt)
+    try:    
+        evt = request.user.get_profile().is_coord_of
+        subs = TDPSubmissions.objects.filter(basesub__event = evt)
+    except:
+        raise Http404()
     return render_to_response('ajax/submissions/all_tdp_submissions.html',
                           locals(),
                           context_instance=RequestContext(request))
