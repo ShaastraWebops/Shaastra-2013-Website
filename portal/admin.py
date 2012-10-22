@@ -115,25 +115,10 @@ class CategoryAdmin(admin.ModelAdmin):
 class EventAdmin(admin.ModelAdmin):
     inlines = [EventImageInline]
     list_display = ['title','category','status']
+    exclude = ['sponsor_image',]
     search_fields = ['title','category__name']
     actions = ['make_sold', 'make_available','count_sold']
 
-    def save_model(self,request,obj,form,change):
-        obj.save()
-        if obj.status =='s':
-            args={
-                'event_name':obj.title,
-                'url':MEDIA_URL + str(obj.sponsor_image) ,
-            }  
-        else:
-            args={
-                'event_name':obj.title,
-                'url':''
-            }
-        target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()
-        
-       
-    
     """
     The following actions can be found on the admin
     site. When certain objects are selected by 
@@ -198,6 +183,22 @@ class TopicAdmin(admin.ModelAdmin):
 class PreviousSponsorAdmin(admin.ModelAdmin):
     list_display = ['name']
     
+class SponsorAdmin(admin.ModelAdmin):
+    list_display = ['name','index_number','about']
+    exclude = ['url', 'sponsored_events']
+    def save_model(self,request,obj,form,change):
+        obj.save()
+        args={
+                'name':obj.name,
+                'logo':MEDIA_URL + str(obj.logo),
+                'index':obj.index_number,
+                #'site_url':obj.url,
+                'about':obj.about,
+                #'events':obj.sponsored_events,                
+        }
+        target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()    
+ 
+        
 class QuoteAdmin(admin.ModelAdmin):
     list_display = ['name'] 
 
@@ -214,6 +215,7 @@ admin.site.unregister(User)  # You must unregister first
 admin.site.register(User, MyUserAdmin)
 
 admin.site.register(PreviousSponsor, PreviousSponsorAdmin)
+admin.site.register(Sponsor, SponsorAdmin)
 admin.site.register(Topic,TopicAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Event, EventAdmin)

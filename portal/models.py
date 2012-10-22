@@ -130,9 +130,6 @@ class TopicImage(models.Model):
 		super(TopicImage,self).save()
 		resize_image(self.image,'300x200')
 		
-	
-
-
 class PreviousSponsor(models.Model):
     """
     This model is for adding details about 2011 sponsors
@@ -150,6 +147,28 @@ class PreviousSponsor(models.Model):
 		resize_image(self.logo,'300x200')
 		
 	
+		
+class Sponsor(models.Model):
+    """
+    This model is for adding details about 2013 sponsors
+    """
+    logo=models.FileField(upload_to='present_sponsors')
+    name=models.CharField(max_length=20,unique=True, help_text='Enter company name (Required)')
+    index_number=models.IntegerField(blank=True)
+    url=models.URLField(blank=True)
+    about=models.CharField(max_length=100, blank=True, help_text='Primary Sponsor, Associate Sponsor, Apparel Sponsor etc.')
+    sponsored_events = models.ManyToManyField(Event, blank=True)
+    
+    def __unicode__(self):
+		return self.name
+
+    def save(self):
+		super(Sponsor,self).save()
+		resize_image(self.logo,'300x200')		
+		
+    class Meta:
+        ordering=['index_number']
+        	
 def resize_image(image_source,size):
 	"""
 	Function to resize the uploaded image
