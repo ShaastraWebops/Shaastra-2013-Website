@@ -1,11 +1,11 @@
-<div id="upload_tdp">
+<div id="upload_tdp" class="span6">
     <form action="" method="POST" enctype="multipart/form-data">
-        <p>{{msg}}</p><br>
+        <p style="color:#fff;font-size:12px;font-style:italic;">{{msg}}</p><br>
         {% csrf_token %}
         <table>
             {{ form.as_table }}
             <tr>
-                <td><input type="submit" value="Upload" /></td>
+                <td><input type="submit" value="Upload" class="btn btn-primary" /></td>
             </tr>
         </table>
     </form>
