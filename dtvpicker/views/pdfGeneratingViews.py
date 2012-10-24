@@ -405,7 +405,7 @@ def dtvSummaryByEvent_PDF(request):
         tableData = [ ['Sub-Event', 'Venue', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Duration', ], ]
         for subevent in Event_SubEventList:
             tableData.append([subevent.title, 
-                              subevent.venue, 
+                              subevent.display_venue(), 
                               subevent.start_date_and_time.date().strftime("%d-%b-%y"), 
                               subevent.start_date_and_time.time().strftime("%I:%M %p"),
                               subevent.end_date_and_time.date().strftime("%d-%b-%y"),
