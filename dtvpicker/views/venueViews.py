@@ -32,18 +32,20 @@ def venueAliases(request):
     if not request.user.is_superuser:
         return HttpResponseForbidden('Restricted access. For details contact the Core Team.')
      
-     form = VenueGroupAliasForm()
-     aliases = VenueGroupAlias.objects.all()
+    form = VenueGroupAliasForm()
+    aliases = VenueGroupAlias.objects.all()
      
     if request.method == 'POST':
         
         form = VenueGroupAliasForm(request.POST.copy())
         
         if form.is_valid():
-            form.save()
-            return HttpReponseRedirect(settings.SITE_URL + 'DTVPicker/VenueAliases/')
+            newAlias = form.save(commit=False)
+            newAlias.save()
+            form.save_m2m()
+            return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/VenueAliases/')
      
-     return render_to_response('dtvpicker/VenuePages/venueGroupAliasHome.html', locals(), context_instance = RequestContext(request))
+    return render_to_response('dtvpicker/VenuePages/venueGroupAliasHome.html', locals(), context_instance = RequestContext(request))
      
 @login_required
 def editVenueAliases(request, aliasID):
@@ -66,8 +68,10 @@ def editVenueAliases(request, aliasID):
         form = VenueGroupAliasForm(request.POST.copy(), instance = aliasObj)
         
         if form.is_valid():
-            form.save()
-            return HttpReponseRedirect(settings.SITE_URL + 'DTVPicker/VenueAliases/')
+            newAlias = form.save(commit=False)
+            newAlias.save()
+            form.save_m2m()
+            return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/VenueAliases/')
 
     return render_to_response('dtvpicker/VenuePages/venueGroupAliasEdit.html', locals(), context_instance = RequestContext(request))
     
@@ -87,5 +91,5 @@ def deleteVenueAliases(request, aliasID):
         
     aliasObj.delete()
     
-    return HttpReponseRedirect(settings.SITE_URL + 'DTVPicker/VenueAliases/')
+    return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/VenueAliases/')
 

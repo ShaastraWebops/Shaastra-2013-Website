@@ -25,11 +25,8 @@ class VenueGroupAlias(models.Model):
     This model holds various groups of venues and their combined alias.
     E.g., CRC 101-103 is 'CRC Ground Floor', CRC 101-305 is 'CRC', etc.
     """
-    venues = models.ManyToManyField(Venue, help_text = 'Select all the venues that you want to give an alias for.'
-    alias = models.CharField(max_length = 32, help_text = 'Key in an alias for the selected venues.'
-    
-    class Meta:
-        unique_together(venues, alias)
+    venues = models.ManyToManyField(Venue, help_text = 'Select all the venues that you want to give an alias for.', null = False, blank = False)
+    alias = models.CharField(max_length = 32, help_text = 'Key in an alias for the selected venues.')
         
 class SubEvent(models.Model):
     """
@@ -50,7 +47,7 @@ class SubEvent(models.Model):
     def venue_display(self):
         disp_string = ''
         
-        for venue in self.venues:
+        #TODO:for venue in self.venues:
             
 
     def save(self, force_insert=False, force_update=False):

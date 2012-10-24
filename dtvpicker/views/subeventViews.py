@@ -126,7 +126,7 @@ class SubEventDelete(SubEventAddEditDeleteABC):
             return HttpResponseForbidden()
 
         subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
-	subeventRequested.delete()
+    	subeventRequested.delete()
 	ping_google()   
         self.updateEventLockStatus(self.getEvent(kwargs['event']))
         return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
