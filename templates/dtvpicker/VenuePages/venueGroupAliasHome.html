@@ -9,7 +9,7 @@
 {% block dtvBody %}
 
     <p>Currently available aliases in database: </p>
-    <table>
+    <table cellspacing="12">
     {% for alias in aliases %}
         {% if forloop.first %}
             <tr>
@@ -19,7 +19,7 @@
         {% endif %}
         <tr>
             <td>{{alias.alias}}</td>
-            <td>{{alias.venues.all}}</td>
+            <td>{{alias.display_venues}}</td>
             <td> <a href = '{{site_url}}DTVPicker/VenueAliases/Edit/{{alias.id}}/'> Edit </a> </td>
             <td> <a href = '{{site_url}}DTVPicker/VenueAliases/Delete/{{alias.id}}/'> Delete </a> </td>
         </tr>

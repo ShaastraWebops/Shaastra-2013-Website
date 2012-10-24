@@ -33,7 +33,7 @@ def venueAliases(request):
         return HttpResponseForbidden('Restricted access. For details contact the Core Team.')
      
     form = VenueGroupAliasForm()
-    aliases = VenueGroupAlias.objects.all()
+    aliases = VenueGroupAlias.objects.all().order_by('alias')
      
     if request.method == 'POST':
         

@@ -27,7 +27,30 @@ class VenueGroupAlias(models.Model):
     """
     venues = models.ManyToManyField(Venue, help_text = 'Select all the venues that you want to give an alias for.', null = False, blank = False)
     alias = models.CharField(max_length = 32, help_text = 'Key in an alias for the selected venues.')
+    
+    def __unicode__(self):
+        return '%s' % (self.alias,)
         
+    def display_venues(self):
+        """
+        This function creates a neat string representation for the Many to Many field venues.
+        The individual venues must be separated by commas and the block name should be displayed once at the start.
+        """
+        disp_string = ''
+        
+        # Get the venues to be displayed.
+        venueList = self.venues.all()
+        
+        # Separate all the venues with commas. 
+        for venue in venueList:
+            disp_string += venue.title + ', '
+            
+        disp_string = disp_string[:-2]  # Remove the last two characters (which are an extra comma and space added after each venue)
+        
+        disp_string = venueList[0].block + ' ' + disp_string  # Prepend the block name to the venue list
+
+        return disp_string
+
 class SubEvent(models.Model):
     """
     A sub-event is, e.g. Prelims 1, Finals, Workshop 2, Lecture 3, etc., of an event.
@@ -44,11 +67,34 @@ class SubEvent(models.Model):
     def __unicode__(self):
         return '%s' % (self.title,)
         
-    def venue_display(self):
+    def display_venue(self):
+        """
+        This function creates a neat string representation for the Many to Many field venue.
+        If the venues stored in venue match the venues stored under any alias, the alias will be displayed.
+        Else, the individual venues must be separated by commas and the block name should be displayed once at the start.
+        """
         disp_string = ''
         
-        #TODO:for venue in self.venues:
+        # Get the venues to be displayed.
+        venueList = self.venue.all()
+        
+        # Get a list of all the VenueGroupAlias objects stored in the db.
+        venueAliases = VenueGroupAlias.objects.all()
+        
+        # Compare the venue sets of the each of the VenueGroupAlias objects with the venues to be displayed.
+        for venueAlias in venueAliases:
+            if set(venueAlias.venues.all()) == set(venueList):  # If any of them matches, it should be displayed instead of the individual venues.
+                return venueAlias.alias
+                
+        # If none of the alias venue sets match, the individual venues should be separated by commas.
+        for venue in venueList:
+            disp_string += venue.title + ', '
             
+        disp_string = disp_string[:-2]  # Remove the last two characters (which are an extra comma and space added after each venue)
+        
+        disp_string = venueList[0].block + ' ' + disp_string  # Prepend the block name to the venue list
+
+        return disp_string
 
     def save(self, force_insert=False, force_update=False):
 	super(SubEvent, self).save(force_insert, force_update)
