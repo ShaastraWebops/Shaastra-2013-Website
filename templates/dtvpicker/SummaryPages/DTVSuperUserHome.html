@@ -1,0 +1,16 @@
+{% extends "dtvpicker/dtvBase.html" %}
+
+{% block dtvTitle %}
+    Super User Home
+{% endblock %}
+
+{% block onScreenPageTitle %} DTV Super User Home {% endblock %}
+
+{% block dtvBody %}
+    <p>Use the following links to access the various sectors.</p>
+
+    <a href = '{{site_url}}DTVPicker/Summary/'>DTV Summary Sector</a> <br/>
+    <a href = '{{site_url}}DTVPicker/Venues/'>Venue Management Sector</a> <br/>
+    <a href = '{{site_url}}DTVPicker/VenueAliases/'>Venue Alias Management Sector</a> <br/>
+
+{% endblock %}

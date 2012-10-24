@@ -5,9 +5,13 @@ from dtvpicker.views import dtvSummaryHandler, dtvSummaryByEvent, dtvSummaryByVe
                             SubEventAdd, SubEventEdit, SubEventDelete, \
                             LockEvent, UnlockEvent, \
                             venuesHome, editVenue, deleteVenue, \
-                            venueAliasesHome, editVenueAliases, deleteVenueAliases
+                            venueAliasesHome, editVenueAliases, deleteVenueAliases, \
+                            dtvHome
 
 urlpatterns = patterns('',
+
+    # DTV Home
+    url(r'^$', dtvHome),
 
 	# DTV Summary pages - On Screen
 	url(r'^Summary/$', dtvSummaryHandler, name='summary'),

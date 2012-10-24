@@ -13,6 +13,19 @@ from events.models import Event
 from dtvpicker.VenueChoices import VENUE_CHOICES
 
 @login_required
+def dtvHome(request):
+    """
+    This is the handler for the DTV Picker.
+    Super users are shown the links to the various sectors (Venue Mgmt Sector, Venue Alias, Mgmt Sector, DTVP Summany Sector).
+    All other users are redirected to the dtvSummaryHandler.
+    """
+        
+    if request.user.is_superuser:
+        return render_to_response('dtvpicker/SummaryPages/DTVSuperUserHome.html', locals(), context_instance = RequestContext(request))
+        
+    return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
+
+@login_required
 def dtvSummaryHandler(request):
     """
     This is the handler for the DTV Summary.
