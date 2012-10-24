@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import patterns, include, url
+from django.views.generic.simple import direct_to_template
 from django.conf import settings
 from settings import SITE_URL
 from django.contrib.auth import views
@@ -17,6 +18,7 @@ superuser.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', 'views.home', name='home'),
+    url(r'^spons', 'views.spons', name='spons'),
     url(r'^user/', include('users.urls')),
     url(r'^admin/', include('admin.urls')),
     url(r'^core/', include('core.urls')),
