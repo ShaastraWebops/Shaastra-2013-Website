@@ -41,6 +41,7 @@
 <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/jquery.jscrollpane.css"  />
 <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/stylemain.css"  />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="{{site_url}}static/js/jquery.cycle.all.js"></script>
 <script type="text/javascript" src="{{site_url}}static/js/jquery.easing.1.3.js"></script>
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="{{site_url}}static/scripts/lightbox.js"></script>
@@ -93,6 +94,12 @@
 		}
 	}
    	window.onload = function() {
+   			$('#sponslide').cycle({ 
+   		 fx:      'curtainY', 
+   		 speed:    300,
+   		 sync: true, 
+   		 timeout:  2000 
+		});
 		resetabs();
 		setContent();
 	}	
@@ -158,7 +165,7 @@ _gaq.push(['_trackPageview']);
 		        <input type="text" id="search_query" value="Search..."  onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" />
             </form>
         </div>
-		    <div id="topright" class="floatright">
+		    <div id="topright" class="floatleft">
     	 		<div id="icons" class="floatleft">
     	 		    <ul class="nav nav-pills">
     	 		    	  <li><a href="{{site_url}}#" id="home" onclick="$('#body').removeClass('bg1');"><p class="head_text">Home</p></a></li>
@@ -181,6 +188,11 @@ _gaq.push(['_trackPageview']);
         			<div id="tuvnord" class="floatleft" ></div>
         			<div id="iitmlogo" class="floatright" target="_blank" onclick="window.location.href='http://www.iitm.ac.in'"></div>
         		</div>
+    		</div>
+    		<div id="sponslide" class="floatright">
+    <img src="{{site_url}}static/img/bg1.jpg" width="160" height="80" /> 
+    <img src="{{site_url}}static/img/bg2.jpg" width="160" height="80" /> 
+    <img src="{{site_url}}static/img/bg3.jpg" width="160" height="80" /> 
     		</div><br>            
 	</div>
 	<div id="body">
