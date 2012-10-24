@@ -38,7 +38,7 @@
 	      if (response.authResponse) {
 		uid = response.authResponse.userID;
 		accessToken = response.authResponse.accessToken;
-		$('#profile').html("<fb:profile-pic uid="+uid+" linked='true' />");
+		$('#profile').html("<fb:profile-pic uid="+uid+" />");
 		FB.api('/me', function(response) {
 		  userDetails = response;
 		  $("#profile").prepend("<strong>"+ userDetails.name + "</strong>");
@@ -219,7 +219,7 @@
 	else var sValue = li.selectValue;
             
 	//event details location	    
-	show(sValue);
+	window.location.hash="events/"+sValue
       }
 
       function selectItem(li) {

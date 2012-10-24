@@ -2,10 +2,11 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template.context import Context, RequestContext
 from django.shortcuts import render_to_response
 from django.conf import settings
-from events.models import Event, EVENT_CATEGORIES, Tag, Update
+from events.models import Event, EVENT_CATEGORIES, Tag, Update, Sponsor
 from django.template.defaultfilters import slugify
 
 def home(request):
+    spons = Sponsor.objects.all()
     event_set=[]
     for c in EVENT_CATEGORIES :
         event_category_set = Event.objects.filter(category=c[0])

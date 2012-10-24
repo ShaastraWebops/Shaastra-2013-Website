@@ -231,4 +231,13 @@ class MobAppTab(models.Model):
     event = models.OneToOneField(Event, blank=True, null=True)
     text = models.TextField()
 
-
+class Sponsor(models.Model):
+    """
+    This model is for adding details about sponsors
+    """
+    name = models.CharField(max_length = 20,unique = True, help_text = 'Enter company name (Required)')
+    index_number = models.IntegerField(blank = True, help_text = 'Indicates order of importance of sponsor - The most important sponsor will be index 1.')
+    url = models.URLField(blank = True)
+    
+    def __unicode__(self):
+        return self.name    

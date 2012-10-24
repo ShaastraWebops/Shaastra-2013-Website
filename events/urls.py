@@ -7,7 +7,7 @@ from django.views.generic.simple import direct_to_template
 from events.views import *
 
 urlpatterns = patterns('',
-                       url(r'^sponslogo', logo, name='spons-logo'),
+                       url(r'^sponslogo/', logo, name='spons-logo'),
                        url(r'^(?P<event_id>\d+)/register/$', register),
                        url(r'^(?P<event_id>\d+)/cancelregistration/$', cancel_registration),
                        #url(r'^(?P<event_name>.+)/tab/(?P<tab_name>.+)', tabs, name='tab-list'),
