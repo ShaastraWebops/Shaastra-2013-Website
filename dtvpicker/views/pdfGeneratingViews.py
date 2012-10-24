@@ -297,7 +297,7 @@ def dtvSummaryByDate_PDF(request):
                               subevent.start_date_and_time.time().strftime("%I:%M %p"),
                               subevent.end_date_and_time.date().strftime("%d-%b-%y"),
                               subevent.end_date_and_time.time().strftime("%I:%M %p"),
-                              subevent.venue,
+                              subevent.display_venue(),
                               strfdelta(subevent.end_date_and_time - subevent.start_date_and_time, "%H:%M"), ])
                               # For strftime documentation and the format specifiers see
                               # http://docs.python.org/library/datetime.html#strftime-strptime-behavior
@@ -336,7 +336,7 @@ def dtvSummaryByDate_PDF(request):
             # Set the font for the date
             lineheight = PDFSetFont(pdf, 'Times-Roman', 14)            
             # Paint the date
-            pdf.drawString(x, y, requestedDate)
+            pdf.drawString(x, y, requestedDate.strftime("%A %d %B %Y"))
             # Add spacing
             y -= (lineheight + 0.2*cm)
 
