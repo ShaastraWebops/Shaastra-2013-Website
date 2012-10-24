@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% block content %}
-<div id="content" class="bbq" style="width:100%;">
+<div id="content" class="bbq" style="width:100%;height:100%">
   <div id="sidemenu">
     <div id="sidemenutitle"><p>{{evt.title|cut:"H_"|cut:"B_"|cut:"P_"|cut:"C_"|cut:"Ch_"}}</p></div>
     <ul id="sidemenulist">
@@ -8,7 +8,7 @@
       <li class="eventtab" id="etab{{forloop.counter}}" name="{{tab.title|slugify}}"><p>{{tab.title}}</p></li>
     {% endfor %}
            {% if evt.has_tdp == 1 and evt.begin_registration == 1 %}
-               <li class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='{{site_url}}submission/submittdp/{{evt.id}}'">Submit TDP</p></li>
+               <li class="eventtab on"><p>Submit TDP</p></li>
            {% endif %}
     </ul>
   </div>
@@ -21,10 +21,12 @@
         		<table>
             {{ form.as_table }}
             <tr>
-                <td><input type="submit" value="Upload" class="btn btn-large btn-primary" /></td>
+                <td><input type="submit" value="Upload" class="btn btn-large btn-primary" style="margin-top:10px;"/></td>
+                <td></td>
             </tr>
         		</table>
     	</form>
+    	<button class="btn btn-large btn-danger" onclick="window.location.href='{{site_url}}#events/{{evt.title}}'">Back to event</button>
 	</div>
   </div>
  </div>
@@ -55,6 +57,34 @@
     </div>
   </div>
 </div>
+<script type="text/javascript" >
+$(document).ready(function(){
+  $(".menu").css({visibility:"hidden"});
+  openEvent();
+  $('.eventtab').click(function(){
+    //$(".bbq-current .tabtext").hide();
+    //alert(".bbq-current .tabtext #"+$(this).attr('name'));
+    //$(".bbq-current").find("#"+$(this).attr('name')).show();
+    $('.eventtab').removeClass('on');
+    $(this).addClass('on');
+    window.location.hash = "events/"+$(".bbq-current #body").attr('name')+"/" + $(this).attr('name');
+  });
+});
+function openEvent(){
+  $(".tabtext").each(function(index){
+    var height = $(this).height();
+    if(height>375){
+      $(this).css({'height':'375px'});
+      $(this).jScrollPane({showArrows: true,verticalScroll: true,autoReinitialise: true});
+    }
+  });
+  var height2 = $("#textbox2").height();
+  if(height2>300){
+    $("#textbox2").css({'height':'300px'});
+    $("#textbox2").jScrollPane({showArrows: true,verticalScroll: true});
+  }  
+}
+</script>
 {% endblock %}
 {% block events_menu %}
   {% for category in event_set %}
@@ -74,7 +104,7 @@
 {% endblock %}
 {% block footer %}
 <div id="footer">
-  <div id="tabbox" class="tabbox">
+  <div id="tabbox3" class="tabbox">
     <div id="tab1" class="tab">
     </div>
     <div id="tab2" class="tab">
