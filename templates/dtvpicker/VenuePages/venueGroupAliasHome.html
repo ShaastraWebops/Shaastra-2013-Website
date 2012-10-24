@@ -8,6 +8,9 @@
 
 {% block dtvBody %}
 
+    <p>Venue aliases override the default way venues are displayed.</p>
+    <p>By default, venues are displayed separated by commas. However, if an alias is specified, the default rendering is overridden and the alias is shown instead of the individual venues.</p>
+    
     <p>Currently available aliases in database: </p>
     <table cellspacing="12">
     {% for alias in aliases %}
