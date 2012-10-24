@@ -1,0 +1,53 @@
+{% extends "dtvpicker/dtvBase.html" %}
+
+{% block dtvTitle %}
+    Venue Group Alias
+{% endblock %}
+
+{% block onScreenPageTitle %} Venue Group Alias Home {% endblock %}
+
+{% block dtvBody %}
+
+    <p>Currently available aliases in database: </p>
+    <table>
+    {% for alias in aliases %}
+        {% if forloop.first %}
+            <tr>
+                <th>Alias</th>
+                <th>Venues Included</th>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>{{alias.alias}}</td>
+            <td>{{alias.venues.all}}</td>
+            <td> <a href = '{{site_url}}DTVPicker/VenueAliases/Edit/{{alias.id}}/'> Edit </a> </td>
+            <td> <a href = '{{site_url}}DTVPicker/VenueAliases/Delete/{{alias.id}}/'> Delete </a> </td>
+        </tr>
+    {% empty %}
+        No aliases found in database.
+    {% endfor %}
+    </table>
+    
+    <br/><br/>
+    
+    <p>Add an alias here:</p>
+    
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+
+        <input type="submit" value="Save">
+        
+    </form>
+    
+    <a href = '{{site_url}}DTVPicker/Summary/'> Go back to the Summary </a>
+    
+{% endblock %}

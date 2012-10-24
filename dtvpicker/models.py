@@ -20,6 +20,17 @@ class Venue(models.Model):
     def __unicode__(self):
         return '%s' % (self.title,)
         
+class VenueGroupAlias(models.Model):
+    """
+    This model holds various groups of venues and their combined alias.
+    E.g., CRC 101-103 is 'CRC Ground Floor', CRC 101-305 is 'CRC', etc.
+    """
+    venues = models.ManyToManyField(Venue, help_text = 'Select all the venues that you want to give an alias for.'
+    alias = models.CharField(max_length = 32, help_text = 'Key in an alias for the selected venues.'
+    
+    class Meta:
+        unique_together(venues, alias)
+        
 class SubEvent(models.Model):
     """
     A sub-event is, e.g. Prelims 1, Finals, Workshop 2, Lecture 3, etc., of an event.
@@ -35,6 +46,12 @@ class SubEvent(models.Model):
 
     def __unicode__(self):
         return '%s' % (self.title,)
+        
+    def venue_display(self):
+        disp_string = ''
+        
+        for venue in self.venues:
+            
 
     def save(self, force_insert=False, force_update=False):
 	super(SubEvent, self).save(force_insert, force_update)

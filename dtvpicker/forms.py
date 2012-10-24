@@ -140,3 +140,7 @@ class EventUnlockForm(forms.Form):
 class VenueForm(ModelForm):
     class Meta:
         model = Venue
+        
+class VenueGroupAliasForm(ModelForm):
+    class Meta:
+        model = VenueGroupAlias
