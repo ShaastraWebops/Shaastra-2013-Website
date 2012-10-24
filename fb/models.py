@@ -6,12 +6,13 @@ from events.models import Event
 
 # Create your models here.
 
-class EventFB(models.Model):
+class sampark(models.Model):
+  place = models.CharField(max_length = 20)
+  headerlink = models.CharField(max_length = 100)
+  writeup = models.CharField(max_length=500)
+  albumid = models.BigIntegerField()
 
-    event = models.ForeignKey(Event)
-    desc = models.CharField(max_length=500)
-
-    def __unicode__(self):
-        return '%s' % self.event.title
+  def __unicode__(self):
+    return '%s' % self.place
 
 
