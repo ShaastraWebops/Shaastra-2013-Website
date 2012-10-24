@@ -4,8 +4,8 @@ from dtvpicker.views import dtvSummaryHandler, dtvSummaryByEvent, dtvSummaryByVe
                             dtvSummaryByEvent_PDF, dtvSummaryByVenue_PDF, dtvSummaryByDate_PDF, \
                             SubEventAdd, SubEventEdit, SubEventDelete, \
                             LockEvent, UnlockEvent, \
-                            addVenue, \
-                            venueAliases, editVenueAliases, deleteVenueAliases
+                            venuesHome, editVenue, deleteVenue, \
+                            venueAliasesHome, editVenueAliases, deleteVenueAliases
 
 urlpatterns = patterns('',
 
@@ -30,8 +30,10 @@ urlpatterns = patterns('',
     url(r'^(?P<event>.*)/UnlockEvent/$', UnlockEvent()),
     
     # Venue URLs
-    url(r'^AddVenue/$', addVenue),
-    url(r'^VenueAliases/$', venueAliases),
+    url(r'^Venues/$', venuesHome),
+    url(r'^Venues/Edit/(?P<venueID>\d+)/$', editVenue),
+    url(r'^Venues/Delete/(?P<venueID>\d+)/$', deleteVenue),
+    url(r'^VenueAliases/$', venueAliasesHome),
     url(r'^VenueAliases/Edit/(?P<aliasID>\d+)/$', editVenueAliases),
     url(r'^VenueAliases/Delete/(?P<aliasID>\d+)/$', deleteVenueAliases),
 )
