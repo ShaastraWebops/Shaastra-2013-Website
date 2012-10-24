@@ -1,0 +1,39 @@
+<div class="container-fluid">
+<div class="row-fluid">
+<ul id="myTab" class="nav nav-tabs">
+<li class="tabs active"><a id="tab" href="#currentspons" data-toggle="tab">Current Sponsers</a></li>
+<li class="tabs"><a id="tab" href="#spons2011" data-toggle="tab">Previous Sponsers - 2011</a></li>
+<li class="tabs"><a id="tab" href="#spons2010" data-toggle="tab">Previous Sponsers - 2010</a></li>
+</ul>
+<div id="myTabContent" class="tab-content span11">
+<div class="tab-pane fade in active" id="introduction">
+    <div class="tabtext span12 floatleft" id="col2" style="text-align:justify;">
+    <center>
+    <div class="span8">
+    </div><br>
+    <div class="span2 floatleft">
+    {% for s in spons %}
+      <img src="{{site_url}}{{s.url}}" />
+    {% endfor %}
+    </div>
+    </center>
+   </div>                
+</div>
+<div class="tab-pane fade in" id="reachingiitm">
+    <div class="tabtext span12 floatleft" id="col2" style="text-align:justify;">
+    <div class="span8">
+    </div>
+    <div class="span2 floatleft"></div>
+   </div>                
+</div>
+<div class="tab-pane fade in" id="shaastradesk">
+    <div class="tabtext span12 floatleft" id="col2" style="text-align:justify;">
+    <div class="span8">
+    </div>
+    <div class="span2 floatleft">
+    </div>
+    </div>                
+</div>
+</div>
+</div>
+</div>
