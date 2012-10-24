@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <h1>Sampark @ {{place}}</h1>
+    <center>
+    <div id="myCarousel" class="carousel slide">
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+        {% for src in srcs %}
+        <div class="item"><img src="{{src}}" id="Carousel" alt="Shaastra"></img></div>
+        {% endfor %}
+        </div>
+        <!-- Carousel nav -->
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+    </center>
+  </div>
+</div>
