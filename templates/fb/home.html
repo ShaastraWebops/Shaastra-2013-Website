@@ -85,7 +85,7 @@
 			  <div id="{{category.0.category|slugify}}" class="accordion-body collapse">
 			    <ul>
 			    {% for event in category %}
-			      <li><a href="#" onclick="show('{{event.title|slugify}}');">{{event.title}}</a></li>
+			      <li><a href="#events/{{event.title|slugify}}">{{event.title}}</a></li>
 			    {% endfor %}
 			    </ul>
 			  </div>
@@ -173,13 +173,16 @@
 	    cache[url].show();
 	    $( '.bbq-loading' ).hide();
 	  } else {
-	    cache[url] = $( '<div class="bbq-item"></div>' )
+	    cache[url] = $( '<div id='+url+' class="bbq-item"></div>' )
 				.appendTo( '.bbq-content' )
 
 	    // Load external content via AJAX. Note that in order to keep this
 	    // example streamlined, only the content in .infobox is shown. You'll
 	    // want to change this based on your needs.
 				.load( url, function(){
+	      if(temp[0]=='events'){
+		FB.XFBML.parse(document.getElementById(url));
+	      }
 	      $( '.bbq-loading' ).hide();
 	    });
 	  }
@@ -201,13 +204,6 @@
     <!-- jQuery functions -->
     <!-- JS functions -->
     <script type="text/javascript">
-      function show(event_id){
-	$('#content').fadeOut();
-	$('#content').load('{{site_url}}fb/events/'+event_id,function(){
-	  FB.XFBML.parse(document.getElementById('content'));
-	  $('#content').fadeIn();
-	});
-      }
     </script>
     <!-- End JS functions -->
     <!--Script to search-->

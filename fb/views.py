@@ -79,11 +79,11 @@ def home(request):
 
 @csrf_exempt
 def hero(request):
-    #target = urllib.urlopen('https://graph.facebook.com/424935270885525/photos').read()
-    #photos = json.loads(target)["data"]
-    #srcs=[]
-    #for photo in photos:
-    	#srcs.append(photo["images"][0]["source"])
+    target = urllib.urlopen('https://graph.facebook.com/424935270885525/photos').read()
+    photos = json.loads(target)["data"]
+    srcs=[]
+    for photo in photos:
+    	srcs.append(photo["images"][0]["source"])
     return render_to_response('fb/hero.html', locals(),
                               context_instance=RequestContext(request))
 @csrf_exempt
@@ -101,8 +101,8 @@ def events(request, event_name):
             return HttpResponseRedirect(url)
     except:
         pass
-#    event_intro = "Desciption comes here!"
-    event_intro = event.mobapptab.text
+    event_intro = "Desciption comes here!"
+#    event_intro = event.mobapptab.text
     return render_to_response('ajax/fb/events.html', locals(),
                               context_instance=RequestContext(request))
 
