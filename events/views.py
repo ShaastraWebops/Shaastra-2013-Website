@@ -105,7 +105,7 @@ def logo(request):
       spons.index_number = index_number
       spons.year = year
     except:
-      spons = Sponsor(name = name, url = url, index_number = index_number,year = spons.year)
+      spons = Sponsor(name = name, url = url, index_number = index_number,year = year)
     spons.save()
     if(spons):
       return HttpResponse("True")
