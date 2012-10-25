@@ -216,11 +216,14 @@ class SponsorAdmin(admin.ModelAdmin):
                 'about':obj.about,
                 #'events':obj.sponsored_events,                
         }
-        target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()  
-        if target == "True":
-            self.message_user(request,"successful")
-        else:
-            self.message_user(request,"logo not sent")          
+
+        #target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()  
+        self.message_user('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args))
+        
+        #if target == "True":
+        #    self.message_user(request,"successful")
+        #else:
+        #    self.message_user(request,"logo not sent")          
  
         
 class QuoteAdmin(admin.ModelAdmin):
