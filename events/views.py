@@ -94,11 +94,18 @@ def logo(request):
     name = request.GET.get('name','')
     url = request.GET.get('url','')
     index_number = request.GET.get('index','')
+    year = request.GET.get('year',2013)
     #event = Event.objects.get(title=event_name)
     #event.sponsor_logo_url = spons_logo_url
     #event.save()
     #event = Event.objects.get(title=event_name)
-    spons = Sponsor(name = name, url = url, index_number = index)
+    try:
+      spons = Sponsor.objects.get(name = name)
+      spons.url = url
+      spons.index_number = index_number
+      spons.year = year
+    except:
+      spons = Sponsor(name = name, url = url, index_number = index_number,year = spons.year)
     spons.save()
     if(spons):
       return HttpResponse("True")

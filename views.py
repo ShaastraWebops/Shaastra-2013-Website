@@ -50,7 +50,12 @@ def hospi(request):
     return render_to_response('hospi/hospi_home.html',locals(),context_instance = RequestContext(request))
 
 def spons(request):
-    spons = Sponsor.objects.all()
+    present_sponsbig = Sponsor.objects.filter(year=2013,index_number=1)
+    present_sponssmall = Sponsor.objects.filter(year=2013,index_number=2)
+    previous_sponsbig = Sponsor.objects.filter(year=2011,index_number=1)
+    previous_sponssmall = Sponsor.objects.filter(year=2011,index_number=2)
+    previous_sponsbig2 = Sponsor.objects.filter(year=2010,index_number=1)
+    previous_sponssmall2 = Sponsor.objects.filter(year=2011,index_number=2)
     #assert False
     return render_to_response('spons_home.html',locals(),context_instance = RequestContext(request))
 
