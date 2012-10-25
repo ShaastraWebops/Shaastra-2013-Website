@@ -36,6 +36,9 @@
 	  $('#body').removeClass('bg1');
 	  $('#tabbox2').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
 	}else if(url=='spons'){
+	  $('.menu').css({visibility:'hidden'});
+	  $('#tabbox,#tabbox2').css({visibility:'hidden'});
+	  $('#body').removeClass('bg1');
 	}else{
 	  $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
 	  $('#body').addClass('bg1');
