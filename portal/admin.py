@@ -218,7 +218,7 @@ class SponsorAdmin(admin.ModelAdmin):
         }
 
         #target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()  
-        self.message_user('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args))
+        self.message_user(request,'http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args))
         
         #if target == "True":
         #    self.message_user(request,"successful")
