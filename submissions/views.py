@@ -182,11 +182,13 @@ def submittdp(request,event_id):
         #If registered check if submission already made.  
         if registered == 1:
             try:
-                submission = TDPSubmissions.objects.get( team = current_team, basesub__event = evt)  
+                submission = TDPSubmissions.objects.get( team = current_team, basesub__event = evt)
+                submission.basesub.delete()  
                 submission.delete()
             except:
                 try:
                     submission = TDPSubmissions.objects.get( participant = usr, basesub__event = evt) 
+                    submission.basesub.delete()  
                     submission.delete()
                 except:
                     pass
@@ -198,12 +200,11 @@ def submittdp(request,event_id):
                     #Create a BaseSub first and connect TDP to it.
                     submission = form.save(commit=False)
                     submission.basesub = basesub
-                    try: 
-                        if current_team:
-                            submission.team = team
-                            submission.save()
-                            msg = "Your TDP has been submitted successfully. Thank You."
-                    except:
+                    if evt.team_event:
+                        submission.team = current_team
+                        submission.save()
+                        msg = "Your TDP has been submitted successfully. Thank You."
+                    else:
                         submission.participant = usr
                         submission.save()
                         msg = "Your TDP has been submitted successfully. Thank You."
