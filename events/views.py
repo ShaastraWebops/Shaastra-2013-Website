@@ -214,3 +214,4 @@ def cancel_registration(request, event_id):
         # TODO: The template below should have a form which allows the user to choose whether he wants to cancel registration or not. TODO done
         return render_to_response('events/deregister_singular_event.html', locals(), context_instance=RequestContext(request))
 
+

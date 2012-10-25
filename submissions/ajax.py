@@ -73,13 +73,13 @@ def save_edit_subjective(
 
 
 # coord related ajax views start from here
-
+@dajaxice_register
 def submission_list(request):
     dajax = Dajax()
-    subs = \
-        request.user.get_profile().is_coord_of.basesubmission_set.all()
+    evt = request.user.get_profile().is_coord_of
+    subs = TDPSubmissions.objects.filter(basesub__event = evt)
     template = \
-        loader.get_template('ajax/submissions/all_submissions.html')
+        loader.get_template('ajax/submissions/all_tdp_submissions.html')
     html = template.render(RequestContext(request, locals()))
     dajax.assign('.bbq-item', 'innerHTML', html)
     dajax.script("$('#submissions_list').dataTable();")
@@ -127,6 +127,7 @@ def edit_sub(
 
 @dajaxice_register
 def send_checklist(request, form):
+#    return dajax.json()
     dajax = Dajax()
     assign = True
     if form['action'] == 'sub_read':

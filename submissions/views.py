@@ -7,6 +7,7 @@ from django.contrib import *
 from django.contrib.auth.models import User
 from events.models import *
 from submissions.models import *
+from submissions.forms import *
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
@@ -152,3 +153,69 @@ def save_edit_subjective(
     return render_to_response('ajax/submissions/textq_form.html',
                               locals(),
                               context_instance=RequestContext(request))
+
+#TODO:Change upload to path while pushing
+@login_required(login_url=settings.LOGIN_URL)
+def submittdp(request,event_id):
+    msg = "IMPORTANT:Please upload file in PDF format only."
+    usr = request.user
+    profile = usr.get_profile()
+    evt = Event.objects.get( id = event_id )
+    registered = 0
+    form = TDPSubmissionForm() 
+    #Check if user is registered for event
+    if evt.has_tdp:
+        if evt.team_event:
+            teams = Team.objects.filter( event = evt )
+            for t in teams:
+                members = t.members.all()
+                for m in members:
+                    if usr == m:
+                        registered = 1
+                        current_team = t
+        else:
+            try:
+                participant = EventSingularRegistration.objects.get(event = evt, user = usr)
+                registered = 1  
+            except:
+                registered = 0 
+        #If registered check if submission already made.  
+        if registered == 1:
+            try:
+                submission = TDPSubmissions.objects.get( team = current_team, basesub__event = evt)  
+            except:
+                try:
+                    submission = TDPSubmissions.objects.get( participant = usr, basesub__event = evt)  
+                except:            
+                    if request.method == 'POST': 
+                        form = TDPSubmissionForm(request.POST, request.FILES) 
+                        if form.is_valid():
+                            basesub = BaseSubmission(event = evt, submitted = True)
+                            basesub.save()
+                            #Create a BaseSub first and connect TDP to it.
+                            submission = form.save(commit=False)
+                            submission.basesub = basesub
+                            try: 
+                                if current_team:
+                                    submission.team = team
+                                    submission.save()
+                                    msg = "Your TDP has been submitted successfully. Thank You."
+                            except:
+                                submission.participant = usr
+                                submission.save()
+                                msg = "Your TDP has been submitted successfully. Thank You."
+        return render_to_response('ajax/submissions/submittdp.html',locals(),context_instance=RequestContext(request))
+    return render_to_response('ajax/submissions/submittdp.html',locals(),context_instance=RequestContext(request))
+
+@login_required(login_url=settings.LOGIN_URL)
+def ViewTdpSubmissions(request):
+    try:    
+        evt = request.user.get_profile().is_coord_of
+        subs = TDPSubmissions.objects.filter(basesub__event = evt)
+    except:
+        raise Http404()
+    return render_to_response('ajax/submissions/all_tdp_submissions.html',
+                          locals(),
+                          context_instance=RequestContext(request))
+
+

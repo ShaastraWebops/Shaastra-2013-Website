@@ -32,7 +32,7 @@ class AddEventForm(forms.ModelForm):
             'team_size_min',
             'team_size_max',
             'begin_registration',
-            'has_questionnaire',
+            'has_tdp',
             )
         widgets = {'lock_status': forms.HiddenInput(),
                    'unlock_reason': forms.HiddenInput(),

@@ -70,6 +70,9 @@ class Event(models.Model):
             
     begin_registration = models.BooleanField(default=False,
             help_text='Mark as True to begin online registration')
+    has_tdp = models.BooleanField(default=False,
+            help_text='Does this event require participants to submit a TDP?'
+            )
     has_questionnaire = models.BooleanField(default=False,
             help_text='Will the participant have to answer a questionnaire?'
             )
@@ -109,6 +112,12 @@ class Event(models.Model):
             team_size_max = 1
         if errors:
             raise ValidationError(errors)
+
+    def construct_dir_path(self):
+        try:
+            return settings.EVENT_DIR + 'event_' + str(self.id) + '/'
+        except AttributeError:
+            return 'events/event_' + str(self.id) + '/'
 
 class EventSingularRegistration(models.Model):
     

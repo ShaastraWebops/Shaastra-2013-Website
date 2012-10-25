@@ -1,0 +1,133 @@
+{% extends "index.html" %}
+{% block content %}
+<div id="content" class="bbq" style="width:100%;height:100%">
+  <div id="sidemenu">
+    <div id="sidemenutitle"><p>{{evt.title|cut:"H_"|cut:"B_"|cut:"P_"|cut:"C_"|cut:"Ch_"}}</p></div>
+    <ul id="sidemenulist">
+    {% for tab in tab_set %}
+      <li class="eventtab" id="etab{{forloop.counter}}" name="{{tab.title|slugify}}"><p>{{tab.title}}</p></li>
+    {% endfor %}
+           {% if evt.has_tdp == 1 and evt.begin_registration == 1 %}
+               <li class="eventtab on"><p>Submit TDP</p></li>
+           {% endif %}
+    </ul>
+  </div>
+  <div id="maincontent">
+   <div id="textbox">
+		<div class="tabtext">
+    		<form action="" method="POST" enctype="multipart/form-data">
+        		<p style="color:#fff;font-size:18px;font-style:italic;">{{msg}}</p><br>
+        		{% csrf_token %}
+        		<table>
+            {{ form.as_table }}
+            <tr>
+                <td><input type="submit" value="Upload" class="btn btn-large btn-primary" style="margin-top:10px;"/></td>
+                <td></td>
+            </tr>
+        		</table>
+    	</form>
+    	<button class="btn btn-large btn-danger" onclick="window.location.href='{{site_url}}#events/{{evt.title}}'">Back to event</button>
+	</div>
+  </div>
+ </div>
+<div id="updates">
+	<div id="textbox2">
+          <h3>Announcements</h3>
+          {% if evt.begin_registration %}
+            <a href="{{site_url}}events/{{evt.id}}/register/">Registrations are now open. Click to register.</a>
+          {% endif %}
+      {% for a in announcements %}
+<!--          {% if forloop.first %}
+              <h3>Announcements</h3>
+          {% endif %}-->
+	{% if a.event == event and a.expired == 0 %}
+	  <p style="font-size:16px;"><b>{{a.subject}}</b> - {{a.description}}<br></p>
+	{% endif %}
+	{% if forloop.last %}<br>{% endif %}
+      {% endfor %}
+
+      {% for u in updates %}
+	{% if forloop.first %}
+	  <h4>Updates</h4>
+	{% endif %}
+	{% if u.event == event and u.expired == 0 %}
+	  <p><b>{{u.subject}}</b> - {{u.description}}<br></p>
+	{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<script type="text/javascript" >
+$(document).ready(function(){
+  $(".menu").css({visibility:"hidden"});
+  openEvent();
+  $('.eventtab').click(function(){
+    //$(".bbq-current .tabtext").hide();
+    //alert(".bbq-current .tabtext #"+$(this).attr('name'));
+    //$(".bbq-current").find("#"+$(this).attr('name')).show();
+    //$('.eventtab').removeClass('on');
+   // $(this).addClass('on');
+    //window.location.hash = "events/"+$(".bbq-current #body").attr('name')+"/" + $(this).attr('name');
+  });
+});
+function openEvent(){
+  $(".tabtext").each(function(index){
+    var height = $(this).height();
+    if(height>375){
+      $(this).css({'height':'375px'});
+      $(this).jScrollPane({showArrows: true,verticalScroll: true,autoReinitialise: true});
+    }
+  });
+  var height2 = $("#textbox2").height();
+  if(height2>300){
+    $("#textbox2").css({'height':'300px'});
+    $("#textbox2").jScrollPane({showArrows: true,verticalScroll: true});
+  }  
+}
+</script>
+{% endblock %}
+{% block events_menu %}
+  {% for category in event_set %}
+  <div id="menu{{forloop.counter}}" class="menu mentab{{forloop.counter}}">
+    <div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
+    </div>
+    <div id="menulist{{forloop.counter}}" class="menulist">
+      <ul id="menuhead{{forloop.counter}}" class="menuhead">{{category.0.category}}</ul>
+      <ul id="menus{{forloop.counter}}">
+      {% for event in category %}
+	<li onclick="window.location.href='#events/{{event|slugify}}';$('#body').removeClass('bg1');$('#content').addClass('back');">{{event.title}}</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endfor %}
+{% endblock %}
+{% block footer %}
+<div id="footer">
+  <div id="tabbox3" class="tabbox">
+    <div id="tab1" class="tab">
+    </div>
+    <div id="tab2" class="tab">
+    </div>
+    <div id="tab3" class="tab">
+    </div>
+    <div id="tab4" class="tab">
+    </div>
+    <div id="tab5" class="tab">
+    </div>
+    <div id="tab6" class="tab">
+    </div>
+    <div id="tab7" class="tab">
+    </div>
+    <div id="tab8" class="tab">
+    </div>
+    <div id="tab9" class="tab">
+    </div>
+    <div id="tab10" class="tab">
+    </div>
+    <div id="tab11" class="tab">
+    </div>
+  </div>
+</div>
+{% endblock %}
+
