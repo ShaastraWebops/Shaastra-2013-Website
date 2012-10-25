@@ -208,15 +208,22 @@ class SponsorAdmin(admin.ModelAdmin):
     exclude = ['url', 'sponsored_events']
     def save_model(self,request,obj,form,change):
         obj.save()
-        args={'name':obj.name, 'url':MEDIA_URL + str(obj.logo), 'index':obj.index_number}
+        args={
+                'name':obj.name,
+                'url':MEDIA_URL + str(obj.logo),
+                'index':obj.index_number,
+                #'site_url':obj.url,
+                'about':obj.about,
+                #'events':obj.sponsored_events,                
+        }
 
-        #target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()  
-        self.message_user(request,'http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args))
+        target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()  
+        #self.message_user(request,'http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args))
         
-        #if target == "True":
-        #    self.message_user(request,"successful")
-        #else:
-        #    self.message_user(request,"logo not sent")          
+        if target == "True":
+            self.message_user(request,"successful")
+        else:
+            self.message_user(request,"logo not sent")          
  
         
 class QuoteAdmin(admin.ModelAdmin):
