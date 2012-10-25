@@ -183,27 +183,30 @@ def submittdp(request,event_id):
         if registered == 1:
             try:
                 submission = TDPSubmissions.objects.get( team = current_team, basesub__event = evt)  
+                submission.delete()
             except:
                 try:
-                    submission = TDPSubmissions.objects.get( participant = usr, basesub__event = evt)  
-                except:            
-                    if request.method == 'POST': 
-                        form = TDPSubmissionForm(request.POST, request.FILES) 
-                        if form.is_valid():
-                            basesub = BaseSubmission(event = evt, submitted = True)
-                            basesub.save()
-                            #Create a BaseSub first and connect TDP to it.
-                            submission = form.save(commit=False)
-                            submission.basesub = basesub
-                            try: 
-                                if current_team:
-                                    submission.team = team
-                                    submission.save()
-                                    msg = "Your TDP has been submitted successfully. Thank You."
-                            except:
-                                submission.participant = usr
-                                submission.save()
-                                msg = "Your TDP has been submitted successfully. Thank You."
+                    submission = TDPSubmissions.objects.get( participant = usr, basesub__event = evt) 
+                    submission.delete()
+                except:
+                    pass
+            if request.method == 'POST': 
+                form = TDPSubmissionForm(request.POST, request.FILES) 
+                if form.is_valid():
+                    basesub = BaseSubmission(event = evt, submitted = True)
+                    basesub.save()
+                    #Create a BaseSub first and connect TDP to it.
+                    submission = form.save(commit=False)
+                    submission.basesub = basesub
+                    try: 
+                        if current_team:
+                            submission.team = team
+                            submission.save()
+                            msg = "Your TDP has been submitted successfully. Thank You."
+                    except:
+                        submission.participant = usr
+                        submission.save()
+                        msg = "Your TDP has been submitted successfully. Thank You."
         return render_to_response('ajax/submissions/submittdp.html',locals(),context_instance=RequestContext(request))
     return render_to_response('ajax/submissions/submittdp.html',locals(),context_instance=RequestContext(request))
 
