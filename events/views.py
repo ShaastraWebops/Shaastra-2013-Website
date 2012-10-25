@@ -94,11 +94,18 @@ def logo(request):
     name = request.GET.get('name','')
     url = request.GET.get('url','')
     index_number = request.GET.get('index','')
+    year = request.GET.get('year',2013)
     #event = Event.objects.get(title=event_name)
     #event.sponsor_logo_url = spons_logo_url
     #event.save()
     #event = Event.objects.get(title=event_name)
-    spons = Sponsor(name = name, url = url, index_number = index)
+    try:
+      spons = Sponsor.objects.get(name = name)
+      spons.url = url
+      spons.index_number = index_number
+      spons.year = year
+    except:
+      spons = Sponsor(name = name, url = url, index_number = index_number,year = spons.year)
     spons.save()
     if(spons):
       return HttpResponse("True")
@@ -206,4 +213,5 @@ def cancel_registration(request, event_id):
         # If the form has not been submitted, we have to render the form.
         # TODO: The template below should have a form which allows the user to choose whether he wants to cancel registration or not. TODO done
         return render_to_response('events/deregister_singular_event.html', locals(), context_instance=RequestContext(request))
+
 

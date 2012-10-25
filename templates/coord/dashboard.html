@@ -85,7 +85,7 @@
             if(data.action=='0'){alert('Please select an Action');return false;}
             if(!data.sub_checklist){alert('Select a Submission!');return false;}
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.submissions.send_checklist(Dajax.process,{'form':data})
+            Dajaxice.submissions.send_checklist(Dajax.process,{'form':data,})
             return false;
             
         }
@@ -352,6 +352,9 @@
         		<li><a href="#submissions" name='submissions' id = 'submissions' >Submissions</a></li>
         		{% else %}
         		<li><a href='#registrations' name='registrations' id = 'registrations' >Registrations</a></li>
+        		{% endif %}
+                {% if event.has_tdp %}
+                <li><a href='#viewtdpsubmissions' name='viewtdpsubmissions' id = 'viewtdpsubmissions' >View TDP Submissions</a></li>
         		{% endif %}
          {% endif %}       		
         		<li><a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a></li>
