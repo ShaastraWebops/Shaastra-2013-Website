@@ -162,14 +162,14 @@ _gaq.push(['_trackPageview']);
 		        <input type="text" id="search_query" value="Search..."  onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" />
             </form>
         </div>
-		    <div id="topright" class="floatright">
+		    <div id="topright" class="floatleft">
     	 		<div id="icons" class="floatleft">
     	 		    <ul class="nav nav-pills">
     	 		    	  <li><a href="{{site_url}}#" id="home" onclick="$('#body').removeClass('bg1');"><p class="head_text">Home</p></a></li>
     	 		        <li><a href="{{site_url}}#events" id="events"><p class="head_text">Events</p></a></li> 
                         <li><a href="{{site_url}}events/sampark/" id="sampark"><p class="head_text">Sampark</p></a></li>       					
             			<li><a id="hospitality" href="{{site_url}}#hospi"><p class="head_text">Hospitality</p></a></li>
-            			<!--<li><a id="spons"><p class="head_text">Sponsorship</p></a></li>-->
+            			<li><a id="spons" href="{{site_url}}#spons"><p class="head_text">Sponsors</p></a></li>
             			<!--<li><a id="forums" href="http://forums.shaastra.org" target="_blank"><p class="head_text">Forums</p></a></li>-->
                                 {% if user.is_authenticated %}
                             <!--        <li><a id="set"><p class="head_text">Settings</p></a></li>-->

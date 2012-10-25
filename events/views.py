@@ -91,13 +91,19 @@ def sampark(request):
     return render_to_response('events/sampark_home.html', locals(), context_instance=RequestContext(request))
 
 def logo(request):
-    event_name = request.GET.get('event_name','')
-    spons_logo_url = request.GET.get('url','')
-    event = Event.objects.get(title=event_name)
-    event.sponsor_logo_url = spons_logo_url
-    event.save()
-    event = Event.objects.get(title=event_name)
-    return HttpResponse("True")
+    name = request.GET.get('name','')
+    url = request.GET.get('url','')
+    index_number = request.GET.get('index','')
+    #event = Event.objects.get(title=event_name)
+    #event.sponsor_logo_url = spons_logo_url
+    #event.save()
+    #event = Event.objects.get(title=event_name)
+    spons = Sponsor(name = name, url = url, index_number = index)
+    spons.save()
+    if(spons):
+      return HttpResponse("True")
+    else:
+      return HttpResponse("False")
     
 
 ### Methods for event registration:
