@@ -6,7 +6,9 @@
       <li class="eventtab" id="etab{{forloop.counter}}" name="{{tab.title|slugify}}"><p>{{tab.title}}</p></li>
     {% endfor %}
            {% if event.has_tdp == 1 and event.begin_registration == 1 %}
-            <li class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='{{site_url}}submission/submittdp/{{event.id}}'">Submit TDP</p></li>
+
+            <li class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');$('#textbox').load({{site_url}}'submission/submittdp/{{event.id}}');">Submit TDP</p></li>
+
            {% endif %}
     </ul>
   </div>

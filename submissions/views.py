@@ -164,7 +164,6 @@ def submittdp(request,event_id):
     registered = 0
     form = TDPSubmissionForm() 
     #Check if user is registered for event
-    
     if evt.has_tdp:
         if evt.team_event:
             teams = Team.objects.filter( event = evt )
@@ -206,6 +205,7 @@ def submittdp(request,event_id):
                                 submission.save()
                                 msg = "Your TDP has been submitted successfully. Thank You."
         return render_to_response('ajax/submissions/submittdp.html',locals(),context_instance=RequestContext(request))
+    return render_to_response('ajax/submissions/submittdp.html',locals(),context_instance=RequestContext(request))
 
 @login_required(login_url=settings.LOGIN_URL)
 def ViewTdpSubmissions(request):
