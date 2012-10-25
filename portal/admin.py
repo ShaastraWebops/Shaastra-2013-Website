@@ -210,7 +210,7 @@ class SponsorAdmin(admin.ModelAdmin):
         obj.save()
         args={
                 'name':obj.name,
-                'logo':MEDIA_URL + str(obj.logo),
+                'url':MEDIA_URL + str(obj.logo),
                 'index':obj.index_number,
                 #'site_url':obj.url,
                 'about':obj.about,
