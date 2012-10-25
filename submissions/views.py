@@ -168,9 +168,9 @@ def submittdp(request,event_id):
         if evt.team_event:
             teams = Team.objects.filter( event = evt )
             for t in teams:
-                members = t.members.objects.all()
+                members = t.members.all()
                 for m in members:
-                    if usr is m:
+                    if usr == m:
                         registered = 1
                         current_team = t
         else:
