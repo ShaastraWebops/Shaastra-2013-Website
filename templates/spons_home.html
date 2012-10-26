@@ -7,7 +7,7 @@
 </ul>
 <div id="myTabContent" class="tab-content span11">
 <div class="tab-pane fade in active" id="currentspons">
-    <div class="tabtext span12 floatleft" id="col2" style="text-align:justify;">
+    <div class="tabtext floatleft" id="col2" style="text-align:justify;">
     <center>
     {% for s in present_sponsors %}
       <p><img src="{{s.url}}" /></p>
@@ -16,7 +16,7 @@
    </div>                
 </div>
 <div class="tab-pane fade in" id="spons2011">
-    <div class="tabtext span12 floatleft" id="col2" style="text-align:justify;">
+    <div class="tabtext floatleft" id="col2" style="text-align:justify;">
     <center>
     {% for s in previous_sponsors %}
       <p><img src="{{s.url}}" /></p>
@@ -25,7 +25,7 @@
     </div>                
 </div>
 <div class="tab-pane fade in" id="spons2010">
-    <div class="tabtext span12 floatleft" id="col2" style="text-align:justify;">
+    <div class="tabtext floatleft" id="col2" style="text-align:justify;">
     <center>
     {% for s in previous_sponsors2 %}
       <p><img src="{{s.url}}" /></p>
