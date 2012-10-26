@@ -24,6 +24,11 @@
 	$('#body').removeClass('bg1');
 	return;
       }
+      
+	  $('#footer').css({display:'block'});
+	  $('#container').css({top:'0px'});
+	  $('#body').css({height:'450px'});
+      
       $('.bbq-loading').show();
       if(url=='events'||url=='hospi'||url=='spons') {
 	$('#generalContents').load(url,function(){
@@ -38,6 +43,8 @@
 	}else if(url=='spons'){
 	  $('.menu').css({visibility:'hidden'});
 	  $('#tabbox,#tabbox2').css({visibility:'hidden'});
+	  $('#footer').css({display:'none'});
+	  $('#body').css({height:'580px'});
 	  $('#body').removeClass('bg1');
 	}else{
 	  $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
