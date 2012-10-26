@@ -33,7 +33,7 @@
 {% endblock %}
 
 {% block body %}
-    <p>{{team.name}} home</p>
+    <p><b>{{team.name}}</b> Home</p>
     <p>
         {% ifequal team_size_message 'big' %}
             Your team has too many members. The maximum number allowable is {{event.team_size_max}}.
@@ -46,11 +46,11 @@
         {% endifequal %}
     </p>    
     <div id="list_of_members">
-        <h3>Members:</h3>
+        <p><b>Members:</b><p>
         {% if team.leader == user %}
             <p>Click to remove a member (you can't remove yourself this way)</p>
         {% endif %}
-        <table>
+        <table id="msg">
             <tr><td>You ({{request.user.username}})</td></tr>
             {% for member in team.members.all %}
                 {% if member != user %}
@@ -111,7 +111,7 @@
                 <p>
                     <div class="button2">
                         <a href="#">
-                            <input type="submit" value="Add" />
+                            <input class="btn btn-primary" type="submit" value="Add" />
                         </a>
                         <span></span>
                     </div>
@@ -143,7 +143,7 @@
                 <input type="hidden" name="team_id" value="{{ team.id }}">
                 <div class="button2">
                     <a href="#">
-                        <input type="submit" value="Change Leader" />
+                        <input type="submit" class="btn btn-primary" value="Change Leader" />
                     </a>
                     <span></span>
                 </div>
@@ -151,7 +151,7 @@
         </div>
         <br />
         <div id="dissolve_team">
-            <a href="{{ site_url }}user/teams/{{ team.id }}/dissolve/">Dissolve this team</a>
+            <a class="btn btn-large btn-danger" href="{{ site_url }}user/teams/{{ team.id }}/dissolve/">Dissolve this team</a>
         </div>
         <br /><br />
     {% endif %}   
