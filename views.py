@@ -6,6 +6,11 @@ from events.models import Event, EVENT_CATEGORIES, Tag, Update, Sponsor
 from django.template.defaultfilters import slugify
 
 def home(request):
+    fragment = request.GET.get('_escaped_fragment_','')
+    if fragment == 'hospi':
+        return render_to_response('ajax/hospi_home.html',locals(),context_instance = RequestContext(request))
+    elif fragment == 'spons':
+	return render_to_response('ajax/spons_home.html',locals(),context_instance = RequestContext(request))
     event_set=[]
     for c in EVENT_CATEGORIES :
         event_category_set = Event.objects.filter(category=c[0])

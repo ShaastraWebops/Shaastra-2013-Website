@@ -43,9 +43,6 @@
             <a href="{{site_url}}events/{{event.id}}/register/">Registrations are now open. Click to register.</a>
           {% endif %}
       {% for a in announcements %}
-<!--          {% if forloop.first %}
-              <h3>Announcements</h3>
-          {% endif %}-->
 	{% if a.event == event and a.expired == 0 %}
 	  <p style="font-size:16px;"><b>{{a.subject}}</b> - {{a.description}}<br></p>
 	{% endif %}

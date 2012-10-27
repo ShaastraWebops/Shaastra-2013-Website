@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta name="google-site-verification" content="B1VpNZ2SMddKxXIaZt4DVyhYVHOwIcR3kQOQYvljcgk" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Shaastra</title>
+  <style type="text/css">
+  #cont{
+    position:absolute;
+    top:0px;
+    width:175px;
+    background-color: rgba(8, 8, 8, 0.6);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#60080808,endColorstr=#60080808);
+    left:70%;
+    visibility: hidden;
+  }
+  #cont ul{
+    width: 175px;
+  }
+  #cont li p:hover{
+    text-decoration: underline;
+    cursor:pointer;
+  }
+  .back{
+    background: rgba(0, 0, 0, 0.7) ! important;
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#70000000,endColorstr=#70000000);
+  }
+  #textbox{
+    width:700px;
+  }
+  .tabtext{
+  width:620px;
+  position: relative;
+  overflow: auto;
+  }
+  .tabtext th label{
+    font-size:18px;
+    line-height: 25px !important; 
+  }
+  </style>
+  <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/style.css"  />
+  <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/jquery.jscrollpane.css"  />
+  <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/stylemain.css"  />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/scriptmain.js" charset = "utf-8"></script>
+  <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-tab.js" charset = "utf-8"></script>
+  <script type="text/javascript" src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script>
+  {% load dajaxice_templatetags %}
+  {% dajaxice_js_import %}
+  <script>
+   	function getWindowHeight() {
+		var windowHeight = 0;
+		if (typeof(window.innerHeight) == 'number') {
+			windowHeight = window.innerHeight;
+		}
+		else {
+			if (document.documentElement && document.documentElement.clientHeight) {
+				windowHeight = document.documentElement.clientHeight;
+			}
+			else {
+				if (document.body && document.body.clientHeight) {
+					windowHeight = document.body.clientHeight;
+				}
+			}
+		}
+		return windowHeight;
+	}
+	function setContent() {
+		if (document.getElementById) {
+			var windowHeight = getWindowHeight();
+			if (windowHeight > 0) {
+				var contentElement = document.getElementById('container');
+				var contentHeight = contentElement.offsetHeight;
+				if (windowHeight - contentHeight > 0) {
+					contentElement.style.position = 'relative';
+					contentElement.style.top = ((windowHeight / 2) - (contentHeight / 2)) + 'px';
+				}
+				else {
+					loadingElement.style.position = 'static';
+				}
+			}
+		}
+	}
+   	window.onload = function() {
+   	  $(".bbq-current .eventtab:first").addClass('on');
+   	  $('#body').addClass('bg1');
+		setContent();
+	}	
+	window.onresize = function() {
+		setContent();
+	}
+</script>
+  <link rel="shortcut icon" href="{{site_url}}static/img/favicon.ico" />
+  <!-- Google analytics --> 
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34424327-1']);
+    _gaq.push(['_setDomainName', 'shaastra.org']);
+    _gaq.push(['_setAllowLinker', true]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <!-- End of Google analytics --> 
+
+  </head> 
+  <body>
+    <center>
+      <div id="container">
+	<div id="header">
+	  <div id="logo" class="floatleft" onclick="window.location.href='{{site_url}}'"></div>
+	  <div class="span2" id="search">
+	    <form action="" onsubmit="return false;">
+	      <input type="text" id="search_query" value="Search..."  onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') 	{this.value = 'Search...';}" />
+            </form>
+	  </div>
+	  <div id="topright" class="floatleft">
+	    <div id="icons" class="floatleft">
+	      <ul class="nav nav-pills">
+		<li><a href="{{site_url}}#" id="home" onclick="$('#body').removeClass('bg1');"><p class="head_text">Home</p></a></li>
+		<li><a href="{{site_url}}#events" id="events"><p class="head_text">Events</p></a></li> 
+		<li><a href="{{site_url}}events/sampark/" id="sampark"><p class="head_text">Sampark</p></a></li>       					
+		<li><a id="hospitality" href="{{site_url}}#!hospi"><p class="head_text">Hospitality</p></a></li>
+		<li><a id="spons" href="{{site_url}}#!spons"><p class="head_text">Sponsors</p></a></li>
+	    <!--<li><a id="forums" href="http://forums.shaastra.org" target="_blank"><p class="head_text">Forums</p></a></li>-->
+		{% if user.is_authenticated %}
+    <!--        <li><a id="set"><p class="head_text">Settings</p></a></li>-->
+		<li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
+		{% else %}
+		<li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li> 
+		<li><a id="reg" href="{{site_url}}user/register/"><p class="head_text">Register</p></a></li>
+		{% endif %}
+		<li><a id="conspire" data-toggle="modal" href="#contacts"><p class="head_text">Contact us</p></a></li>
+	      </ul>
+	    </div>
+	    <div id="twologos" class="floatright">
+	      <div id="tuvnord" class="floatleft" ></div>
+	      <div id="iitmlogo" class="floatright" target="_blank" onclick="window.location.href='http://www.iitm.ac.in'"></div>
+	    </div>
+	  </div><br>            
+	</div>
+	<div id="body">
+	  <div id="cont" class="menulist">
+            <ul>
+	      <li><p class="head_text" onclick="window.location.href='{{site_url}}user/password_change/'">Change Password</p></li>
+	      <li><p class="head_text" onclick="window.location.href='{{site_url}}user/editprofile/'">Edit Profile</p></li>  
+	    </ul>
+	  </div>
+	  <div id="content" class="bbq" style="width:100%">
+	    <div class="bbq-content">
+	    <div class="bbq-item bbq-current">
+	      <div id="body" name="{{event|slugify}}">
+		<div id="sidemenu">
+		  <div id="sidemenutitle"><p>{{event.title|cut:"H_"|cut:"B_"|cut:"P_"|cut:"C_"|cut:"Ch_"}}</p></div>
+		  <ul id="sidemenulist">
+		  {% for tab in tab_set %}
+		    <li class="eventtab" id="etab{{forloop.counter}}" name="{{tab.title|slugify}}"><p>{{tab.title}}</p></li>
+		  {% endfor %}
+		  {% if user.is_authenticated %}
+			{% if event.has_tdp == 1 and event.begin_registration == 1 %}
+			    <li class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='{{site_url}}submission/submittdp/{{event.id}}'">Submit TDP</p></li>
+
+			{% endif %}
+		  {% endif %}
+		  </ul>
+		</div>
+		<div id="maincontent">
+		  <div id="textbox">
+		  {% for tab in tabs %}
+		    <div class="tabtext" id="{{tab.0.title|slugify}}" style="color:#FFF;">
+		      <div class="wrapper">
+		      <!-- Tabs -->
+		      <p>
+		      {{tab.0.text|safe}}
+		      {% if tab.1 %}
+			<hr/>
+			Downloads:<br>
+			<ul>
+			{% for file in tab.1 %}
+			    <li><a href="{{file.url}}" target="_blank" style="color:#FFF;">{{file.title}}</a></li>
+			{% endfor %}
+			</ul>
+		      {% endif %}
+		      </p>
+		      </div>
+		    </div>
+		  {% endfor %}
+		  </div>
+		</div>
+		<div id="updates">
+		  <div id="textbox2">
+		    <h3>Announcements</h3>
+		    {% if event.begin_registration %}
+		      <a href="{{site_url}}events/{{event.id}}/register/">Registrations are now open. Click to register.</a>
+		    {% endif %}
+		    {% for a in announcements %}
+		      {% if a.event == event and a.expired == 0 %}
+			<p style="font-size:16px;"><b>{{a.subject}}</b> - {{a.description}}<br></p>
+		      {% endif %}
+		      {% if forloop.last %}<br>{% endif %}
+		    {% endfor %}
+
+		    {% for u in updates %}
+		      {% if forloop.first %}
+			<h4>Updates</h4>
+		      {% endif %}
+		      {% if u.event == event and u.expired == 0 %}
+			<p><b>{{u.subject}}</b> - {{u.description}}<br></p>
+		      {% endif %}
+		    {% endfor %}
+		  </div>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div id="social">
+	  <div onclick="window.open('https://www.facebook.com/Shaastra');" id="fb" class="socialapp">
+	  </div>
+	  <div id="flickr" onclick="javascript:window.open('http://www.flickr.com/photos/shaastra/');" class="socialapp">
+	  </div>
+	  <div onclick="window.open('https://twitter.com/Shaastra_IITM');" id="twitter" class="socialapp">
+	  </div>
+	  <div onclick="window.open('http://www.youtube.com/iitmshaastra')" id="youtube" class="socialapp">
+	  </div>
+	</div>
+      </div>
+      <div id="footer">
+	<div id="tabbox" class="tabbox">
+	  <div id="tab1" class="tab">
+	  </div>
+	  <div id="tab2" class="tab">
+	  </div>
+	  <div id="tab3" class="tab">
+	  </div>
+	  <div id="tab4" class="tab">
+	  </div>
+	  <div id="tab5" class="tab">
+	  </div>
+	  <div id="tab6" class="tab">
+	  </div>
+	  <div id="tab7" class="tab">
+	  </div>
+	  <div id="tab8" class="tab">
+	  </div>
+	  <div id="tab9" class="tab">
+	  </div>
+	  <div id="tab10" class="tab">
+	  </div>
+	  <div id="tab11" class="tab">
+	  </div>
+	</div>
+      </div>
+    </div>
+    </center>
+  </body>
+</html>

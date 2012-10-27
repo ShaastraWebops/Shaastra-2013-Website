@@ -9,27 +9,42 @@
 <div class="tab-pane fade in active" id="currentspons">
     <div class="tabtext floatleft" id="col2" style="text-align:justify; height:500px">
     <center>
+    <table>    
     {% for s in present_sponsors %}
-      <p><img src="{{s.url}}" /></p>
+    <tr>
+      <td><img src="{{s.logo}}" /><p>{{s.about}}</p></td>
+      <td>{{s.url}}</td>
+    </tr>
     {% endfor %}
+    </table>
     </center>
    </div>                
 </div>
 <div class="tab-pane fade in" id="spons2011">
     <div class="tabtext floatleft" id="col2" style="text-align:justify; height:500px">
     <center>
+    <table>
     {% for s in previous_sponsors %}
-      <p><img src="{{s.url}}" /></p>
+    <tr>
+      <td><img src="{{s.logo}}" /><p>{{s.about}}</p></td>
+      <td>{{s.url}}</td>
+    </tr>
     {% endfor %}
+    </table>
     </center>
     </div>                
 </div>
 <div class="tab-pane fade in" id="spons2010">
     <div class="tabtext floatleft" id="col2" style="text-align:justify; height:500px">
     <center>
+    <table>
     {% for s in previous_sponsors2 %}
-      <p><img src="{{s.url}}" /></p>
+    <tr>
+      <td><img src="{{s.logo}}" /><p>{{s.about}}</p></td>
+      <td>{{s.url}}</td>
+    </tr>
     {% endfor %}
+    </table>
     </center>
     </div>                
 </div>

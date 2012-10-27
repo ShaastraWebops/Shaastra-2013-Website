@@ -14,6 +14,8 @@
       // Get the hash (fragment) as a string, with any leading # removed. Note that
       // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
       var url = $.param.fragment();
+      if (url[0] == '!')
+	url = url.slice(1);
       var temp = url.split('/')
       var event_name = temp[0] + '/' + temp[1], tab_name = temp[2];
       $( '.bbq-item,.bbq-default,#generalContents' ).hide();
@@ -24,11 +26,9 @@
 	$('#body').removeClass('bg1');
 	return;
       }
-      
-	  $('#footer').css({display:'block'});
-	  $('#container').css({top:'0px'});
-	  $('#body').css({height:'450px'});
-      
+      $('#footer').css({display:'block'});
+      $('#container').css({top:'0px'});
+      $('#body').css({height:'450px'});
       $('.bbq-loading').show();
       if(url=='events'||url=='hospi'||url=='spons') {
 	$('#generalContents').load(url,function(){
@@ -101,7 +101,7 @@
       <ul id="menuhead{{forloop.counter}}" class="menuhead">{{category.0.category}}</ul>
       <ul id="menus{{forloop.counter}}">
       {% for event in category %}
-	<li onclick="window.location.href='#events/{{event|slugify}}';$('#body').removeClass('bg1');$('#content').addClass('back');">{{event.title}}</li>
+	<li onclick="window.location.href='#!events/{{event|slugify}}';$('#body').removeClass('bg1');$('#content').addClass('back');">{{event.title}}</li>
       {% endfor %}
       </ul>
     </div>
