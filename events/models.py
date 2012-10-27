@@ -247,7 +247,9 @@ class Sponsor(models.Model):
     name = models.CharField(max_length = 20,unique = True, help_text = 'Enter company name (Required)')
     index_number = models.IntegerField(blank = True, help_text = 'Indicates order of importance of sponsor - The most important sponsor will be index 1.')
     url = models.URLField(blank = True)
+    logo = models.URLField(blank = True)
     year = models.IntegerField(default = "2013")
+    about = models.CharField(max_length = 50, help_text = 'Type of sponsor')
     
     def __unicode__(self):
-        return self.name    
+        return self.name

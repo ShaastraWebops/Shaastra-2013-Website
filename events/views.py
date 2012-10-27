@@ -14,11 +14,24 @@ import urllib
 
 # Create your views here.
 def home(request):
-    events = Event.objects.all()
-    initial_updates = Update.objects.filter(category = 'Update')
-    updates = sorted(initial_updates, key=attrgetter('id'), reverse=True)
-    initial_announcements = Update.objects.filter(category = 'Announcement')
-    announcements = sorted(initial_announcements, key=attrgetter('id'), reverse=True)
+    event_name = request.GET.get('_escaped_fragment_','')
+    if event_name:
+	event_name = event_name.replace('-', ' ')
+	if event_name=="robo oceana":
+	    event_name="robo-oceana"
+	elif event_name=="lectures video conferences":
+	    event_name="lectures & video conferences"
+	if event_name == 'sampark/' :
+	    return sampark(request)
+	event = Event.objects.get(title=event_name)
+	initial_updates = Update.objects.filter(category = 'Update')
+	updates = sorted(initial_updates, key=attrgetter('id'), reverse=True)
+	initial_announcements = Update.objects.filter(category = 'Announcement')
+	announcements = sorted(initial_announcements, key=attrgetter('id'), reverse=True)
+	tab_set = event.tab_set.all()
+	files_set = [tab.tabfile_set.all() for tab in tab_set]
+	tabs = zip(tab_set,files_set)
+	return render_to_response('ajax/events/events.html', locals(), context_instance=RequestContext(request))
     return render_to_response('events/events_home.html', locals(), context_instance=RequestContext(request))
 
 def events(request, event_name):
@@ -93,6 +106,8 @@ def sampark(request):
 def logo(request):
     name = request.GET.get('name','')
     url = request.GET.get('url','')
+    logo = request.GET.get('logo','')
+    about = request.GET.get('about','')
     index_number = request.GET.get('index','')
     year = request.GET.get('year',2013)
     #event = Event.objects.get(title=event_name)
@@ -104,8 +119,10 @@ def logo(request):
       spons.url = url
       spons.index_number = index_number
       spons.year = year
+      spons.logo = logo
+      spons.about = about
     except:
-      spons = Sponsor(name = name, url = url, index_number = index_number,year = year)
+      spons = Sponsor(name = name, url = url, index_number = index_number,year = year, logo = logo, about = about)
     spons.save()
     if(spons):
       return HttpResponse("True")
