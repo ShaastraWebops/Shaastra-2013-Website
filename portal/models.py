@@ -18,7 +18,6 @@ SPONSOR_CHOICES = (
     ('Event Sponsor', 'Event Sponsor'),
     ('Hospitality Sponsor', 'Hospitality Sponsor'),
     ('Outreach Sponsor', 'Outreach Sponsor'),
-    ('Associate Sponsor', 'Associate Sponsor'),
     ('Apparel Sponsor', 'Apparel Sponsor'),
     ('Gift Sponsor', 'Gift Sponsor'),
     ('Research Partner', 'Research Partner'),
@@ -27,6 +26,25 @@ SPONSOR_CHOICES = (
     
 )
 
+#To specify kind of 2013 sponsor
+NEW_SPONSOR_CHOICES = (
+    ('Main Sponsor', 'Main Sponsor'),
+    ('Associate Sponsor', 'Associate Sponsor'),
+    ('Co Sponsor', 'Co Sponsor'),
+    ('Presenting Partner', 'Presenting Partner'),
+    ('Event Sponsor', 'Event Sponsor'),
+    ('Hospitality Sponsor', 'Hospitality Sponsor'),
+    ('Telecom Partner', 'Telecom Partner'),
+    ('Publicity Partner', 'Publicity Partner'),
+    ('Internship Partner', 'Internship Partner'),
+    ('Research Partner', 'Research Partner'),
+    ('Outreach Sponsor', 'Outreach Sponsor'),
+    ('Apparel Sponsor', 'Apparel Sponsor'),
+    ('Gift Sponsor', 'Gift Sponsor'),
+    ('Green Partner', 'Green Partner'),
+    ('Data Partner', 'Data Partner'),
+    
+)
 
 
 
@@ -155,8 +173,8 @@ class Sponsor(models.Model):
     logo=models.FileField(upload_to='present_sponsors')
     name=models.CharField(max_length=20,unique=True, help_text='Enter company name (Required)')
     url=models.URLField()
-    index_number=models.IntegerField(help_text='To help order the images, for example - Primary Sponsor will be 1')
-    about=models.CharField(max_length=100, help_text='Primary Sponsor, Associate Sponsor, Apparel Sponsor etc.')
+    about=models.CharField(max_length=100, choices=NEW_SPONSOR_CHOICES)
+    index_number=models.IntegerField(help_text='Helps to order the sponsor by their importance. Ex. Main sponsor will be 1')
     sponsored_events = models.ManyToManyField(Event, blank=True)
     
     def __unicode__(self):
