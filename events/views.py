@@ -14,8 +14,9 @@ import urllib
 
 # Create your views here.
 def home(request):
-    event_name = request.GET.get('_escaped_fragment_','').split('/')[1]
+    event_name = request.GET.get('_escaped_fragment_','')
     if event_name:
+        event_name = event_name.split('/')[1]
 	event_name = event_name.replace('-', ' ')
 	if event_name=="robo oceana":
 	    event_name="robo-oceana"
