@@ -22,8 +22,8 @@ def home(request):
 	    event_name="robo-oceana"
 	elif event_name=="lectures video conferences":
 	    event_name="lectures & video conferences"
-	if event_name == 'sampark/' :
-	    return sampark(request)
+	#if event_name == 'sampark/' :
+	    #return sampark(request)
 	event = Event.objects.get(title=event_name)
 	initial_updates = Update.objects.filter(category = 'Update')
 	updates = sorted(initial_updates, key=attrgetter('id'), reverse=True)
@@ -41,8 +41,8 @@ def events(request, event_name):
     	event_name="robo-oceana"
     elif event_name=="lectures video conferences":
     	event_name="lectures & video conferences"
-    if event_name == 'sampark/' :
-        return sampark(request)
+    #if event_name == 'sampark/' :
+        #return sampark(request)
     event = Event.objects.get(title=event_name)
     initial_updates = Update.objects.filter(category = 'Update')
     updates = sorted(initial_updates, key=attrgetter('id'), reverse=True)
