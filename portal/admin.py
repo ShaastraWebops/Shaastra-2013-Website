@@ -205,14 +205,14 @@ class PreviousSponsorAdmin(admin.ModelAdmin):
     
 class SponsorAdmin(admin.ModelAdmin):
     list_display = ['name','index_number','about']
-    exclude = ['url', 'sponsored_events']
+    exclude = ['sponsored_events',]
     def save_model(self,request,obj,form,change):
         obj.save()
         args={
                 'name':obj.name,
-                'url':MEDIA_URL + str(obj.logo),
+                'logo':MEDIA_URL + str(obj.logo),
                 'index':obj.index_number,
-                #'site_url':obj.url,
+                'url':obj.url,
                 'about':obj.about,
                 #'events':obj.sponsored_events,                
         }

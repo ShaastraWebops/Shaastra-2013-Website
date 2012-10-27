@@ -154,9 +154,9 @@ class Sponsor(models.Model):
     """
     logo=models.FileField(upload_to='present_sponsors')
     name=models.CharField(max_length=20,unique=True, help_text='Enter company name (Required)')
-    index_number=models.IntegerField(blank=True)
-    url=models.URLField(blank=True)
-    about=models.CharField(max_length=100, blank=True, help_text='Primary Sponsor, Associate Sponsor, Apparel Sponsor etc.')
+    url=models.URLField()
+    index_number=models.IntegerField(help_text='To help order the images, for example - Primary Sponsor will be 1')
+    about=models.CharField(max_length=100, help_text='Primary Sponsor, Associate Sponsor, Apparel Sponsor etc.')
     sponsored_events = models.ManyToManyField(Event, blank=True)
     
     def __unicode__(self):
