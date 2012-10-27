@@ -4,13 +4,17 @@ from django.shortcuts import render_to_response
 from django.conf import settings
 from events.models import Event, EVENT_CATEGORIES, Tag, Update, Sponsor
 from django.template.defaultfilters import slugify
+from events.views import home as events_home
 
 def home(request):
     fragment = request.GET.get('_escaped_fragment_','')
+    splits = fragment.split('/')
     if fragment == 'hospi':
         return render_to_response('ajax/hospi_home.html',locals(),context_instance = RequestContext(request))
     elif fragment == 'spons':
 	return render_to_response('ajax/spons_home.html',locals(),context_instance = RequestContext(request))
+    elif splits[0] == 'events':
+        return events_home(request)
     event_set=[]
     for c in EVENT_CATEGORIES :
         event_category_set = Event.objects.filter(category=c[0])
