@@ -10,6 +10,12 @@ STATUS_CHOICES = (
     ('s', 'Sold'),
     ('a', 'Available'),
 )
+
+YEAR_CHOICES = (
+    (2011, '2011'),
+    (2010, '2010'),
+)
+
 #To specify kind of sponsor
 SPONSOR_CHOICES = (
     ('Principal Sponsor', 'Principal Sponsor'),
@@ -29,9 +35,9 @@ SPONSOR_CHOICES = (
 #To specify kind of 2013 sponsor
 NEW_SPONSOR_CHOICES = (
     ('Main Sponsor', 'Main Sponsor'),
+    ('Presenting Partner', 'Presenting Partner'),
     ('Associate Sponsor', 'Associate Sponsor'),
     ('Co Sponsor', 'Co Sponsor'),
-    ('Presenting Partner', 'Presenting Partner'),
     ('Event Sponsor', 'Event Sponsor'),
     ('Hospitality Sponsor', 'Hospitality Sponsor'),
     ('Telecom Partner', 'Telecom Partner'),
@@ -155,7 +161,9 @@ class PreviousSponsor(models.Model):
     logo=models.FileField(upload_to='sponsors',null=True,blank=True)
     name=models.CharField(max_length=20,unique=True, help_text='Enter company name (Required)')
     url=models.URLField(blank=True)
-    about=models.CharField(max_length=100, choices=SPONSOR_CHOICES, blank=True)
+    about=models.CharField(max_length=100, choices=SPONSOR_CHOICES)
+    index_number=models.IntegerField()
+    year=models.IntegerField(choices=YEAR_CHOICES)
    
     def __unicode__(self):
 		return self.name
@@ -163,6 +171,9 @@ class PreviousSponsor(models.Model):
     def save(self):
 		super(PreviousSponsor,self).save()
 		resize_image(self.logo,'300x200')
+
+    class Meta:
+        ordering=['year']	
 		
 	
 		
@@ -174,7 +185,8 @@ class Sponsor(models.Model):
     name=models.CharField(max_length=20,unique=True, help_text='Enter company name (Required)')
     url=models.URLField()
     about=models.CharField(max_length=100, choices=NEW_SPONSOR_CHOICES)
-    index_number=models.IntegerField(help_text='Helps to order the sponsor by their importance. Ex. Main sponsor will be 1')
+    index_number=models.IntegerField()
+    year = models.IntegerField()
     sponsored_events = models.ManyToManyField(Event, blank=True)
     
     def __unicode__(self):

@@ -10,12 +10,11 @@ from django.contrib import admin
 from django.contrib.auth import logout
 from django.conf import settings
 
-
 def home(request):
     categories = Category.objects.all()
     topics=Topic.objects.all()
     topic_images=TopicImage.objects.all()
-    previous_sponsors=PreviousSponsor.objects.all()
+    previous_sponsors=PreviousSponsor.objects.filter(year='2011')
     quotes=Quote.objects.all()
     one_home_content=Home.objects.filter(id=1)
     if one_home_content:

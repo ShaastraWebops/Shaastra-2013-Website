@@ -201,12 +201,41 @@ class TopicAdmin(admin.ModelAdmin):
         obj.save()
 
 class PreviousSponsorAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ['name', 'year', 'about']
+    exclude = ['index_number',]
+    def save_model(self,request,obj,form,change):
+        i=1
+        for choice in SPONSOR_CHOICES:
+            if str(choice[0]) == obj.about:
+                obj.index_number = i
+            i=i+1    
+        obj.save() 
+        args={
+                'name':obj.name,
+                'logo':MEDIA_URL + str(obj.logo),
+                'index':obj.index_number,
+                'url':obj.url,
+                'about':obj.about,              
+        }
+
+        target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()  
+        #self.message_user(request,'http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args))
+        
+        if target == "True":
+            self.message_user(request,"successful")
+        else:
+            self.message_user(request,"logo not sent")             
     
 class SponsorAdmin(admin.ModelAdmin):
-    list_display = ['name','index_number','about']
-    exclude = ['sponsored_events',]
+    list_display = ['name','about']
+    exclude = ['index_number','sponsored_events', 'year']
     def save_model(self,request,obj,form,change):
+        i=1
+        for choice in NEW_SPONSOR_CHOICES:
+            if str(choice[0]) == obj.about:
+                obj.index_number = i
+            i=i+1    
+        obj.year = 2013    
         obj.save()
         args={
                 'name':obj.name,
