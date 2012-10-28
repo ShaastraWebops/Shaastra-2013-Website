@@ -158,7 +158,7 @@ class PreviousSponsor(models.Model):
     """
     This model is for adding details about 2011 sponsors
     """
-    logo=models.FileField(upload_to='sponsors',null=True,blank=True)
+    logo=models.FileField(upload_to='sponsors')
     name=models.CharField(max_length=20,unique=True, help_text='Enter company name (Required)')
     url=models.URLField(blank=True)
     about=models.CharField(max_length=100, choices=SPONSOR_CHOICES)
