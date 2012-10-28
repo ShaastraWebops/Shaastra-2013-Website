@@ -215,7 +215,8 @@ class PreviousSponsorAdmin(admin.ModelAdmin):
                 'logo':MEDIA_URL + str(obj.logo),
                 'index':obj.index_number,
                 'url':obj.url,
-                'about':obj.about,              
+                'about':obj.about, 
+                'year':obj.year,              
         }
 
         target =  urllib.urlopen('http://www.shaastra.org/2013/main/events/sponslogo?' + urllib.urlencode(args)).read()  
@@ -243,6 +244,7 @@ class SponsorAdmin(admin.ModelAdmin):
                 'index':obj.index_number,
                 'url':obj.url,
                 'about':obj.about,
+                'year':obj.year, 
                 #'events':obj.sponsored_events,                
         }
 
