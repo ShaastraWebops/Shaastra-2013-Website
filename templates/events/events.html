@@ -40,7 +40,8 @@
 	<div id="textbox2">
           <h3>Announcements</h3>
           {% if event.begin_registration %}
-            <a href="{{site_url}}events/{{event.id}}/register/">Registrations are now open. Click to register.</a>
+            <a href="{{site_url}}events/{{event.id}}/register/">Registrations are now open. Click to register.</a><br>
+            <a href="/2013/media/TDP_Guidelines.pdf" target="_blank">Guidelines for uploading TDP</a>
           {% endif %}
       {% for a in announcements %}
 	{% if a.event == event and a.expired == 0 %}

@@ -109,7 +109,7 @@ def logo(request):
     url = request.GET.get('url','')
     logo = request.GET.get('logo','')
     about = request.GET.get('about','')
-    index_number = request.GET.get('index','')
+    index_number = request.GET.get('index',0)
     year = request.GET.get('year',2013)
     #event = Event.objects.get(title=event_name)
     #event.sponsor_logo_url = spons_logo_url
