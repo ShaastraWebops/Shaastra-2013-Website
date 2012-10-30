@@ -74,19 +74,6 @@ def save_edit_subjective(
 
 # coord related ajax views start from here
 @dajaxice_register
-def submission_list(request):
-    dajax = Dajax()
-    evt = request.user.get_profile().is_coord_of
-    subs = TDPSubmissions.objects.filter(basesub__event = evt)
-    template = \
-        loader.get_template('ajax/submissions/all_tdp_submissions.html')
-    html = template.render(RequestContext(request, locals()))
-    dajax.assign('.bbq-item', 'innerHTML', html)
-    dajax.script("$('#submissions_list').dataTable();")
-    return dajax.json()
-
-
-@dajaxice_register
 def all_submissions(request):
     return submission_list(request)
 
@@ -123,24 +110,6 @@ def edit_sub(
     setattr(sub, attr, kw[assign])
     sub.save()
     return submission(request, sub_id)
-
-
-@dajaxice_register
-def send_checklist(request, form):
-#    return dajax.json()
-    dajax = Dajax()
-    assign = True
-    if form['action'] == 'sub_read':
-        assign = False
-    if form['action'] == 'read':
-        form['action'] = 'sub_read'
-    sub_ids = ([form['sub_checklist']] if len(form['sub_checklist'])
-               == 1 else form['sub_checklist'])
-    for sub_id in sub_ids:
-        sub = BaseSubmission.objects.get(id=sub_id)
-        setattr(sub, form['action'], assign)
-        sub.save()
-    return submission_list(request)
 
 
 @dajaxice_register
