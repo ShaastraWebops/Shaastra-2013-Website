@@ -72,3 +72,6 @@ def method_splitter(request, *args, **kwargs):
     elif request.method == 'POST' and post_view is not None:
         return post_view(request, *args, **kwargs)
     raise Http404
+
+def landing(request):
+    return render_to_response('landing.html',locals(),context_instance = RequestContext(request))
