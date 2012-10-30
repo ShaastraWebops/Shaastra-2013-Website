@@ -5,6 +5,13 @@
 }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
+<script>
+$(document).ready(function(){
+	$(function(){
+		$('.tabtext').jScrollPane({showArrows: true,verticalScroll: true,horizontalScroll:false,autoReinitialise: true});
+		});
+	});
+</script>
 <div class="container-fluid">
 <div class="row-fluid">
 <ul id="myTab" class="nav nav-tabs">
@@ -17,7 +24,7 @@
 <li class="tabs"><a id="tab" href="#instructions" data-toggle="tab">Instructions</a></li>
 <li class="tabs"><a id="tab" href="#contact" data-toggle="tab">Contact</a></li>
 </ul>
-<div id="myTabContent" class="tab-content span11">
+<div id="myTabContent" class="tab-content span11" style="overflow:visible">
 <div class="tab-pane fade in active" id="introduction">
     <div class="tabtext span10 floatleft" id="col2" style="text-align:justify;">
 	<div id="textboxes">
@@ -113,7 +120,7 @@ contact numbers and basic tariff structure of a few call taxi operators in Chenn
    </div>                
 </div>
 <div class="tab-pane fade in" id="shaastradesk">
-    <div class="tabtext span10 floatleft" id="col2" style="text-align:justify;">
+    <div class="tabtext2 span10 floatleft" id="col2" style="text-align:justify;">
 		<p>The Hospitality team at Shaastra is dedicated to help you and attend to all your doubts and
 queries throughout your stay with us. Apart from our Reception Desk, the Shaastra Desk -
 which forms an indispensable part of Shaastra, will be set up close to the festive area in
@@ -130,7 +137,7 @@ entertained only during the timings when the Shaastra Desk is operational.</p>
    </div>                
 </div>
 <div class="tab-pane fade in" id="alternateaccomodation">
-    <div class="tabtext span10 floatleft" id="col2" style="text-align:justify;">
+    <div class="tabtext2 span10 floatleft" id="col2" style="text-align:justify;">
 	    <p>Because of limited space on campus, we might not be able to provide accommodation to
 all participants who apply for accommodation. In case you don't receive a confirmation
 mail regarding your accommodation from the Hospitality team, you could always make
@@ -139,7 +146,7 @@ your reference <input type="button" value="Here" onclick="window.location.href='
    </div>                
 </div>
 <div class="tab-pane fade in" id="uponreaching">
-    <div class="tabtext span10 floatleft" id="col2" style="text-align:justify;">
+    <div class="tabtext2 span10 floatleft" id="col2" style="text-align:justify;">
 		<p>The Institute in itself is located around 2.5 kms inside the campus. Two parallel roads, Bonn
 Avenue and Delhi avenue, lead you through the residential zone, under a canopy of green, to
 Gajendra Circle (otherwise called GC) and the administrative block. Buses ply between the
@@ -259,7 +266,7 @@ Still have unanswered queries? Check out <a style="color:white" href="http://www
    </div>                
 </div>
 <div class="tab-pane fade in" id="instructions">
-    <div class="tabtext span10 floatleft" id="col2" style="text-align:justify;">
+    <div class="tabtext2 span10 floatleft" id="col2" style="text-align:justify;">
 	<ul>
     <li>We shall provide you with mattresses. However, you are encouraged to carry
 your own blankets since it might be a little cold at night.</li>
@@ -282,7 +289,7 @@ will be final in case of any disputes.</li>
    </div>                
 </div>
 <div class="tab-pane fade in" id="contact">
-    <div class="tabtext span10 floatleft" id="col2" style="text-align:justify;">
+    <div class="tabtext2 span10 floatleft" id="col2" style="text-align:justify;">
 		<p>For Hospitality related queries, please feel free to reach out the Hospitality team at
 hospitality@shaastra.org or paragmanudhane@shaastra.org</p>
 <hr>
