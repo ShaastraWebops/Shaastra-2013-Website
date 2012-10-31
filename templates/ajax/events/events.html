@@ -41,88 +41,23 @@
   <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/style.css"  />
   <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/jquery.jscrollpane.css"  />
   <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/stylemain.css"  />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/scriptmain.js" charset = "utf-8"></script>
-  <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-tab.js" charset = "utf-8"></script>
-  <script type="text/javascript" src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script>
-  {% load dajaxice_templatetags %}
-  {% dajaxice_js_import %}
-  <script>
-   	function getWindowHeight() {
-		var windowHeight = 0;
-		if (typeof(window.innerHeight) == 'number') {
-			windowHeight = window.innerHeight;
-		}
-		else {
-			if (document.documentElement && document.documentElement.clientHeight) {
-				windowHeight = document.documentElement.clientHeight;
-			}
-			else {
-				if (document.body && document.body.clientHeight) {
-					windowHeight = document.body.clientHeight;
-				}
-			}
-		}
-		return windowHeight;
-	}
-	function setContent() {
-		if (document.getElementById) {
-			var windowHeight = getWindowHeight();
-			if (windowHeight > 0) {
-				var contentElement = document.getElementById('container');
-				var contentHeight = contentElement.offsetHeight;
-				if (windowHeight - contentHeight > 0) {
-					contentElement.style.position = 'relative';
-					contentElement.style.top = ((windowHeight / 2) - (contentHeight / 2)) + 'px';
-				}
-				else {
-					loadingElement.style.position = 'static';
-				}
-			}
-		}
-	}
-   	window.onload = function() {
-   	  $(".bbq-current .eventtab:first").addClass('on');
-   	  $('#body').addClass('bg1');
-		setContent();
-	}	
-	window.onresize = function() {
-		setContent();
-	}
-</script>
   <link rel="shortcut icon" href="{{site_url}}static/img/favicon.ico" />
-  <!-- Google analytics --> 
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-34424327-1']);
-    _gaq.push(['_setDomainName', 'shaastra.org']);
-    _gaq.push(['_setAllowLinker', true]);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-  <!-- End of Google analytics --> 
-
   </head> 
   <body>
     <center>
       <div id="container">
 	<div id="header">
-	  <div id="logo" class="floatleft" onclick="window.location.href='{{site_url}}'"></div>
+	  <div id="logo" class="floatleft"></div>
 	  <div class="span2" id="search">
-	    <form action="" onsubmit="return false;">
-	      <input type="text" id="search_query" value="Search..."  onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') 	{this.value = 'Search...';}" />
+	    <form action="">
+	      <input type="text" id="search_query" value="Search..." />
             </form>
 	  </div>
 	  <div id="topright" class="floatleft">
 	    <div id="icons" class="floatleft">
 	      <ul class="nav nav-pills">
-		<li><a href="{{site_url}}#" id="home" onclick="$('#body').removeClass('bg1');"><p class="head_text">Home</p></a></li>
+		<li><a href="{{site_url}}#" id="home"><p class="head_text">Home</p></a></li>
 		<li><a href="{{site_url}}#events" id="events"><p class="head_text">Events</p></a></li> 
 		<li><a href="{{site_url}}events/sampark/" id="sampark"><p class="head_text">Sampark</p></a></li>       					
 		<li><a id="hospitality" href="{{site_url}}#!hospi"><p class="head_text">Hospitality</p></a></li>
@@ -140,15 +75,15 @@
 	    </div>
 	    <div id="twologos" class="floatright">
 	      <div id="tuvnord" class="floatleft" ></div>
-	      <div id="iitmlogo" class="floatright" target="_blank" onclick="window.location.href='http://www.iitm.ac.in'"></div>
+	      <div id="iitmlogo" class="floatright" target="_blank"></div>
 	    </div>
-	  </div><br>            
+	  </div><br>
 	</div>
 	<div id="body">
 	  <div id="cont" class="menulist">
             <ul>
-	      <li><p class="head_text" onclick="window.location.href='{{site_url}}user/password_change/'">Change Password</p></li>
-	      <li><p class="head_text" onclick="window.location.href='{{site_url}}user/editprofile/'">Edit Profile</p></li>  
+	      <li><p class="head_text">Change Password</p></li>
+	      <li><p class="head_text">Edit Profile</p></li>  
 	    </ul>
 	  </div>
 	  <div id="content" class="bbq" style="width:100%">
@@ -163,7 +98,7 @@
 		  {% endfor %}
 		  {% if user.is_authenticated %}
 			{% if event.has_tdp == 1 and event.begin_registration == 1 %}
-			    <li class="eventtab" onclick="$('.eventtab').removeClass('on');$(this).addClass('on');"><p onclick="window.location.href='{{site_url}}submission/submittdp/{{event.id}}'">Submit TDP</p></li>
+			    <li class="eventtab"><p>Submit TDP</p></li>
 
 			{% endif %}
 		  {% endif %}
@@ -220,13 +155,13 @@
 	  </div>
 	</div>
 	<div id="social">
-	  <div onclick="window.open('https://www.facebook.com/Shaastra');" id="fb" class="socialapp">
+	  <div id="fb" class="socialapp">
 	  </div>
-	  <div id="flickr" onclick="javascript:window.open('http://www.flickr.com/photos/shaastra/');" class="socialapp">
+	  <div id="flickr" class="socialapp">
 	  </div>
-	  <div onclick="window.open('https://twitter.com/Shaastra_IITM');" id="twitter" class="socialapp">
+	  <div id="twitter" class="socialapp">
 	  </div>
-	  <div onclick="window.open('http://www.youtube.com/iitmshaastra')" id="youtube" class="socialapp">
+	  <div id="youtube" class="socialapp">
 	  </div>
 	</div>
       </div>
