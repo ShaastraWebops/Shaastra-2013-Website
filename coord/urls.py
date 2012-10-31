@@ -11,7 +11,7 @@ urlpatterns = patterns(
     url(r'^questions/', Questions()),
     url(r'^mobapp/$', MobApp()),
     url(r'^registrations/$', Registrations()),
-    url(r'^viewtdpsubmissions/$', ViewTdpSubmissions),
+    url(r'^viewtdpsubmissions/$', ViewTdpSubmissions, name='viewtdpsubmissions'),
     url(r'^tabfile/$', TabFileSubmit()),
     url(r'^update/$', AddUpdate),
     url(r'^editupdate/(?P<id>\d+)', EditUpdate),

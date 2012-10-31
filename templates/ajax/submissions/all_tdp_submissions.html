@@ -24,8 +24,9 @@
 </tr>
 </thead>
 <tbody>
-{% for sub in subs %}.
+{% for sub in subs %}
 <tr>
+
     <td><input type="checkbox" name="sub_checklist" class="checkbox" value="{{sub.basesub.id}}" /></td>
     {% if sub.basesub.event.team_event %}
     <td width="120">{{sub.team.leader.first_name}}</td>
@@ -36,9 +37,9 @@
     <td width="120">{{sub.participant.last_name}}</td>
     <td width="120"><a href = {{MEDIA_URL}}{{sub.tdp_upload|cut:"/home/shaastra/public_html/2013/media/"}}>{{sub.participant.username}}</a></td>    
     {% endif %}
-    <td width="120">{% if sub.sub_read %} Yes {% else %} No {% endif %}</td>
-    <td width="120">{% if sub.selected%} Yes {% else %} No {% endif %}</td>
-    <td width="120">{% if sub.interesting%} Yes {% else %} No {% endif %}</td>
+    <td width="120">{% if sub.basesub.sub_read %} Yes {% else %} No {% endif %}</td>
+    <td width="120">{% if sub.basesub.selected%} Yes {% else %} No {% endif %}</td>
+    <td width="120">{% if sub.basesub.interesting%} Yes {% else %} No {% endif %}</td>
 
 </tr>
 {% endfor %}

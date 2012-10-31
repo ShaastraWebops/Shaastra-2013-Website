@@ -85,7 +85,7 @@
             if(data.action=='0'){alert('Please select an Action');return false;}
             if(!data.sub_checklist){alert('Select a Submission!');return false;}
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.submissions.send_checklist(Dajax.process,{'form':data,})
+            Dajaxice.coord.send_checklist(Dajax.process,{'form':data})
             return false;
             
         }

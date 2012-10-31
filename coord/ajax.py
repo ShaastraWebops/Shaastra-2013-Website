@@ -5,6 +5,7 @@ from dajax.core import Dajax
 from django.utils import simplejson
 from django.template import loader, Context, RequestContext, Template
 from events.models import *
+from submissions.models import *
 from coord.forms import *
 from core.forms import AddEventForm
 from dajaxice.decorators import dajaxice_register
@@ -525,3 +526,34 @@ def add_edit_update(request, form='', id=0):
         t = template.render(RequestContext(request, locals()))
         dajax.assign('.bbq-item', 'innerHTML', t)
     return dajax.json()
+
+def submission_list(request):
+    dajax = Dajax()
+    evt = request.user.get_profile().is_coord_of
+    subs = TDPSubmissions.objects.filter(basesub__event = evt)
+    template = \
+        loader.get_template('ajax/submissions/all_tdp_submissions.html')
+    html = template.render(RequestContext(request, locals()))
+    dajax.assign('.bbq-item', 'innerHTML', html)
+    dajax.script("$('#submissions_list').dataTable();")
+    return dajax.json()
+
+@dajaxice_register
+def send_checklist(request,form=''):
+    dajax = Dajax()
+    assign = True
+    if form['action'] == 'sub_read':
+        assign = False
+    if form['action'] == 'read':
+        form['action'] = 'sub_read'
+    try:
+        for sub_id in form['sub_checklist']:
+            sub = TDPSubmissions.objects.get(basesub__id = sub_id)
+            setattr(sub.basesub, form['action'], assign)
+            sub.basesub.save()
+    except:
+        sub_id = form['sub_checklist']
+        sub = TDPSubmissions.objects.get(basesub__id = sub_id)
+        setattr(sub.basesub, form['action'], assign)
+        sub.basesub.save()       
+    return submission_list(request)
