@@ -29,8 +29,11 @@ class BaseSubmission(models.Model):
 
 
 def get_upload_path(instance, filename):
-	dir_path = settings.MEDIA_ROOT + 'TDPSubmissions/' + instance.basesub.event.construct_dir_path()
-	return dir_path + filename
+    dir_path = settings.MEDIA_ROOT + 'TDPSubmissions/' + instance.basesub.event.construct_dir_path()
+    try:
+        return dir_path + instance.team.name + '.pdf'
+    except:
+        return dir_path + instance.participant.first_name + '_' + instance.participant.last_name +'.pdf'
     
 class TDPSubmissions(models.Model):
     basesub       = models.ForeignKey(BaseSubmission)

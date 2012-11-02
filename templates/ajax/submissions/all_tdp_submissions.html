@@ -31,7 +31,7 @@
     {% if sub.basesub.event.team_event %}
     <td width="120">{{sub.team.leader.first_name}}</td>
     <td width="120">{{sub.team.leader.last_name}}</td>
-    <td width="120"><a href = {{MEDIA_URL}}{{sub.tdp_upload|cut:"/home/shaastra/public_html/2013/media/"}}>{{sub.team.leader.username}}</a></td>
+    <td width="120"><a href = {{MEDIA_URL}}{{sub.tdp_upload|cut:"/home/shaastra/public_html/2013/media/"}}>{{sub.team.name}}</a></td>
     {% else %}
     <td width="120">{{sub.participant.first_name}}</td>
     <td width="120">{{sub.participant.last_name}}</td>
