@@ -19,7 +19,7 @@ $(document).ready(function(){
     <center>
     {% for sponsor in present_sponsors %}
         {% ifchanged sponsor.about %}
-            <br><h3 id="sponscat">{{sponsor.about}}</h3><br>
+            <br><br><h3 id="sponscat">{{sponsor.about}}</h3><br>
         {% endifchanged %}
         <a id='{{sponser.about}}' href='{{sponsor.url}}'><img src='{{sponsor.logo}}'></a>
     {% endfor %}
