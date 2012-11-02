@@ -19,11 +19,15 @@ YEAR_CHOICES = (
 #To specify kind of sponsor
 SPONSOR_CHOICES = (
     ('Principal Sponsor', 'Principal Sponsor'),
+    ('Presenting Partner', 'Presenting Partner'),      
     ('Associate Sponsor', 'Associate Sponsor'),
-    ('Co Sponsor', 'Co Sponsor'),
+    ('Co Sponsor', 'Co Sponsor'),  
     ('Event Sponsor', 'Event Sponsor'),
     ('Hospitality Sponsor', 'Hospitality Sponsor'),
+    ('Exhibition Partner', 'Exhibition Partner'),      
     ('Outreach Sponsor', 'Outreach Sponsor'),
+    ('Telecom Partner', 'Telecom Partner'),
+    ('Publicity Partner', 'Publicity Partner'),    
     ('Apparel Sponsor', 'Apparel Sponsor'),
     ('Gift Sponsor', 'Gift Sponsor'),
     ('Research Partner', 'Research Partner'),
