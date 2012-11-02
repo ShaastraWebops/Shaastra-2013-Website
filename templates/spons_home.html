@@ -14,8 +14,8 @@ $(document).ready(function(){
 </ul>
 <div id="myTabContent" class="tab-content span11" style="overflow:visible;">
 <div class="tab-pane fade in active" id="currentspons">
-    <div class="tabtext" id="col2" style="text-align:justify; height:450px; float:center; width:1200px;">
-    <div id="scrollspons" style="height:440px;">
+    <div class="tabtext" id="col2" style="text-align:justify; height:500px; float:center; width:1200px;top:0px;">
+    <div id="scrollspons" style="height:480px;">
     <center>
     {% for sponsor in present_sponsors %}
         {% ifchanged sponsor.about %}
@@ -28,7 +28,7 @@ $(document).ready(function(){
     </div>                
 </div>
 <div class="tab-pane fade in" id="spons2011">
-    <div class="tabtext" id="col2" style="text-align:justify; height:450px; float:center; width:1200px;">
+    <div class="tabtext" id="col2" style="text-align:justify; height:500px; float:center; width:1200px;top:0px;">
     <center>
     {% for sponsor in previous_sponsors %}
         {% ifchanged sponsor.about %}
@@ -40,7 +40,7 @@ $(document).ready(function(){
     </div>                
 </div>
 <div class="tab-pane fade in" id="spons2010">
-    <div class="tabtext" id="col2" style="text-align:justify; height:450px; float:center; width:1200px;">
+    <div class="tabtext" id="col2" style="text-align:justify; height:500px; float:center; width:1200px;top:0px;">
     <center>
     {% for sponsor in previous_sponsors2 %}
         {% ifchanged sponsor.about %}
