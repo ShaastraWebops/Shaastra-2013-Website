@@ -4,6 +4,12 @@ $(document).ready(function(){
 		$('.scrollspons').jScrollPane({showArrows: false,verticalScroll: true,horizontalScroll:false,autoReinitialise: true,mouseWheelSpeed:50});
 		});
 	});
+
+function openWindow( url )
+{
+	window.open(url, '');
+	window.focus();
+}
 </script>
 <div class="container-fluid">
 <div class="row-fluid">
@@ -21,7 +27,7 @@ $(document).ready(function(){
         {% ifchanged sponsor.about %}
             <br><br><h3 id="sponscat">{{sponsor.about}}</h3><br>
         {% endifchanged %}
-        <a href='{{sponsor.url}}'><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
+        <a href='{{sponsor.url}}' onclick="javascript:openWindow(this.href);return false;"><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
     {% endfor %}
     </center>
     </div>
@@ -35,7 +41,7 @@ $(document).ready(function(){
         {% ifchanged sponsor.about %}
             <br><h3 id="sponscat">{{sponsor.about}}</h3><br>
         {% endifchanged %}
-        <a href='{{sponsor.url}}'><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
+        <a href='{{sponsor.url}}' onclick="javascript:openWindow(this.href);return false;"><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
     {% endfor %}
     </center>
 	</div>
@@ -49,7 +55,7 @@ $(document).ready(function(){
         {% ifchanged sponsor.about %}
             <br><h3 id="sponscat">{{sponsor.about}}</h3><br>
         {% endifchanged %}
-        <a href='{{sponsor.url}}'><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
+        <a href='{{sponsor.url}}' onclick="javascript:openWindow(this.href);return false;"><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
     {% endfor %}
     </center>
     </div>
