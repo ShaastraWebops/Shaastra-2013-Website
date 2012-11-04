@@ -161,7 +161,7 @@ _gaq.push(['_trackPageview']);
             			<!--<li><a id="spons" href="{{site_url}}#!spons"><p class="head_text">Sponsors</p></a></li>-->
             			<!--<li><a id="forums" href="http://forums.shaastra.org" target="_blank"><p class="head_text">Forums</p></a></li>-->
                                 {% if user.is_authenticated %}
-                            <!--        <li><a id="set"><p class="head_text">Settings</p></a></li>-->
+                                   <li><a id="set"><p class="head_text">Settings</p></a></li>
                                 		<li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
                                 {% else %}
                                     <li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li> 
@@ -179,8 +179,8 @@ _gaq.push(['_trackPageview']);
 	<div id="body">
 	      <div id="cont" class="menulist">
             <ul>
-         		 <li><p class="head_text" onclick="window.location.href='{{site_url}}user/password_change/'">Change Password</p></li>
-         		 <li><p class="head_text" onclick="window.location.href='{{site_url}}user/editprofile/'">Edit Profile</p></li>  
+         		 <li><a class="head_text" href='{{site_url}}user/password_change/' style="display:inline!important;margin:0!important;padding:0!important;">Change Password</a></li>
+         		 <li><a class="head_text" href='{{site_url}}user/editprofile/' style="display:inline!important;margin:0!important;padding:0!important;">Edit Profile</a></li>  
       		</ul>
         </div>
         {% block content %}
