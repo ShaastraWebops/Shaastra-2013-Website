@@ -8,100 +8,162 @@
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
         <script type="text/javascript" src="{{site_url}}static/js/college.reg.js"></script>
         <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
-        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
-        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style.css">
-        <style type="text/css">
-        #header{
-            width:100%;
-            padding:0%;
-            padding-top:5px;
-            box-shadow: 0px 0px 10px rgb(0, 0, 0);}
-       #topright{
-            width: 610px;}
-       #icons{
-             width:440px;}
-       label{color:#FFF;
-				      font-size:14px;}
-				.helptext{color:#999999;
-				         font-size:13px;
-				         font-style:italic;}
-				input , select{width:200px;
-									}
-        #foot{
-            width:100%;
-            padding:0%;
-            height:50px;
-            box-shadow: 0px 0px 10px rgb(0, 0, 0);
-            background:rgba(0,0,0,0.5);
-            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50000000,endColorstr=#50000000); 
-            }
-        #foot ul
-        #foot a{
-        		color:#fff;
-        		opacity:0.7;
-        		filter:alpha(opacity=70);
-        		}
-        #foot a:hover{
-            opacity:1.0;
-        		filter:alpha(opacity=100);
-        		background:rgba(0,0,0,0.5);
-        		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50000000,endColorstr=#50000000); 
-        	}
-        	#foot ul
-        {  
-        width:40%;
-        position: absolute;
-        margin-left:25%;
-        padding: 0;
-       list-style-type: none;
-        text-align: center;
-        }    
+       
+        
+        <link rel="shortcut icon" href="{{site_url}}static/img/favicon.ico" />
+        <style>
+body
+    {
+    width:100%;
+    height:100%;
+    margin:0;
+    background:url({{site_url}}static/img/bg.png) 100% 100%;
+    background-repeat : repeat;
+	 font-family:'Century Gothic',serif ! important;
+	 letter-spacing:0.75px ! important;
+    }
+ #container
+    {
+    width : 60%;
+    margin:0 auto;
+    height: 100%;
+    //overflow:hidden;
+    }  
+.right{float:right;
+  width:80%; 
+    }
+.left{
+	float:left;
+	margin:30px 30px 0 auto;
+	width:15%;
+	}
 
-			#foot ul li { display: inline; }
-        #msg{
-				  color: #fff;}
-				#reg{color:#999999;}
-		  </style>
+.icons{
+    width : 150px;
+    height:38px;
+    font-size:16px;
+    color: #fff;
+    background: url({{site_url}}static/img/signup.png);
+    text-align: center;
+   opacity:0.9;
+	filter:alpha(opacity=90);
+	border:0px;
+	margin-bottom:10px;
+ }
+.icons:hover{
+	opacity:1.0;
+	    filter:alpha(opacity=100);
+        cursor:pointer;}
+	#logo
+    {
+    font-size:30px;
+    color:#fff !important;
+    font-weight: bold;
+    vertical-align:middle;
+    display:table;
+    }  
+ #logo>img{
+ 	width: 115px;
+ 	height: 65px;
+ 	margin-right:10px;} 
+ .chzn-container .chzn-results {
+ 		max-height:130px;
+ 		}
+#msg{
+   font-family: "century gothic",serif;
+	letter-spacing: 1px;
+	font-size:16px;
+	color:#fff;	
+	margin-left:40px;
+	display:block;	
+	}
+#msg:hover{cursor:pointer;}
+#reg{
+   color:#fff;
+	font-size:16px;	
+   margin-left:40px;	
+	}
+a,a:link,a:active{
+   text-decoration:none;}
+
+label{
+  color:#FFF;
+  font-family: 'century gothic';
+	font-size: 14px;
+}
+
+span.helptext{color:#666;
+              font-size:12px;
+              font-style:italic;}
+
+   input,select{width:200px;}
+  .errorlist{
+  	color:#fff ! important;
+	font-size:13px;
+	font-weight:bold;
+	font-style:italic;  	
+  	}
+  #topright{
+  margin: 30px 30px 0px auto;
+    float:right;
+    width : 150px;
+    height:38px;
+    font-size:16px;
+    color: #fff;
+    background: url({{site_url}}static/img/signup.png);
+    text-align: center;
+   opacity:0.9;
+	    filter:alpha(opacity=90);
+	border:0px;
+ }
+#topright:hover{
+	opacity:1.0;
+	    filter:alpha(opacity=100);
+        cursor:pointer;
+	}
+#formbox input[type="text"], input[type="password"]
+{
+	width: 200px;
+}     </style>
+        <script type="text/javascript">
+(function($){
+     $.fn.extend({
+          center: function () {
+                return this.each(function() {
+                        var top = ($(window).height() - $(this).outerHeight()) / 2;
+                        var left = ($(window).width() - $(this).outerWidth()) / 2;
+                        $(this).css({position:'absolute', margin:0, top: (top > 0 ? top : 0)+'px', left: (left > 0 ? left : 0)+'px'});
+                });
+        }
+     });
+})(jQuery);
+</script>
+<script>
+$(document).ready(function(){$('#container').center();
+  $("#msg").addClass("btn btn-large btn-primary"); 
+});
+$(window).resize(function(){$('#container').center();});
+</script>
         </head>
 <body>
-  <div id="full" class="container">
-    <div id="header" class="container">
-    <div id="logo" class="floatleft"></div>
-    		<div id="topright" class="floatright">
-    	 		<div id="icons" class="floatleft">
-    	 		    <ul class="nav nav-pills">     			
-            			<li><a href="{{site_url}}" id="home"><p class="head_text">Home</p></a></li>		
-            			<li><a id="hospitality"><p class="head_text">Hospitality</p></a></li>
-            			<li><a id="forums" href="http://forums.shaastra.org"><p class="head_text">Forums</p></a></li>
-                     <li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
-            	 </ul>
-            </div>
-        		<div id="twologos" class="floatright">
-        			<div id="tuvnord" class="floatleft"></div>
-        			<div id="iitmlogo" class="floatright"></div>
-        		</div>
-    		</div>
-    </div>
-    <div class="container" id="super">
-    <form action="" method="POST" class="form-horizontal container">
-    	  <h1>Edit profile:</h1><br>
-        <fieldset>{% csrf_token %}
-        <table>
-            {{ editProfileForm.as_table }}
-        </table><br>
-        <input type="submit" value="Update Profile" class="btn btn-info">
-        </fieldset>
-    </form>
-   </div>
-   <div id="foot">
-         <ul class="nav nav-pills">
-			<li><a href="http://www.shaastra.org/2011/main/policy/">privacy policy</a></li>
-    		<li><a href="http://www.shaastra.org/blog/">blog</a></li>
-    		<li><a href="{{site_url}}#events">events</a></li>
-    		<li><a href= #>credits</a></li>
-    		<li><a href= #>contact</a></li>
-    		</ul>   
-   </div>
+<div id = "container">
+   <button id = "topright" onclick="window.location.href='{{site_url}}'">Home</button>
+      <div id="form" class="control-group" style="width:90%;margin-top:20px;">
+        <!-- Add something similar to make the error message for the reCaptcha appear.-->
+        <div id = "logo">
+            	<img src="{{site_url}}static/img/dice.png" alt="">Edit Profile
+            </div><br>
+            <form action="" method="POST" class="form-horizontal"> 
+					<div id="formbox">
+             	<fieldset>{% csrf_token %}
+        			<table>
+            		{{ editProfileForm.as_table }}
+        			</table><br>
+        			<input type="submit" value="Update Profile" id="register" class="btn btn-large btn-success" style="margin-left:5px;">
+        			</fieldset>
+	       	   </div>
+	       	</form>
   </div>
+ </div>
 </body>    
 </html>
