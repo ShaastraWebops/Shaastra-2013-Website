@@ -80,7 +80,7 @@
                         	{% for i in previous_sponsors %}
                         	
 								{% if forloop.first %}
-                        	     <div class="item active" style="height: 200px" align="center">
+                        	     <div class="item active" align="center">
                         	     <img src="{{MEDIA_URL}}{{i.logo}}" alt="" >
                         	     </div>
 								{% endif %}
@@ -91,7 +91,7 @@
                     
                     {% for i in previous_sponsors %}
 						{% if not forloop.first %}
-                        <div class="item" style="height: 200px" align="center">
+                        <div class="item" align="center">
                             <img src="{{MEDIA_URL}}{{i.logo}}" alt="">
                         </div>
 						{% endif %}
