@@ -24,6 +24,7 @@
 	$('#tabbox').css('visibility','hidden');
 	$('#tabbox2').css('visibility','hidden');
 	$('#body').removeClass('bg1');
+	document.title = "Shaastra";
 	return;
       }
       $('#footer').css({display:'block'});
@@ -40,16 +41,19 @@
 	  $('#tabbox').css({visibility:'hidden'});
 	  $('#body').removeClass('bg1');
 	  $('#tabbox2').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
+          document.title = "Shaastra - Hospitality";
 	}else if(url=='spons'){
 	  $('.menu').css({visibility:'hidden'});
 	  $('#tabbox,#tabbox2').css({visibility:'hidden'});
 	  $('#footer').css({display:'none'});
 	  $('#body').css({height:'580px'});
 	  $('#body').removeClass('bg1');
+          document.title = "Shaastra - Sponsorship";
 	}else{
 	  $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
 	  $('#body').addClass('bg1');
 	  $('#tabbox2').css({'visibility':'hidden'});
+          document.title = "Shaastra - Events";
 	}
 	return;
       }
@@ -68,6 +72,7 @@
 	  openEvent();
 	}
 	$( '.bbq-loading' ).hide();
+        document.title = "Shaastra - " + event_name.split('/')[1].replace('-',' ');
       } else {
 	cache[event_name] = $( '<div class="bbq-item bbq-current"></div>' )
 			    .appendTo( '.bbq-content' )
@@ -84,6 +89,7 @@
 	  }
 	  $( '.bbq-loading' ).hide();
 // 	  resetabs();
+          document.title = "Shaastra - " + event_name.split('/')[1].replace('-',' ');
 	});
       }
     })
