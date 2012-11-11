@@ -45,7 +45,7 @@
           {% endif %}
       {% for a in announcements %}
 	{% if a.event == event and a.expired == 0 %}
-	  <p style="font-size:16px;"><b>{{a.subject}}</b> - {{a.description}}<br></p>
+	  <p style="font-size:16px;"><b>{{a.subject}}</b> - {{a.description|safe}}<br></p>
 	{% endif %}
 	{% if forloop.last %}<br>{% endif %}
       {% endfor %}
