@@ -39,22 +39,24 @@ SPONSOR_CHOICES = (
 
 #To specify kind of 2013 sponsor
 NEW_SPONSOR_CHOICES = (
-    ('Main Sponsor', 'Main Sponsor'),
     ('Associate Sponsor', 'Associate Sponsor'),
-    ('Research Partner', 'Research Partner'),
-    ('Telecom Partner', 'Telecom Partner'),        
-    ('Event Sponsor', 'Event Sponsor'),
-    ('Presenting Partner', 'Presenting Partner'),
-    ('Internship Partner', 'Internship Partner'),    
     ('Co Sponsor', 'Co Sponsor'),
-    ('Hospitality Sponsor', 'Hospitality Sponsor'),
+    ('Research Partner', 'Research Partner'),
+    ('Telecom Partner', 'Telecom Partner'),
+    ('Presenting Partner', 'Presenting Partner'),        
+    ('Event Sponsor', 'Event Sponsor'),
+    ('Knowledge Partner','Knowledge Partner'),
+    ('Internship Partner', 'Internship Partner'),    
     ('Publicity Partner', 'Publicity Partner'),
-    ('Outreach Sponsor', 'Outreach Sponsor'),
-    ('Apparel Sponsor', 'Apparel Sponsor'),
-    ('Gift Sponsor', 'Gift Sponsor'),
-    ('Green Partner', 'Green Partner'),
-    ('Data Partner', 'Data Partner'),
-    
+    ('Print Solutions Partner','Print Solutions Partner'),
+    ('Online Merchandize Partner','Online Merchandize Partner'),    
+#    ('Hospitality Sponsor', 'Hospitality Sponsor'),
+#    ('Outreach Sponsor', 'Outreach Sponsor'),
+#    ('Apparel Sponsor', 'Apparel Sponsor'),
+#    ('Gift Sponsor', 'Gift Sponsor'),
+#    ('Green Partner', 'Green Partner'),
+#    ('Data Partner', 'Data Partner'),
+
 )
 
 
