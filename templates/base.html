@@ -210,10 +210,10 @@ _gaq.push(['_trackPageview']);
                            </div>-->
     								{% for sponsor in present_sponsors %}
     								 <div style="height:100%;width:100%;">
-        									{% ifchanged sponsor.about %}
+        								  
             								<br><h3 id="sponscat">{{sponsor.about}}</h3><br>
-        								   {% endifchanged %}
-        								   <div style="height:280px;width:100%"><center>
+        								  
+        								   <div style="height:280px;width:100%;display:inline"><center>
         										<a href='{{sponsor.url}}'><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
         									</center></div>
 									</div>    								
