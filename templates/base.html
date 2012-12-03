@@ -199,9 +199,8 @@ _gaq.push(['_trackPageview']);
                     <div class="container-fluid" style="margin-top:15px;margin-right:50px;width:90%;">
                     <div class="row-fluid">
 			          <div class="floatleft span6" id="col1">
-                      <!--<object id="midblackvid" style="height:350px; width:100%;position:relative;"><iframe width="100%" height="350" src="http://www.youtube.com/embed/nkhTykPD0BM?rel=0&wmode=opaque" frameborder="0" allowfullscreen></iframe></object>
-	                   -->
-                      <div id="slide" style="height:100%;width:100%;">								
+                      <object id="midblackvid" style="height:350px; width:100%;position:relative;"><iframe width="100%" height="350" src="http://www.youtube.com/embed/nkhTykPD0BM?rel=0&wmode=opaque" frameborder="0" allowfullscreen></iframe></object>
+                      <!--<div id="slide" style="height:100%;width:100%;">								
                            <!--<div style="height:100%;width:100%;">
                            	<br><h3 id="sponscat">Presenting sponsors</h3><br>
                            	<div class="hovr1" style="height:280px;width:100%"></div>
@@ -209,18 +208,18 @@ _gaq.push(['_trackPageview']);
                            <div style="height:100%;width:100%;">
                            	<br><h3 id="sponscat">Presenting sponsors</h3><br>
                            	<div class="hovr2" style="height:280px;width:100%"></div>
-                           </div>-->  
+                           </div>
     								{% for sponsor in present_sponsors %}
     								 <div style="height:100%;width:100%;">
         									{% ifchanged sponsor.about %}
             								<br><h3 id="sponscat">{{sponsor.about}}</h3><br>
         								   {% endifchanged %}
         								   <div style="height:280px;width:100%"><center>
-        										<a href='{{sponsor.url}}' onclick="javascript:openWindow(this.href);return false;"><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
+        										<a href='{{sponsor.url}}'><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
         									</center></div>
 									</div>    								
     								{% endfor %}
-                      </div>				                  
+                      </div>-->				                  
                      </div>   	                   
 	                  
 			          <div class="floatright span6" id="col2"  style="text-align:justify ! important;">
