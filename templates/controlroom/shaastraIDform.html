@@ -1,0 +1,16 @@
+<html>
+<head>
+    <title>Shaastra 2013 Control Room</title>
+</head>
+<body>
+    <p>{{msg}}</p>
+    <p>Enter Shaastra ID of participant</p><br>
+    
+    <form id="ShaastraIDForm" action="" method="post">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type = "submit" value="Go!"><br><br>
+</body>
+</html>

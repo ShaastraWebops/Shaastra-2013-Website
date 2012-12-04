@@ -1,0 +1,36 @@
+{% load dajaxice_templatetags %}
+<html>
+<head>
+    <title>Shaastra 2013 Control Room</title>
+    {% dajaxice_js_import %}
+    <script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
+    <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
+    <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+    <script type="text/javascript" charset = "utf-8">
+    function checkin()
+    {
+    data = $("#IndividualForm :input").serializeObject();
+    Dajaxice.controlroom.save_individual_checkin(Dajax.process,{'form':data});
+    return false;
+    }
+    function checkout(id)
+    {
+    data = $("#IndividualForm :input").serializeObject();
+    Dajaxice.controlroom.save_individual_checkout(Dajax.process,{'form':data,'shaastraid':id});
+    return false;
+    }
+    </script>
+</head>
+<body>
+    <p>Check In/Check Out Form</p><br>
+    <div class="IndividualCheckIn">
+    <form id="IndividualForm" action="" method="post">
+    {% csrf_token %}
+    <table id = "IndividualForm">
+        {{ individual_form.as_table }}
+    </table>
+    </div>
+    <button class="btn btn-primary" onclick="checkin();" type ='button' value='Save'>Check In</button><br><hr>
+    <button class="btn btn-primary" onclick="checkout('{{participant.shaastra_id}}');" type ='button' value='Save'>Check Out</button>
+</body>
+</html>

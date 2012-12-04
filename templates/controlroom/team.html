@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>Shaastra 2013 Control Room</title>
+</head>
+<body>
+    <p>Team Check In</p><br>
+    <div class="TeamCheckIn">
+    <form id="TeamForm" action="" method="post">
+    {% csrf_token %}
+    <table id = "TeamForm">
+    <thead>
+    <tr>
+        
+        <th width='120'>Shaastra ID</th>
+        <th width='120'>First Name</th>
+        <th width='120'>Last Name</th>
+        <th width='120'>Phone No</th>
+        <th width='120'>Check In Control</th>
+        <th width='120'>Check Out Control</th>
+        <th width='120'>Room</th>
+        <th width='120'>Hostel</th>
+        <th width='120'>Check In Date</th>
+        <th width='120'>Check Out Date</th>
+        <th width='120'>Comments</th>
+        <th width='120'></th>
+    </thead>
+    <tbody>
+    <tr>
+    {% for m in checkedin_profiles %}
+        <td width ='120'>{{m.shaastra_ID}}</td>
+        <td width ='120'>{{m.first_name}}</td>
+        <td width ='120'>{{m.last_name}}</td>
+        <td width ='120'>{{m.phone_no}}</td>
+        <td width ='120'>{{m.check_in_control_room}}</td>
+        <td width ='120'>{{m.check_out_control_room}}</td>
+        <td width ='120'>{{m.room.room_no}}</td>
+        <td width ='120'>{{m.room.hostel}}</td>
+        <td width ='120'>{{m.check_in_date}}</td>
+        <td width ='120'>{{m.check_out_date}}</td>
+        <td width ='120'>{{m.comments}}</td>
+        <td width ='120'></td>
+        
+    {% endfor %}
+    </tr>
+    {% for m in new_profiles %}
+        <td width ='120'>{{m.shaastra_id}}</td>
+        <td width ='120'>{{m.user.first_name}}</td>
+        <td width ='120'>{{m.user.last_name}}</td>
+        <td width ='120'>{{m.mobile_number}}</td>
+        <td width ='120'></td>
+        <td width ='120'></td>
+        <td width ='120'></td>
+        <td width ='120'></td>
+        <td width ='120'></td>
+        <td width ='120'></td>
+        <td width ='120'></td>
+        <td width ='120'><a href = "{{site_url}}controlroom/checkin/{{m.shaastra_id}}">Check In</a></td><br>
+        
+        
+    {% endfor %}
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    
+</body>
+</html>
