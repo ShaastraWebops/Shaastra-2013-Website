@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="container">
-    <h4>Team Check In</h4><br>
+    <h2>Team Check In</h2><br>
     <div class="TeamCheckIn">
     <form id="TeamForm" action="" method="post">
     {% csrf_token %}
@@ -65,14 +65,14 @@
         <td width ='120'></td>
         <td width ='120'></td>
         <td width ='120'></td>
-        <td width ='120'><a href = "{{site_url}}controlroom/checkin/{{m.shaastra_id}}">Check In</a></td>
+        <td width ='120'><a href = "{{site_url}}controlroom/checkin/{{m.shaastra_id}}" class="btn btn-primary">Check In</a></td>
     </tr>
     {% endfor %}
     
     </tbody>
     </table>
     </div>
-    <a href="{{site_url}}controlroom/home/">Home</a>
+    <button class="btn btn-large btn-danger" onclick="window.location.href='{{site_url}}controlroom/home/'" value="Home"></button>
   </div>  
 
 </body>

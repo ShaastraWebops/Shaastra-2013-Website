@@ -41,12 +41,12 @@
     </div>
     <button class="btn btn-primary" onclick="checkin();" type ='button' value='Save'>Check In</button><br><hr>
     <button class="btn btn-primary" onclick="checkout('{{participant.shaastra_id}}');" type ='button' value='Save'>Check Out</button>
-    {% if request.get_full_path == "/controlroom/individual/" %}     
-        <a href="{{site_url}}controlroom/individual/">Back</a>
+    {% if request.get_full_path == "/controlroom/individual/" %}
+        <button class="btn btn-large btn-inverse" onclick="window.location.href='{{site_url}}controlroom/individual/'" value="Back"></button>     
     {% else %}
-        <a href="{{site_url}}controlroom/team/">Back</a>    
+        <button class="btn btn-large btn-inverse" onclick="window.location.href='{{site_url}}controlroom/team/'" value="Back"></button>       
     {% endif %}
-    <a href="{{site_url}}controlroom/home/">Home</a>
+        <button class="btn btn-large btn-inverse" onclick="window.location.href='{{site_url}}controlroom/home/'" value="Home"></button>     
     </div>
 
 </body>
