@@ -24,7 +24,7 @@ HOSTEL_CHOICES = (
 class AvailableRooms(models.Model):
     room_no = models.CharField(max_length = 20)
     hostel = models.CharField(max_length = 20, choices = HOSTEL_CHOICES)
-    is_available = models.BooleanField()
+    number_of_people = models.IntegerField()
 
     def __unicode__(self):
         return '%s' % self.room_no + ',' + self.hostel

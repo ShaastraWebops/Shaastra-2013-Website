@@ -30,7 +30,6 @@ def save_individual_checkin(request,form):
 
 @dajaxice_register
 def save_individual_checkout(request,form,shaastraid):
-    #TODO:Checkout should save same instance
     dajax =Dajax()
     checkedin = IndividualCheckIn.objects.get(shaastra_ID=shaastraid)
     individual_form=IndividualForm(form, instance = checkedin)

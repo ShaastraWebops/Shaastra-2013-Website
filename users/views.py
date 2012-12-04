@@ -33,6 +33,8 @@ def login_get(request):
             return HttpResponseRedirect(settings.SITE_URL + 'core/')
         elif currentuser.get_profile().is_coord_of:
             return HttpResponseRedirect(settings.SITE_URL + 'coord/')
+        elif currentuser.get_profile().is_hospi:
+            return HttpResponseRedirect(settings.SITE_URL + 'controlroom/home/')
         else:
             return HttpResponseRedirect(settings.SITE_URL)
     form = LoginForm()
@@ -62,6 +64,8 @@ def login_post(request):
             return HttpResponseRedirect(settings.SITE_URL + 'core/')
         elif user.get_profile().is_coord_of:
             return HttpResponseRedirect(settings.SITE_URL + 'coord/')
+        elif user.get_profile().is_hospi:
+            return HttpResponseRedirect(settings.SITE_URL + 'controlroom/home/')
         else:
             return HttpResponseRedirect(settings.SITE_URL)
     msg = 'Username and Password does not match.'

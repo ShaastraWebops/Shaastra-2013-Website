@@ -25,8 +25,9 @@
         <th width='120'></th>
     </thead>
     <tbody>
-    <tr>
+    
     {% for m in checkedin_profiles %}
+    <tr>
         <td width ='120'>{{m.shaastra_ID}}</td>
         <td width ='120'>{{m.first_name}}</td>
         <td width ='120'>{{m.last_name}}</td>
@@ -39,10 +40,11 @@
         <td width ='120'>{{m.check_out_date}}</td>
         <td width ='120'>{{m.comments}}</td>
         <td width ='120'></td>
-        
+    </tr>    
     {% endfor %}
-    </tr>
+ 
     {% for m in new_profiles %}
+    <tr>
         <td width ='120'>{{m.shaastra_id}}</td>
         <td width ='120'>{{m.user.first_name}}</td>
         <td width ='120'>{{m.user.last_name}}</td>
@@ -54,14 +56,14 @@
         <td width ='120'></td>
         <td width ='120'></td>
         <td width ='120'></td>
-        <td width ='120'><a href = "{{site_url}}controlroom/checkin/{{m.shaastra_id}}">Check In</a></td><br>
-        
-        
-    {% endfor %}
+        <td width ='120'><a href = "{{site_url}}controlroom/checkin/{{m.shaastra_id}}">Check In</a></td>
     </tr>
+    {% endfor %}
+    
     </tbody>
     </table>
     </div>
-    
+    <hr>
+    <a href="{{site_url}}controlroom/home/">Home</a>
 </body>
 </html>

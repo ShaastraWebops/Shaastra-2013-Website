@@ -4,14 +4,15 @@
 </head>
 <body>
     <p>{{msg}}</p>
-    <p>Enter Shaastra ID of participant</p><br>
+    <p>Add Room Form</p><br>
     
     <form id="ShaastraIDForm" action="" method="post">
     {% csrf_token %}
     <table>
         {{ form.as_table }}
     </table>
-    <input type = "submit" value="Go!"><br><br>
+    <input type = "submit" value="Add!"><br><br>
     <a href="{{site_url}}controlroom/home/">Back</a>
 </body>
 </html>
+

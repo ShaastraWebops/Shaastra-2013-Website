@@ -89,6 +89,7 @@ class UserProfile(models.Model):
     key_expires = models.DateTimeField(null=True)
     want_accomodation = models.BooleanField(default=False, help_text = "This doesn't guarantee accommodation during Shaastra.")
     is_core = models.BooleanField(default=False)
+    is_hospi = models.BooleanField(default=False)
 
 #    is_coord        = models.BooleanField....(default = False)
 

@@ -13,6 +13,10 @@ from controlroom.models import *
 from chosen import widgets as chosenwidgets
 import settings
 
+class AddRoomForm(ModelForm):
+    class Meta:
+        model = AvailableRooms
+
 class ShaastraIDForm(forms.Form):
     shaastraID = forms.CharField(help_text = 'Enter Shaastra ID of participant')
 

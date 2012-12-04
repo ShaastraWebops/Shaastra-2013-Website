@@ -11,6 +11,7 @@ urlpatterns = patterns(
     url(r'^home/$', home),
     url(r'^individual/$', individual),
     url(r'^team/$', team),
+    url(r'^addroom/$', AddRoom),
     url(r'^checkin/(?P<shaastraid>[\w]+)/?$', TeamCheckIn),
     url(r'^checkout/$', CheckOut),
     )

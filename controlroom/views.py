@@ -25,10 +25,27 @@ import random
 import datetime
 
 def home(request):
-    #TODO:Add room feature
     return render_to_response('controlroom/home.html', locals(),
                               context_instance=RequestContext(request))
 
+def AddRoom(request):
+    #TODO: Authenticate user is hospi coord
+    if request.method == 'POST':
+        form = AddRoomForm(request.POST)
+        if form.is_valid:
+            form.save()
+            msg = "Room Added"
+            return render_to_response('controlroom/AddRoomForm.html', locals(),
+                              context_instance=RequestContext(request))
+        else:
+            msg="Invalid Form"
+            return render_to_response('controlroom/AddRoomForm.html', locals(),
+                              context_instance=RequestContext(request))
+    else:
+        form = AddRoomForm()
+        return render_to_response('controlroom/AddRoomForm.html', locals(),
+                              context_instance=RequestContext(request))
+    
 def individual(request):
     #TODO: Authenticate user is hospi coord
     if request.method == 'POST':
