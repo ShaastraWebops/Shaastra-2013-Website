@@ -1,16 +1,23 @@
 <html>
 <head>
 <title>Shaastra 2013 Control Room</title>
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/stylemain.css"  />
+<style type="text/css">
+body{background:rgb(240,240,240);}
+a.btn{text-decoration: none!important;margin: 0!important;}
+.container{padding:20px 0px;}
+</style>
 </head>
 <body>
+<div class="container">
 <a href="{{site_url}}user/logout/">Logout</a><br>
 <a href="{{site_url}}controlroom/addroom/">Add Room</a><br>
-<p>CHECK IN</p>
-<a href="{{site_url}}controlroom/individual/" id="individual">Individual Registration</a> 
-<a href="{{site_url}}controlroom/team/" id="team">Team Registration</a><br>
+<h4>CHECK IN</h4>
+<a href="{{site_url}}controlroom/individual/" id="individual" class="btn btn-large btn-primary">Individual Registration</a> 
+<a href="{{site_url}}controlroom/team/" id="team" class="btn btn-large btn-primary">Team Registration</a><br>
 <hr>
-<p>CHECK OUT</p>
-<a href="{{site_url}}controlroom/checkout/" id="checkout">Check Out</a> 
-
+<h4>CHECK OUT</h4>
+<a href="{{site_url}}controlroom/checkout/" id="checkout" class="btn btn-large btn-inverse">Check Out</a> 
+</div>
 </body>
 </html>
