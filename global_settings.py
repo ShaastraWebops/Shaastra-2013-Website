@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'events',
     'submissions',
     'dtvpicker',
+    'controlroom',
     'dajaxice',
     'dajax',
     'recaptcha',

@@ -10,6 +10,7 @@ from django.contrib.sitemaps import *
 from sitemaps import *
 from users.urls import *
 from events.urls import *
+from controlroom.urls import *
 from dajaxice.core import dajaxice_autodiscover
 dajaxice_autodiscover()
 from django.contrib import admin as superuser
@@ -25,6 +26,7 @@ urlpatterns = patterns(
     url(r'^coord/', include('coord.urls')),
     url(r'^events/', include('events.urls')),
     url(r'^fb/', include('fb.urls')),
+    url(r'^controlroom/', include('controlroom.urls')),
     url(r'^hospi/', 'views.hospi', name='hospi'),
     url(r'^landing/', 'views.landing', name='landing'),
     url(r'^submission/', include('submissions.urls')),
