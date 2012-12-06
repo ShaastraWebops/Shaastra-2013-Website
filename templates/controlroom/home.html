@@ -17,7 +17,41 @@ a.btn{text-decoration: none!important;margin: 0!important;}
 <a href="{{site_url}}controlroom/team/" id="team" class="btn btn-large btn-primary">Team Registration</a><br>
 <br>
 <h4>CHECK OUT</h4>
-<a href="{{site_url}}controlroom/checkout/" id="checkout" class="btn btn-large btn-inverse">Check Out</a> 
+<a href="{{site_url}}controlroom/checkout/" id="checkout" class="btn btn-large btn-inverse">Check Out</a>
+<!--<table id = "TeamForm" class="table table-striped table-bordered table-condensed">
+    <thead>
+    <tr>
+        
+        <th width='120'>Shaastra ID</th>
+        <th width='120'>First Name</th>
+        <th width='120'>Last Name</th>
+        <th width='120'>Phone No</th>
+        <th width='120'>Check In Control</th>
+        <th width='120'>Check Out Control</th>
+        <th width='120'>Room</th>
+        <th width='120'>Hostel</th>
+        <th width='120'>Check In Date</th>
+        <th width='120'>Check Out Date</th>
+        <th width='120'>Comments</th>
+    </thead>
+    <tbody>
+    {% for m in checkedin %}
+    <tr>
+        <td width ='120'>{{m.shaastra_ID}}</td>
+        <td width ='120'>{{m.first_name}}</td>
+        <td width ='120'>{{m.last_name}}</td>
+        <td width ='120'>{{m.phone_no}}</td>
+        <td width ='120'>{{m.check_in_control_room}}</td>
+        <td width ='120'>{{m.check_out_control_room}}</td>
+        <td width ='120'>{{m.room.room_no}}</td>
+        <td width ='120'>{{m.room.hostel}}</td>
+        <td width ='120'>{{m.check_in_date}}</td>
+        <td width ='120'>{{m.check_out_date}}</td>
+        <td width ='120'>{{m.comments}}</td>
+    </tr>    
+    {% endfor %}
+    </tbody>
+    </table> -->
 </div>
 </body>
 </html>

@@ -35,6 +35,7 @@ def save_individual_checkout(request,form,shaastraid):
     individual_form=IndividualForm(form, instance = checkedin)
     if individual_form.is_valid():
         individual_form.save()
+        #TODO:
         #room = AvailableRooms.objects.get(id = data['room'])
         #room.is_available = 0
         #room.save()
