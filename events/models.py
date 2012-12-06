@@ -50,7 +50,7 @@ class Tag(models.Model):
 
 class Event(models.Model):
 
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=300)
     events_logo = models.FileField(upload_to=upload_handler('Events'),
                                    blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True, null=True)

@@ -51,6 +51,7 @@
 <script type="text/javascript" src="{{site_url}}static/scripts/lightbox.js"></script>
 <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/scriptmain.js" charset = "utf-8"></script>
 <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/scripts/hover.js" charset = "utf-8"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/scripts/jquery.cycle.js" charset = "utf-8"></script>
 <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-tab.js" charset = "utf-8"></script>
 <script type="text/javascript" src="{{site_url}}static/js/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script>
@@ -193,14 +194,34 @@ _gaq.push(['_trackPageview']);
 
                 <!-- This content will be shown if no path is specified in the URL fragment. -->
                 <div class="bbq-default">
-						  <div id="new"><b><p style="color:white;size=60px;"><marquee><span>Shaastra 2013 Workshop registrations have begun. TDP submission - Phase 2 for all pre-registered events has begun</span></marquee></p></b></div> 
-
+                <div id="new"><b><p style="color:white;size=60px;"><marquee><span>Shaastra 2013 Workshop registrations have begun. TDP submission - Phase 2 for all pre-registered events has begun</span></marquee></p></b></div> 
                     <div class="container-fluid" style="margin-top:15px;margin-right:50px;width:90%;">
                     <div class="row-fluid">
-			          <div class="floatleft span6" id="col1">
-                      <object id="midblackvid" style="height:350px; width:100%;position:relative;"><iframe width="100%" height="350" src="http://www.youtube.com/embed/nkhTykPD0BM?rel=0&wmode=opaque" frameborder="0" allowfullscreen></iframe></object>
-	                   </div>
-			          <div class="floatright span6" id="col2"  style="text-align:justify ! important;">
+			          <div class="floatleft span5" id="col1">
+                      <!--<object id="midblackvid" style="height:350px; width:100%;position:relative;"><iframe width="100%" height="350" src="http://www.youtube.com/embed/nkhTykPD0BM?rel=0&wmode=opaque" frameborder="0" allowfullscreen></iframe></object>
+                      --><div id="slide" style="height:100%;width:100%;">								
+                           <!--<div style="height:100%;width:100%;">
+                           	<br><h3 id="sponscat">Presenting sponsors</h3><br>
+                           	<div class="hovr1" style="height:280px;width:100%"></div>
+                           </div>  
+                           <div style="height:100%;width:100%;">
+                           	<br><h3 id="sponscat">Presenting sponsors</h3><br>
+                           	<div class="hovr2" style="height:280px;width:100%"></div>
+                           </div>-->
+    								{% for sponsor in present_sponsors %}
+    								 <div style="height:100%;width:100%;">
+        								  
+            								<br><h3 id="sponscat">{{sponsor.about}}</h3><br>
+        								  
+        								   <div style="height:280px;width:100%;display:inline"><center>
+        								    <a href='{{sponsor.url}}' target="_blank" style="display:inline!important;padding:0px!important;"><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
+        									</center></div>
+									</div>    								
+    								{% endfor %}
+                      </div>				                  
+                     </div>   	                   
+	                  
+			          <div class="floatright span7" id="col2"  style="text-align:justify ! important;">
 			          		<img src="{{site_url}}static/img/slogo2.png"><br/>
 			          		<b>Shaastra will now be held between 5th and 8th January</b>
 			          		<p>This New Year, watch the power of technology enchant minds at the much awaited technical festival of IIT Madras- Shaastra. The 14th edition of the festival, to be held between 5th and 8th January, focuses on bringing out the spirit of engineering, creating a platform for innovation, ideation and ingenuity. Be it planes soaring, RC engines racing, robots fighting or dominos falling; be prepared to be transported into a world of future.</p>

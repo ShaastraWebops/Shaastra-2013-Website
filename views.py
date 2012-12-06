@@ -33,6 +33,11 @@ def home(request):
         row.append(temp)
         result_list.append(row)
     #End of search code
+    # ading spons images code
+    present_sponsors = Sponsor.objects.filter(year=2013).order_by('index_number')
+    previous_sponsors = Sponsor.objects.filter(year=2011).order_by('index_number')
+    previous_sponsors2 = Sponsor.objects.filter(year=2010).order_by('index_number')
+    # end spons images
     # adding code for announcements on main page
     events = Event.objects.all()
     announcements = []
