@@ -23,6 +23,7 @@ from recaptcha.client import captcha
 import sha
 import random
 import datetime
+import csv
 
 @login_required(login_url=settings.SITE_URL + 'user/login/')
 def home(request):
@@ -51,7 +52,34 @@ def AddRoom(request):
         form = AddRoomForm()
         return render_to_response('controlroom/AddRoomForm.html', locals(),
                               context_instance=RequestContext(request))
-    
+
+@login_required(login_url=settings.SITE_URL + 'user/login/')
+def AddMultipleRooms(request):
+    if request.user.get_profile().is_hospi is False:
+        return HttpResponseRedirect(settings.SITE_URL)
+    form = AddMultipleRoomsForm()
+    if request.method == 'POST':
+        form = AddMultipleRoomsForm(request.POST, request.FILES)   
+        if form.is_valid():
+            line_number = 0
+            rooms = [] 
+            for line in form.cleaned_data['rooms']:
+                # Remove the end-of-line character from the line
+                line = line.replace('\n', '').replace('\r', '').replace('(','').replace(')','')
+                # Ignore blank lines
+                if line == '':
+                    continue
+                line_number += 1
+                rooms.append(line)
+                room = AvailableRooms(
+                            room_no = line.split(',')[0],
+                            hostel =  line.split(',')[1],
+                            number_of_people = line.split(',')[2]
+                            )
+                room.save()                
+    return render_to_response('controlroom/AddMultipleRooms.html', locals(),
+                              context_instance=RequestContext(request))
+
 @login_required(login_url=settings.SITE_URL + 'user/login/')
 def individual(request):
     if request.user.get_profile().is_hospi is False:

@@ -17,6 +17,9 @@ class AddRoomForm(ModelForm):
     class Meta:
         model = AvailableRooms
 
+class AddMultipleRoomsForm(forms.Form):
+    rooms = forms.FileField(required = True)
+    
 class ShaastraIDForm(forms.Form):
     shaastraID = forms.CharField(help_text = 'Enter Shaastra ID of participant')
 
