@@ -79,7 +79,8 @@ def AddMultipleRooms(request):
                                 hostel =  line.split(',')[1],
                                 number_of_people = line.split(',')[2]
                                 )
-                    room.save()                
+                    room.save()   
+                    msg = "Rooms added successfully to database"             
     return render_to_response('controlroom/AddMultipleRooms.html', locals(),
                               context_instance=RequestContext(request))
 
