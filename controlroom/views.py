@@ -71,12 +71,15 @@ def AddMultipleRooms(request):
                     continue
                 line_number += 1
                 rooms.append(line)
-                room = AvailableRooms(
-                            room_no = line.split(',')[0],
-                            hostel =  line.split(',')[1],
-                            number_of_people = line.split(',')[2]
-                            )
-                room.save()                
+                try:
+                    room = AvailableRooms.objects.get(room_no = line.split(',')[0])
+                except:
+                    room = AvailableRooms(
+                                room_no = line.split(',')[0],
+                                hostel =  line.split(',')[1],
+                                number_of_people = line.split(',')[2]
+                                )
+                    room.save()                
     return render_to_response('controlroom/AddMultipleRooms.html', locals(),
                               context_instance=RequestContext(request))
 
