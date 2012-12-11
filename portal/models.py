@@ -53,6 +53,7 @@ NEW_SPONSOR_CHOICES = (
     ('Print Solutions Partner','Print Solutions Partner'),
     ('Online Merchandize Partner','Online Merchandize Partner'),
     ('Workshop Partner','Workshop Partner'),
+    ('Magazine Partner','Magazine Partner'),
     ('Online Collaboration Partner','Online Collaboration Partner'),
     ('Web Hosting Partner','Web Hosting Partner'),
     ('Online Media Partner','Online Media Partner'),
