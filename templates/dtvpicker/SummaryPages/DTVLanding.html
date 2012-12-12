@@ -30,4 +30,9 @@
             </tr>
         </table>
     </p>
+    {% if user.is_superuser %}
+        <p>
+            <a href = '{{site_url}}DTVPicker/'> Go back to the Super User Home </a>
+        </p>
+    {% endif %}
 {% endblock %}
