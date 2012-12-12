@@ -1,6 +1,9 @@
 <center><b>Event Details</center></b><br/>      
-<table>
-    {{ event_form.as_table }}
-</table>
-<button onclick="add_event();" type ='submit' value='Save'>Add</button>
-
+<form id="AddEventForm" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <i> Please add the event logo once the event is created using Edit Event in the dashboard</i>
+    <table>
+        {{ event_form.as_table }}
+    </table>
+    <button class="btn btn-primary" onclick="add_event();" type ='button' value='Save'>Add</button>
+</form>

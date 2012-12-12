@@ -1,167 +1,235 @@
-from django.http import *
-from django.template import *
-from django.shortcuts import *
-from django.contrib import *
-from django.contrib.auth.forms import UserCreationForm
-from django.core.context_processors import csrf
-from django.contrib import *
-from django.contrib.auth.models import User
-from events.models import *
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.template.context import Context, RequestContext
+from django.shortcuts import render_to_response
 from django.conf import settings
+from events.models import *
+from users.models import Team
+from operator import attrgetter
+from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.core.exceptions import ObjectDoesNotExist
+import urllib
 
-import os
-import datetime
-from datetime import date
 
 # Create your views here.
+def home(request):
+    event_name = request.GET.get('_escaped_fragment_','')
+    if event_name:
+        event_name = event_name.split('/')[1]
+	event_name = event_name.replace('-', ' ')
+	if event_name=="robo oceana":
+	    event_name="robo-oceana"
+	elif event_name=="lectures video conferences":
+	    event_name="lectures & video conferences"
+	if event_name == 'sampark/' :
+	    return sampark(request)
+	event = Event.objects.get(title=event_name)
+	initial_updates = Update.objects.filter(category = 'Update')
+	updates = sorted(initial_updates, key=attrgetter('id'), reverse=True)
+	initial_announcements = Update.objects.filter(category = 'Announcement')
+	announcements = sorted(initial_announcements, key=attrgetter('id'), reverse=True)
+	tab_set = event.tab_set.all()
+	files_set = [tab.tabfile_set.all() for tab in tab_set]
+	tabs = zip(tab_set,files_set)
+	return render_to_response('ajax/events/events.html', locals(), context_instance=RequestContext(request))
+    return render_to_response('events/events_home.html', locals(), context_instance=RequestContext(request))
 
-class BaseView(object):
-    # parent class. classes below inherit this
-    def __call__(self, request, **kwargs):
-        # handles request and dispatches the corresponding handler based on the type of request (GET/POST)
-        method = request.META['REQUEST_METHOD'].upper()
-        handler = getattr(self, 'handle_%s' %method, None)
-        
-        if handler is None:
-            methods = []
-            for x in dir(self):
-                if x.startswith('handle_'):
-                    methods.append(x[7:])
-            return HttpResponseNotAllowed(methods)
-            
-        return handler(request, **kwargs)
-        
-    def get_tabs(self,event):
-        # returns list of all tabs of a particular event
-        try:
-            return event.tab_set.all()
-        except:
-            raise Http404()
-            
-    def get_files(self, tab):
-        # returns list of all files of a particular tab
-        try:
-            return tab.tabfile_set.all()
-        except:
-            print 'here too'
-            raise Http404()
-        
+def events(request, event_name):
+    event_name = event_name.replace('-', ' ')
+    if event_name=="robo oceana":
+    	event_name="robo-oceana"
+    elif event_name=="lectures video conferences":
+    	event_name="lectures & video conferences"
+    if event_name == 'sampark/' :
+        return sampark(request)
+    event = Event.objects.get(title=event_name)
+    initial_updates = Update.objects.filter(category = 'Update')
+    updates = sorted(initial_updates, key=attrgetter('id'), reverse=True)
+    initial_announcements = Update.objects.filter(category = 'Announcement')
+    announcements = sorted(initial_announcements, key=attrgetter('id'), reverse=True)
+    tab_set = event.tab_set.all()
+    files_set = [tab.tabfile_set.all() for tab in tab_set]
+    tabs = zip(tab_set,files_set)
+    #assert False
+    return render_to_response('events/events.html', locals(), context_instance=RequestContext(request))
 
-class ProtectedView(BaseView):
-    """
-    ProtectedView requires users to authenticate themselves before proceeding to the computation logic.
-    """
+'''
+def tabs(request, event_name, tab_name):
+    event_name = event_name.replace('-', ' ')
+    tab_name = tab_name.replace('-', ' ')
+    if event_name=="robo oceana":
+    	event_name="robo-oceana"
+    elif event_name=="lectures video conferences":
+    	event_name="lectures & video conferences"
+    event = Event.objects.get(title=event_name)
+    tab_set = event.tab_set.all()
+    tab = tab_set.get(title=tab_name)
+    file_set = tab.tabfile_set.all()
+    return render_to_response('events/tabs.html', locals(), context_instance=RequestContext(request))
+'''
+def sampark(request):
+#    if path:
+#        assert False
+#        return HttpResponseRedirect(settings.SITE_URL+path)
+    bengaluruevents = []
+    hyderabadevents = []
+    puneevents = []
+    coimbatoreevents = []
+    chennaievents = []
+    event = Event.objects.all()
+    city_set = ['Bengaluru', 'Hyderabad', 'Coimbatore', 'Pune', 'Chennai']
+    for e in event:
+        if e.title.split('_')[0] == 'B':
+            bengaluruevents.append(e)
+        if e.title.split('_')[0] == 'H':
+            hyderabadevents.append(e)
+        if e.title.split('_')[0] == 'P':
+            puneevents.append(e)
+        if e.title.split('_')[0] == 'C':
+            coimbatoreevents.append(e)
+        if e.title.split('_')[0] == 'Ch':
+            chennaievents.append(e)
+    #Code for search
+    result_list=[]
+    for t in Tag.objects.all():
+        row=[]
+        row.append(str(t.name))
+        temp=[]
+        for x in t.event_set.all():
+            url = slugify(x) + '/tab/' + x.tab_set.all()[0].title
+            temp.append([str(x),str(url)])
+        row.append(temp)
+        result_list.append(row)
+    #End of search code
+    return render_to_response('events/sampark_home.html', locals(), context_instance=RequestContext(request))
 
-    @method_decorator(login_required)
-    def userAuthentication(self, request, **kwargs):
-        return True
+def logo(request):
+    name = request.GET.get('name','')
+    url = request.GET.get('url','')
+    logo = request.GET.get('logo','')
+    about = request.GET.get('about','')
+    index_number = request.GET.get('index',0)
+    year = request.GET.get('year',2013)
+    #event = Event.objects.get(title=event_name)
+    #event.sponsor_logo_url = spons_logo_url
+    #event.save()
+    #event = Event.objects.get(title=event_name)
+    try:
+      spons = Sponsor.objects.get(name = name)
+      spons.url = url
+      spons.index_number = index_number
+      spons.year = year
+      spons.logo = logo
+      spons.about = about
+    except:
+      spons = Sponsor(name = name, url = url, index_number = index_number,year = year, logo = logo, about = about)
+    spons.save()
+    if(spons):
+      return HttpResponse("True")
+    else:
+      return HttpResponse("False")
     
-    def __call__(self, request, **kwargs):
-        """
-        * Checks authentication
-        * Handles request
-        * Dispatches the corresponding handler based on the type of request (GET/POST)
-        """
-        # TODO(Anant, anant.girdhar@gmail.com): Instead of copying the code, it would be better if we override BaseView.__call__
-        #                                       and add the necessary lines for authentication.
-        
-        # Copied code from BaseView.__call__
-        # Overriding BaseView.__call__ to check authentication.
 
-        if self.userAuthentication(request, **kwargs) == False:
-            return HttpResponseForbidden()
-        method = request.META['REQUEST_METHOD'].upper()
-        handler = getattr(self, 'handle_%s' %method, None)
+### Methods for event registration:
         
-        if handler is None:
-            methods = []
-            for x in dir(self):
-                if x.startswith('handle_'):
-                    methods.append(x[7:])
-            return HttpResponseNotAllowed(methods)    
-        return handler(request, **kwargs)
-        
-class CoordProtectedView(ProtectedView):
-    """
-    CoordProtectedView requires the user to be authenticated and to be a coord before proceeding to the computation logic.
-    """
-    @method_decorator(login_required)
-    def userAuthentication(self, request, **kwargs):
-        if request.user.get_profile().is_coord_of is not None:
-            return True
-        return False
+def register_singular_event(request, event):
+    user = request.user
+    userProfile = user.get_profile()
+    singularRegistrations = EventSingularRegistration.objects.filter(event = event)
+    registration_done_message = None
+    try:
+        userRegistration = singularRegistrations.get(user = user)
+    except:
+        # This means that the user is not registered.
+        # We must now execute the registration logic.
+        if request.method == 'POST':
+            # If the user submitted the registration form (which is just a confirm button)
+            newRegistration = EventSingularRegistration(user = user, event = event)
+            newRegistration.save()
+            registration_done_message = u'You have been registered for this event.'
+        else:
+            # If the form has not been submitted, we have to render the form.
+            # TODO: The template below should have a form which allows the user to choose whether he wants to register or not. TODO done
+            return render_to_response('events/register_singular_event.html', locals(), context_instance=RequestContext(request))
+    if registration_done_message is None:
+        # If registration_done_message exists, then the user just registered. Do not change this message here.
+        # If it does not exist, the user registered earlier. Set the message.
+        registration_done_message = u'You have already registered for this event.'
+    # TODO: The template below should tell the user that he is registered. TODO done
+    # TODO: The template should also allow the user to cancel his registration
+    return render_to_response('events/registration_done.html', locals(), context_instance=RequestContext(request))
 
-    def permissionsGranted(self, request, **kwargs):
-        """
-        Checks if the coord has permissions to access the requested event.
-        """
-        try:
-            if request.user.get_profile().is_coord_of != Event.objects.get(title = kwargs['event']):
-                return False  # If the coord is not coord of the requested event
-            return True
-        except:
-            raise Http404('You do not have permissions to view this page')
-        
-class CoreProtectedView(ProtectedView):
+def register_team_event(request, event):
+    user = request.user
+    userProfile = user.get_profile()
+    teams = Team.objects.filter(event = event)
+    try:
+        userTeam = teams.get(members = user)
+    except Team.DoesNotExist:
+        # This means that the user is not a part of any registered team.
+        # We must now execute the team registration logic.
+        # To register for an event, the user must create a team.
+        # If the user wants to join another team, the leader of that team must send the user a request.
+        # Here we must redirect to the create team view.
+        return render_to_response('events/team_registration_required.html', locals(), context_instance=RequestContext(request))
+        #return HttpResponseRedirect(settings.SITE_URL + 'user/teams/create/' + str(event.id) + '/')
+    # Else the user is already part of a team.
+    return render_to_response('events/team_registration_done.html', locals(), context_instance=RequestContext(request))
+
+@login_required
+def register(request, event_id):
+    """ 
+    This is the event registration view.
+    If the event is a singular event, i.e. individual participation, the
+    user will be shown a form asking him to register.
+    If the event is a team event, the user will be redirected to the team
+    selection page
     """
-    CoreProtectedView requires the user to be authenticated and to be a core before proceeding to the computation logic.
+    event_id = int(event_id)
+    try:
+        event = Event.objects.get(id = event_id)
+    except Event.DoesNotExist:
+        raise Http404('It seems like you the event you have requested for does not exist.')
+    if not event.registrable_online:
+        return render_to_response('events/register_offline.html', locals(), context_instance=RequestContext(request))
+        #TODO: This template should tell the user that the event cannot be registered for online and that the registration is only on site. TODO done
+    if not event.begin_registration:
+        return render_to_response('events/registration_not_started.html', locals(), context_instance=RequestContext(request))
+        #TODO: This template should tell the user that the event registration is online but has not started yet. Stay tuned for updates. TODO done
+    if not event.team_event:  # This means that the event is a singular event.
+        response = register_singular_event(request, event)
+        return response
+    else:  # The event is a team event.
+        response = register_team_event(request, event)
+        return response
+
+@login_required        
+def cancel_registration(request, event_id):
     """
-    @method_decorator(login_required)
-    def userAuthentication(self, request, **kwargs):
-        if request.user.get_profile().is_core:
-            return True
-        return False
+    This view cancels a users registration for an event.
+    """
+    event_id = int(event_id)
+    user = request.user
+    try:
+        event = Event.objects.get(id = event_id)
+    except Event.DoesNotExist:
+        raise Http404('It seems like you the event you have requested for does not exist.')
+    if event.team_event:
+        # TODO: This template should tell the user how to deregister from a team event TODO done
+        return render_to_response('events/team_deregister.html', locals(), context_instance=RequestContext(request))
+    try:
+        user_registration = EventSingularRegistration.objects.filter(event=event).get(user=user)
+    except:
+        raise Http404('You are not registered for this event.')
     
-class CoordDashboard(CoordProtectedView):
-    """
-    displays the coord dashboard depending on the logged in coords event
-    """
-    def handle_GET(self, request, **kwargs):
-        event = request.user.get_profile().is_coord_of
-        tabs = self.get_tabs(event)
-        return render_to_response('events/dashboard.html', locals(), context_instance = RequestContext(request))
-        
-class TabFileSubmit(CoordProtectedView):
-    """
-    ajax file uploads are directed to this view
-    """
-    def handle_POST(self, request, **kwargs):
-        from django.conf import settings
-        # These were the headers set by the function File() to pass additional data. 
-        filename = request.META['HTTP_X_FILE_NAME']
-        display_name = request.META['HTTP_X_NAME']
-        tab_id = request.META['HTTP_X_TAB_ID']
-        
-        tab = Tab.objects.get(id = tab_id)
-        direc = os.path.join(settings.PROJECT_DIR + settings.MEDIA_URL, 'events', str(tab.event.id), tab._meta.object_name, str(tab.id))
-        # note that event and tab IDs and not their titles have been used to create folders so that renaming does not affect the folders
-        if not os.path.exists(direc):
-            os.makedirs(direc)
-        path = os.path.join(direc, filename)
-        a = TabFile.objects.get_or_create(tab_file = path)
-        # get_or_create returns a tuple whose second element is a boolean which is True if it is creating a new object.
-        # the first element is the object that has been created/found.
-        if a[1]:
-            a[0].url = os.path.join(settings.MEDIA_URL, 'events', str(tab.event.id), tab._meta.object_name, str(tab.id), filename)
-            f = open(path, 'w')
-            with f as dest:
-                req = request
-                # Right now the file comes as raw input (in form of binary strings). Unfortunately, this is the only way I know that will make ajax work with file uploads.
-                foo = req.read( 1024 )
-                while foo:
-                    dest.write( foo )
-                    foo = req.read( 1024 )
-        a[0].title = display_name
-        a[0].tab = tab
-        a[0].save()
-        file_list = self.get_files(tab)
+    if request.method == 'POST':
+        # If the user submitted the registration cancellation form (which is just a confirm button)
+        user_registration.delete()
+        return render_to_response('events/deregistration_done.html', locals(), context_instance=RequestContext(request))
+    else:
+        # If the form has not been submitted, we have to render the form.
+        # TODO: The template below should have a form which allows the user to choose whether he wants to cancel registration or not. TODO done
+        return render_to_response('events/deregister_singular_event.html', locals(), context_instance=RequestContext(request))
 
-        template = loader.get_template('ajax/events/file_list.html')
-        t = template.render(RequestContext(request, locals()))
-        # the ajax function File() assigns this as the innerHTML of a div after the request has been completed.
-        return HttpResponse(t)
-        
-        
+

@@ -1,0 +1,50 @@
+<form id = "sub_list" action="" method = "POST">
+{% csrf_token %}
+<select id="action" name="action">
+  <option selected="selected" value="0">---------</option>
+  <option value="selected">mark as selected</option>
+  <option value="sub_read">mark as unread</option>
+  <option value="interesting">mark as interesting</option>
+  <option value="read">mark as read</option>
+</select>
+<input type="button" onclick="send_checklist();" value="Apply" class="btn btn-info">
+
+<br><br>
+<table id="submissions_list" class="table table-striped table-bordered table-condensed left" border = "1">
+<thead>
+<tr>
+    <th><input type="checkbox" value="toggle" id="toggle" onclick="toggleChecked(this.checked);"/></th>
+    <th width="120">First Name</th>
+    <th width="120">Last Name</th>
+    <th width="120">Read TDP</th>
+    <th width="120">Read</th>
+    <th width="120">Selected</th>
+    <th width="120">Interesting</th>
+    
+</tr>
+</thead>
+<tbody>
+{% for sub in subs %}
+<tr>
+
+    <td><input type="checkbox" name="sub_checklist" class="checkbox" value="{{sub.basesub.id}}" /></td>
+    {% if sub.basesub.event.team_event %}
+    <td width="120">{{sub.team.leader.first_name}}</td>
+    <td width="120">{{sub.team.leader.last_name}}</td>
+    <td width="120"><a href = {{MEDIA_URL}}{{sub.tdp_upload|cut:"/home/shaastra/public_html/2013/media/"}}>{{sub.team.name}}</a></td>
+    {% else %}
+    <td width="120">{{sub.participant.first_name}}</td>
+    <td width="120">{{sub.participant.last_name}}</td>
+    <td width="120"><a href = {{MEDIA_URL}}{{sub.tdp_upload|cut:"/home/shaastra/public_html/2013/media/"}}>{{sub.participant.username}}</a></td>    
+    {% endif %}
+    <td width="120">{% if sub.basesub.sub_read %} Yes {% else %} No {% endif %}</td>
+    <td width="120">{% if sub.basesub.selected%} Yes {% else %} No {% endif %}</td>
+    <td width="120">{% if sub.basesub.interesting%} Yes {% else %} No {% endif %}</td>
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</form>
+<input type="button" value="Close" class="btn btn-primary" onclick="close_form();" >
+<br>

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from django.db import models
 from datetime import datetime
 from django.conf import settings
@@ -60,6 +62,7 @@ class VenueGroupAlias(models.Model):
         return disp_string
 
 class SubEvent(models.Model):
+
     """
     A sub-event is, e.g. Prelims 1, Finals, Workshop 2, Lecture 3, etc., of an event.
     """

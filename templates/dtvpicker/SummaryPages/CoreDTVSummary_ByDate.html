@@ -1,7 +1,7 @@
 {% extends "dtvpicker/dtvBase.html" %}
 
 {% block dtvTitle %}
-    Summary | By Date
+    <h1>Summary | By Date</h1>
 {% endblock %}
 
 {% block onScreenPageTitle %} DTV Summary (By Date) {% endblock %}
@@ -10,7 +10,7 @@
     {% for date, subEventList in happeningsByDate %}
         <h4> {{ date|date:"D, d M Y" }} </h4>
         {% if subEventList %}
-            <table>
+            <table class="table table-striped table-bordered table-condensed">
                 <tr>
                     <th> Event </th>
                     <th> Sub-Event </th>
@@ -40,10 +40,10 @@
     
     <br/> <br/>
 
-    <a href = '{{site_url}}DTVPicker/Summary/'> <b> Go back to the DTV Summary Landing </b> </a>
+    <a href = '{{site_url}}DTVPicker/Summary/' class="btn btn-inverse atag" style="width:320px;">Go back to the DTV Summary Landing</a>
     
     {% if enablePDFPrinting %}
-        or <a href = '{{site_url}}DTVPicker/Summary/ByDate/GeneratePDF/'> print these details as PDF. </a>
+        or <a href = '{{site_url}}DTVPicker/Summary/ByDate/GeneratePDF/' class="btn btn-info atag" style="width:250px;"> print these details as PDF. </a>
     {% endif %}
     
     <br/>

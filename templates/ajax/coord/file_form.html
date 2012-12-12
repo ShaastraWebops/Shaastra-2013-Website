@@ -1,0 +1,24 @@
+<h4>Upload files for {{tab.title}}</h4>
+<form id="TabFileForm" action="" method="post" enctype="multipart/form-data" class="form-horizontal control group"> {% csrf_token %}
+    Display name: <input type="text" name="display_name" id="display_name"/> 
+
+
+
+
+    file: <input type="file" id="thefile"/><br>
+
+    <input type="button" value="Upload File" onclick="File({{tab.id}});" class="btn btn-primary"/> 
+</form>
+
+<div id = "file_list">
+    <div id="file">
+        {% for file in file_list %}
+            <a href="{{file.url}}" id="{{file.id}}">{{file.title}}</a><br>
+            <ul class="nav nav-pills q">
+            <li><a id="delete_file" onclick="Dajaxice.events.delete_file(Dajax.process,{'tab_id':'{{tab.id}}','file_id':'{{file.id}}'})">Delete</a></li>
+            <li><a href="#customtabs/files/rename/{{tab.id}}/{{file.id}}" id="rename">Rename</a></li></ul><br>
+        {% endfor %}
+    </div>
+</div>
+<div id = "uploading">
+</div>

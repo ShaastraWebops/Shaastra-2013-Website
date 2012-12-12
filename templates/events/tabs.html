@@ -1,0 +1,11 @@
+{{tab.text|safe}}
+
+{% if file_set %}
+<hr/>
+    Downloads:<br>
+    <ul>
+    {% for file in file_set %}
+        <li><a href="{{file.url}}" style="color:white;">{{file.title}}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}

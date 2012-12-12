@@ -1,0 +1,36 @@
+<html>
+	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# shaastra: http://ogp.me/ns/fb/shaastra#">
+        <title>Shaastra>>Events>>{{event}}</title>
+        <script type="text/javascript" >
+        function rsvp() {
+        FB.api('/{{event.fb_event_id}}/attending', 'post', function(response) {
+            if(response!=true)
+            	alert("We are temporarily unable to send an invitation, kindly use the join button in the event's page.");
+        });
+        }
+        </script>
+     <meta property="fb:app_id"               content="291744470918252"> 
+     <meta property="og:type"                 content="shaastra:event"> 
+<!--     <meta property="og:url"                  content="">-->
+     <meta property="og:site_name"            content="Shaastra 2013">
+     <meta property="og:image"                content="{{site_url}}static/img/diceNtext.png">
+     <meta property="og:title"                content="Shaastra 2013>>{{event}}">
+     <meta property="og:description"          content="Come and join the fun!">
+    </HEAD>
+    <BODY>
+        <div class="well">
+            <div id="sidemenutitle" class="row-fluid">
+                <strong><h1><a href="http://www.facebook.com/events/{{event.fb_event_id}}" rel="tooltip" title="Click here to go the Event's FB page!" onclick="rsvp();" target = "_blank">{{event.title}}</a></h1></strong>
+            </div><hr>
+            <div class="row-fluid"">
+            <div id="maincontent" class="span5 floatleft well"> {{ event_intro|safe }}
+            </div>
+<!--            <div class="fb-comments" data-href="{{site_url}}fb/events/{{event.id}}" data-num-posts="2" data-width="470"></div>-->
+            <div id="gallery" class="span5 floatright boxA">
+                <div id="picture"><img src="{{event.sponsor_logo_url}}" /></div>
+            </div>
+<!--            <div class="fb-facepile" data-href="{{site_url}}fb/events/{{event.id}}" data-max-rows="1" data-width="300"></div>-->
+            <fb:like href="{{site_url}}fb/events/{{event.title}}" show_faces="false" width="450"></fb:like> 
+        </div>
+    </BODY>
+</html>

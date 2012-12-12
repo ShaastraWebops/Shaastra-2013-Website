@@ -7,7 +7,8 @@ LANGUAGE_CODE = 'en-us'
 # settings that will be common and useful.
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 PROJECT_DIR_NAME = PROJECT_DIR.split('/')[-1] # used in dajaxice.[my_project_folder_name].events.[ajax_function] (see context_processors.py)
-AJAX_TEMPLATE_DIR = os.path.join(PROJECT_DIR, 'templates/events', 'ajax') # path where ajax templates are stored
+AJAX_TEMPLATE_DIR = os.path.join(PROJECT_DIR, 'templates', 'ajax') # path where ajax templates are stored
+FIXTURES_DIR = os.path.dirname(__file__)
 
 
 SITE_ID = 1
@@ -17,10 +18,6 @@ USE_I18N = False
 USE_L10N = True
 
 AUTH_PROFILE_MODULE = 'users.UserProfile'
-
-FACEBOOK_APP_ID = '291744470918252'
-FACEBOOK_APP_SECRET = '599f13aad496d3acc8ea887a0e889b92'
-FACEBOOK_SCOPE = 'email'
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -35,7 +32,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
-
 ROOT_URLCONF = 'urls'
 
 INSTALLED_APPS = (
@@ -44,18 +40,19 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django.contrib.messages',
     'admin',
+    'core',
+    'coord',
     'users',
     'events',
-    'dajaxice',
-    'dajax', 
-    'core',
     'submissions',
     'dtvpicker',
-    'django.contrib.sites',
-    'django.contrib.sitemaps',
-
+    'controlroom',
+    'dajaxice',
+    'dajax',
+    'recaptcha',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -85,6 +82,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
@@ -107,10 +106,12 @@ DAJAX_MEDIA_PREFIX='dajax'
 DAJAXICE_MEDIA_PREFIX="dajaxice"
 DAJAXICE_DEBUG = True
 
-EMAIL_HOST='localhost'
-#Default: 'localhost'
-#The host to use for sending e-mail.
-EMAIL_HOST_PASSWORD='$#aastra20iiw3b0ps'
-#Default: '' (Empty string)
-EMAIL_HOST_USER='shaastra'
+CACHES = {
+        'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                            'LOCATION': '127.0.0.1:11211',
+                                }
+}
 
+RECAPTCHA_PUBLIC_KEY = '6Lf1ktUSAAAAALOtemzm08LVwHmfku6yXXCdrMJn'
+RECAPTCHA_PRIVATE_KEY = '6Lf1ktUSAAAAANLvSSLPiSpgocDrjyK9ApPUvcaF'

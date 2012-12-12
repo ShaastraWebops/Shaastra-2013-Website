@@ -1,0 +1,23 @@
+{% extends "users/teams/teams_base.html" %}
+
+{% block body %}
+
+    <div id="create_team_form">
+        <p>Create a team to participate in {{ event.title }}:</p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table id="msg" >
+                {{ form.as_table }}
+                <tr><td>
+                    <div class="button2">
+                        <a href="#">
+                            <input class="btn btn-large btn-success" type="submit" value="Create" />
+                        </a>
+                        <span></span>
+                    </div>
+                </tr></td>
+            </table>
+        </form>
+    </div>
+
+{% endblock %}

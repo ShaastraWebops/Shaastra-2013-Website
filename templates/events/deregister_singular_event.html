@@ -1,0 +1,14 @@
+{% extends "events/registration_base.html" %}
+
+{% block body %}
+	<p>	
+    To deregister, click the button.<br>
+    </p>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-large btn-danger" value="De-Register">
+    </form>
+    
+    <a class="btn btn-success" href = '{{site_url}}events/{{event.title}}/'>Stay Registered</a>
+    
+{% endblock %}

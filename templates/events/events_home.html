@@ -1,0 +1,26 @@
+<!--<p>Registration for Shaastra 2013 will start shortly.</p>
+{% for event in events %}
+<h5>{{event.title}}</h5>
+    {% for a in announcements %}
+    <!--          {% if forloop.first %}
+                  <h3>Announcements</h3>
+              {% endif %}
+              
+              {% if a.event == event and a.expired == 0 %}
+                  <h4>Announcements</h4>
+                  <p style="font-size:16px;"><b>{{a.subject}}</b> - {{a.description}}<br></p>
+              {% endif %}
+              {% if forloop.last %}
+                  <br>
+              {% endif %}
+          {% endfor %}
+
+          {% for u in updates %}
+              {% if forloop.first and u.event == event %}
+                  <h4>Updates</h4>
+              {% endif %}
+              {% if u.event == event and u.expired == 0 %}
+                  <p><b>{{u.subject}}</b> - {{u.description}}<br></p>
+              {% endif %}
+          {% endfor %}
+{% endfor %}-->

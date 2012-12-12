@@ -2,11 +2,59 @@
 <html>
     <head>
         <title>Shaastra 2013</title>
-	{% dajaxice_js_import %}
-        <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
+	    {% dajaxice_js_import %}
+	    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
+        <link href="{{site_url}}static/css/chosen.css"  type="text/css" rel="stylesheet">
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+        <script type="text/javascript" language="javascript">
+
+        $(function(){
+                    
+          // Bind an event to window.onhashchange that, when the history state changes,
+          // gets the url from the hash and displays either our cached content or fetches
+          // new content to be displayed.
+          $(window).bind( 'hashchange', function(e) {
+            
+            // Get the hash (fragment) as a string, with any leading # removed. Note that
+            // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+            var url = $.param.fragment();
+            
+            // Remove .bbq-current class from any previously "current" link(s).
+            $( 'a.bbq-current' ).removeClass( 'bbq-current' );
+            if(url)
+            {
+                $(".bbq-default").hide();
+            // Add .bbq-current class to "current" nav link(s), only if url isn't empty.
+            url && $( 'a[href="#' + url + '"]' ).addClass( 'bbq-current' );
+
+          // Show "loading" content while AJAX content loads.
+          $( '.bbq-loading' ).show();
+        // Load external content via AJAX. Note that in order to keep this
+        // example streamlined, only the content in .infobox is shown. You'll
+        // want to change this based on your needs.
+          $('.bbq-item').load( url, function(){
+              // Content loaded, hide "loading" content.
+              $( '.bbq-loading' ).hide();$( '.bbq-item' ).show();
+                if($('.bbq-item').find('.chzn-select'))
+                {
+                    $(".chzn-select").chosen();
+                }
+            });
+            }
+            else
+            {
+                $(".bbq-item").hide();
+                $(".bbq-default").show();
+            }
+          })
+          
+        });
+        </script>
         <script type="text/javascript">
         function add_group()
         {
@@ -31,7 +79,6 @@
         }
         function add_core()
         {
-            $(".bbq-item option:first").attr("selected","selected"); 
             data=$(".bbq-item :input").serializeObject();
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
             Dajaxice.admin.add_edit_core(Dajax.process,{'form':data});
@@ -63,50 +110,29 @@
             updateSummary();
          });
 	    </script>
-        <script type="text/javascript" language="javascript">
-
-        $(function(){
-                    
-          // Bind an event to window.onhashchange that, when the history state changes,
-          // gets the url from the hash and displays either our cached content or fetches
-          // new content to be displayed.
-          $(window).bind( 'hashchange', function(e) {
-            
-            // Get the hash (fragment) as a string, with any leading # removed. Note that
-            // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
-            var url = $.param.fragment();
-            
-            // Remove .bbq-current class from any previously "current" link(s).
-            $( 'a.bbq-current' ).removeClass( 'bbq-current' );
-            
-            // Add .bbq-current class to "current" nav link(s), only if url isn't empty.
-            url && $( 'a[href="#' + url + '"]' ).addClass( 'bbq-current' );
-          // Show "loading" content while AJAX content loads.
-          $( '.bbq-loading' ).show();
-        // Load external content via AJAX. Note that in order to keep this
-        // example streamlined, only the content in .infobox is shown. You'll
-        // want to change this based on your needs.
-          $('.bbq-item').load( url, function(){
-              // Content loaded, hide "loading" content.
-              $( '.bbq-loading' ).hide();
-            });
-          })
-          
-        });
-        </script>
     </head>
     <body>
-        Welcome {{ request.user }},<br>
-        <a href="{{site_url}}user/logout/">Logout</a>
+        <div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+        		<div class="left" id="wel"><h3>Welcome {{ request.user }}</h3></div>
+        		<div class="right" id="links"><ul class="nav nav-pills">
+        			<li><a href="{{site_url}}user/logout/" class="right headerlinks">Logout</a></li>
+        		</ul></div>
+	</div></div></div>
         <hr/>
+      <div class="container" id="main">
         <div id="nav">
-            <a href="#addgroup">Add group</a>
-            <a href="#addcore">Add Core</a>
+            <ul class="nav nav-tabs">
+            <li><a href="#addgroup">Add group</a></li>
+            <li><a href="#addcore">Add Core</a></li></ul>
         </div><br>
-        <div id="container">
-            <div id="summary" style="float:left;width:50%;">
+        <div class="container-fluid">
+				<div class="row-fluid">
+            <div id="summary" class="span6">
             </div>
-            <div class="bbq" id="space" style="float:right;width:50%;">              
+            <div class="span6">
+            <div class="bbq" id="space">              
                 <div class="bbq-content">
 
                     <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
@@ -115,10 +141,15 @@
                     </div>
 
                     <!-- This content will be shown if no path is specified in the URL fragment. -->
+                    <div class="bbq-default">
+                    <i> Space for displaying forms </i>
+                    </div>
+
                     <div class="bbq-item">
-                    </div>                
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div></div>
+        </div></div>
+       </div>
     </body>
 </html>

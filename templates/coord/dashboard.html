@@ -1,0 +1,423 @@
+{% load dajaxice_templatetags %}
+<html>
+    <head>
+	    <title>Shaastra 2013 | Coord Dashboard</title>
+        {% dajaxice_js_import %}
+        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+        <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/style1.css">
+        <script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dataTables.js" charset = "utf-8"></script>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
+        <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script> 
+        <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/nicEdit.js" charset = "utf-8"></script>
+        <link href="{{site_url}}static/css/demo_page.css"  type="text/css" rel="stylesheet" >
+        <link href="{{site_url}}static/css/demo_table.css"  type="text/css" rel="stylesheet">
+        <script type="text/javascript" charset = "utf-8">
+        // not documenting this for now. Try n see all the templates in the ajax folder. These functions are called from those templates.
+        // make a note of all the div ids. See how the divs are being changed dynamically by dajax.
+        function createNicEdit(){
+        niced = new nicEditor({buttonList :['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','indent','outdent','link','unlink']}).panelInstance('niced_text');
+        }
+        function createNicEdit1(){
+        niced = new nicEditor({buttonList :['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','indent','outdent','link','unlink']}).panelInstance('id_title');
+        }
+        
+        function add_option_field(){
+        var old_opt = $("#mcq_form tr:last input:last").attr("name");   // oldopt = 'optb'
+        var html = $("#mcq_form tr:last").html();
+        opt = old_opt.replace('opt','');                                // opt = 'b'
+        old_option = 'option '.concat(opt);                             // oldoption = 'option b'
+        new_opt = String.fromCharCode(opt.charCodeAt(0) + 1);           // newopt = 'c'
+        new_option = 'option '.concat(new_opt);                         // newoption = 'option c'
+        new_opt = 'opt'.concat(new_opt);                                // newopt = 'optc'
+        html = html.replace(new RegExp(old_opt, 'g'), new_opt);
+        html = html.replace(old_option, new_option);
+        html = "<tr>"+html+"</tr>";
+        $("#mcq_form tbody").append(html);
+        return false;
+        }
+
+        function upload_events_logo(id)
+        {
+            var fileInput = document.getElementById('id_events_logo');
+            var file = fileInput.files[0];
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{site_url}}core/addevent/', true);
+            xhr.setRequestHeader('Content-Type','text/plain');
+            xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+            xhr.setRequestHeader('X-Event-Id', id );
+            xhr.setRequestHeader("X-File-Name", file.name);
+            xhr.onreadystatechange = function () {                      // read ajax onreadystatechange responses
+                if ((xhr.readyState == 4) && (xhr.status == 200)){
+                    document.getElementById('eventdetails').innerHTML=xhr.responseText;
+                    window.location.hash='';
+                }
+            }
+            xhr.send(file);                 // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
+       }
+
+        function edit_event(id)
+        {
+            var fileInput = document.getElementById('id_events_logo');
+            var file = fileInput.files[0];
+            if(file==undefined)
+	            file=0;
+            else
+	            file=1;
+            data=$(".bbq-item :input").serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.edit_event(Dajax.process,{'form':data,'id':id,'upload':file,});
+        }
+      
+        function save_score(id){
+            data = $('#score').serializeObject();
+            isnum = /^[-+]?[0-9]+(\.[0-9]+)?$/.test(data.score);
+            if(!isnum){alert('enter a valid score');return false;}
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.submissions.save_score(Dajax.process,{'form':data,'sub_id':id})
+            return false;
+        }
+
+        function send_checklist(){
+            data = $('#sub_list').serializeObject();
+            if(data.action=='0'){alert('Please select an Action');return false;}
+            if(!data.sub_checklist){alert('Select a Submission!');return false;}
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.send_checklist(Dajax.process,{'form':data})
+            return false;
+            
+        }
+        function toggleChecked(status){
+            $(".checkbox").each( function(){
+                $(this).attr("checked", status);
+                })
+        }
+
+        function save_mobapptab(){
+            $('.bbq-item').html = "<img src = '{{site_url}}static/img/loading.gif'>";
+            data = $('#mobapptab_form').serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.add_edit_mobapp_tab(Dajax.process,{'form':data})
+            return false;
+        }
+
+        function save_editted_option(id){
+            data = $('#edit_option_form').serializeObject();
+            Dajaxice.coord.save_editted_option(Dajax.process,{'form':data,'option_id':id})
+            return false;
+        }
+
+        function save_option(id){
+            data = $('#add_option_form').serializeObject();
+            Dajaxice.coord.save_option(Dajax.process,{'form':data,'ques_id':id})
+            return false;
+        }
+
+        function delete_option(id){
+            var r=confirm("Are you sure you want to delete the option?");
+            if(r==true)
+            {
+                Dajaxice.coord.delete_option(Dajax.process,{'option_id':id})
+            }
+        }
+
+        function delete_mcq(id){
+            var r=confirm("Are you sure you want to delete the question?");
+            if(r==true)
+            {
+                $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+                Dajaxice.coord.delete_mcq(Dajax.process,{'ques_id':id})
+            }
+        }
+
+        function save_mcq(id){
+            niced.removeInstance('id_title');
+            data = $('#mcq_form').serializeObject();
+            if (data.title == null || data.title == ""){alert('Question Title cannot be blank');return false;}
+            if (isNaN(data.q_no) || data.q_no == null || data.q_no == ""){alert('Question number must be an integer');return false;}
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.save_mcq(Dajax.process,{'data':data,'ques_id':id})
+            return false;
+        }
+
+        function delete_sub(id){
+            var r=confirm("Are you sure you want to delete the question?");
+            if(r==true)
+            {
+                $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+                Dajaxice.coord.delete_subjective(Dajax.process,{'ques_id':id})
+            }
+        }
+
+        function save_editted_subjective(id){
+            data = $('#edit_subjective_form').serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.save_editted_subjective(Dajax.process,{'form':data,'ques_id':id})
+            return false;
+        }
+
+        function save_subjective(){
+            niced.removeInstance('id_title');
+            data = $('#subjective_form').serializeObject();
+            ques_id=$("#ques_id").attr('value');
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.save_subjective(Dajax.process,{'data':data,'ques_id':ques_id,})
+            return false;
+        }
+
+        function save_tab(){
+            niced.removeInstance('niced_text');
+            data = $('#tab_form').serializeObject();
+            tab_id=$("#tab_id").attr('value');
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.save_tab(Dajax.process,{'data':data,'tab_id':tab_id,})
+            return false;
+        }
+
+        function edit_tab(id){
+            data = $('#edit_tab').serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.save_editted_tab(Dajax.process,{'form':data,'tab_id':id})
+            return false;
+        }
+
+        function delete_tab(id){
+            var r=confirm("Are you sure you want to delete the tab?");
+            if(r==true)
+                {$(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+                Dajaxice.coord.delete_tab(Dajax.process,{'tab_id':id})}
+        }
+
+        function rename_file(id){
+            data = $('#file_rename').serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.rename_file_done(Dajax.process, {'form':data,'file_id':id})
+            return false;
+        }
+        
+        function delete_file(tab_id, file_id){
+            var r=confirm("Are you sure you want to delete this file?");
+            if(r==true)
+            {
+                $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+                Dajaxice.coord.delete_file(Dajax.process,{'tab_id':tab_id, 'file_id':file_id})
+            }
+        }
+
+        function validateForm() {                   //prevents display name from being empty
+            var x=document.forms["TabFileForm"]["display_name"].value;
+            if (x==null || x=="")
+            {
+            alert("name must be filled out");
+            return false;
+            }
+            // validation for empty file field here. Works even without it for now, an error is shown in firebug.
+            return true;
+        }
+
+        function File(id){
+            if (validateForm()){
+            var name = document.forms["TabFileForm"]["display_name"].value;
+            var fileInput = document.getElementById('thefile');
+            var file = fileInput.files[0];
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{site_url}}coord/tabfile/', true);
+            xhr.setRequestHeader('Content-Type','text/plain; charset="utf-8"');
+            xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+            xhr.setRequestHeader('X-Tab-Id', id);
+            xhr.setRequestHeader("X-File-Name", file.name);
+            xhr.setRequestHeader('X-Name', name);
+            xhr.onreadystatechange = function () {                      // read ajax onreadystatechange responses
+                if ((xhr.readyState == 4) && (xhr.status == 200)){
+                    document.getElementById('file_list').innerHTML = xhr.responseText;
+                }
+                if (xhr.readyState == 1){
+                document.getElementById('uploading').innerHTML = "<img src = '{{site_url}}static/img/loading.gif'>";    //loading..loading..
+                }
+                if (xhr.readyState == 4){
+                document.getElementById('uploading').innerHTML = "";    //loading done
+                document.forms['TabFileForm'].reset();
+                }
+            }
+            xhr.send(file);                 // this takes the data to /tabfile/ which will take it to the class view TabFileSubmit
+        }
+        }
+        function add_update()
+        {
+            data=$(".bbq-item :input").serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.add_edit_update(Dajax.process,{'form':data});
+        }
+        function edit_update(id)
+        {
+            data=$(".bbq-item :input").serializeObject();
+            $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
+            Dajaxice.coord.add_edit_update(Dajax.process,{'form':data,'id':id});
+        }
+        function close_form()
+        {
+            $('.bbq-item').hide();
+            $('.bbq-default').show();
+            window.location.hash='';
+
+        }
+        </script>
+        <script type="text/javascript" language="javascript">
+        $(function(){
+                
+            // Bind an event to window.onhashchange that, when the history state changes,
+            // gets the url from the hash and displays either our cached content or fetches
+            // new content to be displayed.
+            $(window).bind( 'hashchange', function(e) {
+
+                // Get the hash (fragment) as a string, with any leading # removed. Note that
+                // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+                var url = $.param.fragment();
+
+                // Remove .bbq-current class from any previously "current" link(s).
+                $( 'a.bbq-current' ).removeClass( 'bbq-current' );
+
+                if(url)
+                {
+                    $(".bbq-default").hide();
+                    // Add .bbq-current class to "current" nav link(s), only if url isn't empty.
+                    url && $( 'a[href="#' + url + '"]' ).addClass( 'bbq-current' );
+
+                    // Show "loading" content while AJAX content loads.
+                    $( '.bbq-loading' ).show();
+                    // Load external content via AJAX. Note that in order to keep this
+                    // example streamlined, only the content in .infobox is shown. You'll
+                    // want to change this based on your needs.
+                    $('.bbq-item').load( url, function(){
+                        // Content loaded, hide "loading" content.
+                        $( '.bbq-loading' ).hide();
+                        $( '.bbq-item' ).show();
+                        if(window.location.hash=='#submissions')
+                            $("#submissions_list").dataTable();
+                        if(window.location.hash=='#customtabs' || window.location.hash.indexOf('tabs/edit')>0)
+                            createNicEdit();
+                        if(window.location.hash.indexOf('questions')>0)
+                            createNicEdit1();
+                        if($('.bbq-item').find('.chzn-select'))
+                        {
+                            $(".chzn-select").chosen();
+                        }
+                    });
+                }
+                else
+                {
+                    $(".bbq-item").hide();
+                    $(".bbq-default").show();
+                }
+            })
+            Dajaxice.coord.updateTabs(Dajax.process);
+            $(window).trigger('hashchange');
+
+        });
+        </script>
+     <script type="text/javascript" >
+           $(document).ready(function(){           
+                 $("#nav a").click(function(){
+                 			$("#nav a").removeClass("on");
+                 			$(this).addClass("on");
+                 	});               
+           });
+           
+    </script>
+        <link href="{{site_url}}static/css/chosen.css"  type="text/css" rel="stylesheet">
+    </head>
+    <body>
+    <div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+         	<div class="left" id="wel"><h3>Welcome {{request.user}} &nbsp;| &nbsp; {% if request.user.get_profile.is_core %}{{ request.user.groups.get_query_set.0 }} core{% else %}{{event}} coord {% endif %}</h3></div>
+         <div class="right" id="links"><ul class="nav nav-pills">
+                {% if request.user.get_profile.is_core %}<li><a href="{{site_url}}core/" class="headerlinks">Core Home</a></li>{% endif %}
+                <li><a href="{{site_url}}user/password_change/" class="headerlinks">Change Password</a></li>
+<!--        		    <li><a href="{{site_url}}DTVPicker/Summary/" class="headerlinks">DTVPicker</a></li> -->
+        		    <li><a href="{{site_url}}user/logout/" class="headerlinks">Logout</a></li></ul>
+        	</div>
+         </div>
+      </div>
+     </div><hr/>
+     <div class="container" id="main">
+        {% csrf_token %}
+      <div id="nav"> 
+         <ul class="nav nav-tabs">
+         {% if event.registrable_online %}
+                {% if event.has_questionnaire %}
+        		<li><a href='#questions' name='questions' id = 'question'>Questions</a></li>
+        		<li><a href="#submissions" name='submissions' id = 'submissions' >Submissions</a></li>
+        		{% else %}
+        		<li><a href='#registrations' name='registrations' id = 'registrations' >Registrations</a></li>
+        		{% endif %}
+                {% if event.has_tdp %}
+                <li><a href='#viewtdpsubmissions' name='viewtdpsubmissions' id = 'viewtdpsubmissions' >View TDP Submissions</a></li>
+        		{% endif %}
+         {% endif %}       		
+        		<li><a href='#mobapp' name='mobapp' id = 'mobapp' >Mobile App Writeup</a></li>
+        		<li><a href="#customtabs">Add a Tab</a></li>
+        		<li><a href="#editevent/{{event.id}}">Edit Event</a></li>
+                <li><a href="#update" id='update'> Post update </a><li>
+        </ul>
+        </div>
+       
+       <div class="container-fluid">
+            <div class="row-fluid">
+                <div name="tabs" class="left span8">
+                    <ul class="nav nav-pills" id="tabs"></ul>
+                </div>
+                <div id="eventdetails">
+                    <div class="right span2">
+	                <h2>{{event.category}}<br>  
+                        {{event}}</h2>         
+                    </div>
+                    <div id="events_logo" class="span2">
+                        <center><img src="{{event.events_logo}}" /></center>
+                    </div>
+                </div>
+            </div>
+       </div>
+        <hr/><br>
+        <div class="container-fluid">        
+        <div class="bbq left" id="detail">
+            <div class="bbq-content span10">
+
+                <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
+                <div class="bbq-loading" style="display:none;">
+                    <img src="{{site_url}}static/img/loading.gif" alt="Loading"/> Loading content...
+                </div>
+
+                <!-- This content will be shown if no path is specified in the URL fragment. -->
+                <div class="bbq-default">
+                <i> Click on a Tab you would like to view </i>
+                </div>
+
+                <div class="bbq-item">
+                </div>
+            </div>
+        </div>
+
+        <div id="updates" class="right span4 boxA">
+	<h4>Announcement</h4>
+        {% for u in update %}
+            {% if u.event == request.user.get_profile.is_coord_of and u.category == 'Announcement' and u.expired == 0 %}
+                <p>{{u.subject}} - {{u.description}} <button style="float:right;" onclick="window.location.href='#editupdate/{{u.id}}'" class="btn-mini btn-info">Edit </button>
+            {% endif %}
+        {% endfor %}<br>
+        <h4>Updates</h4>
+        {% for u in update %}
+            {% if u.event == request.user.get_profile.is_coord_of and u.category == 'Update' and u.expired == 0 %}
+                <p><p>{{u.subject}} - {{u.description}} <button style="float:right;" onclick="window.location.href='#editupdate/{{u.id}}'" class="btn-mini btn-info">Edit </button>>
+            {% endif %}
+        {% endfor %}           
+
+	</div>
+	</div>
+
+      </div> 
+        
+   </body>
+</html>

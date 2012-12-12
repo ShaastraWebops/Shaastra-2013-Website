@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="google-site-verification" content="B1VpNZ2SMddKxXIaZt4DVyhYVHOwIcR3kQOQYvljcgk" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>Shaastra</title>
+<style type="text/css">
+#cont{
+	position:absolute;
+	top:0px;
+	width:175px;
+	background-color: rgba(8, 8, 8, 0.6);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#60080808,endColorstr=#60080808);
+	left:70%;
+	visibility: hidden;
+}
+
+#cont ul{
+	width: 175px;}
+
+
+#cont li p:hover{
+	text-decoration: underline;
+	cursor:pointer;}	
+.back
+{
+	background: rgba(0, 0, 0, 0.7) ! important;
+ 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#70000000,endColorstr=#70000000);
+}
+#textbox{
+  width:700px;
+}
+.tabtext{
+ width:620px;
+ position: relative;
+ //overflow: auto;
+}
+.tabtext th label{
+	font-size:18px;
+	line-height: 25px !important; 
+}
+</style>
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/style.css"  />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/lightbox.css"  />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/jquery.jscrollpane.css"  />
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/stylemain.css"  />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="{{site_url}}static/js/jquery.easing.1.3.js"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="{{site_url}}static/scripts/lightbox.js"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/scriptmain.js" charset = "utf-8"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/scripts/hover.js" charset = "utf-8"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/scripts/jquery.cycle.js" charset = "utf-8"></script>
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-tab.js" charset = "utf-8"></script>
+<script type="text/javascript" src="{{site_url}}static/js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" >
+	jQuery(function($) {
+	 $(".menu").css({visibility:"hidden"});
+	  $('#tabbox').css('visibility','hidden');
+});
+</script>
+{% load dajaxice_templatetags %}
+{% dajaxice_js_import %}
+<script>
+
+   	function getWindowHeight() {
+		var windowHeight = 0;
+		if (typeof(window.innerHeight) == 'number') {
+			windowHeight = window.innerHeight;
+		}
+		else {
+			if (document.documentElement && document.documentElement.clientHeight) {
+				windowHeight = document.documentElement.clientHeight;
+			}
+			else {
+				if (document.body && document.body.clientHeight) {
+					windowHeight = document.body.clientHeight;
+				}
+			}
+		}
+		return windowHeight;
+	}
+	function setContent() {
+		if (document.getElementById) {
+			var windowHeight = getWindowHeight();
+			if (windowHeight > 0) {
+				var contentElement = document.getElementById('container');
+				var contentHeight = contentElement.offsetHeight;
+				if (windowHeight - contentHeight > 0) {
+					contentElement.style.position = 'relative';
+					contentElement.style.top = ((windowHeight / 2) - (contentHeight / 2)) + 'px';
+				}
+				else {
+					loadingElement.style.position = 'static';
+				}
+			}
+		}
+	}
+   	window.onload = function() {
+		resetabs();
+		setContent();
+	}	
+	window.onresize = function() {
+		setContent();
+		resetabs();
+	}
+	function tab(num){
+		resetabs();
+		document.getElementById(num).style.visibility="visible";
+	}
+	function resetabs()
+	{
+		$(".menu").css('visibility','hidden');
+
+	}
+</script>
+
+<script type="text/javascript" language="javascript">
+{% block functions %}{% endblock %}
+    </script>
+{% block hash_handler %}{% endblock %}
+<link rel="shortcut icon" href="{{site_url}}static/img/favicon.ico" />
+
+<!-- Google analytics --> 
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-34424327-1']);
+_gaq.push(['_setDomainName', 'shaastra.org']);
+_gaq.push(['_setAllowLinker', true]);
+_gaq.push(['_trackPageview']);
+
+(function() {
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+
+</script>
+<!-- End of Google analytics --> 
+
+</head> 
+<body>
+<center>
+
+	<div id="container">
+	<div id="header">
+		<div id="logo" class="floatleft" onclick="window.location.href='{{site_url}}'"></div>
+		<div class="span2" id="search">
+		    <form action="" onsubmit="return false;">
+		        <input type="text" id="search_query" value="Search..."  onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" />
+            </form>
+        </div>
+		    <div id="topright" class="floatleft">
+    	 		<div id="icons" class="floatleft">
+    	 		    <ul class="nav nav-pills">
+    	 		    	  <li><a href="{{site_url}}#" id="home" onclick="$('#body').removeClass('bg1');"><p class="head_text">Home</p></a></li>
+    	 		        <li><a href="{{site_url}}#events" id="events"><p class="head_text">Events</p></a></li> 
+                        <li><a href="{{site_url}}events/sampark/" id="sampark"><p class="head_text">Sampark</p></a></li>       					<li><a id="spons" href="{{site_url}}#!spons"><p class="head_text">Sponsors</p></a></li>
+            			<li><a id="hospitality" href="{{site_url}}#!hospi"><p class="head_text">Hospitality</p></a></li>
+            			
+            			<!--<li><a id="forums" href="http://forums.shaastra.org" target="_blank"><p class="head_text">Forums</p></a></li>-->
+                                {% if user.is_authenticated %}
+                                   <li><a id="set"><p class="head_text">Settings</p></a></li>
+                                		<li><a href="{{site_url}}user/logout/" id="login"><p class="head_text">Logout</p></a></li>
+                                {% else %}
+                                    <li><a href="{{site_url}}user/login" id="login"><p class="head_text">Login</p></a></li> 
+                                     <li><a id="reg" href="{{site_url}}user/register/"><p class="head_text">Register</p></a></li>
+                                {% endif %}
+                      <li><a id="conspire" data-toggle="modal" href="#contacts"><p class="head_text">Contact us</p></a></li>
+            	 </ul>
+            </div>
+        		<div id="twologos" class="floatright">
+        			<div id="tuvnord" class="floatleft" ></div>
+        			<div id="iitmlogo" class="floatright" target="_blank" onclick="window.location.href='http://www.iitm.ac.in'"></div>
+        		</div>
+    		</div><br>            
+	</div>
+	<div id="body">
+	      <div id="cont" class="menulist">
+            <ul>
+         		 <li><a class="head_text" href='{{site_url}}user/password_change/' style="display:inline!important;margin:0!important;padding:0!important;">Change Password</a></li>
+         		 <li><a class="head_text" href='{{site_url}}user/editprofile/' style="display:inline!important;margin:0!important;padding:0!important;">Edit Profile</a></li>  
+      		</ul>
+        </div>
+        {% block content %}
+        <div id="content" class="bbq" style="width:100%">
+                <div class="bbq-content">
+                <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
+                <div id="loadinggif" class="bbq-loading" style="display:none;">
+                    <img src="{{site_url}}static/img/loading.gif" alt="Loading"/> Loading content...
+                </div>
+
+                <!-- This content will be shown if no path is specified in the URL fragment. -->
+                <div class="bbq-default">
+                <div id="new"><b><p style="color:white;size=60px;"><marquee><span>TDP submission Phase 2 - All TDP submissions should be mailed to the respective event email ids.</span></marquee></p></b></div> 
+                    <div class="container-fluid" style="margin-top:15px;margin-right:50px;width:90%;">
+                    <div class="row-fluid">
+			          <div class="floatleft span5" id="col1">
+                      <!--<object id="midblackvid" style="height:350px; width:100%;position:relative;"><iframe width="100%" height="350" src="http://www.youtube.com/embed/nkhTykPD0BM?rel=0&wmode=opaque" frameborder="0" allowfullscreen></iframe></object>
+                      --><div id="slide" style="height:100%;width:100%;">								
+                           <!--<div style="height:100%;width:100%;">
+                           	<br><h3 id="sponscat">Presenting sponsors</h3><br>
+                           	<div class="hovr1" style="height:280px;width:100%"></div>
+                           </div>  
+                           <div style="height:100%;width:100%;">
+                           	<br><h3 id="sponscat">Presenting sponsors</h3><br>
+                           	<div class="hovr2" style="height:280px;width:100%"></div>
+                           </div>-->
+    								{% for sponsor in present_sponsors %}
+    								 <div style="height:100%;width:100%;">
+        								  
+            								<br><h3 id="sponscat">{{sponsor.about}}</h3><br>
+        								  
+        								   <div style="height:280px;width:100%;display:inline"><center>
+        								    <a href='{{sponsor.url}}' target="_blank" style="display:inline!important;padding:0px!important;"><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
+        									</center></div>
+									</div>    								
+    								{% endfor %}
+                      </div>				                  
+                     </div>   	                   
+	                  
+			          <div class="floatright span7" id="col2"  style="text-align:justify ! important;">
+			          		<img src="{{site_url}}static/img/slogo2.png"><br/>
+			          		<b>Shaastra will now be held between 5th and 8th January</b>
+			          		<p>This New Year, watch the power of technology enchant minds at the much awaited technical festival of IIT Madras- Shaastra. The 14th edition of the festival, to be held between 5th and 8th January, focuses on bringing out the spirit of engineering, creating a platform for innovation, ideation and ingenuity. Be it planes soaring, RC engines racing, robots fighting or dominos falling; be prepared to be transported into a world of future.</p>
+			          		<p>Apocalypse will have to wait since Shaastra is all set to Ignite your Imagination, as the best minds of the country redefine the boundaries between dream and reality.</p><p> Tech is in the air, breathe Shaastra.</p>			          
+			          </div>       
+                    </div>
+                    </div>
+                </div>
+                <div class="bbq-item" id="generalContents">
+                </div>
+                </div>
+        </div>
+        {% endblock %}
+        {% block events_menu %}
+        {% endblock %}
+       
+            <div id="social">
+    	<div onclick="window.open('https://www.facebook.com/Shaastra');" id="fb" class="socialapp">
+        </div>
+        <div id="flickr" onclick="javascript:window.open('http://www.flickr.com/photos/shaastra/');" class="socialapp">
+        </div>
+       <div onclick="window.open('https://twitter.com/Shaastra_IITM');" id="twitter" class="socialapp">
+        </div>
+        <div onclick="window.open('http://www.youtube.com/iitmshaastra')" id="youtube" class="socialapp">
+        </div>
+    </div>
+    </div>
+   {% block footer %}{% endblock %}
+{% block modal %}
+<div id="contacts" class="modal fade hide" tabindex="0" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="text-align:left;">
+            <div class="modal-body">
+            
+         <h2 id="myModalLabel" style="text-align:center;">Contact us</h2>
+            <h3>Student In-Charge</h3><br>        
+        <h4>Sohan Jawale <!-- : +91-9952936437--></h4>
+        <h5>cas@smail.iitm.ac.in</h5> 
+        <br>
+  		<h3>Sponsorship</h3><br>
+        <h4>Asha Chigurupati : +91-9543987685</h4>        
+        <h5>asha@shaastra.org</h5>
+        <br>
+        <h4>Tejas Balasubramanya : +91-8939336379</h4>
+        <h5>tejas@shaastra.org</h5>
+        <br>
+  		<h3>Student Relations</h3><br>
+        <h4>Syamantak Basu : </h4>
+        <h5>syamantak@shaastra.org</h5>
+         <br>
+	<h4 style="padding-bottom:10px;">For any general queries, Contact :</h4>
+	<h4 style="padding-bottom:6px;">Namit Chaudhary - +91-9789058153</h4>
+	<h4>Navneet Jain - +91-7200497356</h4>
+	<br>
+         <h4>Site admin</h4>
+         <h5>contactus@shaastra.org</h5>
+				</div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+{% endblock %}
+    </div>
+    </center>
+
+<!--Script to search-->
+
+<script type="text/javascript">
+function findValue(li) {
+	if( li == null ) return alert("No match!");
+
+	// if coming from an AJAX call, using EventID as sValue
+	if( !!li.extra ) var sValue = li.extra[0];
+
+	// otherwise, using EventName
+	else var sValue = li.selectValue;
+    
+    //event details location	    
+	window.location="#!events/"+sValue;
+}
+
+function selectItem(li) {
+	findValue(li);
+}
+
+function formatItem(row) {
+	return row[0];
+}
+
+function lookupLocal(){
+	var oSuggest = $("#search_query")[0].autocompleter;
+
+	oSuggest.findValue();
+
+	return false;
+}
+
+$(document).ready(function() {
+	$("#search_query").autocompleteArray(
+		{{ result_list|safe }},
+		{
+			delay:10,
+			minChars:1,
+			onItemSelect:selectItem,
+			onFindValue:findValue,
+			autoFill:false
+
+		}
+	);
+});
+</script>  
+<!--End of Search script-->
+
+</body>
+</html>

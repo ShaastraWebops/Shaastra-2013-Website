@@ -11,7 +11,7 @@
         Are you sure you want to delete the following sub-event?
     </p>
 
-    <table>
+    <table class="table table-striped table-bordered table-condensed">
         <tr>
             <th> Sub-Event </th>
             <th> Start Date </th>
@@ -34,9 +34,9 @@
     
     <form action = "" method = "POST">
         {% csrf_token %}
-        <input type = "submit" value = "Yes, I am sure. Delete Sub-event.">
+        <input type = "submit" value = "Yes, I am sure. Delete Sub-event." class="btn btn-success">
     </form>
     
-    <a href = '{{site_url}}DTVPicker/Summary/'> No. Don't delete sub-event. </a>
+    <a href = '{{site_url}}DTVPicker/Summary/' class="btn btn-inverse atag" style="width:200px;"> No. Don't delete sub-event. </a>
 
 {% endblock %}

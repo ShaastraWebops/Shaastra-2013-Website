@@ -1,0 +1,10 @@
+<h3>Add a Custom Tab</h3><br/>
+
+<form action="" method="POST" id="tab_form" accept-charset="utf-8">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <input type="button" value="Save" onclick = "save_tab();" class="btn btn-primary">
+    <input type="button" value="Close" class="btn btn-primary" onclick="close_form();" >
+</form>

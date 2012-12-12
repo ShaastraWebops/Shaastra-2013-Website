@@ -1,0 +1,253 @@
+{% load dajaxice_templatetags %}
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+  <head>
+    <title>Shaastra</title>
+    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="{{site_url}}static/css/fbapp.css">
+    <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/jquery.autocomplete.css" /><!--For search-->
+    <meta property="fb:app_id"               content="291744470918252"> 
+    <meta property="og:type"                 content="website"> 
+<!--     <meta property="og:url"                  content="{{site_url}}">-->
+    <meta property="og:site_name"            content="Shaastra 2013">
+    <meta property="og:image"                content="{{site_url}}static/img/shaastralogo.png">
+    <meta property="og:title"                content="Shaastra 2013">
+  </head>
+  <body>
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+	FB.init({
+	  appId      : '291744470918252', // App ID
+	  channelUrl : '//www.shaastra.org/2013/main/static/fb/channel.html', // Channel File
+	  status     : true, // check login status
+	  cookie     : true, // enable cookies to allow the server to access the session
+	  xfbml      : false  // parse XFBML
+	});
+
+	// Additional initialization code here
+	FB.getLoginStatus(function(response) {
+	  if(response.status === 'connected') {
+	    uid = response.authResponse.userID;
+	    accessToken = response.authResponse.accessToken;
+	    $('#profile').html("<fb:profile-pic uid="+uid+" linked='true' />");
+	    FB.api('/me', function(response) {
+	      userDetails = response;
+	    });
+	  } else if(response.status === 'not_authorized') {
+	    FB.login(function(response) {
+	      if (response.authResponse) {
+		uid = response.authResponse.userID;
+		accessToken = response.authResponse.accessToken;
+		$('#profile').html("<fb:profile-pic uid="+uid+" />");
+		FB.api('/me', function(response) {
+		  userDetails = response;
+		  $("#profile").prepend("<strong>"+ userDetails.name + "</strong>");
+		});
+	      } else {
+		window.location="http://www.facebook.com/Shaastra";
+	      }
+	    });
+	  }
+	  FB.XFBML.parse();
+	});	
+      };
+
+      // Load the SDK Asynchronously
+      (function(d){
+	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	if (d.getElementById(id)) {return;}
+	  js = d.createElement('script'); js.id = id; js.async = true;
+	  js.src = "//connect.facebook.net/en_US/all.js";
+	  ref.parentNode.insertBefore(js, ref);
+      }(document));
+    </script>
+    <div class="container-fluid">
+      <div class="row-fluid">
+	<div class="navbar navbar-fixed-top">
+	  <div class="navbar-inner">
+	    <div class="container">
+	      <ul class="nav">
+		<li><a href="http://www.shaastra.org/" target="_blank"><img id="logo" src="{{site_url}}static/img/shaastralogoold.png" alt="<h2>Shaastra 2013</h2>"/></a></li>
+		<li><a href="#">Home</a></li>
+		<li class="dropdown">
+		  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		  Events
+		  <b class="caret"></b>
+		  </a>
+		  <ul class="dropdown-menu">
+		    <div class="accordion" id="eventsMenu">
+		    {% for category in event_set %}
+		      <li>
+			<div class="accordion-group">
+			  <div style="color:black;" class="accordion-heading">
+			    <a class="accordion-toggle" data-toggle="collapse" data-target="#{{category.0.category|slugify}}" data-parent="#eventsMenu">{{category.0.category}}</a>
+			  </div>
+			  <div id="{{category.0.category|slugify}}" class="accordion-body collapse">
+			    <ul>
+			    {% for event in category %}
+			      <li><a href="#events/{{event.title|slugify}}">{{event.title}}</a></li>
+			    {% endfor %}
+			    </ul>
+			  </div>
+			</div>
+		      </li>
+		    {% endfor %}
+		    </div>
+		  </ul>
+		</li>
+                <li class="dropdown">
+		  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		  Sampark
+		  <b class="caret"></b>
+		  </a>
+		  <ul class="dropdown-menu">
+		    <li><a class="sampark" href="#sampark/Bengaluru" >Bengaluru</a></li>
+		    <li><a class="sampark" href="#sampark/Hyderabad" >Hyderabad</a></li>
+		    <li><a class="sampark" href="#sampark/Pune" >Pune</a></li>
+		    <li><a class="sampark" href="#sampark/Kerala" >Kerala</a></li>
+		    <li><a class="sampark" href="#sampark/Chennai" >Chennai</a></li>
+		  </ul>
+		</li>
+		<li><a href="{{site_url}}#hospi" target="_blank">Hospitality</a></li>
+		<li><a href="{{site_url}}" target="_blank">Sponsorship</a></li>
+		<li><a href="http://forums.shaastra.org/" target="_blank">Forums</a></li>
+		<li class="divider-vertical"></li>
+		<form class="navbar-search pull-left">
+		  <input id="search_query" type="text" class="search-query" placeholder="Search Events">
+		</form>
+	      </ul>
+	    </div>
+	  </div>
+	</div>
+      </div><br>
+      <div id="container" class="row-fluid">
+	<div id="profile" class="span2 well">
+
+	</div>
+	<div class="span10">
+	  <div id="content" class="row-fluid bbq">
+	    <!--Body content-->
+	    <div class="bbq-content">
+	      <div class="bbq-loading">
+		<center><img src="{{site_url}}static/img/loading.gif"></img></center>
+	      </div>
+	      <div class="bbq-item bbq-default">
+	      </div>
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+    <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-dropdown.js" charset = "utf-8"></script>
+    <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-collapse.js" charset = "utf-8"></script>
+    <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-transition.js" charset = "utf-8"></script>
+    <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/bootstrap-carousel.js" charset = "utf-8"></script>
+    <script type="text/javascript" src="{{site_url}}static/js/jquery.ba-bbq.js"></script>
+    <!-- hash handler -->
+    <script type="text/javascript">
+      $(function(){
+	// Keep a mapping of url-to-container for caching purposes.
+	var cache = {
+	  // If url is '' (no fragment), display this div's content.
+	  '': $('.bbq-default')
+	};
+	// Bind an event to window.onhashchange that, when the history state changes,
+	// gets the url from the hash and displays either our cached content or fetches
+	// new content to be displayed.
+	$(window).bind( 'hashchange', function(e) {
+	  // Get the hash (fragment) as a string, with any leading # removed. Note that
+	  // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+	  var url = $.param.fragment();
+	  var temp = url.split('/');
+	  $('.bbq-loading').show();
+	  $( '.bbq-item,.bbq-default' ).hide();
+	  if(!url) {
+	    $('.bbq-default').show();
+	    $( '.bbq-loading' ).hide();
+	    return;
+	  }
+	  
+	  if(cache[url]) {
+	    cache[url].show();
+	    $( '.bbq-loading' ).hide();
+	  } else {
+	    cache[url] = $( '<div id='+url+' class="bbq-item"></div>' )
+				.appendTo( '.bbq-content' )
+
+	    // Load external content via AJAX. Note that in order to keep this
+	    // example streamlined, only the content in .infobox is shown. You'll
+	    // want to change this based on your needs.
+				.load( url, function(){
+	      if(temp[0]=='events'){
+		FB.XFBML.parse(document.getElementById(url));
+	      }
+	      $( '.bbq-loading' ).hide();
+	    });
+	  }
+	})
+	$(window).trigger('hashchange');
+      });
+    </script>
+    <!-- End hash handler -->
+    <!-- jQuery functions -->
+    <script type="text/javascript">
+      $(document).ready(function(){
+	$('.dropdown-toggle').dropdown();
+	$(".collapse").collapse();
+ 	$('.bbq-default').load('{{site_url}}fb/hero/',function(){
+ 	  $('.carousel').carousel({interval: 3000});
+ 	});
+      });
+    </script>
+    <!-- jQuery functions -->
+    <!-- JS functions -->
+    <script type="text/javascript">
+    </script>
+    <!-- End JS functions -->
+    <!--Script to search-->
+    <script type='text/javascript' src="{{site_url}}static/js/jquery.autocomplete.js"></script>
+    <script type="text/javascript">
+      function findValue(li) {
+	if( li == null ) return alert("No match!");
+
+	// if coming from an AJAX call, using EventID as sValue
+	if( !!li.extra ) var sValue = li.extra[0];
+
+	// otherwise, using EventName
+	else var sValue = li.selectValue;
+            
+	//event details location	    
+	window.location.hash="events/"+sValue
+      }
+
+      function selectItem(li) {
+	findValue(li);
+      }
+
+      function formatItem(row) {
+	return row[0];
+      }
+
+      function lookupLocal(){
+	var oSuggest = $("#search_query")[0].autocompleter;
+
+	oSuggest.findValue();
+
+	return false;
+      }
+
+      $(document).ready(function() {
+	$("#search_query").autocompleteArray({{ result_list|safe }},{
+	  delay:10,
+	  minChars:1,
+	  onItemSelect:selectItem,
+	  onFindValue:findValue,
+	  autoFill:false
+	});
+      });
+    </script>
+    <!--End of Search script-->
+  </body>
+</html>

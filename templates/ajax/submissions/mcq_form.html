@@ -1,6 +1,23 @@
-{{q.q_number}}.{{q.title}}
+{{q.q_number}}.{{q.title|safe}}
 <form id = "mcq_form" action="" method = "POST">{% csrf_token %}
 {{f}}
-<input type="button" value = "Save" onclick="save_edit_mcq({{eve_id}},{{q_id}});"/>
+<input type="button" value = "Save" onclick="save_edit_mcq({{eve_id}},{{q_id}});" class="btn btn-primary"/>
 </form>
+
+<!-- Pagination below -->
+{% if prev_elem %}
+{% if prev_elem.2 %}
+<a href="#submission/{{eve_id}}/mcques/{{prev_elem.0}}/"><{{prev_elem.1}} </a>
+{% else %}
+<a href="#submission/{{eve_id}}/subques/{{prev_elem.0}}/"><{{prev_elem.1}} </a>
+{% endif %}
+{% endif %}
+
+{% if next_elem %}
+{% if next_elem.2 %}
+<a href="#submission/{{eve_id}}/mcques/{{next_elem.0}}/"> {{next_elem.1}}></a>
+{% else %}
+<a href="#submission/{{eve_id}}/subques/{{next_elem.0}}/"> {{next_elem.1}}></a>
+{% endif %}
+{% endif %}
 

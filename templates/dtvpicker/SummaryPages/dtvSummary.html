@@ -12,7 +12,7 @@
         <h4> {{ event }} </h4>
         {% block eventActions %} {% endblock %}
         {% if subEventList %}
-            <table>
+            <table class="table table-striped table-bordered table-condensed">
                 <tr>
                     <th> Sub-Event </th>
                     <th> Start Date </th>
@@ -21,6 +21,7 @@
                     <th> End Time </th>
                     <th> Venue </th>
                     <th> Last Modified </th>
+                    <th> Actions </th>
                 </tr>
                 {% for subEvent in subEventList %}
                 <tr>

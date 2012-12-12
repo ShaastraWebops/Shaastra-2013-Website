@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block hash_handler %}
+    $(function(){
+        // Keep a mapping of url-to-container for caching purposes.
+        var cache = {
+            // If url is '' (no fragment), display this div's content.
+            '': $('.bbq-default')
+        };
+
+        // Bind an event to window.onhashchange that, when the history state changes,
+        // gets the url from the hash and displays either our cached content or fetches
+        // new content to be displayed.
+        $(window).bind( 'hashchange', function(e) {
+
+            // Get the hash (fragment) as a string, with any leading # removed. Note that
+            // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+            var url = $.param.fragment();
+            $( '.bbq-item,.bbq-default' ).hide();
+            if(!url) {
+                $('.bbq-default').show();
+                return;
+            }
+            var event_name=url.split('/tab')[0];
+            if(cache[event_name]) {
+                var event = cache[event_name];
+                if(cache[url]) {
+                    event.find(".tabtext").html(cache[url]);
+                } else {
+                    event.find(".tabtext").load("{{site_url}}"+url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '.bbq-loading' ).hide();
+                                resetabs();
+                                cache[url] = event.find(".tabtext").html();
+                        });
+                }
+                event.show();
+            } else {
+                cache[event_name] = $( '<div class="bbq-item"></div>' ).appendTo( '.bbq-content' );
+
+                // Load external content via AJAX. Note that in order to keep this
+                // example streamlined, only the content in .infobox is shown. You'll
+                // want to change this based on your needs.
+                cache[event_name].load("{{site_url}}"+event_name, function(){
+
+                    cache[event_name].find(".tabtext").load( "{{site_url}}"+url, function(){
+                                // Content loaded, hide "loading" content.
+                                $( '.bbq-loading' ).hide();
+                                resetabs();
+                                cache[url] = cache[event_name].find(".tabtext").html();
+                        });
+                    });
+            }
+        })
+        $(window).trigger('hashchange');
+    });
+{% endblock %}
+{% block footer %}
+<style>
+#text
+{
+	width:300px;
+	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#text li
+{
+	list-style:none;
+}
+#text li:hover
+{
+	opacity:0.6;
+	cursor:pointer;
+}
+</style>
+    <div id="footer">
+    <center>
+    <div id="tabbox" style="width:950px;">
+    	<div id="tab1" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) 0 0;">
+         <div id="tab1name" class="tabname">
+            Bengaluru
+            </div>
+        </div>
+     <div id="tab2" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) -129px 0;">
+            <div id="tab2name" class="tabname">
+            Hyderabad
+            </div>
+        </div>
+     <div id="tab3" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) -258px 0;">
+            <div id="tab3name" class="tabname">
+            Pune
+            </div>
+        </div>
+     <div id="tab4" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) -387px 0;">
+            <div id="tab4name" class="tabname">
+            Coimbatore
+            </div>
+        </div>
+      <div id="tab5" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) -516px 0;">
+            <div id="tab5name" class="tabname">
+            Chennai
+            </div>
+        </div>
+     </div>
+     </div>
+     </div>
+    </center>
+{% endblock %}
+{% block content %}
+<div id="content" class="bbq" style="width:100%;">
+        <div class="bbq-content">
+        <!-- This will be shown while loading AJAX content. You'll want to get an image that suits your design at http://ajaxload.info/ -->
+        <div class="bbq-loading" style="display:none;">
+            <img src="{{site_url}}static/img/loading.gif" alt="Loading"/> Loading content...
+        </div>
+
+        <!-- This content will be shown if no path is specified in the URL fragment. -->
+	<center>
+        <div class="bbq-default" style="height:450px; width:800px; color:#FFF; opacity:0.9; background-color:#222; text-align:left; padding-left:20px;">
+        <center><div id="text" style="color:white; width:90%; font-size:9.7px; position:relative; margin: 13px auto auto 20px;"><!--Temporary-->
+		<li style="color:rgb(214,214,214);font-size:18px;"><b>Student In-Charge</b></li></br>
+        <li style="color:white;font-size:15px;">Sohan Jawale : +91-9952936437</li>
+        <li style="color:white;font-size:13px;" class="pad">cas@smail.iitm.ac.in</li> </br></br>        
+  		<li style="color:rgb(214,214,214);font-size:18px;"><b>Sponsorship</b></li></br>
+        <li style="color:white;font-size:15px;">Asha Chigurapati : +91-9543987685;</li>        
+        <li style="color:white;font-size:13px;">asha@shaastra.org</li>
+        <li style="color:white;font-size:15px;">Tejas Balasubramanya : +91-8939336379</li>
+        <li style="color:white;font-size:13px;" class="pad">tejas@shaastra.org</li></br></br>
+  		<li style="color:rgb(214,214,214);font-size:18px;"><b>Student Relations</b></li></br>
+        <li style="color:white;font-size:15px;">Syamantak Basu : +91-9962265947</li>
+        <li style="color:white;font-size:13px;">syamantak@shaastra.org</li>
+        </div></center>
+        </div>
+	</center>
+        <div class="bbq-item">
+        </div>
+        </div>
+</div>
+{% endblock %}
+{% block events_menu %}
+    {% for city in city_set %}
+    <div id="menu{{forloop.counter}}" class="menu" style="
+    {% if city == 'Bengaluru' %}margin-left:17%;{% endif %}
+    {% if city == 'Hyderabad' %}margin-left:32%;{% endif %}
+    {% if city == 'Pune' %}margin-left:43%;{% endif %}
+    {% if city == 'Coimbatore' %}margin-left:57%;{% endif %}
+    {% if city == 'Chennai' %}margin-left:70%;{% endif %} ">
+        	<div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
+            </div>
+            <div id="menulist{{forloop.counter}}" class="menulist">
+            <ul id="menuhead{{forloop.counter}}" class="menuhead">
+            {% if city == 'Bengaluru' %}Bengaluru{% endif %}
+            {% if city == 'Hyderabad' %}Hyderabad{% endif %}
+            {% if city == 'Pune' %}Pune{% endif %}
+            {% if city == 'Chennai' %}Chennai{% endif %}
+            {% if city == 'Coimbatore' %}Coimbatore{% endif %}
+            </ul>
+            <ul id="menus{{forloop.counter}}">
+                {% if city == 'Bengaluru' %}
+                {% for event in bengaluruevents %}
+         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"B_"}}</li>
+
+                {% endfor %}
+                {% endif %}
+                {% if city == 'Hyderabad' %}
+                {% for event in hyderabadevents %}
+         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"H_"}}</li>
+                {% endfor %}
+                {% endif %}
+                {% if city == 'Pune' %}
+                {% for event in puneevents %}
+         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"P_"}}</li>
+                {% endfor %}
+                {% endif %}
+                {% if city == 'Chennai' %}
+                {% for event in chennaievents %}
+         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"C_"}}</li>
+                {% endfor %}
+                {% endif %}
+                {% if city == 'Coimbatore' %}
+                {% for event in coimbatoreevents %}
+         		    <li onclick="window.location.href='#events/{{event|slugify}}/tab/{{event.tab_set.all.0.title}}'">{{event.title|cut:"Ch_"}}</li>
+                {% endfor %}
+                {% endif %}
+      		</ul>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

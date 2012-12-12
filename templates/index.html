@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block hash_handler %}
+<script type="text/javascript">
+  $(function(){
+    // Keep a mapping of url-to-container for caching purposes.
+    var cache = {
+      // If url is '' (no fragment), display this div's content.
+      '': $('.bbq-default')
+    };
+    // Bind an event to window.onhashchange that, when the history state changes,
+    // gets the url from the hash and displays either our cached content or fetches
+    // new content to be displayed.
+    $(window).bind( 'hashchange', function(e) {
+      // Get the hash (fragment) as a string, with any leading # removed. Note that
+      // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+      var url = $.param.fragment();
+      if (url[0] == '!')
+	url = url.slice(1);
+      var temp = url.split('/')
+      var event_name = temp[0] + '/' + temp[1], tab_name = temp[2];
+      $( '.bbq-item,.bbq-default,#generalContents' ).hide();
+      if(!url || url=='_=_') {
+	$('.bbq-default').show();
+	$('#tabbox').css('visibility','hidden');
+	$('#tabbox2').css('visibility','hidden');
+	$('#body').removeClass('bg1');
+	document.title = "Shaastra";
+	return;
+      }
+      $('#footer').css({display:'block'});
+      $('#container').css({top:'0px'});
+      $('#body').css({height:'450px'});
+      $('.bbq-loading').show();
+      if(url=='events'||url=='hospi'||url=='spons') {
+	$('#generalContents').load(url,function(){
+	  $('.bbq-loading').hide();
+	  $('#generalContents').show();
+	});
+	if(url=='hospi'){
+	  $('.menu').css({visibility:'hidden'});
+	  $('#tabbox').css({visibility:'hidden'});
+	  $('#body').removeClass('bg1');
+	  $('#tabbox2').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
+          document.title = "Shaastra - Hospitality";
+	}else if(url=='spons'){
+	  $('.menu').css({visibility:'hidden'});
+	  $('#tabbox,#tabbox2').css({visibility:'hidden'});
+	  $('#footer').css({display:'none'});
+	  $('#body').css({height:'580px'});
+	  $('#body').removeClass('bg1');
+          document.title = "Shaastra - Sponsorship";
+	}else{
+	  $('#tabbox').css({'visibility':'visible','left':'-1000px'}).animate({'visibility':'visible','left':'0px'});
+	  $('#body').addClass('bg1');
+	  $('#tabbox2').css({'visibility':'hidden'});
+          document.title = "Shaastra - Events";
+	}
+	return;
+      }
+      $('#tabbox').css({'visibility':'visible'});
+      $('#tabbox2').css({'visibility':'hidden'});
+      $('#body').addClass('bg1');
+      $('#content').addClass('back');
+      $('.bbq-item').removeClass('bbq-current');
+      if(cache[event_name]) {
+	cache[event_name].show();
+	cache[event_name].addClass('bbq-current');
+	if(tab_name){
+	  $(".bbq-current .tabtext").hide();
+	  $(".bbq-current").find("#"+tab_name).show();
+	}else{
+	  openEvent();
+	}
+	$( '.bbq-loading' ).hide();
+        document.title = "Shaastra - " + event_name.split('/')[1].replace('-',' ');
+      } else {
+	cache[event_name] = $( '<div class="bbq-item bbq-current"></div>' )
+			    .appendTo( '.bbq-content' )
+
+	// Load external content via AJAX. Note that in order to keep this
+	// example streamlined, only the content in .infobox is shown. You'll
+	// want to change this based on your needs.
+			    .load( event_name, function(){
+	  if(tab_name){
+	    $(".bbq-current .tabtext").hide();
+	    $(".bbq-current").find("#"+tab_name).show();
+	  }else{
+	    openEvent();
+	  }
+	  $( '.bbq-loading' ).hide();
+// 	  resetabs();
+          document.title = "Shaastra - " + event_name.split('/')[1].replace('-',' ');
+	});
+      }
+    })
+    $(window).trigger('hashchange');
+  });
+</script>
+{% endblock %}
+{% block functions %}{% endblock %}
+{% block events_menu %}
+  {% for category in event_set %}
+  <div id="menu{{forloop.counter}}" class="menu mentab{{forloop.counter}}">
+    <div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
+    </div>
+    <div id="menulist{{forloop.counter}}" class="menulist">
+      <ul id="menuhead{{forloop.counter}}" class="menuhead">{{category.0.category}}</ul>
+      <ul id="menus{{forloop.counter}}">
+      {% for event in category %}
+	<li onclick="window.location.href='#!events/{{event|slugify}}';$('#body').removeClass('bg1');$('#content').addClass('back');">{{event.title}}</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endfor %}
+{% endblock %}
+{% block footer %}
+<div id="footer">
+  <div id="tabbox" class="tabbox">
+    <div id="tab1" class="tab">
+    </div>
+    <div id="tab2" class="tab">
+    </div>
+    <div id="tab3" class="tab">
+    </div>
+    <div id="tab4" class="tab">
+    </div>
+    <div id="tab5" class="tab">
+    </div>
+    <div id="tab6" class="tab">
+    </div>
+    <div id="tab7" class="tab">
+    </div>
+    <div id="tab8" class="tab">
+    </div>
+    <div id="tab9" class="tab">
+    </div>
+    <div id="tab10" class="tab">
+    </div>
+    <div id="tab11" class="tab">
+    </div>
+  </div>
+    <div id="tabbox2" class="tabbox" style="top:-10px;">
+    <a id="htab1" class="htab" href="{{site_url}}static/img/hospi/hbg1.jpg" rel="lightbox[hospi]">
+    </a>
+    <a id="htab2" class="htab" href="{{site_url}}static/img/hospi/hbg2.jpg" rel="lightbox[hospi]">
+    </a>
+    <a id="htab3" class="htab" href="{{site_url}}static/img/hospi/hbg3.jpg" rel="lightbox[hospi]">
+    </a>
+    <a id="htab4" class="htab" href="{{site_url}}static/img/hospi/hbg4.jpg" rel="lightbox[hospi]">
+    </a>
+    <a id="htab5" class="htab" href="{{site_url}}static/img/hospi/hbg5.jpg" rel="lightbox[hospi]">
+    </a>
+    <a id="htab6" class="htab" href="{{site_url}}static/img/hospi/hbg6.jpg" rel="lightbox[hospi]">
+    </a>
+    <a id="htab7" class="htab" href="{{site_url}}static/img/hospi/hbg7.jpg" rel="lightbox[hospi]">
+    </a>
+    <a id="htab8" class="htab" href="{{site_url}}static/img/hospi/hbg8.jpg" rel="lightbox[hospi]">
+    </a>
+    <a id="htab9" class="htab" href="{{site_url}}static/img/hospi/hbg9.jpg" rel="lightbox[hospi]">
+    </a>
+    <a id="htab10" class="htab" href="{{site_url}}static/img/hospi/hbg10.jpg" rel="lightbox[hospi]">
+    </a>
+    <a id="htab11" class="htab" href="{{site_url}}static/img/hospi/hbg11.jpg" rel="lightbox[hospi]">
+    </a>
+     <a id="htab12" class="htab" href="{{site_url}}static/img/hospi/hbg12.jpg" rel="lightbox[hospi]">
+    </a>
+  </div>
+</div>
+{% endblock %}

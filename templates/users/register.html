@@ -2,11 +2,134 @@
 <html>
     <head>
         <title>Shaastra 2013</title>
+        <link rel="shortcut icon" href="{{site_url}}static/img/favicon.ico" />
+        <style>
+body
+    {
+    width:100%;
+    height:100%;
+    margin:0;
+    background:url({{site_url}}static/img/bg.png);
+    background-repeat : repeat;
+	 font-family:'Century Gothic',serif ! important;
+	 letter-spacing:0.75px ! important;
+    }
+ #container
+    {
+    width : 60%;
+    margin:0 auto;
+    height: 100%;
+    //overflow:hidden;
+    }  
+.right{float:right;
+  width:80%; 
+    }
+.left{
+	float:left;
+	margin:30px 30px 0 auto;
+	width:15%;
+	}
+
+.icons{
+    width : 150px;
+    height:38px;
+    font-size:16px;
+    color: #fff;
+    background: url({{site_url}}static/img/signup.png);
+    text-align: center;
+   opacity:0.9;
+	filter:alpha(opacity=90);
+	border:0px;
+	margin-bottom:10px;
+ }
+.icons:hover{
+	opacity:1.0;
+	    filter:alpha(opacity=100);
+        cursor:pointer;}
+	#logo
+    {
+    font-size:30px;
+    color:#fff !important;
+    font-weight: bold;
+    vertical-align:middle;
+    display:table;
+    }  
+ #logo>img{
+ 	width: 115px;
+ 	height: 65px;
+ 	margin-right:10px;} 
+ .chzn-container .chzn-results {
+ 		max-height:130px;
+ 		}
+#msg{
+   font-family: "century gothic",serif;
+	letter-spacing: 1px;
+	font-size:16px;
+	color:#fff;	
+	margin-left:40px;
+	display:block;	
+	}
+#msg:hover{cursor:pointer;}
+#reg{
+   color:#fff;
+	font-size:16px;	
+   margin-left:40px;	
+	}
+a,a:link,a:active{
+   text-decoration:none;}
+
+label{
+  color:#FFF;
+  font-family: 'century gothic';
+	font-size: 14px;
+}
+
+span.helptext{color:#666;
+              font-size:12px;
+              font-style:italic;}
+
+   input,select{width:200px;}
+  .errorlist{
+  	color:#fff ! important;
+	font-size:13px;
+	font-weight:bold;
+	font-style:italic;  	
+  	}
+  #topright{
+  margin: 30px 30px 0px auto;
+    float:right;
+    width : 150px;
+    height:38px;
+    font-size:16px;
+    color: #fff;
+    background: url({{site_url}}static/img/signup.png);
+    text-align: center;
+   opacity:0.9;
+	    filter:alpha(opacity=90);
+	border:0px;
+ }
+#topright:hover{
+	opacity:1.0;
+	    filter:alpha(opacity=100);
+        cursor:pointer;
+	}
+#formbox input[type="text"], input[type="password"]
+{
+	width: 220px;
+}
+</style>
         {% dajaxice_js_import %}
+
+    <!--<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/scroll.css"  />-->
+
         <script type="text/javascript" src="{{site_url}}static/js/jquery.js"></script>
         <script type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js"></script>
         <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+	
+
         <script type="text/javascript" src="{{site_url}}static/js/college.reg.js"></script>
+        <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/bootstrap.css">
+    <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
         	if ($("#facebook_id").attr("value"))
@@ -41,19 +164,83 @@
 		    xmlhttp.send(data);
 	    }
 	    </script>
+        <script type="text/javascript">
+        function load_branch(){
+            html="<td><div id='selectbranch'></div></td>";
+            $("table tr:eq(2)").append(html);
+            $('.chzn-select').chosen();
+            } 
+            $(document).ready(function(){
+	            load_branch();
+               $("#selectbranch").click(function(){
+                    $(this).hide();
+                    
+                    
+               });
+            });
+        </script>
+        <link href="{{site_url}}static/css/chosen.css"  type="text/css" rel="stylesheet">
+        <script type="text/javascript">
+(function($){
+     $.fn.extend({
+          center: function () {
+                return this.each(function() {
+                        var top = ($(window).height() - $(this).outerHeight()) / 2;
+                        var left = ($(window).width() - $(this).outerWidth()) / 2;
+                        $(this).css({position:'absolute', margin:0, top: (top > 0 ? top : 0)+'px', left: (left > 0 ? left : 0)+'px'});
+                });
+        }
+     });
+})(jQuery);
+</script>
+<script>
+$(document).ready(function(){$('#container').center();
+  $("#msg").addClass("btn btn-large btn-primary"); 
+});
+$(window).resize(function(){$('#container').center();});
+</script>
     </head>
     <body>
-        Register<br/>
-        <form id="form_reg" action="{{ post_url }}" method="POST">
+<div id = "container">
+   <button id = "topright" onclick="window.location.href='{{site_url}}'">Home</button>
+      <div id="form" class="control-group" style="width:90%;">
+        <!-- Add something similar to make the error message for the reCaptcha appear.-->
+        <div id = "logo">
+            	<img src="{{site_url}}static/img/dice.png" alt="">Sign up
+            </div><br> 
+        <form id="form_reg" action="{{ post_url }}" method="POST" class="form-horizontal">
+	<div id="formbox">
         <table>
             {% csrf_token %}
             {{ form.as_table }}
         </table>
+	</div>
+        <!-- Scripts for reCaptcha -> https://developers.google.com/recaptcha/docs/display -->
+        <script type="text/javascript"
+            src="http://www.google.com/recaptcha/api/challenge?k=6Lf1ktUSAAAAALOtemzm08LVwHmfku6yXXCdrMJn">
+        </script>
+        <noscript>
+            <iframe src="http://www.google.com/recaptcha/api/noscript?k=6Lf1ktUSAAAAALOtemzm08LVwHmfku6yXXCdrMJn"
+                height="250" width="450" frameborder="0"></iframe><br>
+            <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+            </textarea>
+            <input type="hidden" name="recaptcha_response_field"
+                value="manual_challenge">
+        </noscript>
         <input type="hidden" name="facebook_id" id="facebook_id" value="{{ facebook_id }}" />
         <input type="hidden" name="access_token" id="access_token" value="{{access_token}}" />
-        <button type="button" onclick="forumReg();" id="register">Register</button>
-        <a href="{{ site_url }}">Home</a>
-    </form>
-    </body>
+        {% if captcha_response != "" %}
+            <p class="errorlist">The words typed did not match the words in the image</p>
+        {% endif %}<br>
+        <input type="button" onclick="forumReg();" id="register" value="Register" class="btn btn-large btn-info" style="margin-left:5px;">
+       </form>
+       <br>
+    </div>
+</body>
+	<!-- <script src="{{site_url}}static/js/jScrollPane.js"></script>
+	<script src="{{site_url}}static/js/jquery.mousewheel.js"></script>
+
+	<script src="{{site_url}}static/js/scrollreg.js"></script>
+	<script src="{{site_url}}static/js/jquery.jscrollpane.min.js"></script> -->
 </html>
 	 

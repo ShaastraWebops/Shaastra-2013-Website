@@ -1,9 +1,14 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from django import forms
 from models import SubEvent, Venue, VenueGroupAlias
 from django.forms import ModelForm
 
+
 class SubEventForm(ModelForm):
+
     class Meta:
+
         model = SubEvent
         fields = ('title', 'event', 'start_date_and_time', 'end_date_and_time', 'venue')
         widgets = {
@@ -145,3 +150,4 @@ class VenueGroupAliasForm(ModelForm):
     class Meta:
         model = VenueGroupAlias
     #TODO(Anant): Add logic here to ensure that there is only one alias for a particular venue set.
+

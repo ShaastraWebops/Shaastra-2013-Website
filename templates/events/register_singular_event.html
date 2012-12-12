@@ -1,0 +1,14 @@
+{% extends "events/registration_base.html" %}
+
+{% block body %}
+	<p>
+    To register, click the button.<br>
+    </p>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-large btn-success" value="Register">
+    </form>
+    
+    <a class="btn btn-danger" href = '{{site_url}}events/{{event.title}}/'> Cancel </a>
+    
+{% endblock %}

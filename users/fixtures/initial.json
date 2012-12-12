@@ -1,0 +1,1132 @@
+[
+    {
+        "model": "auth.group",
+        "pk": 1,
+        "fields": {
+            "name": "Events"
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "air_show",
+            "email": "air_show@shaastra.org",
+            "password":"pbkdf2_sha256$10000$XLMcWaxp1ymN$+Z0up91z74pDGnSt1Uezbd7T3xjgxmblOQzvr2a9t3c="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "wright_design",
+            "email": "wright_design@shaastra.org",
+            "password":"pbkdf2_sha256$10000$CaZ2x6V8KV2G$vugBJHyHa7NaiQWe9ze2iWzYZ3DeF+NGdPonLnjLTqw="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "username": "paper_planes",
+            "email": "paper_planes@shaastra.org",
+            "password":"pbkdf2_sha256$10000$6EeRBKnPWBfU$GQodMJnICkfFDT9XIjSFKGHrE++0fFfPUbf4Hsv7Pi0="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 4,
+        "fields": {
+            "username": "aerobotics",
+            "email": "aerobotics@shaastra.org",
+            "password":"pbkdf2_sha256$10000$ZULvKaikPY34$V7Hpa0ZcKPk1+S73CW4/gxiR36ZfRA0mhspjLkE86hc="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 5,
+        "fields": {
+            "username": "hackfest",
+            "email": "hackfest@shaastra.org",
+            "password":"pbkdf2_sha256$10000$sjEhC73xUZci$pwfhJ8a4y1X6w/jVCDW2X8pQz2+KlnfHRrRjrRCN46A="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 6,
+        "fields": {
+            "username": "opc",
+            "email": "opc@shaastra.org",
+            "password":"pbkdf2_sha256$10000$9mVUOrR7B8od$ZwuwIVfuqMNj31YYU8RhiXSaxgVv8D+k/uqnpbGr4Jk="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 7,
+        "fields": {
+            "username": "reverse_coding",
+            "email": "reverse_coding@shaastra.org",
+            "password":"pbkdf2_sha256$10000$i8rFt4paVuYN$g2Ra1m0LPl35vDLjTg7PschbNpYSy+dfy5EZ5Cf3ZiE="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 8,
+        "fields": {
+            "username": "robowars",
+            "email": "robowars@shaastra.org",
+            "password":"pbkdf2_sha256$10000$W6cwRxk6DPY6$h5HRflKbtatoIta5Ntagkv0Kl9DnuIffXRaD5ldZoR8="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 9,
+        "fields": {
+            "username": "contraption",
+            "email": "contraption@shaastra.org",
+            "password":"pbkdf2_sha256$10000$wI4yVebZrDCv$7R+QDGLi9duNQpmRD5Hew4qAT2C3be/+m6j21+f1jDE="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 10,
+        "fields": {
+            "username": "fire_n_ice",
+            "email": "fire_n_ice@shaastra.org",
+            "password":"pbkdf2_sha256$10000$Su45DPt6gJCi$yvf/FkEohbssNHZm3AOobjh1Gk4SuZPeGOus1RIb5Jk="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 11,
+        "fields": {
+            "username": "robotics",
+            "email": "robotics@shaastra.org",
+            "password":"pbkdf2_sha256$10000$Reuo46seB4Gg$jxKY/+ASo0dzopz6qEidk1KBBVFVhi1/q6M26qVZM2s="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 12,
+        "fields": {
+            "username": "junkyard_wars",
+            "email": "junkyard_wars@shaastra.org",
+            "password":"pbkdf2_sha256$10000$spcZZ7m4fOnc$8Zk5byUB2+rNyiPjtO7COBV832as1JwSVW9RusXe8yc="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 13,
+        "fields": {
+            "username": "ultimate_engineer",
+            "email": "ultimate_engineer@shaastra.org",
+            "password":"pbkdf2_sha256$10000$yPBnjXidCFhm$U3mNsV0qqya3QmN/6sVWyE1xAoH3zJGfVMGZEeVWVP0="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 14,
+        "fields": {
+            "username": "project_x",
+            "email": "project_x@shaastra.org",
+            "password":"pbkdf2_sha256$10000$1wi59UjEgoFA$qKhFoPii15hSJPy72jb4NOkx3ysDXs/I975igAAJpcI="  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 15,
+        "fields": {
+            "username": "shaastra_cube_open",
+            "email": "shaastra_cube_open@shaastra.org",
+            "password":"pbkdf2_sha256$10000$d52marUfSY64$24eB3UzhOsN+oByNawD/uVHBvwAyxVDJQCZ5/fuQaMc="  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 16,
+        "fields": {
+            "username": "puzzle_champ",
+            "email": "puzzle_champ@shaastra.org",
+            "password":"pbkdf2_sha256$10000$a6VlP9twmOlx$vnh1ovI4kcHMfnadcvGTOfoh6eKaDiwnJmbwvbgMP2w="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 17,
+        "fields": {
+            "username": "math_modelling",
+            "email": "math_modelling@shaastra.org",
+            "password":"pbkdf2_sha256$10000$DGpPlY4mMTwT$MjBdGtodAgpG2pn5nBJ/yv+pD0l4uyCdH/ykUfJg3fQ="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 18,
+        "fields": {
+            "username": "fox_hunt",
+            "email": "fox_hunt@shaastra.org",
+            "password":"pbkdf2_sha256$10000$x1EZTOJnaKLM$yN5cI/9BT+stySP7+AvoY0zLcj9m3RL7P122wzz29O8="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 19,
+        "fields": {
+            "username": "shaastra_main_quiz",
+            "email": "shaastra_main_quiz@shaastra.org",
+            "password":"pbkdf2_sha256$10000$jjrVPDi0cKAZ$1dS6XBAE3DeH4INN2kpF34ZNeSlWu3G5X4ByHfYPz4E="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 20,
+        "fields": {
+            "username": "htw",
+            "email": "htw@shaastra.org",
+            "password":"pbkdf2_sha256$10000$cHkLngN0cbIt$FhQGJgs43Iq2on5QiJ276qDRmK3lPIglBSFVE8Q5vxc="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 21,
+        "fields": {
+            "username": "auto_quiz",
+            "email": "auto_quiz@shaastra.org",
+            "password":"pbkdf2_sha256$10000$CO8qjQmfGPhN$LVeeKb/19wOLdchSHRhCO2IdDWFsQRRQCWTUpummxsM="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 22,
+        "fields": {
+            "username": "shaastra_junior_quiz",
+            "email": "shaastra_junior_quiz@shaastra.org",
+            "password":"pbkdf2_sha256$10000$XipZtX6AFuHz$UJmyLGX0DbNzCS4Pf6YpGAkVF8MD1P5yKmHm02NCwvk="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 23,
+        "fields": {
+            "username": "online_events",
+            "email": "online_events@shaastra.org",
+            "password":"pbkdf2_sha256$10000$zkorYYhoHUkF$xRjH1V+2rpJrCMWmAphDuKVD0lTzbTmklPJCzAJHFuU="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 24,
+        "fields": {
+            "username": "desmod",
+            "email": "desmod@shaastra.org",
+            "password":"pbkdf2_sha256$10000$kuoPthH5v5sD$z5/8YMbwduKTCN0y0OvWvHbwKRUJ+79x8ZB7mTq1n4w="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 25,
+        "fields": {
+            "username": "scdc",
+            "email": "scdc@shaastra.org",
+            "password":"pbkdf2_sha256$10000$t5JETuiW5BK3$3yaNfP/X1y1QPsgLdEG7fg/PgUpAwKeszvMoKpJyaaM="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 26,
+        "fields": {
+            "username": "robo-oceana",
+            "email": "robo-oceana@shaastra.org",
+            "password":"pbkdf2_sha256$10000$eEh5vnxKrEvW$iuZQLj4bojMJezLRRcw88a4m9d4I4BbiS7dq9+36Kxo="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 27,
+        "fields": {
+            "username": "game_drome",
+            "email": "game_drome@shaastra.org",
+            "password":"pbkdf2_sha256$10000$KjGgL4bm7Vdg$c2RX7oDES2jEmG0E6/ollLZjNHicB4weAf/ixu3pZt8="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 28,
+        "fields": {
+            "username": "idp",
+            "email": "idp@shaastra.org",
+            "password":"pbkdf2_sha256$10000$mIOdhtl6tEQ8$rAyNH8YB/pNKpOO802H9lIUa8pedPywT+9/JLqaolps="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 29,
+        "fields": {
+            "username": "shaastra_junior",
+            "email": "shaastra_junior@shaastra.org",
+            "password":"pbkdf2_sha256$10000$yCsKOjPE9Yvy$iPIM3UaB03UApXoc82IZe8AAcq++5260lchzeta/FnQ="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 30,
+        "fields": {
+            "username": "sustainable_cityscape",
+            "email": "sustainable_cityscape@shaastra.org",
+            "password":"pbkdf2_sha256$10000$pu2trNSpCj3T$xAZf9S2AtrWaq1aW28kixRek2NPZbwCxB+Zd56r0YQI="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 31,
+        "fields": {
+            "username": "case_study",
+            "email": "case_study@shaastra.org",
+            "password":"pbkdf2_sha256$10000$jUVxM6XH7qRm$To5PH//pEfHUk66lhEd+ZZooR5oXojb5SBC58DqNqRc="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 32,
+        "fields": {
+            "username": "magic",
+            "email": "magic@shaastra.org",
+            "password":"pbkdf2_sha256$10000$kXDAPgQqSOTm$h+57nS6oESxwB50PqOvVptlNFcmNNE8vj00cwpMqmgQ="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 33,
+        "fields": {
+            "username": "e-waste",
+            "email": "e-waste@shaastra.org",
+            "password":"pbkdf2_sha256$10000$uE4oGD5zKXBG$FkkBNRfQUddpXBfZ/xi9MW0MuC3K/te/uXxULsTAPOE="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 34,
+        "fields": {
+            "username": "face_off",
+            "email": "face_off@shaastra.org",
+            "password":"pbkdf2_sha256$10000$2EEl3PlTvTzv$E3vGK2B8/SoD1KutZtTqvrhdqkjL8C1/C1Pnn+YQblE="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 35,
+        "fields": {
+            "username": "sketch_it",
+            "email": "sketch_it@shaastra.org",
+            "password":"pbkdf2_sha256$10000$4glQjSaK92yd$qk1RvWOseVvI/K4uCEFX9xl5QjYE53pzBOZAyK78/t8="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 36,
+        "fields": {
+            "username": "pilot_training",
+            "email": "pilot_training@shaastra.org",
+            "password":"pbkdf2_sha256$10000$8qefsTGyyB5Z$M1NRk+g1Qw4Bb45CQzq6LK26XqzfEM2DRb5KtrevzP8="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 37,
+        "fields": {
+            "username": "hovercraft",
+            "email": "hovercraft@shaastra.org",
+            "password":"pbkdf2_sha256$10000$WFbCo0pHpVNX$/mKYR1FZuUrxNiSNnNfBHwyHMSF7sxtTvzYWlls9/0E="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 38,
+        "fields": {
+            "username": "research_expo",
+            "email": "research_expo@shaastra.org",
+            "password":"pbkdf2_sha256$10000$hZWgdVyCGtQD$B2p0JwLOhX9ubWfyceaWxKmEy20ACHhzK0+LeS7l4tQ="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 39,
+        "fields": {
+            "username": "lectures",
+            "email": "lectures@shaastra.org",
+            "password":"pbkdf2_sha256$10000$HGtrUGkfKbNz$vfQTpLP1daWhwAtVlUZnERMSyH/U49li9Fc9wnJE+p4="
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 40,
+        "fields": {
+            "username": "shaastra",
+            "email": "webmaster@shaastra.org",
+            "password": "pbkdf2_sha256$10000$JhYBxenid3J3$nbmsiyYzCvlolGaLKoNOy0lFbtrKmCmZNhZGC1wVF1Y=",
+            "is_superuser": "1" 
+  
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 41,
+        "fields": {
+            "username": "eventscore",
+            "email": "tanuj1411@gmail.com",
+            "password":"pbkdf2_sha256$10000$comzrAtwP18E$nqG+rlOmGsVUizeJUyUxhLg37B0B4nZwbKs2/IbB55Y=",
+            "groups" : "1"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 1,
+        "fields": {
+            "title": "Air Show",
+            "category": "Aerofest"
+
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 2,
+        "fields": {
+            "title": "Wright Design",
+            "category": "Aerofest"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 3,
+        "fields": {
+            "title": "Paper Planes",
+            "category": "Aerofest"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 4,
+        "fields": {
+            "title": "Aerobotics",
+            "category": "Aerofest"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 5,
+        "fields": {
+            "title": "Hackfest",
+            "category": "Coding"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 6,
+        "fields": {
+            "title": "Online Programming Contest",
+            "category": "Coding"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 7,
+        "fields": {
+            "title": "Reverse Coding",
+            "category": "Coding"
+   
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 8,
+        "fields": {
+            "title": "Robowars",
+            "category": "Design and Build"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 9,
+        "fields": {
+            "title": "Contraptions",
+            "category": "Design and Build"
+   
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 10,
+        "fields": {
+            "title": "Fire n Ice",
+            "category": "Design and Build"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 11,
+        "fields": {
+            "title": "Robotics",
+            "category": "Design and Build"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 12,
+        "fields": {
+            "title": "Junkyard Wars",
+            "category": "Design and Build"
+
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 13,
+        "fields": {
+            "title": "Ultimate Engineer",
+            "category": "Design and Build"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 14,
+        "fields": {
+            "title": "Project X",
+            "category": "Involve"
+   
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 15,
+        "fields": {
+            "title": "Shaastra Cube Open",
+            "category": "Involve"
+   
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 16,
+        "fields": {
+            "title": "Puzzle Champ",
+            "category": "Involve"
+ 
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 17,
+        "fields": {
+            "title": "Math Modelling",
+            "category": "Involve"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 18,
+        "fields": {
+            "title": "Fox Hunt",
+            "category": "Involve"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 19,
+        "fields": {
+            "title": "Shaastra Main Quiz",
+            "category": "Quizzes"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 20,
+        "fields": {
+            "title": "How Things Work",
+            "category": "Quizzes"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 21,
+        "fields": {
+            "title": "Auto Quiz",
+            "category": "Quizzes"
+         
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 22,
+        "fields": {
+            "title": "Shaastra Junior Quiz",
+            "category": "Quizzes"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 23,
+        "fields": {
+            "title": "Online Events",
+            "category": "Online"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 24,
+        "fields": {
+            "title": "Desmod",
+            "category": "Department Flagship"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 25,
+        "fields": {
+            "title": "SCDC",
+            "category": "Department Flagship"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 26,
+        "fields": {
+            "title": "Robo-Oceana",
+            "category": "Department Flagship"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 27,
+        "fields": {
+            "title": "Game Drome",
+            "category": "Spotlight"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 28,
+        "fields": {
+            "title": "IDP",
+            "category": "Spotlight"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 29,
+        "fields": {
+            "title": "Shaastra Junior",
+            "category": "Spotlight"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 30,
+        "fields": {
+            "title": "Sustainable Cityscape",
+            "category": "Spotlight"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 31,
+        "fields": {
+            "title": "Case Study",
+            "category": "Spotlight"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 32,
+        "fields": {
+            "title": "Magic",
+            "category": "Spotlight"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 33,
+        "fields": {
+            "title": "E-Waste",
+            "category": "Spotlight"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 34,
+        "fields": {
+            "title": "Face Off",
+            "category": "Spotlight"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 35,
+        "fields": {
+            "title": "Sketch It",
+            "category": "Workshops"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 36,
+        "fields": {
+            "title": "Pilot Training",
+            "category": "Workshops"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 37,
+        "fields": {
+            "title": "Hovercraft",
+            "category": "Workshops"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 38,
+        "fields": {
+            "title": "Research Expo",
+            "category": "Others"
+  
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 39,
+        "fields": {
+            "title": "Lectures",
+            "category": "Others"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 1,
+        "fields": {
+            "user": "1",
+            "is_coord_of": "1"
+
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 2,
+        "fields": {
+            "user": "2",
+            "is_coord_of": "2"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 3,
+        "fields": {
+            "user": "3",
+            "is_coord_of": "3"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 4,
+        "fields": {
+            "user": "4",
+            "is_coord_of": "4"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 5,
+        "fields": {
+            "user": "5",
+            "is_coord_of": "5"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 6,
+        "fields": {
+            "user": "6",
+            "is_coord_of": "6"
+ 
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 7,
+        "fields": {
+            "user": "7",
+            "is_coord_of": "7"
+   
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 8,
+        "fields": {
+            "user": "8",
+            "is_coord_of": "8"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 9,
+        "fields": {
+            "user": "9",
+            "is_coord_of": "9"
+   
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 10,
+        "fields": {
+            "user": "10",
+            "is_coord_of": "10"
+ 
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 11,
+        "fields": {
+            "user": "11",
+            "is_coord_of": "11"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 12,
+        "fields": {
+            "user": "12",
+            "is_coord_of": "12"
+
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 13,
+        "fields": {
+            "user": "13",
+            "is_coord_of": "13"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 14,
+        "fields": {
+            "user": "14",
+            "is_coord_of": "14"
+   
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 15,
+        "fields": {
+            "user": "15",
+            "is_coord_of": "15"
+   
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 16,
+        "fields": {
+            "user": "16",
+            "is_coord_of": "16"
+ 
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 17,
+        "fields": {
+            "user": "17",
+            "is_coord_of": "17"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 18,
+        "fields": {
+            "user": "18",
+            "is_coord_of": "18"
+ 
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 19,
+        "fields": {
+            "user": "19",
+            "is_coord_of": "19"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 20,
+        "fields": {
+            "user": "20",
+            "is_coord_of": "20"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 21,
+        "fields": {
+            "user": "21",
+            "is_coord_of": "21"
+       
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 22,
+        "fields": {
+            "user": "22",
+            "is_coord_of": "22"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 23,
+        "fields": {
+            "user": "23",
+            "is_coord_of": "23"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 24,
+        "fields": {
+            "user": "24",
+            "is_coord_of": "24"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 25,
+        "fields": {
+            "user": "25",
+            "is_coord_of": "25"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 26,
+        "fields": {
+            "user": "26",
+            "is_coord_of": "26"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 27,
+        "fields": {
+            "user": "27",
+            "is_coord_of": "27"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 28,
+        "fields": {
+            "user": "28",
+            "is_coord_of": "28"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 29,
+        "fields": {
+            "user": "29",
+            "is_coord_of": "29"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 30,
+        "fields": {
+            "user": "30",
+            "is_coord_of": "30"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 31,
+        "fields": {
+            "user": "31",
+            "is_coord_of": "31"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 32,
+        "fields": {
+            "user": "32",
+            "is_coord_of": "32"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 33,
+        "fields": {
+            "user": "33",
+            "is_coord_of": "33"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 34,
+        "fields": {
+            "user": "34",
+            "is_coord_of": "34"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 35,
+        "fields": {
+            "user": "35",
+            "is_coord_of": "35"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 36,
+        "fields": {
+            "user": "36",
+            "is_coord_of": "36"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 37,
+        "fields": {
+            "user": "37",
+            "is_coord_of": "37"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 38,
+        "fields": {
+            "user": "38",
+            "is_coord_of": "38"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 39,
+        "fields": {
+            "user": "39",
+            "is_coord_of": "39"
+  
+        }
+    },
+    {
+        "model": "users.UserProfile",
+        "pk": 40,
+        "fields": {
+            "user": "41",
+            "is_core": "1"
+            
+  
+        }
+    }
+]

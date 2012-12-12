@@ -1,0 +1,5 @@
+File:<b>{{actual_name}}</b>
+<form id="file_rename" action="" method="post"> {% csrf_token %}
+    Name: <input type="text" value="{{form.title}}" name="display_name" id="display_name"/>
+    <input type="button" value="Change Name" onclick="rename_file({{file_id}});" class="btn btn-info"/> 
+</form>

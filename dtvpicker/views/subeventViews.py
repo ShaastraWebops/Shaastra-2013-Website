@@ -1,8 +1,12 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """This module holds the views to add, edit and delete sub-events."""
 
 from BaseClasses import SubEventAddEditDeleteABC
 
-from django.http import HttpResponseForbidden, HttpResponseRedirect, Http404
+from django.http import HttpResponseForbidden, HttpResponseRedirect, \
+    Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
@@ -12,7 +16,9 @@ from events.models import Event
 from dtvpicker.forms import SubEventForm
 from django.contrib.sitemaps import ping_google
 
+
 class SubEventAdd(SubEventAddEditDeleteABC):
+
     """
     Adding a sub-event to the database.
     Permissions: Event Coords only.
@@ -21,27 +27,29 @@ class SubEventAdd(SubEventAddEditDeleteABC):
                  All other details (start, end, venue) are to be updated separately in EditSubEvent.
                  So, after the sube event is added, we redirect to the EditSubEvent page.
     """
-    
+
     def handle_GET(self, request, **kwargs):
         if self.permissionsGranted(request, **kwargs) == False:
             return HttpResponseForbidden()
-        
+
         eventRequested = self.getEvent(kwargs['event'])
-        
-        form = SubEventForm(initial = {'event' : '%d' % eventRequested.id, })
+
+        form = SubEventForm(initial={'event': '%d' % eventRequested.id})
         form_mode = 'add'  # For re-using the template (only difference: add/edit button)
-        return render_to_response ('dtvpicker/SubeventPages/addEditSubEvent.html', locals(), context_instance = RequestContext(request))
-    
+        return render_to_response('dtvpicker/SubeventPages/addEditSubEvent.html'
+                                  , locals(),
+                                  context_instance=RequestContext(request))
+
     def handle_POST(self, request, **kwargs):
         if self.permissionsGranted(request, **kwargs) == False:
             return HttpResponseForbidden()
-        
+
         eventRequested = self.getEvent(kwargs['event'])
-        
+
         formDataReceived = request.POST.copy()
         
         form = SubEventForm(formDataReceived)
-        
+
         if form.is_valid():
             newSubEventData = form.cleaned_data
 
@@ -53,14 +61,19 @@ class SubEventAdd(SubEventAddEditDeleteABC):
             return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
         
         form_mode = 'add'  # For re-using the template (only difference: add/edit button)
-        return render_to_response ('dtvpicker/SubeventPages/addEditSubEvent.html', locals(), context_instance = RequestContext(request))
-        
+        return render_to_response('dtvpicker/SubeventPages/addEditSubEvent.html'
+                                  , locals(),
+                                  context_instance=RequestContext(request))
+
+
 class SubEventEdit(SubEventAddEditDeleteABC):
+
     """
     Editing details of sub-event.
     Permissions: Event Coords only.
     Access: Only own events.
     """
+
     def handle_GET(self, request, **kwargs):
         if self.permissionsGranted(request, **kwargs) == False:
             return HttpResponseForbidden()
@@ -73,8 +86,10 @@ class SubEventEdit(SubEventAddEditDeleteABC):
                                        'venue'                  : subeventRequested.venue.all(),
                                        'event'                  : eventRequested, })
         form_mode = 'edit'  # For re-using the template (only difference: add/edit button)
-        return render_to_response ('dtvpicker/SubeventPages/addEditSubEvent.html', locals(), context_instance = RequestContext(request))
-    
+        return render_to_response('dtvpicker/SubeventPages/addEditSubEvent.html'
+                                  , locals(),
+                                  context_instance=RequestContext(request))
+
     def handle_POST(self, request, **kwargs):
         if self.permissionsGranted(request, **kwargs) == False:
             return HttpResponseForbidden()
@@ -83,14 +98,17 @@ class SubEventEdit(SubEventAddEditDeleteABC):
         subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
         formDataReceived = request.POST.copy()
 
-        form = SubEventForm(formDataReceived, instance = self.getSubEvent(kwargs['subevent'], kwargs['event']))
-                # Here I have not set the instance as subeventRequested 
+        form = SubEventForm(formDataReceived,
+                            instance=self.getSubEvent(kwargs['subevent'
+                            ], kwargs['event']))
+
+                # Here I have not set the instance as subeventRequested
                 # (although I use it for almost everything else)
                 # but rather I have called the getSubEvent method again
                 # because if the form is posted with a different title
                 # then the title of the subeventRequested object is also updated.
                 # This does not have any effect on this method
-                # but I have used subeventRequested in the template for displaying the 
+                # but I have used subeventRequested in the template for displaying the
                 # the sub-event's title which changes although you still want to update the same instance!
 
         if form.is_valid():
@@ -104,23 +122,31 @@ class SubEventEdit(SubEventAddEditDeleteABC):
             return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
 
         form_mode = 'edit'  # For re-using the template (only difference: add/edit button)
-        return render_to_response ('dtvpicker/SubeventPages/addEditSubEvent.html', locals(), context_instance = RequestContext(request))
-        
+        return render_to_response('dtvpicker/SubeventPages/addEditSubEvent.html'
+                                  , locals(),
+                                  context_instance=RequestContext(request))
+
+
 class SubEventDelete(SubEventAddEditDeleteABC):
+
     """
     Deleting sub-event.
     Permissions: Coords only.
     Access: Only own events.
-    """                
+    """
+
     def handle_GET(self, request, **kwargs):
         if self.permissionsGranted(request, **kwargs) == False:
             return HttpResponseForbidden()
 
         eventRequested = self.getEvent(kwargs['event'])
-        subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
+        subeventRequested = self.getSubEvent(kwargs['subevent'],
+                kwargs['event'])
 
-        return render_to_response ('dtvpicker/SubeventPages/deleteSubEvent.html', locals(), context_instance = RequestContext(request))
-    
+        return render_to_response('dtvpicker/SubeventPages/deleteSubEvent.html'
+                                  , locals(),
+                                  context_instance=RequestContext(request))
+
     def handle_POST(self, request, **kwargs):
         if self.permissionsGranted(request, **kwargs) == False:
             return HttpResponseForbidden()
@@ -129,5 +155,8 @@ class SubEventDelete(SubEventAddEditDeleteABC):
     	subeventRequested.delete()
 	ping_google()   
         self.updateEventLockStatus(self.getEvent(kwargs['event']))
-        return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
+
+        return HttpResponseRedirect(settings.SITE_URL
+                                    + 'DTVPicker/Summary/')
+
 

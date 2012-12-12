@@ -13,13 +13,13 @@
 {% block dtvBody %}
     <p>
         {% ifequal form_mode 'add' %}
-            Add Sub-Event:
+            <h4>Add Sub-Event:</h4>
         {% else %}
-            Edit Sub-Event "{{ subeventRequested.title }}":
+           <h4> Edit Sub-Event "{{ subeventRequested.title }}":</h4>
         {% endifequal %}
     </p>
     {% if form.errors %}
-        <p style="color: red;">
+        <p style="color:#9d261d;">
             Please correct the error{{ form.errors|pluralize }} below.
         </p>
     {% endif %}
@@ -34,6 +34,6 @@
         
     </form>
     
-    <a href = '{{site_url}}DTVPicker/Summary/'> Cancel </a>
+    <a href = '{{site_url}}DTVPicker/Summary/' class="btn btn-inverse atag"> Cancel </a>
     
 {% endblock %}

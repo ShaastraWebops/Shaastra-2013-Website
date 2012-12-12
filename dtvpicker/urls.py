@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from django.conf.urls.defaults import patterns, url
 
 from dtvpicker.views import dtvSummaryHandler, dtvSummaryByEvent, dtvSummaryByVenue, dtvSummaryByDate, \
@@ -26,10 +28,10 @@ urlpatterns = patterns('',
 
     # Add, edit, delete sub-events
     url(r'^(?P<event>.*)/AddSubEvent/$', SubEventAdd()),
-    url(r'^(?P<event>.*)/EditSubEvent/(?P<subevent>.*)/$', SubEventEdit()),
-    url(r'^(?P<event>.*)/DeleteSubEvent/(?P<subevent>.*)/$', SubEventDelete()),
-    
-    # Lock, unlock events
+    url(r'^(?P<event>.*)/EditSubEvent/(?P<subevent>.*)/$',
+        SubEventEdit()),
+    url(r'^(?P<event>.*)/DeleteSubEvent/(?P<subevent>.*)/$',
+        SubEventDelete()),
     url(r'^(?P<event>.*)/LockEvent/$', LockEvent()),
     url(r'^(?P<event>.*)/UnlockEvent/$', UnlockEvent()),
     
@@ -41,3 +43,4 @@ urlpatterns = patterns('',
     url(r'^VenueAliases/Edit/(?P<aliasID>\d+)/$', editVenueAliases),
     url(r'^VenueAliases/Delete/(?P<aliasID>\d+)/$', deleteVenueAliases),
 )
+

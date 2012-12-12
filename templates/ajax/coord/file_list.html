@@ -1,0 +1,5 @@
+<div id="file">{% for file in file_list %}<ul class="nav nav-pills"><li><a href="{{file.url}}" class="filetitle">{{file.title}}</a></li></ul>
+<ul class="nav nav-pills">
+    <li><a href="#" id="delete_file" onclick="delete_file({{tab.id}}, {{file.id}})" class="btn-inverse">Delete</a></li>
+    <li><a href="#customtabs/files/rename/{{tab.id}}/{{file.id}}" id="rename" class="btn-inverse">Rename</a></li>
+</ul><br/>{% endfor %}</div>

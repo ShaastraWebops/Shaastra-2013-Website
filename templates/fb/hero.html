@@ -1,0 +1,17 @@
+<div class="hero-unit" style="height:100%">
+    <img src="{{site_url}}static/img/shaastra2013newdark.png" />
+    <p>Shaastra is the annual technical festival of IIT Madras. It is the largest technical fest of its kind in India and has the distinction of being the first ISO 9001:2008 certified student-organized event in the world.
+    <center>
+    <div id="myCarousel" class="carousel slide">
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+        {% for src in srcs %}
+        <div class="item"><img src="{{src}}" id="Carousel" alt="Shaastra"></img></div>
+        {% endfor %}
+        </div>
+        <!-- Carousel nav -->
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+    </center>
+</div>

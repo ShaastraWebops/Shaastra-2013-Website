@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block event %}
+<div id="body">
+   	<div id="sidemenu">
+    	<div id="sidemenutitle">{{event.title}}</div>
+        <ul id="sidemenulist">
+            {% for tab in tab_set %}
+     		<li><a href="#events/{{event.id}}/tab/{{tab.id}}">{{tab.title}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="maincontent" style="color: #FFF">Click on a tab to view it
+    </div>
+    <div id="gallery">
+        <div id="picture"><img src="{{event.events_logo}}" />
+        </div>
+    </div>
+    <div id="updates" class="span3">
+		<h4>Announcement</h4>
+        <br>
+      <h4>Updates</h4>
+    </div>
+</div>
+{% endblock %}
