@@ -35,6 +35,7 @@ class VenueGroupAlias(models.Model):
         """
         This function creates a neat string representation for the Many to Many field venues.
         The individual venues must be separated by commas and the block name should be displayed once at the start.
+        Also, if the venue name has the block name already in it, it should be removed.
         """
         disp_string = ''
         
@@ -42,8 +43,15 @@ class VenueGroupAlias(models.Model):
         venueList = self.venues.all()
         
         # Separate all the venues with commas. 
+        # Also check if each individual venue name already has the block name. If so, remove it.
         for venue in venueList:
-            disp_string += venue.title + ', '
+            if venue.title[:len(venue.block)] == venue.block:
+                extraChars = 0
+                while venue.title[len(venue.block)+extraChars] == ' ':
+                    extraChars += 1
+                disp_string += venue.title[len(venue.block)+extraChars:] + ', '
+            else:
+                disp_string += venue.title + ', '
             
         disp_string = disp_string[:-2]  # Remove the last two characters (which are an extra comma and space added after each venue)
         
@@ -87,8 +95,15 @@ class SubEvent(models.Model):
                 return venueAlias.alias
                 
         # If none of the alias venue sets match, the individual venues should be separated by commas.
+        # Also check if each individual venue name already has the block name. If so, remove it.
         for venue in venueList:
-            disp_string += venue.title + ', '
+            if venue.title[:len(venue.block)] == venue.block:
+                extraChars = 0
+                while venue.title[len(venue.block)+extraChars] == ' ':
+                    extraChars += 1
+                disp_string += venue.title[len(venue.block)+extraChars:] + ', '
+            else:
+                disp_string += venue.title + ', '
             
         disp_string = disp_string[:-2]  # Remove the last two characters (which are an extra comma and space added after each venue)
         
