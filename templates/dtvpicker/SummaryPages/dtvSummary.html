@@ -21,7 +21,9 @@
                     <th> End Time </th>
                     <th> Venue </th>
                     <th> Last Modified </th>
-                    <th> Actions </th>
+                    {% ifequal request.user.is_core 0 %}
+                        <th> Actions </th>
+                    {% endifequal %}
                 </tr>
                 {% for subEvent in subEventList %}
                 <tr>
