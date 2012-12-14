@@ -33,6 +33,7 @@ class AddEventForm(forms.ModelForm):
             'team_size_max',
             'begin_registration',
             'has_tdp',
+            'sponsor_logo',
             )
         widgets = {'lock_status': forms.HiddenInput(),
                    'unlock_reason': forms.HiddenInput(),

@@ -79,6 +79,8 @@ class Event(models.Model):
     fb_event_id = models.CharField(max_length=20, null=True)
     updated = models.BooleanField(default=False)
     sponsor_logo_url= models.CharField(max_length=150)
+    sponsor_logo = models.FileField(upload_to=upload_handler('Events/Sponsors'),
+                                   blank=True, null=True)
 
     def __unicode__(self):
         return '%s' % self.title
