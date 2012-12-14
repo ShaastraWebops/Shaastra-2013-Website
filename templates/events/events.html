@@ -36,6 +36,7 @@
     {% endfor %}
     </div>
   </div>
+  <div id="sponslogo"><img src="{{event.sponsor_logo}}" /></div>
   <div id="updates">
 	<div id="textbox2">
           <h3>Announcements</h3>
@@ -87,8 +88,8 @@ function openEvent(){
     }
   });
   var height2 = $("#textbox2").height();
-  if(height2>300){
-    $("#textbox2").css({'height':'300px'});
+  if(height2>290){
+    $("#textbox2").css({'height':'290px'});
     $("#textbox2").jScrollPane({showArrows: true,verticalScroll: true,autoReinitialise: true});
   }  
 }
