@@ -104,7 +104,7 @@
     <div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
     </div>
     <div id="menulist{{forloop.counter}}" class="menulist">
-      <ul id="menuhead{{forloop.counter}}" class="menuhead">{{category.0.category}}</ul>
+      <ul id="menuhead{{forloop.counter}}" class="menuhead">{{category.0.get_category_display}}</ul>
       <ul id="menus{{forloop.counter}}">
       {% for event in category %}
 	<li onclick="window.location.href='#!events/{{event|slugify}}';$('#body').removeClass('bg1');$('#content').addClass('back');">{{event.title}}</li>

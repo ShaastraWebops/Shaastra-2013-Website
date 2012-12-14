@@ -22,7 +22,7 @@ EVENT_CATEGORIES = (
     ('Department Flagship', 'Department Flagship'),
     ('Spotlight', 'Spotlight'),
     ('Workshops', 'Workshops'),
-    ('Exhibitions', 'Exhibitions'),
+    ('Exhibitions', 'Exhibitions and Shows'),
     ('Associated Events', 'Associated Events'),    
     ('Sampark', 'Sampark'),
     )
