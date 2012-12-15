@@ -211,7 +211,7 @@ _gaq.push(['_trackPageview']);
     								{% for sponsor in present_sponsors %}
     								 <div style="height:100%;width:100%;">
         								  
-            								<br><h3 id="sponscat">{{sponsor.about}}</h3><br>
+            								<h3 id="sponscat">{{sponsor.about}}</h3><br>
         								  
         								   <div style="height:280px;width:100%;display:inline"><center>
         								    <a href='{{sponsor.url}}' target="_blank" style="display:inline!important;padding:0px!important;"><img id='{{sponsor.about}}' class="sponsor" src='{{sponsor.logo}}'></a>
@@ -219,8 +219,11 @@ _gaq.push(['_trackPageview']);
 									</div>    								
     								{% endfor %}
                       </div>				                  
-                     </div>   	                   
-	                  
+                     </div>
+                    <div class="span5" id="webspons">
+                    		<span style="display:inline-block;float:left;margin-left:10px;margin-top:30px;font-weight:bold">Web Hosting Partner</span>
+                    		<img src="{{site_url}}static/img/znet.png" alt="" width="300" height="auto" style="display:inline-block;float:left;">
+                    </div>   	                    
 			          <div class="floatright span7" id="col2"  style="text-align:justify ! important;">
 			          		<img src="{{site_url}}static/img/slogo2.png"><br/>
 			          		<b>Shaastra will now be held between 5th and 8th January</b>
