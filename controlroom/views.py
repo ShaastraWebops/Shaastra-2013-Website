@@ -59,9 +59,7 @@ def AddMultipleRooms(request):
             line_number = 0
             rooms = [] 
             for line in form.cleaned_data['rooms']:
-                # Remove the end-of-line character from the line
                 line = line.replace('\n', '').replace('\r', '').replace('(','').replace(')','')
-                # Ignore blank lines
                 if line == '':
                     continue
                 line_number += 1
