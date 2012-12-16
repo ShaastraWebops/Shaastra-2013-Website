@@ -24,7 +24,8 @@ HOSTEL_CHOICES = (
 class AvailableRooms(models.Model):
     room_no = models.CharField(max_length = 20)
     hostel = models.CharField(max_length = 20, choices = HOSTEL_CHOICES)
-    number_of_people = models.IntegerField()
+    max_number = models.IntegerField()
+    already_checkedin = models.IntegerField(default=0)
 
     def __unicode__(self):
         return '%s' % self.room_no + ',' + self.hostel
@@ -36,7 +37,7 @@ class IndividualCheckIn(models.Model):
     last_name = models.CharField(max_length = 50)
     phone_no = models.CharField(max_length = 15)
     check_in_control_room = models.CharField(max_length = 20,choices = HOSTEL_CHOICES)
-    check_out_control_room = models.CharField(max_length = 20,choices = HOSTEL_CHOICES)
+    check_out_control_room = models.CharField(max_length = 20,choices = HOSTEL_CHOICES, blank = True)
     check_in_date = models.DateTimeField(default = datetime.now)
     check_out_date = models.DateTimeField(null = True, blank=True) 
     comments = models.CharField(max_length = 1000, blank=True)

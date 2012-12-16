@@ -19,7 +19,7 @@ def save_individual_checkin(request,form):
         individual_form.save()
         #TODO:Deal with rooms
         #room = AvailableRooms.objects.get(id = data['room'])
-        #room.is_available = 0
+        #room.already_checkedin = room.already_checkedin + 1
         #room.save()
         msg = "Checked In Successfully!"
         dajax.alert(msg)
@@ -35,9 +35,9 @@ def save_individual_checkout(request,form,shaastraid):
     individual_form=IndividualForm(form, instance = checkedin)
     if individual_form.is_valid():
         individual_form.save()
-        #TODO:
+        #TODO:Deal with rooms
         #room = AvailableRooms.objects.get(id = data['room'])
-        #room.is_available = 0
+        #room.already_checkedin = room.already_checkedin - 1
         #room.save()
         msg = "Checked Out Successfully!"
         dajax.alert(msg)
