@@ -13,11 +13,12 @@
 	 </style>
 </head>
 </html>
+<div class="container">
     <h4><p>{{msg}}</p></h4>
     <div id="upload_form">
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <table>
+            <table class="table table-striped table-bordered table-condensed">
                 {{ form.as_table }}
                 <tr>
                     <td><input type="submit" value="Upload" class="btn btn-large btn-success"/></td>
@@ -27,5 +28,6 @@
         </form>
     </div>
     <a href="{{site_url}}controlroom/home/" class="action btn btn-large btn-danger">Back</a>
+</div>
 </body>
 </html>
