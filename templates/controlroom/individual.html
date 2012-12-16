@@ -14,6 +14,23 @@
     <script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
     <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
     <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+    <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
+    <script type="text/javascript">
+        function load_room(){
+            html="<td><div id='selectroom'></div></td>";
+            $("table tr:eq(2)").append(html);
+            $('.chzn-select').chosen();
+            } 
+            $(document).ready(function(){
+	            load_room();
+               $("#selectroom").click(function(){
+                    $(this).hide();
+                    
+                    
+               });
+            });
+    </script>
+    <link href="{{site_url}}static/css/chosen.css"  type="text/css" rel="stylesheet">
     <script type="text/javascript" charset = "utf-8">
     function checkin()
     {
@@ -42,9 +59,13 @@
     <button class="btn btn-primary" onclick="checkin();" type ='button' value='Save'>Check In</button><br><hr>
     <button class="btn btn-primary" onclick="checkout('{{participant.shaastra_id}}');" type ='button' value='Save'>Check Out</button>
     {% if request.get_full_path == "/controlroom/individual/" %}
-        <a class="btn btn-large btn-inverse" href='{{site_url}}controlroom/individual/'>Back</a>     
+        <a class="btn btn-large btn-inverse" href='{{site_url}}controlroom/individual/'>Back</a>  
+    {% else %}
+    {% if request.get_full_path == "/controlroom/checkout/" %}
+        <a class="btn btn-large btn-inverse" href='{{site_url}}controlroom/checkout/'>Back</a>     
     {% else %}
         <a class="btn btn-large btn-inverse" href='{{site_url}}controlroom/team/'>Back</a>       
+    {% endif %}
     {% endif %}
         <a class="btn btn-large btn-inverse" href='{{site_url}}controlroom/home/'>Home</a>     
     </div>

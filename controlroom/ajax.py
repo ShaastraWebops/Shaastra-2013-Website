@@ -16,11 +16,10 @@ def save_individual_checkin(request,form):
     dajax =Dajax()
     individual_form=IndividualForm(form)
     if individual_form.is_valid():
-        individual_form.save()
-        #TODO:Deal with rooms
-        #room = AvailableRooms.objects.get(id = data['room'])
-        #room.already_checkedin = room.already_checkedin + 1
-        #room.save()
+        form = individual_form.save()
+        room = AvailableRooms.objects.get(id = form.room_id)
+        room.already_checkedin = room.already_checkedin + 1
+        room.save()
         msg = "Checked In Successfully!"
         dajax.alert(msg)
     else:
@@ -34,11 +33,10 @@ def save_individual_checkout(request,form,shaastraid):
     checkedin = IndividualCheckIn.objects.get(shaastra_ID=shaastraid)
     individual_form=IndividualForm(form, instance = checkedin)
     if individual_form.is_valid():
-        individual_form.save()
-        #TODO:Deal with rooms
-        #room = AvailableRooms.objects.get(id = data['room'])
-        #room.already_checkedin = room.already_checkedin - 1
-        #room.save()
+        form = individual_form.save()
+        room = AvailableRooms.objects.get(id = form.room_id)
+        room.already_checkedin = room.already_checkedin - 1
+        room.save()
         msg = "Checked Out Successfully!"
         dajax.alert(msg)
     else:

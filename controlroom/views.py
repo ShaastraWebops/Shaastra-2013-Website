@@ -17,13 +17,8 @@ from controlroom.models import *
 from django.utils.translation import ugettext as _
 from controlroom.forms import *
 from django.contrib.sessions.models import Session
-from django.core.mail import EmailMessage, EmailMultiAlternatives
-from django.core.mail import send_mail as mailsender
-from recaptcha.client import captcha
-import sha
-import random
-import datetime
-import csv
+from datetime                   import datetime
+
 
 @login_required(login_url=settings.SITE_URL + 'user/login/')
 def home(request):
@@ -221,7 +216,8 @@ def CheckOut(request):
                     return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request)) 
                 else:
-                    individual_form = IndividualForm(instance=checkedin)
+                    values = {'check_out_date': datetime.now}
+                    individual_form = IndividualForm(instance=checkedin,initial=values)
                     return render_to_response('controlroom/individual.html', locals(),
                                           context_instance=RequestContext(request))
             except:

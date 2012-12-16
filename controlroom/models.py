@@ -28,7 +28,7 @@ class AvailableRooms(models.Model):
     already_checkedin = models.IntegerField(default=0)
 
     def __unicode__(self):
-        return '%s' % self.room_no + ',' + self.hostel
+        return '%s' % self.hostel + ',' + self.room_no
 
 class IndividualCheckIn(models.Model):
     room = models.ForeignKey(AvailableRooms)
