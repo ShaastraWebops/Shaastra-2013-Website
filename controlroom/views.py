@@ -17,13 +17,8 @@ from controlroom.models import *
 from django.utils.translation import ugettext as _
 from controlroom.forms import *
 from django.contrib.sessions.models import Session
-from django.core.mail import EmailMessage, EmailMultiAlternatives
-from django.core.mail import send_mail as mailsender
-from recaptcha.client import captcha
-import sha
-import random
-import datetime
-import csv
+from datetime                   import datetime
+
 
 @login_required(login_url=settings.SITE_URL + 'user/login/')
 def home(request):
@@ -77,11 +72,35 @@ def AddMultipleRooms(request):
                     room = AvailableRooms(
                                 room_no = line.split(',')[0],
                                 hostel =  line.split(',')[1],
-                                number_of_people = line.split(',')[2]
+                                max_number = line.split(',')[2]
                                 )
                     room.save()   
                     msg = "Rooms added successfully to database"             
     return render_to_response('controlroom/AddMultipleRooms.html', locals(),
+                              context_instance=RequestContext(request))
+
+@login_required(login_url=settings.SITE_URL + 'user/login/')
+def RoomMap(request):
+    if request.user.get_profile().is_hospi is False:
+        return HttpResponseRedirect(settings.SITE_URL)
+    alak = AvailableRooms.objects.filter(hostel='Alakananda').order_by('room_no')
+    brahms = AvailableRooms.objects.filter(hostel='Brahmaputra').order_by('room_no')
+    cauvery = AvailableRooms.objects.filter(hostel='Cauvery').order_by('room_no')
+    ganga = AvailableRooms.objects.filter(hostel='Ganga').order_by('room_no')
+    godav = AvailableRooms.objects.filter(hostel='Godavari').order_by('room_no')
+    jam = AvailableRooms.objects.filter(hostel='Jamuna').order_by('room_no')
+    krishna = AvailableRooms.objects.filter(hostel='Krishna').order_by('room_no')
+    mahanadhi = AvailableRooms.objects.filter(hostel='Mahanadhi').order_by('room_no')
+    mandak = AvailableRooms.objects.filter(hostel='Mandakini').order_by('room_no')
+    narmad = AvailableRooms.objects.filter(hostel='Narmada').order_by('room_no')
+    pamba = AvailableRooms.objects.filter(hostel='Pamba').order_by('room_no')
+    saras = AvailableRooms.objects.filter(hostel='Saraswathi').order_by('room_no')
+    sarayu = AvailableRooms.objects.filter(hostel='Sarayu').order_by('room_no')
+    sharav = AvailableRooms.objects.filter(hostel='Sharavati').order_by('room_no')
+    sindhu = AvailableRooms.objects.filter(hostel='Sindhu').order_by('room_no')
+    tambi = AvailableRooms.objects.filter(hostel='Tamraparani').order_by('room_no')
+    tapti = AvailableRooms.objects.filter(hostel='Tapti').order_by('room_no')
+    return render_to_response('controlroom/RoomMap.html', locals(),
                               context_instance=RequestContext(request))
 
 @login_required(login_url=settings.SITE_URL + 'user/login/')
@@ -197,7 +216,8 @@ def CheckOut(request):
                     return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request)) 
                 else:
-                    individual_form = IndividualForm(instance=checkedin)
+                    values = {'check_out_date': datetime.now}
+                    individual_form = IndividualForm(instance=checkedin,initial=values)
                     return render_to_response('controlroom/individual.html', locals(),
                                           context_instance=RequestContext(request))
             except:
