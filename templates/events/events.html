@@ -101,7 +101,7 @@ function hideEmptyRightElements() {
   var numAnnouncements=0;
   var numUpdates=0;
 
-  if ($("rgnlink").length == 1)  // The registration link counts as an announcement
+  if ($("#rgnlink").length == 1)  // The registration link counts as an announcement
     numAnnouncements += 1;
 
   numAnnouncements += $(".announcetext").length;
@@ -109,6 +109,6 @@ function hideEmptyRightElements() {
   numUpdates += $(".updatetext").length;
 
   if (numAnnouncements === 0 && numUpdates === 0)  // If there are no announcements or updates
-    $("updates").hide();                           // The entire announcements and updates box can be hidden.
+    $("#updates").hide();                           // The entire announcements and updates box can be hidden.
 }
 </script>
