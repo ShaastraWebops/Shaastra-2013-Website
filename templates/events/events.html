@@ -95,7 +95,7 @@ function openEvent(){
 }
 function hideEmptyRightElements() {
   if ($("#sponslogoimg").attr("src") == "") { // This means that the spons logo has not been uploaded and so the source is not available
-    $("#sponslogo").hide();  // In this case the div containing the spons logo can be hidden
+    $("#sponslogo").hide();                   // In this case the div containing the spons logo can be hidden
   }
 
   var numAnnouncements=0;
@@ -109,6 +109,6 @@ function hideEmptyRightElements() {
   numUpdates += $(".updatetext").length;
 
   if (numAnnouncements == 0 && numUpdates == 0)  // If there are no announcements or updates
-    $("#updates").hide();                           // The entire announcements and updates box can be hidden.
+    $("#updates").hide();                        // The entire announcements and updates box can be hidden.
 }
 </script>
