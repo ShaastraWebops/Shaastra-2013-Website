@@ -4,7 +4,7 @@
     {% ifequal event.lock_status 'locked' %}
         <h4> LOCKED </h4>
     {% else %}          
- 			<a href = '{{site_url}}DTVPicker/{{event}}/AddSubEvent/' class="btn btn-primary atag" style="width:100px;">Add Sub-Event</a>
+ 			<a href = '{{site_url}}DTVPicker/{{event}}/AddSubEvent/' class="btn btn-primary atag" style="width:120px;">Add Sub-Event</a>
         {% for event, subEventList in happenings %}    {# There will be only one tuple here (only one event) #}
             {% ifequal event.lock_status 'not_locked' %}                
                 	<a href = '{{site_url}}DTVPicker/{{event}}/LockEvent/'class="btn btn-primary atag" style="width:100px;">Lock Event</a>
