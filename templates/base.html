@@ -320,6 +320,25 @@ function lookupLocal(){
 	return false;
 }
 
+function hideEmptyRightElements() {
+  if ($("#sponslogoimg").attr("src") == "") { // This means that the spons logo has not been uploaded and so the source is not available
+    $("#sponslogo").hide();                   // In this case the div containing the spons logo can be hidden
+  }
+
+  var numAnnouncements=0;
+  var numUpdates=0;
+
+  if ($("#rgnlink").length == 1)  // The registration link counts as an announcement
+    numAnnouncements += 1;
+
+  numAnnouncements += $(".announcetext").length;
+
+  numUpdates += $(".updatetext").length;
+
+  if (numAnnouncements == 0 && numUpdates == 0)  // If there are no announcements or updates
+    $("#updates").hide();                        // The entire announcements and updates box can be hidden.
+}
+
 $(document).ready(function() {
 	$("#search_query").autocompleteArray(
 		{{ result_list|safe }},
@@ -333,6 +352,7 @@ $(document).ready(function() {
 		}
 	);
 });
+hideEmptyRightElements();
 </script>  
 <!--End of Search script-->
 
