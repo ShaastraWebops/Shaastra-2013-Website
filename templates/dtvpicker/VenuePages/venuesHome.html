@@ -1,0 +1,53 @@
+{% extends "dtvpicker/dtvBase.html" %}
+
+{% block dtvTitle %}
+    Venues
+{% endblock %}
+
+{% block onScreenPageTitle %} Venues Home {% endblock %}
+
+{% block dtvBody %}
+
+    <p>Currently available venues in database: </p>
+    <table>
+    {% for venue in venues %}
+        {% if forloop.first %}
+            <tr>
+                <th>Venue</th>
+                <th>Block</th>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>{{venue.title}}</td>
+            <td>{{venue.block}}</td>
+            <td> <a href = '{{site_url}}DTVPicker/Venues/Edit/{{venue.id}}/'> Edit </a> </td>
+            <td> <a href = '{{site_url}}DTVPicker/Venues/Delete/{{venue.id}}/'> Delete </a> </td>
+        </tr>
+    {% empty %}
+        No venues found in database.
+    {% endfor %}
+    </table>
+    
+    <br/><br/>
+    
+    <p>Add a venue here:</p>
+    
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+
+        <input type="submit" value="Save">
+        
+    </form>
+    
+    <a href = '{{site_url}}DTVPicker/'> Go back to the Super User Home </a>
+    
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "dtvpicker/dtvBase.html" %}
+
+{% block dtvTitle %}
+    Venue Group Alias
+{% endblock %}
+
+{% block onScreenPageTitle %} Edit Alias: '{{aliasObj.alias}}' {% endblock %}
+
+{% block dtvBody %}
+
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+
+        <input type="submit" value="Save">
+        
+    </form>
+    
+    <a href = '{{site_url}}DTVPicker/VenueAliases/'> Go back to Venue Aliases Home </a>
+    
+    <a href = '{{site_url}}DTVPicker/'> Go back to the Super User Home </a>
+    
+{% endblock %}

@@ -161,29 +161,17 @@ class SubEventAddEditDeleteABC(CoordProtectedView):
         if subEventList:
             newLockStatus = 'not_locked'
             for subevent in subEventList:
-                if not (subevent.start_date_and_time
-                        and subevent.end_date_and_time
-                        and subevent.venue):
+                if not (subevent.start_date_and_time and subevent.end_date_and_time and subevent.venue.count() > 0):  # Checks for missing fields.
                     newLockStatus = 'cannot_be_locked'
                     break
 
         eventToUpdate.lock_status = newLockStatus
         eventToUpdate.unlock_reason = ''
         eventToUpdate.save()
-
-    def updateAndSaveSubEvent(self, subEventObject, newSubEventData):
-        subEventObject.title = newSubEventData['title']
-        subEventObject.start_date_and_time = \
-            newSubEventData['start_date_and_time']
-        subEventObject.end_date_and_time = \
-            newSubEventData['end_date_and_time']
-        subEventObject.venue = newSubEventData['venue']
-        subEventObject.event = newSubEventData['event']
-        subEventObject.last_modified = datetime.datetime.now()  # Is handled by SubEvent.clean().
-
-                                                               # Done here just to make sure.
-
-        subEventObject.save()
-        self.updateEventLockStatus(subEventObject.event)
-
+    
+    def updateAndSaveSubEvent(self, form):
+        newSubEvent = form.save(commit=False)
+        newSubEvent.save()
+        form.save_m2m()
+        self.updateEventLockStatus(newSubEvent.event)
 

@@ -10,3 +10,4 @@ urlpatterns = patterns('', url(r'^addevent/', addevent, name='addevent'
                        eventdashboard, name='event-dashboard'),
                        url(r'^dashboard/', include('coord.urls'),
                        name='dashboard'), url(r'^$', home, name='home'))
+

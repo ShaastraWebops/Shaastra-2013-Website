@@ -14,14 +14,18 @@ from django.conf import settings
 from dtvpicker.models import SubEvent
 from events.models import Event
 from dtvpicker.forms import SubEventForm
+from django.contrib.sitemaps import ping_google
 
 
 class SubEventAdd(SubEventAddEditDeleteABC):
 
     """
     Adding a sub-event to the database.
-    Permissions: Coords only.
+    Permissions: Event Coords only.
     Access: Only own events.
+    Description: On adding a sub-event to the database, only the name of the sub-event and its event are added to the database.
+                 All other details (start, end, venue) are to be updated separately in EditSubEvent.
+                 So, after the sube event is added, we redirect to the EditSubEvent page.
     """
 
     def handle_GET(self, request, **kwargs):
@@ -43,17 +47,19 @@ class SubEventAdd(SubEventAddEditDeleteABC):
         eventRequested = self.getEvent(kwargs['event'])
 
         formDataReceived = request.POST.copy()
-        formDataReceived['event'] = eventRequested.id
-
+        
         form = SubEventForm(formDataReceived)
 
         if form.is_valid():
             newSubEventData = form.cleaned_data
-            newSubEvent = SubEvent()
-            self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
-            return HttpResponseRedirect(settings.SITE_URL
-                    + 'DTVPicker/Summary/')
 
+            if newSubEventData['event'] != eventRequested:
+                # Event was a hidden field, how can it get updated? Some malicious posting has happened. Raise error.
+                raise Http404('How did the event get updated? Malicious POSTing huh?! You shouldn\'t be allowed to continue.')
+            
+            self.updateAndSaveSubEvent(form)
+            return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
+        
         form_mode = 'add'  # For re-using the template (only difference: add/edit button)
         return render_to_response('dtvpicker/SubeventPages/addEditSubEvent.html'
                                   , locals(),
@@ -64,7 +70,7 @@ class SubEventEdit(SubEventAddEditDeleteABC):
 
     """
     Editing details of sub-event.
-    Permissions: Coords only.
+    Permissions: Event Coords only.
     Access: Only own events.
     """
 
@@ -73,16 +79,12 @@ class SubEventEdit(SubEventAddEditDeleteABC):
             return HttpResponseForbidden()
 
         eventRequested = self.getEvent(kwargs['event'])
-        subeventRequested = self.getSubEvent(kwargs['subevent'],
-                kwargs['event'])
-
-        form = SubEventForm(initial={
-            'title': subeventRequested.title,
-            'start_date_and_time': subeventRequested.start_date_and_time,
-            'end_date_and_time': subeventRequested.end_date_and_time,
-            'venue': subeventRequested.venue,
-            'event': eventRequested,
-            })
+        subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
+        form = SubEventForm(initial = {'title'                  : subeventRequested.title,
+                                       'start_date_and_time'    : subeventRequested.start_date_and_time,
+                                       'end_date_and_time'      : subeventRequested.end_date_and_time,
+                                       'venue'                  : subeventRequested.venue.all(),
+                                       'event'                  : eventRequested, })
         form_mode = 'edit'  # For re-using the template (only difference: add/edit button)
         return render_to_response('dtvpicker/SubeventPages/addEditSubEvent.html'
                                   , locals(),
@@ -93,9 +95,7 @@ class SubEventEdit(SubEventAddEditDeleteABC):
             return HttpResponseForbidden()
 
         eventRequested = self.getEvent(kwargs['event'])
-        subeventRequested = self.getSubEvent(kwargs['subevent'],
-                kwargs['event'])
-
+        subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
         formDataReceived = request.POST.copy()
 
         form = SubEventForm(formDataReceived,
@@ -113,10 +113,13 @@ class SubEventEdit(SubEventAddEditDeleteABC):
 
         if form.is_valid():
             newSubEventData = form.cleaned_data
-            newSubEvent = subeventRequested  # We want to update this SubEvent instance
-            self.updateAndSaveSubEvent(newSubEvent, newSubEventData)
-            return HttpResponseRedirect(settings.SITE_URL
-                    + 'DTVPicker/Summary/')
+
+            if newSubEventData['event'] != eventRequested:
+                # Event was a hidden field, how can it get updated? Some malicious posting has happened. Raise error.
+                raise Http404('How did the event get updated? Malicious POSTing huh?!')
+            
+            self.updateAndSaveSubEvent(form)
+            return HttpResponseRedirect(settings.SITE_URL + 'DTVPicker/Summary/')
 
         form_mode = 'edit'  # For re-using the template (only difference: add/edit button)
         return render_to_response('dtvpicker/SubeventPages/addEditSubEvent.html'
@@ -148,9 +151,9 @@ class SubEventDelete(SubEventAddEditDeleteABC):
         if self.permissionsGranted(request, **kwargs) == False:
             return HttpResponseForbidden()
 
-        subeventRequested = self.getSubEvent(kwargs['subevent'],
-                kwargs['event'])
-        subeventRequested.delete()
+        subeventRequested = self.getSubEvent(kwargs['subevent'], kwargs['event'])
+    	subeventRequested.delete()
+	ping_google()   
         self.updateEventLockStatus(self.getEvent(kwargs['event']))
 
         return HttpResponseRedirect(settings.SITE_URL

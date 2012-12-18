@@ -1,0 +1,56 @@
+{% extends "dtvpicker/dtvBase.html" %}
+
+{% block dtvTitle %}
+    Venue Group Alias
+{% endblock %}
+
+{% block onScreenPageTitle %} Venue Group Alias Home {% endblock %}
+
+{% block dtvBody %}
+
+    <p>Venue aliases override the default way venues are displayed.</p>
+    <p>By default, venues are displayed separated by commas. However, if an alias is specified, the default rendering is overridden and the alias is shown instead of the individual venues.</p>
+    
+    <p>Currently available aliases in database: </p>
+    <table cellspacing="12">
+    {% for alias in aliases %}
+        {% if forloop.first %}
+            <tr>
+                <th>Alias</th>
+                <th>Venues Included</th>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>{{alias.alias}}</td>
+            <td>{{alias.display_venues}}</td>
+            <td> <a href = '{{site_url}}DTVPicker/VenueAliases/Edit/{{alias.id}}/'> Edit </a> </td>
+            <td> <a href = '{{site_url}}DTVPicker/VenueAliases/Delete/{{alias.id}}/'> Delete </a> </td>
+        </tr>
+    {% empty %}
+        No aliases found in database.
+    {% endfor %}
+    </table>
+    
+    <br/><br/>
+    
+    <p>Add an alias here:</p>
+    
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+
+        <input type="submit" value="Save">
+        
+    </form>
+    
+    <a href = '{{site_url}}DTVPicker/'> Go back to the Super User Home </a>
+    
+{% endblock %}

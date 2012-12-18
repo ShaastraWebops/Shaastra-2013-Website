@@ -1,0 +1,31 @@
+{% extends "dtvpicker/dtvBase.html" %}
+
+{% block dtvTitle %}
+    Venue
+{% endblock %}
+
+{% block onScreenPageTitle %} Edit Venue: '{{venueObj.title}}' {% endblock %}
+
+{% block dtvBody %}
+
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+
+        <input type="submit" value="Save">
+        
+    </form>
+    
+    <a href = '{{site_url}}DTVPicker/Venues/'> Go back to Venues Home </a>
+    
+    <a href = '{{site_url}}DTVPicker/'> Go back to the Super User Home </a>
+    
+{% endblock %}

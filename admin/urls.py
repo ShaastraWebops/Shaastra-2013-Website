@@ -13,3 +13,4 @@ urlpatterns = patterns(
     url(r'^editcore/(?P<id>\d+)', editcore, name='editcore'),
     url(r'^$', home, name='home'),
     )
+
