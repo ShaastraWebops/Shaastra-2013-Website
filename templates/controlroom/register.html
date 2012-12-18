@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>Shaastra 2013 Control Room</title>
+    <link rel="stylesheet" type="text/css" href="{{site_url}}static/css/stylemain.css"  />
+    <style type="text/css">
+       	body{background:rgb(240,240,240);}
+			a.btn{text-decoration: none!important;margin: 0!important;}
+			.container{padding:20px 0px;}
+			label{font-size:15px;}
+			span.helptext{font-size:12px;font-style: italic;}
+	 </style>
+    <script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
+    <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
+    <script type="text/javascript">
+        function load_branch(){
+            html="<td><div id='selectbranch'></div></td>";
+            $("table tr:eq(2)").append(html);
+            $('.chzn-select').chosen();
+            } 
+            $(document).ready(function(){
+	            load_branch();
+               $("#selectbranch").click(function(){
+                    $(this).hide();
+                    
+                    
+               });
+            });
+    </script>
+    <link href="{{site_url}}static/css/chosen.css"  type="text/css" rel="stylesheet">
+</head>
+<body>
+	 <div class="container">
+    <h4><p>{{msg}}</p><br></h4>
+        
+    <form id="ShaastraIDForm" action="" method="post" class="form-horizontal">
+    {% csrf_token %}
+    <table class="table table-striped table-bordered table-condensed">
+        {{ form.as_table }}
+    </table>
+
+    <input type = "submit" value="Go!" class="btn btn-large btn-primary"><br><br>
+    <a class="btn btn-large btn-danger" href='{{site_url}}controlroom/home/'>Back</a>
+    </div>
+
+</body>
+</html>

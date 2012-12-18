@@ -230,4 +230,34 @@ def CheckOut(request):
         return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request))
 
-
+def Register(request):
+    if request.user.get_profile().is_hospi is False:
+        return HttpResponseRedirect(settings.SITE_URL)
+    values = {'want_accomodation':True}
+    form = UserForm(initial=values)
+    if request.method == 'POST':
+        values = {'want_accomodation':True}
+        form = UserForm(request.POST,initial=values)
+        if form.is_valid():
+            data = form.cleaned_data
+            new_user = User(first_name=data['first_name'],
+                            last_name=data['last_name'],
+                            username=data['username'], email=data['email'])
+            new_user.set_password(data['password'])
+            new_user.is_active = True
+            new_user.save()
+            x = 1300000 + new_user.id   
+            shaastra_id = ("SHA" + str(x))
+            userprofile = UserProfile(
+                user=new_user,
+                gender=data['gender'],
+                age=data['age'],
+                branch=data['branch'],
+                mobile_number=data['mobile_number'],
+                college=data['college'],
+                college_roll=data['college_roll'],
+                shaastra_id= ("SHA" + str(x)),
+                )
+            msg = "Your Shaastra ID is " + shaastra_id
+    return render_to_response('controlroom/register.html', locals(),
+                              context_instance=RequestContext(request))
