@@ -108,9 +108,9 @@ class SubEvent(models.Model):
             else:
                 disp_string += venue.title + ', '
             
-        disp_string = disp_string[:-2]  # Remove the last two characters (which are an extra comma and space added after each venue)
-        
-        disp_string = venueList[0].block + ' ' + disp_string  # Prepend the block name to the venue list
+        if disp_string != '':
+            disp_string = disp_string[:-2]  # Remove the last two characters (which are an extra comma and space added after each venue)
+            disp_string = venueList[0].block + ' ' + disp_string  # Prepend the block name to the venue list
 
         return disp_string
 
