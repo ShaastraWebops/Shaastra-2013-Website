@@ -171,56 +171,6 @@
         </div>
 </div>
 {% endblock %}
-{% block events_menu %}
-    {% for city in city_set %}
-    <div id="menu{{forloop.counter}}" class="menu" style="
-    {% if city == 'Bengaluru' %}margin-left:17%;{% endif %}
-    {% if city == 'Hyderabad' %}margin-left:32%;{% endif %}
-    {% if city == 'Coimbatore' %}margin-left:43%;{% endif %}
-    {% if city == 'Pune' %}margin-left:57%;{% endif %}
-    {% if city == 'Chennai' %}margin-left:70%;{% endif %} ">
-        	<div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
-            </div>
-            <div id="menulist{{forloop.counter}}" class="menulist">
-            <ul id="menuhead{{forloop.counter}}" class="menuhead">
-            {% if city == 'Bengaluru' %}Bengaluru{% endif %}
-            {% if city == 'Hyderabad' %}Hyderabad{% endif %}
-            {% if city == 'Pune' %}Kerala{% endif %}
-            {% if city == 'Chennai' %}Chennai{% endif %}
-            {% if city == 'Coimbatore' %}Coimbatore{% endif %}
-            </ul>
-            <ul id="menus{{forloop.counter}}">
-                {% if city == 'Bengaluru' %}
-                {% for event in bengaluruevents %}
-         		    <li onclick="window.location.href='#!events/{{event|slugify}}'">{{event.title|cut:"B_"}}</li>
-
-                {% endfor %}
-                {% endif %}
-                {% if city == 'Hyderabad' %}
-                {% for event in hyderabadevents %}
-         		    <li onclick="window.location.href='#!events/{{event|slugify}}'">{{event.title|cut:"H_"}}</li>
-                {% endfor %}
-                {% endif %}
-                {% if city == 'Pune' %}
-                {% for event in puneevents %}
-         		    <li onclick="window.location.href='#!events/{{event|slugify}}'">{{event.title|cut:"P_"}}</li>
-                {% endfor %}
-                {% endif %}
-                {% if city == 'Chennai' %}
-                {% for event in chennaievents %}
-         		    <li onclick="window.location.href='#!events/{{event|slugify}}'">{{event.title|cut:"Ch_"}}</li>
-                {% endfor %}
-                {% endif %}
-                {% if city == 'Coimbatore' %}
-                {% for event in coimbatoreevents %}
-         		    <li onclick="window.location.href='#!events/{{event|slugify}}'">{{event.title|cut:"C_"}}</li>
-                {% endfor %}
-                {% endif %}
-      		</ul>
-            </div>
-        </div>
-    {% endfor %}
-{% endblock %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="static/js/bootstrap-transition.js"></script>
 <script src="static/js/bootstrap-modal.js"></script>
