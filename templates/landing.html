@@ -46,6 +46,18 @@
             	position: absolute;
             	z-index: 1250;
             	background:url({{site_url}}static/img/landing/logo.png) 100% 100% no-repeat;
+           }
+           #webspons{
+            	width:340px;
+            	height:200px;
+            	position: absolute;
+            	z-index: 1250;
+            	left:40%;
+            	top:25%;
+            	font-family:'Century Gothic',Helvetica,sans-serif;
+            	color:#fff;
+            	text-align:center;
+            	display:none;
            } 	
         </style>
     </head>
@@ -125,6 +137,10 @@
             </div>
         </div>
         <div id="thelogo"></div>
+        <div id="webspons">
+                    		<span style="display:inline-block;float:left;font-weight:bold;width:120px;margin-top:10px;height:auto;font-size:14px;">Web Hosting Partner</span>
+                    		<img src="{{site_url}}static/img/znet.png" alt="" width="200" height="auto" style="display:inline-block;float:left;cursor:pointer" onclick="window.open('http://www.znetlive.in/');">
+        </div>  
         <div id="social">
     	<div onclick="window.open('https://www.facebook.com/Shaastra');" id="fb" class="socialapp"></div>
         <div id="flickr" onclick="javascript:window.open('http://www.flickr.com/photos/shaastra/');" class="socialapp"></div>
@@ -256,7 +272,7 @@
                         'left'      : width*Math.cos(theta*i)+"px",
                         'opacity'   : 1
                         
-                    },4000,'easeOutBack',function(){$("#social").fadeTo('3000',1.0);$('#thelogo').fadeIn('slow');});
+                    },4000,'easeOutBack',function(){$("#social").fadeTo('3000',1.0);$('#thelogo').fadeIn('slow');$('#webspons').fadeIn('slow');});
                 
                 }
                 
