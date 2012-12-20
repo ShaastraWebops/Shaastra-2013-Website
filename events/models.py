@@ -153,12 +153,12 @@ class Update(models.Model):
                                   )
 
 
-    def save(self, force_insert=False, force_update=False):
-	super(Event, self).save(force_insert, force_update)
-	try:
-		ping_google()
-	except Exception:
-		pass
+#    def save(self, force_insert=False, force_update=False):
+#	    super(Event, self).save(force_insert, force_update)
+#	    try:
+#		    ping_google()
+#	    except Exception:
+#		    pass
 
 class Tab(models.Model):
 
