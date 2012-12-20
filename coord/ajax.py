@@ -489,13 +489,12 @@ def add_edit_update(request, form='', id=0):
         if u_flag >= 4 and update_temp.category == 'Update' and not id:
             dajax.alert('This event already has 4 updates. Please mark atleast one update as Expired before adding a new update'
                         )
-        elif a_flag >= 1 and update_temp.category == 'Announcement' \
-            and not id:
+        elif a_flag >= 1 and update_temp.category == 'Announcement' and not id:
 
             dajax.alert('This event already has 1 announcement. Please mark the announcement as Expired before adding a new update'
                         )
         else:
-
+            
             update_temp.save()
         dajax.assign('#updates', 'innerHTML', '<h4>Announcement</h4>')
         initial = Update.objects.all()
