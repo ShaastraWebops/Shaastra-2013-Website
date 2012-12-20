@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block hash_handler %}
+<script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/scripts/slides.min.jquery.js" charset = "utf-8"></script>
 <script type="text/javascript">
   $(function(){
     // Keep a mapping of url-to-container for caching purposes.
@@ -78,34 +79,55 @@
     $(window).trigger('hashchange');
   });
 </script>
+<script>
+		$(function(){
+			$('#slides').slides({
+				preload: true,
+				preloadImage: '{{site_url}}static/img/loading.gif',
+				play: 1000,
+				pause: 1000,
+				hoverPause: true,
+				pagination:false,
+				generatePagination:false
+			});
+		});
+</script>
+<style type="text/css" media="screen">
+            .slides_container {
+            	margin-top:10px;
+                width:900px;
+                height:375px;
+            }
+            .slides_container div {
+                width:900px;
+                height:375px;
+                display:block;
+            }
+</style>
+<link rel="stylesheet" type="text/css" href="{{site_url}}static/css/sshow.css"  />
 {% endblock %}
 {% block footer %}
     <div id="footer">
     <center>
     <div id="stabbox" style="height:130px;width:950px;position:relative;">
-    	<div id="stab1" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) 0 0;">
+    	<div id="stab1" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) 0 0;" onclick="window.location.href='http://www.shaastra.org/2013/main/#!events/air-show'">
          <div id="tab1name" class="tabname">
-            Bengaluru
+            Air Show
             </div>
         </div>
-     <div id="stab2" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) -129px 0;">
+     <div id="stab2" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) -129px 0;" onclick="window.location.href='http://www.shaastra.org/2013/main/#!events/research-expo'">
             <div id="tab2name" class="tabname">
-            Hyderabad
+            Research Expo
             </div>
         </div>
-     <div id="stab3" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) -387px 0;">
+     <div id="stab3" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) -387px 0;" onclick="window.location.href='http://www.shaastra.org/2013/main/#!events/shaastra-nights'">
             <div id="tab3name" class="tabname">
-            Coimbatore
+            Shaastra Nights
             </div>
         </div>
-     <div id="stab4" class="stab" style="background:url({{site_url}}static/img/kerala-tab1.jpg);">
+     <div id="stab4" class="stab" style="background:url({{site_url}}static/img/kerala-tab1.jpg);" onclick="window.location.href='http://www.shaastra.org/2013/main/#!events/shaastra-exhibitions'">
             <div id="tab7name" class="tabname">
-            Kerala
-            </div>
-        </div>
-      <div id="stab5" class="stab" style="background:url({{site_url}}static/img/sprite3.jpg) -516px 0;">
-            <div id="tab5name" class="tabname">
-            Chennai
+            Shaastra Exhibitions
             </div>
         </div>
      </div>
@@ -125,32 +147,22 @@
         <div class="bbq-default" style="height:425px; width:900px; color:#FFF; opacity:0.9; background-color:#222; text-align:left; padding:0px 20px;margin-top:10px;">
      <div id="new" style="width:100%;cursor:auto;"><marquee>Move your pointer over each city picture for the corresponding events list. Click on each event for details </marquee></div>	
 	<div id="samparktext">
-       <p>Samparks are a series of workshops, events, lectures and qualifiers that are held at cities across India in an effort to bring Shaastra closer to everyone. This year, with new and improved events that assure wildcard entries, never before seen demonstrations and much more , the Samparks in your city are something that you can not afford to miss!</p>
-  <table width="100%">
-    <tr style="text-align:center;">
-    <th colspan="2"><strong>Sampark Chennai</strong></td>
-    </tr>
-    <tr style="text-align:center;">
-    <td width="50%">Robotics Workshop, IIT Madras</td>
-    <td width="50%">Hovercraft Workshop, IIT Madras</td>
-    </tr>
-    <tr>
-    <td width="50%">
-    IBot, Robotics club of IIT Madras presents you the chance to learn Autonomous Robotics. A one day workshop participants are given a hands-on experience of building line follower bot using Arduino development platform. Did you ever dream of coding a Robot and got stuck as a beginner! Then here is your chance to dive into the world of robotics.
-    </td>
-    <td width="50%">
-    This Shaastra, we give you a chance to take a leap into the world of aerobotics. Learn how a hovercraft is built from scratch, and get the confidence to go ahead and build or modify your hovercraft to new levels.The workshop is aimed for amateurs in aerobotics and is a rare opportunity for teams to make a hovercraft hands-on and also get to know the principles behind this craft’s mechanisms and electronics.
-    </td>
-    </tr>
-    <tr style="text-align:center;">
-    <td colspan="2" style="font-size:15px;">Registrations are now open. Limited seats available! Use the links below to register as early as possible.</td>
-    </tr>
-    <tr style="text-align:center;">
-    <td width="50%"><button onclick='window.location.hash="events/ch_robotics-workshop/registration"' class="btn btn-primary">Robotics Workshop</button></td>
-    <td width="50%"><button onclick='window.location.hash="events/ch_hovercraft-workshop/registration"' class="btn btn-primary">Hovercraft Workshop</button></td>
-    </tr>
-  </table>
-<p>
+        <div id="slides">
+            <div class="slides_container">
+                <div>
+                    <img src="{{site_url}}static/img/shows/1.jpg">
+                </div>
+                <div>
+                    <img src="{{site_url}}static/img/shows/2.jpeg">
+                </div>
+                <div>
+                    <img src="{{site_url}}static/img/shows/3.jpg">
+                </div>
+                <div>
+                    <img src="{{site_url}}static/img/shows/4.bmp">
+                </div>
+            </div>
+        </div>
         </div>
 	</div>
 	</center>
@@ -158,56 +170,6 @@
         </div>
         </div>
 </div>
-{% endblock %}
-{% block events_menu %}
-    {% for city in city_set %}
-    <div id="menu{{forloop.counter}}" class="menu" style="
-    {% if city == 'Bengaluru' %}margin-left:17%;{% endif %}
-    {% if city == 'Hyderabad' %}margin-left:32%;{% endif %}
-    {% if city == 'Coimbatore' %}margin-left:43%;{% endif %}
-    {% if city == 'Pune' %}margin-left:57%;{% endif %}
-    {% if city == 'Chennai' %}margin-left:70%;{% endif %} ">
-        	<div id="menutopcolour{{forloop.counter}}" class="menutopcolour">
-            </div>
-            <div id="menulist{{forloop.counter}}" class="menulist">
-            <ul id="menuhead{{forloop.counter}}" class="menuhead">
-            {% if city == 'Bengaluru' %}Bengaluru{% endif %}
-            {% if city == 'Hyderabad' %}Hyderabad{% endif %}
-            {% if city == 'Pune' %}Kerala{% endif %}
-            {% if city == 'Chennai' %}Chennai{% endif %}
-            {% if city == 'Coimbatore' %}Coimbatore{% endif %}
-            </ul>
-            <ul id="menus{{forloop.counter}}">
-                {% if city == 'Bengaluru' %}
-                {% for event in bengaluruevents %}
-         		    <li onclick="window.location.href='#!events/{{event|slugify}}'">{{event.title|cut:"B_"}}</li>
-
-                {% endfor %}
-                {% endif %}
-                {% if city == 'Hyderabad' %}
-                {% for event in hyderabadevents %}
-         		    <li onclick="window.location.href='#!events/{{event|slugify}}'">{{event.title|cut:"H_"}}</li>
-                {% endfor %}
-                {% endif %}
-                {% if city == 'Pune' %}
-                {% for event in puneevents %}
-         		    <li onclick="window.location.href='#!events/{{event|slugify}}'">{{event.title|cut:"P_"}}</li>
-                {% endfor %}
-                {% endif %}
-                {% if city == 'Chennai' %}
-                {% for event in chennaievents %}
-         		    <li onclick="window.location.href='#!events/{{event|slugify}}'">{{event.title|cut:"Ch_"}}</li>
-                {% endfor %}
-                {% endif %}
-                {% if city == 'Coimbatore' %}
-                {% for event in coimbatoreevents %}
-         		    <li onclick="window.location.href='#!events/{{event|slugify}}'">{{event.title|cut:"C_"}}</li>
-                {% endfor %}
-                {% endif %}
-      		</ul>
-            </div>
-        </div>
-    {% endfor %}
 {% endblock %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="static/js/bootstrap-transition.js"></script>
