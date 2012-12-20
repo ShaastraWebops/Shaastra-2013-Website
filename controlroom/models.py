@@ -36,9 +36,15 @@ class IndividualCheckIn(models.Model):
     first_name = models.CharField(max_length = 50)
     last_name = models.CharField(max_length = 50)
     phone_no = models.CharField(max_length = 15)
-    check_in_control_room = models.CharField(max_length = 20,choices = HOSTEL_CHOICES)
+    check_in_control_room = models.CharField(max_length = 20,choices = HOSTEL_CHOICES,blank=True)
     check_out_control_room = models.CharField(max_length = 20,choices = HOSTEL_CHOICES, blank = True)
-    check_in_date = models.DateTimeField(default = datetime.now)
+    check_in_date = models.DateTimeField(default = datetime.now,blank = True)
     check_out_date = models.DateTimeField(null = True, blank=True) 
     comments = models.CharField(max_length = 1000, blank=True)
+    
+    def __unicode__(self):
+        return self.first_name
+
+    class Admin:
+        pass
 
