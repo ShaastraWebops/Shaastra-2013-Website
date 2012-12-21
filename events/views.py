@@ -24,6 +24,8 @@ def home(request):
 	    event_name="lectures & video conferences"
 	if event_name == 'sampark/' :
 	    return sampark(request)
+	elif event_name == 'shows/' :
+	    return shows(request)
 	event = Event.objects.get(title=event_name)
 	initial_updates = Update.objects.filter(category = 'Update')
 	updates = sorted(initial_updates, key=attrgetter('id'), reverse=True)
@@ -43,6 +45,8 @@ def events(request, event_name):
     	event_name="lectures & video conferences"
     if event_name == 'sampark/' :
         return sampark(request)
+    elif event_name == 'shows/' :
+	return shows(request)
     event = Event.objects.get(title=event_name)
     initial_updates = Update.objects.filter(category = 'Update')
     updates = sorted(initial_updates, key=attrgetter('id'), reverse=True)
@@ -103,6 +107,21 @@ def sampark(request):
         result_list.append(row)
     #End of search code
     return render_to_response('events/sampark_home.html', locals(), context_instance=RequestContext(request))
+
+def shows(request):
+    #Code for search
+    result_list=[]
+    for t in Tag.objects.all():
+        row=[]
+        row.append(str(t.name))
+        temp=[]
+        for x in t.event_set.all():
+            url = slugify(x) + '/tab/' + x.tab_set.all()[0].title
+            temp.append([str(x),str(url)])
+        row.append(temp)
+        result_list.append(row)
+    #End of search code
+    return render_to_response('events/shows_home.html', locals(), context_instance=RequestContext(request))
 
 def logo(request):
     name = request.GET.get('name','')

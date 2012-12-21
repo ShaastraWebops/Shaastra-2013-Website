@@ -13,5 +13,6 @@ urlpatterns = patterns('',
                        #url(r'^(?P<event_name>.+)/tab/(?P<tab_name>.+)', tabs, name='tab-list'),
                        url(r'^(?P<event_name>.+)', events, name='event-list'),
                        url(r'^sampark/', sampark, name='sampark-home'),
+                       url(r'^shows/', sampark, name='shows-home'),
                        url(r'^$', home, name='event-home'),
                        )
