@@ -118,27 +118,28 @@ def EventHandler(request,params=None):
  
 def UpdateHandler(request,params=None):
     if(params!=None):
-        try:
-            updatesObject = Update.objects.filter(event = params,expired = False)
-            updates = list()
-            announcements = list()
-            today_updates = list()
-            today_announcements = list()
-            today = datetime.date.today()
-            for update in updatesObject:
-                if update.category == "Update":
-                    updates.append(html_to_text(update.description))
-                    if update.date == today:
-                        today_updates.append(html_to_text(update.description))
-                else:
-                    announcements.append(html_to_text(update.description))
-                    if update.date == today:
-                        today_announcements.append(html_to_text(update.description))
+        #try:
+        updatesObject = Update.objects.filter(event = params,expired = False)
+        updates = list()
+        announcements = list()
+        today_updates = list()
+        today_announcements = list()
+        today = datetime.now().date()
+        for update in updatesObject:
+            if update.category == "Update":
+                updates.append(html_to_text(update.description))
+                if update.date == today:
+                    today_updates.append(html_to_text(update.description))
+            else:
+                announcements.append(html_to_text(update.description))
 
-              
-            rendered = {'updates':updates,'announcements':announcements,'Today_Update':today_updates,'Today_Announcements':today_announcements,'status':200}
-        except:
-            rendered = {'status':500}
+                if update.date == today:
+                    today_announcements.append(html_to_text(update.description))
+
+          
+        rendered = {'updates':updates,'announcements':announcements,'Today_Update':today_updates,'Today_Announcements':today_announcements,'status':200}
+        #except:
+            #rendered = {'status':500}
         
     rendered = json.dumps(rendered) 
         
