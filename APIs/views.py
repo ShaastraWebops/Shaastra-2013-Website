@@ -3,8 +3,39 @@ from django.shortcuts import render_to_response
 from django.template.context import Context, RequestContext
 from django.core.paginator import Paginator
 import re,sys
+import datetime
 import json
 from APIs.models import *
+from HTMLParser import HTMLParser
+import htmlentitydefs
+
+#Html to plain text converter
+#Code borrowed from @Soren\ Loveborg
+class HTMLTextExtractor(HTMLParser):
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.result = [ ]
+
+    def handle_data(self, d):
+        self.result.append(d)
+
+    def handle_charref(self, number):
+        codepoint = int(number[1:], 16) if number[0] in (u'x', u'X') else int(number)
+        self.result.append(unichr(codepoint))
+
+    def handle_entityref(self, name):
+        codepoint = htmlentitydefs.name2codepoint[name]
+        self.result.append(unichr(codepoint))
+
+    def get_text(self):
+        return u''.join(self.result)
+
+def html_to_text(html):
+    s = HTMLTextExtractor()
+    s.feed(html)
+    return s.get_text()
+
+#End of borrowed code
 
 #Test function to test the POST APIs
 def test(request):
@@ -58,17 +89,25 @@ def EventHandler(request,params=None):
 
         else:
             try:
-                mobopsTab = MobAppTab.objects.get(event = params)
+                IntroTab =  MobAppTab.objects.get(event_id = params,title="Introduction")
+                try:
+                    FormatTab = MobAppTab.objects.get(event_id = params,title="Event Format")
+                except:
+                    FormatTab =  MobAppTab.objects.get(event_id = params,title="Introduction")
+                
                 updatesObject = Update.objects.filter(event = params,expired = False)
                 updates = list()
                 announcements = list()
                 for update in updatesObject:
                     if update.category == "Update":
-                        updates.append(update.description)
+                        updates.append(html_to_text(update.description))
                     else:
-                        announcements.append(update.description)
+                        announcements.append(html_to_text(update.description))
+                
+                Intro = html_to_text(IntroTab.text)
+                Format = html_to_text(FormatTab.text)
 
-                rendered = {'text':mobopsTab.text,'updates':updates,'announcements':announcements}
+                rendered = {'Introduction':Intro,'Event Format':Format,'updates':updates,'announcements':announcements}
             except:
                 status = 500
         
@@ -77,6 +116,34 @@ def EventHandler(request,params=None):
         
     return HttpResponse(rendered, mimetype='application/json')
  
+def UpdateHandler(request,params=None):
+    if(params!=None):
+        try:
+            updatesObject = Update.objects.filter(event = params,expired = False)
+            updates = list()
+            announcements = list()
+            today_updates = list()
+            today_announcements = list()
+            today = datetime.date.today()
+            for update in updatesObject:
+                if update.category == "Update":
+                    updates.append(html_to_text(update.description))
+                    if update.date == today:
+                        today_updates.append(html_to_text(update.description))
+                else:
+                    announcements.append(html_to_text(update.description))
+                    if update.date == today:
+                        today_announcements.append(html_to_text(update.description))
+
+              
+            rendered = {'updates':updates,'announcements':announcements,'Today_Update':today_updates,'Today_Announcements':today_announcements,'status':200}
+        except:
+            rendered = {'status':500}
+        
+    rendered = json.dumps(rendered) 
+        
+    return HttpResponse(rendered, mimetype='application/json')
+
 def UserHandler(request,params):
     rendered = json.dumps({"status":"invalid code"})
     if request.method == "POST":
