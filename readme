@@ -13,3 +13,4 @@ start=<number> : returns the events from <number> th event till end.
 end=<number>: returns the events from beginning till <number> th event
 start=<start>&end=<end> : returns the events from <start> th event till <end> th event
 
+/updates/<event_id> - Returns the 'updates' , 'announcements' , 'Today_Updates' , 'Today_Announcements' parameters.
