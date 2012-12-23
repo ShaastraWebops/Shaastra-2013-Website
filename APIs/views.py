@@ -123,8 +123,9 @@ def EventHandler(request,params=None):
                 IntroTab =  MobAppTab.objects.get(event = params,title="Introduction")
                 try:
                     FormatTab = MobAppTab.objects.get(event = params,title="Event Format")
+                    Format = html_to_text(FormatTab.text)
                 except:
-                    FormatTab =  MobAppTab.objects.get(event = params,title="Introduction")
+                    Format = "There is no predefined format for this event"
                 try:
                     PrizeTab = MobAppTab.objects.get(event=params,title__icontains="Prize Money")
                     PrizeMoney  = html_to_text(PrizeTab.text)
@@ -141,7 +142,6 @@ def EventHandler(request,params=None):
                         announcements.append(html_to_text(update.description))
                 
                 Intro = html_to_text(IntroTab.text)
-                Format = html_to_text(FormatTab.text)
 
                 rendered = {'Introduction':Intro,'Event Format':Format,'Prize Money':PrizeMoney,'updates':updates,'announcements':announcements}
             except:
