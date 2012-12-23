@@ -94,7 +94,12 @@ def EventHandler(request,params=None):
                     FormatTab = MobAppTab.objects.get(event_id = params,title="Event Format")
                 except:
                     FormatTab =  MobAppTab.objects.get(event_id = params,title="Introduction")
-                
+                try:
+                    PrizeTab = MobAppTab.objects.get(event_id=params,title__icontains="Prize Money")
+                    PrizeMoney  = html_to_text(PrizeTab.text)
+                except:
+                    PrizeMoney = "NA"
+
                 updatesObject = Update.objects.filter(event = params,expired = False)
                 updates = list()
                 announcements = list()
@@ -107,7 +112,7 @@ def EventHandler(request,params=None):
                 Intro = html_to_text(IntroTab.text)
                 Format = html_to_text(FormatTab.text)
 
-                rendered = {'Introduction':Intro,'Event Format':Format,'updates':updates,'announcements':announcements}
+                rendered = {'Introduction':Intro,'Event Format':Format,'Prize Money':PrizeMoney,'updates':updates,'announcements':announcements}
             except:
                 status = 500
         
