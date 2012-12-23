@@ -4,6 +4,7 @@ urlpatterns = patterns('APIs.views',
         
     url(r'^test/$', 'test'),
     url(r'^events/$', 'EventHandler'),
+    url(r'^coords/$', 'CoordHandler'),
     url(r'^events/(?P<params>.*)/$', 'EventHandler'),
     url(r'^updates/(?P<params>.*)/$', 'UpdateHandler'),
     url(r'^users/(?P<params>.*)/$', 'UserHandler'),
