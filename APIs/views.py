@@ -43,25 +43,30 @@ def test(request):
 
 def CoordHandler(request,params=None):
     rendered = dict()
-    profiles = userprofile.objects.using('erp').filter()
-    rendered['users'] = list() 
-    for profile in profiles:
-        name = profile.name
-        user = User.objects.using('erp').get(pk = profile.user.pk)
-        email = user.email
-        phone = profile.chennai_number
-        alternatePhone = profile.summer_number
-        hostel = profile.hostel
-        room = profile.room_no
-        if profile.department:
-            department = Department.objects.using('erp').get(pk = profile.department.pk)
-            departmentName = department.Dept_Name
-        else:
-            departmentName = "orphan"
-        nickname = profile.nickname
+    try:
+        profiles = userprofile.objects.using('erp').filter()
+        rendered['users'] = list() 
+        for profile in profiles:
+            name = profile.name
+            user = User.objects.using('erp').get(pk = profile.user.pk)
+            if user.groups.filter(name='Cores'):
+                continue
+            email = user.email
+            phone = profile.chennai_number
+            alternatePhone = profile.summer_number
+            hostel = profile.hostel
+            room = profile.room_no
+            if profile.department:
+                department = Department.objects.using('erp').get(pk = profile.department.pk)
+                departmentName = department.Dept_Name
+            else:
+                continue
+            nickname = profile.nickname
 
-        rendered['users'].append({"id":profile.pk,"name":name,"email":email,"phone":phone,"alternatePhone":alternatePhone,"hostel":hostel,"room":room,"department":departmentName,"nickname":nickname})
-    rendered['status'] = 200
+            rendered['users'].append({"id":profile.pk,"name":name,"email":email,"phone":phone,"alternatePhone":alternatePhone,"hostel":hostel,"room":room,"department":departmentName,"nickname":nickname})
+        rendered['status'] = 200
+    except:
+        rendered['status'] = 500
     rendered = json.dumps(rendered)
     return HttpResponse(rendered, mimetype='application/json')
 
