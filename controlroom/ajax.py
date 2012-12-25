@@ -53,13 +53,12 @@ def send_participants(request,form):
     rm = AvailableRooms.objects.get(id=r)
     check_in = form['checkin']
     comments = form['comments'] 
+    msg = " "
     try:
         for s_id in form['sub_checklist']:
             try:
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID = s_id)
-                msg = s_id + " is already checked in"    
-                dajax.alert(msg)
-                return dajax.json
+                msg = msg + s_id + ','
             except:
                 profile = UserProfile.objects.get(shaastra_id = s_id)
                 new_guest = IndividualCheckIn(room = rm,
@@ -74,8 +73,10 @@ def send_participants(request,form):
                 room = AvailableRooms.objects.get(id = rm)
                 room.already_checkedin = room.already_checkedin + 1
                 room.save()
-                msg = "Checked In successfully!"
-                dajax.alert(msg)
+        if msg == " ":
+            msg = "All members checked in successfully!"
+        else:
+            msg = msg + " already checked in"
     except:
         s_id = form['sub_checklist']
         try:
@@ -96,5 +97,6 @@ def send_participants(request,form):
             room.already_checkedin = room.already_checkedin + 1
             room.save()
             msg = "Checked In successfully!"
-        dajax.alert(msg)
+    print msg
+    dajax.alert(msg)
     return dajax.json
