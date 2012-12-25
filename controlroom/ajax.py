@@ -55,6 +55,33 @@ def send_participants(request,form):
     comments = form['comments'] 
     try:
         for s_id in form['sub_checklist']:
+            try:
+                checkedin = IndividualCheckIn.objects.get(shaastra_ID = s_id)
+                msg = s_id + " is already checked in"    
+                dajax.alert(msg)
+                return dajax.json
+            except:
+                profile = UserProfile.objects.get(shaastra_id = s_id)
+                new_guest = IndividualCheckIn(room = rm,
+                                              shaastra_ID = profile.shaastra_id,
+                                              first_name = profile.user.first_name,
+                                              last_name = profile.user.last_name,
+                                              phone_no = profile.mobile_number,
+                                              check_in_control_room = check_in,
+                                              comments = comments,
+                                              )
+                new_guest.save()
+                room = AvailableRooms.objects.get(id = rm)
+                room.already_checkedin = room.already_checkedin + 1
+                room.save()
+                msg = "Checked In successfully!"
+                dajax.alert(msg)
+    except:
+        s_id = form['sub_checklist']
+        try:
+            checkedin = IndividualCheckIn.objects.get(shaastra_ID = s_id)
+            msg = s_id + " is already checked in"
+        except:
             profile = UserProfile.objects.get(shaastra_id = s_id)
             new_guest = IndividualCheckIn(room = rm,
                                           shaastra_ID = profile.shaastra_id,
@@ -65,26 +92,9 @@ def send_participants(request,form):
                                           comments = comments,
                                           )
             new_guest.save()
-            room = AvailableRooms.objects.get(id = rm)
+            room = AvailableRooms.objects.get(id = r)
             room.already_checkedin = room.already_checkedin + 1
             room.save()
             msg = "Checked In successfully!"
-            dajax.alert(msg)
-    except:
-        s_id = form['sub_checklist']
-        profile = UserProfile.objects.get(shaastra_id = s_id)
-        new_guest = IndividualCheckIn(room = rm,
-                                      shaastra_ID = profile.shaastra_id,
-                                      first_name = profile.user.first_name,
-                                      last_name = profile.user.last_name,
-                                      phone_no = profile.mobile_number,
-                                      check_in_control_room = check_in,
-                                      comments = comments,
-                                      )
-        new_guest.save()
-        room = AvailableRooms.objects.get(id = r)
-        room.already_checkedin = room.already_checkedin + 1
-        room.save()
-        msg = "Checked In successfully!"
         dajax.alert(msg)
     return dajax.json
