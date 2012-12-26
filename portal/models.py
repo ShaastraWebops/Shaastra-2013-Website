@@ -46,6 +46,8 @@ NEW_SPONSOR_CHOICES = (
     ('Hospitality Sponsor', 'Hospitality Sponsor'),
     ('Telecom Partner', 'Telecom Partner'),
     ('Event Sponsor', 'Event Sponsor'),
+    ('Analytics Partner','Analytics Partner'),
+    ('Exhibition Partner','Exhibition Partner'),
     ('Knowledge Partner','Knowledge Partner'),
     ('Education Partner','Education Partner'),
     ('Internship Partner', 'Internship Partner'),    
