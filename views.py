@@ -5,7 +5,7 @@ from django.conf import settings
 from events.models import Event, EVENT_CATEGORIES, Tag, Update, Sponsor
 from django.template.defaultfilters import slugify
 from events.views import home as events_home
-from participantPds import *
+from participantPdfs import *
 
 def home(request):
     fragment = request.GET.get('_escaped_fragment_','')

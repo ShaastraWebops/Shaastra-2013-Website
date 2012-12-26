@@ -4,7 +4,7 @@ from events.models import Event, EventSingularRegistration
 
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMultiAlternatives
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponse
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
@@ -13,7 +13,11 @@ from reportlab.lib import colors
 from reportlab.platypus import Table, TableStyle
 from reportlab.pdfbase.pdfmetrics import getFont, getAscentDescent
 from reportlab.platypus import Paragraph
-from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+try:
+    from cStringIO import StringIO
+except:
+    from StringIO import StringIO
 
 def PDFSetFont(pdf, font_name, font_size):
     """
@@ -90,7 +94,7 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
     
     y -= lineheight + (cm * 0.8)
     
-    pdf.drawString(x, y, 'College: %s' % College.objects.get(userProfile.college).name)
+    pdf.drawString(x, y, 'College: %s' % userProfile.college.name)
     
     y -= lineheight + (cm * 0.8)
     
@@ -105,6 +109,8 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
     pdf.drawString(x, y, 'Age: %d' % userProfile.age)
     
     y -= lineheight + (cm * 0.8)
+
+    return y
     
 def printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, userTeams):
 
@@ -114,7 +120,7 @@ def printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, 
     
     tableData = [ ['Serial No', 'Event Name', 'Team Name', 'Team ID'] ]
     
-    for eventRegistration in singularEventRegistration:
+    for eventRegistration in singularEventRegistrations:
         tableData.append([sNo, eventRegistration.event.title, '', ''])
         sNo += 1
         
@@ -134,29 +140,25 @@ def printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, 
                               ('GRID', (0, 0), (-1, -1), 1, colors.black),
                             ])
     t.setStyle(tableStyle)
+    (A4Width, A4Height) = A4
     availableWidth = A4Width - 2 * cm  # Leaving margins of 1 cm on both sides
-    availableHeight = y - (lineheight + 0.2 * cm)  # (lineheight + 0.2*cm) subtracted to include title height
+    availableHeight = y
     (tableWidth, tableHeight) = t.wrap(availableWidth, availableHeight)  # find required space
     
     t.drawOn(pdf, x, y - tableHeight)
     
 def printQMSInstructions(pdf, x, y):
     
-    text = '''This is the QMS instructions. Please do not forget to load the qms instructions before sending this out to the recipients. This is the first paragraph. I hope you enjoyed reading this PDF. Please do not forget to read it till the very end.
+    text = 'This is the QMS instructions. Please do not forget to load the qms instructions before sending this out to the recipients. This is the first paragraph. I hope you enjoyed reading this PDF. Please do not forget to read it till the very end.<br/><br/>This PDF is designed to let you know what exactly you have to do. It gives you details about you, which we hope you know better than us. It also contains some details that we hope that you now know. Please do keep this PDF for reference. It contains some very important identification numbers about you.<br/><br/>If you have any problems, do contact our QMS Team.<br/><br/><b>Shaastra 2013!</b>!!'''
     
-    This PDF is designed to let you know what exactly you have to do. It gives you details about you, which we hope you know better than us. It also contains some details that we hope that you now know. Please do keep this PDF for reference. It contains some very important identification numbers about you.
+    styles = getSampleStyleSheet()
+    styles.add(ParagraphStyle(name = 'qmsStyle', fontSize = 12))
     
-    If you have any problems, do contact our QMS Team.
-    
-    <b>Shaastra 2013!</b>!!'''
-    
-    style = ParagraphStyle()
-    style['fontSize'] = 12
-    
-    p = Paragraph(text, style, None) # None for bullet type
+    p = Paragraph(text, styles['qmsStyle'], None) # None for bullet type
 
+    (A4Width, A4Height) = A4
     availableWidth = A4Width - 2 * cm  # Leaving margins of 1 cm on both sides
-    availableHeight = y - (lineheight + 0.2 * cm)  # (lineheight + 0.2*cm) subtracted to include title height
+    availableHeight = y
     (paraWidth, paraHeight) = p.wrap(availableWidth, availableHeight)  # find required space
     
     p.drawOn(pdf, x, y - paraHeight)
@@ -167,14 +169,13 @@ def generateParticipantPDF(user):
 
     userProfile = UserProfile.objects.get(user = user)
     
-    # Create the HttpResponse object with the appropriate PDF headers.
-
-    response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=PP#%s.pdf' % userProfile.shaastra_id
+    # Create a buffer to store the contents of the PDF.
+    # http://stackoverflow.com/questions/4378713/django-reportlab-pdf-generation-attached-to-an-email
+    buffer = StringIO()
 
     # Create the PDF object, using the response object as its "file."
 
-    pdf = canvas.Canvas(response, pagesize=A4)
+    pdf = canvas.Canvas(buffer, pagesize=A4)
 
     # Define the title of the document as printed in the document header.
 
@@ -198,18 +199,18 @@ def generateParticipantPDF(user):
 
     # Print Participant Details in PDF
 
-    printParticipantDetails(pdf, x, y, user, userProfile)
+    y = printParticipantDetails(pdf, x, y, user, userProfile)
     
     # Print Event Participation Details in PDF
     
     singularEventRegistrations = EventSingularRegistration.objects.filter(user = user)
     userTeams = user.joined_teams.all()
     
-    if singularEventRegistrations == [] and userTeams == []:
+    if (not singularEventRegistrations) and (not userTeams):
         # The user is not registered for any event.
         y -= cm * 0.5
         pdf.drawString(x, y, 'You are not registered for any events this Shaastra')
-        
+    
     else:
         pdf.showPage()
         pageNo += 1
@@ -228,6 +229,9 @@ def generateParticipantPDF(user):
     pdf.showPage()
     pdf.save()
 
+    response = buffer.getvalue()
+    buffer.close()
+
     return response
     
 def mailPDF(user, pdf):
@@ -235,10 +239,11 @@ def mailPDF(user, pdf):
     subject = 'Participation PDF'
     message = 'Dear participant,<br/>Please find attached the PDF that contains important information. Please go through it and address any querries to the QMS Team.<br/>Shaastra 2013 Team.<br/>'
     email = user.email
+    email = 'swopstesting@gmail.com' #TODO: Remove this line for finale
 
-    msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , email)
+    msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , [email,])
     msg.content_subtype = "html"
-    msg.attach(pdf['Content-Disposition'][22:], pdf.read(), 'application/pdf')
+    msg.attach('PP#%s.pdf' % user.get_profile().shaastra_id, pdf, 'application/pdf')
     msg.send()
     
 @login_required
@@ -248,15 +253,21 @@ def mailParticipantPDFs(request):
         return HttpResponseForbidden('The participant mailer can only be accessed by superusers. You don\'t have enough permissions to continue.')
     
     participants = []
-    userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id == '') #TODO Exclude non active users??
-    participantProfilesWithShaastraIds = userPfofilesWithShaastraIds.exclude(is_core == True).exclude(is_coord_of != '')
+    userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
+    participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(is_coord_of = None)
     for profile in participantProfilesWithShaastraIds:
-        participants.append(User.objects.get(user = profile.user))
+        try:
+            u = profile.user
+        except:
+            continue
+        participants.append(u)
         
     participantsMailed = []
-    assert False
-    participants = UserProfile.objects.filter(id = 1973)
     
+    participants = [User.objects.get(id = 1374)] #TODO: Remove this line for finale
+
     for participant in participants:
         pdf = generateParticipantPDF(participant)
         mailPDF(participant, pdf)
+    
+    return HttpResponse('Mails sent.')
