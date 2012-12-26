@@ -133,7 +133,7 @@ def team(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
     msg = "Enter Shaastra ID of Team leader"
-    rooms = AvailableRooms.objects.all().order_by('hostel')
+    rooms = AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel')
     hostels = HOSTEL_CHOICES
     if request.method == 'POST':
         form = ShaastraIDForm(request.POST)
