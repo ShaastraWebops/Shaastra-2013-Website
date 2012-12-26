@@ -18,6 +18,8 @@ try:
     from cStringIO import StringIO
 except:
     from StringIO import StringIO
+    
+import datetime
 
 def PDFSetFont(pdf, font_name, font_size):
     """
@@ -70,6 +72,25 @@ def initNewPDFPage(pdf, page_title, page_no, (pageWidth, pageHeight),):
 
     return y
     
+def paintParagraph(pdf, x, y, text):
+
+    styles = getSampleStyleSheet()
+    styles.add(ParagraphStyle(name = 'paraStyle', fontSize = 12))
+    
+    p = Paragraph(text, styles['paraStyle'], None) # None for bullet type
+
+    (A4Width, A4Height) = A4
+    availableWidth = A4Width - 2 * cm  # Leaving margins of 1 cm on both sides
+    availableHeight = y
+    (paraWidth, paraHeight) = p.wrap(availableWidth, availableHeight)  # find required space
+    
+    p.drawOn(pdf, x, y - paraHeight)
+    
+    y -= paraHeight + cm
+    
+    return y
+    
+    
 def printParticipantDetails(pdf, x, y, user, userProfile):
 
     lineheight = PDFSetFont(pdf, 'Times-Roman', 12)
@@ -109,6 +130,10 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
     pdf.drawString(x, y, 'Age: %d' % userProfile.age)
     
     y -= lineheight + (cm * 0.8)
+
+    accountInstruction = '<b>Please note that if you have not created an account on the Shaastra website, an account has been created for you. Both your username and password are the local part of your email address. E.g. if your email is \'example@domain.com\', both your username and password will be \'example\' (without the quotes). Please do update your profile on the Shaastra website to avoid any inconvenience later.</b>'
+    
+    y = paintParagraph(pdf, x, y, accountInstruction)
 
     return y
     
@@ -151,19 +176,7 @@ def printQMSInstructions(pdf, x, y):
     
     text = 'This is the QMS instructions. Please do not forget to load the qms instructions before sending this out to the recipients. This is the first paragraph. I hope you enjoyed reading this PDF. Please do not forget to read it till the very end.<br/><br/>This PDF is designed to let you know what exactly you have to do. It gives you details about you, which we hope you know better than us. It also contains some details that we hope that you now know. Please do keep this PDF for reference. It contains some very important identification numbers about you.<br/><br/>If you have any problems, do contact our QMS Team.<br/><br/><b>Shaastra 2013!</b>!!'''
     
-    styles = getSampleStyleSheet()
-    styles.add(ParagraphStyle(name = 'qmsStyle', fontSize = 12))
-    
-    p = Paragraph(text, styles['qmsStyle'], None) # None for bullet type
-
-    (A4Width, A4Height) = A4
-    availableWidth = A4Width - 2 * cm  # Leaving margins of 1 cm on both sides
-    availableHeight = y
-    (paraWidth, paraHeight) = p.wrap(availableWidth, availableHeight)  # find required space
-    
-    p.drawOn(pdf, x, y - paraHeight)
-    
-    
+    y = paintParagraph(pdf, x, y, text)
 
 def generateParticipantPDF(user):
 
@@ -270,4 +283,4 @@ def mailParticipantPDFs(request):
         pdf = generateParticipantPDF(participant)
         mailPDF(participant, pdf)
     
-    return HttpResponse('Mails sent.')
+    return HttpResponse('Mails sent. Timestamp: %s' % str(datetime.datetime.now))
