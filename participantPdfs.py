@@ -131,7 +131,7 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
     
     y -= lineheight + (cm * 0.8)
 
-    accountInstruction = '<b>Please note that if you have not created an account on the Shaastra website, an account has been created for you. Both your username and password are the local part of your email address. E.g. if your email is \'example@domain.com\', both your username and password will be \'example\' (without the quotes). Please do update your profile on the Shaastra website to avoid any inconvenience later.</b>'
+    accountInstruction = 'Attention: <b>If you have not created an account on the Shaastra website</b>, an account has been created for you. Both your username and password are the local part of your email address. E.g. if your email is \'example@domain.com\', both your username and password will be \'example\' (without the quotes). <b>Please do update your profile on the Shaastra website to avoid any inconvenience later.</b>'
     
     y = paintParagraph(pdf, x, y, accountInstruction)
 
@@ -277,7 +277,7 @@ def mailParticipantPDFs(request):
         
     participantsMailed = []
     
-    participants = [User.objects.get(id = 1374)] #TODO: Remove this line for finale
+    participants = [User.objects.get(id = 5787)] #TODO: Remove this line for finale
 
     for participant in participants:
         pdf = generateParticipantPDF(participant)
