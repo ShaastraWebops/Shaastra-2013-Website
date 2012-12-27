@@ -52,7 +52,7 @@
         {% endif %}
         <table id="msg">
             {% for member in team.members.all %}
-                    {% if giveDeleteMembersPermission %}
+                    {% if giveLeaderAccess %}
 <!--                            <script type="text/javascript">
                                 function submit_form_{{ member.id }}()
                                 {
@@ -98,7 +98,7 @@
     
     <br /><br /><br />
     
-    {% if team.leader == user %}
+    {% if giveLeaderAccess %}
         <div id="add_member_form">
             <p><h3>Add a member:</h3></a>
             <form name="add_member" action="{{ site_url }}user/teams/{{ team.id }}/add_member/" method="POST">
@@ -131,7 +131,7 @@
         <a href="javascript:submit_dropout_form()">Leave this team</a><br /><br />
     {% endif %}
 
-    {% if team.leader == user %}
+    {% if giveLeaderAccess %}
         <div id="change_leader_form">
         <h3>Change the team leader</h3>
             <form action="{{ site_url }}user/teams/{{ team.id }}/change_leader/" method="POST">
