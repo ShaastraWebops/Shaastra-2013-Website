@@ -485,6 +485,8 @@ def remove_member(request, team_id = None):
                 if user != team.leader and hospi_override == False:
                     return render_to_response('users/teams/you_arent_leader.html', locals(), context_instance = RequestContext(request))
                 new_leader = team.members.get(username = change_leader_form.cleaned_data['new_leader'])           
+                if new_leader == team.leader:
+                    return render_to_response('users/teams/you_are_leader.html', locals(), context_instance = RequestContext(request))
                 team.members.remove(new_leader)                                                # yes i know, it looks bad. but what the hell. i'm lazy.
                 return HttpResponseRedirect('%suser/teams/%s/' % (settings.SITE_URL, team.id))
         return render_to_response('users/teams/team_home.html', locals(), context_instance = RequestContext(request))
