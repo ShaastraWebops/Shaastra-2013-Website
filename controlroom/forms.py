@@ -97,3 +97,40 @@ class UserForm(ModelForm):
             'mobile_number',
             'want_accomodation',
             )
+            
+class CreateTeamForm(forms.ModelForm):
+    
+    def clean_event(self):
+        if 'event' in self.cleaned_data:
+            event = self.cleaned_data['event']
+            try:
+                Event.objects.get(pk = event.id)
+            except Event.DoesNotExist:
+                raise forms.ValidationError('Not a valid event')
+        return self.cleaned_data['event']
+        
+    def clean_leader_shaastra_ID(self):
+        if 'leader_shaastra_ID' in self.cleaned_data:
+            leader_shaastra_ID = self.cleaned_data['leader_shaastra_ID']
+            try:
+                UserProfile.objects.get(shaastra_id = leader_shaastra_ID)
+            except UserProfile.DoesNotExist:
+                raise forms.ValidationError('Not a vaild Shaastra ID')
+        return self.cleaned_data['leader_shaastra_ID']
+    
+    def clean(self):
+        data = self.cleaned_data
+        if 'name' in data and 'event' in data:
+            try:
+                Team.objects.filter(event__id = data['event'].id).get(name__iexact = data['name'])
+                raise forms.ValidationError('A team with the same name already exists for this event!')
+            except Team.DoesNotExist:
+                pass
+        return data
+        
+    leader_shaastra_ID = forms.CharField(max_length = 10, help_text = 'The Shaastra ID of the team leader')
+    
+    class Meta:
+        model = Team
+        fields = ('name', 'event', 'leader_shaastra_ID')
+        

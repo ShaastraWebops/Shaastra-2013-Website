@@ -17,4 +17,5 @@ urlpatterns = patterns(
     url(r'^checkin/(?P<shaastraid>[\w]+)/?$', TeamCheckIn),
     url(r'^checkout/$', CheckOut),
     url(r'^register/$', Register),
+    url(r'^createteam/$', CreateTeam),
     )

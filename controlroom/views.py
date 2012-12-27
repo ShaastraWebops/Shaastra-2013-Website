@@ -174,12 +174,12 @@ def team(request):
                             checkedin = IndividualCheckIn.objects.get(shaastra_ID=profile.shaastra_id)
                             checkedin_profiles.append(checkedin)
                         except:
-                            new_profiles.append(profile)    
+                            new_profiles.append(profile)
             return render_to_response('controlroom/team.html', locals(),
                                   context_instance=RequestContext(request))
         else:
             return render_to_response('controlroom/shaastraIDform.html', locals(),
-                              context_instance=RequestContext(request)) 
+                              context_instance=RequestContext(request))
     else:
         form = ShaastraIDForm()
         return render_to_response('controlroom/shaastraIDform.html', locals(),
@@ -263,3 +263,33 @@ def Register(request):
             msg = "Your Shaastra ID is " + shaastra_id
     return render_to_response('controlroom/register.html', locals(),
                               context_instance=RequestContext(request))
+                              
+@login_required
+def CreateTeam(request):
+    if request.user.get_profile().is_hospi is False:
+        return HttpResponseRedirect(settings.SITE_URL)
+    
+    form = CreateTeamForm()
+    
+    if request.method == 'POST':
+        form = CreateTeamForm(request.POST)
+        if form.is_valid():
+            leader = UserProfile.objects.get(shaastra_id = form.cleaned_data['leader_shaastra_ID']).user
+            try:
+                Team.objects.get(members__pk = leader.id, event = form.cleaned_data['event'])
+                return render_to_response('users/teams/already_part_of_a_team.html', locals(), context_instance = RequestContext(request))
+            except Team.DoesNotExist:
+                pass
+            team = form.save(commit = False)
+            team.leader = leader
+            '''
+            try:
+                team.leader.get_profile().registered.get(pk = team.event.id)
+            except Event.DoesNotExist:
+                team.leader.get_profile().registered.add(team.event)
+            '''
+            team.save()
+            team.members.add(leader)
+            return HttpResponseRedirect('%suser/teams/%s/' % (settings.SITE_URL, team.id))
+    return render_to_response('users/teams/create_team.html', locals(), context_instance = RequestContext(request))
+
