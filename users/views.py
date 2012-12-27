@@ -501,7 +501,7 @@ def dissolve_team(request, team_id = None):
             team.members.clear()
             team.delete()
             if hospi_override:
-                return HttpResponseRedirect('%scontrolroom/' % settings.SITE_URL)
+                return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
             return HttpResponseRedirect('%sevents/' % settings.SITE_URL)
     raise Http404
 

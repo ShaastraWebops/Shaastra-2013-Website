@@ -51,7 +51,6 @@
             <p>Click to remove a member (you can't remove yourself this way)</p>
         {% endif %}
         <table id="msg">
-            <tr><td>You ({{request.user.username}})</td></tr>
             {% for member in team.members.all %}
                 {% if member != user %}
                     {% if team.leader == user %}
@@ -65,11 +64,12 @@
                         <tr>
                             <td>
                                 <div id="member_username_div">
-                                    {{ member.username }}
+                                    {% if member == user %} You - {% endif %} {{ member.username }}
                                 </div>
                             </td>
 <!--                            </a>   -->
                             <td>
+                            {% if member != user %}
                                 <form name="remove_{{ member.id }}" action="{{ site_url }}user/teams/{{ team.id }}/remove_member/" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="new_leader" value="{{ member.username }}" />
@@ -81,6 +81,7 @@
                                         <span></span>
                                      </div>
                                 </form>
+                            {% endif %}
                             </td>
                         </tr>
                     {% else %}
