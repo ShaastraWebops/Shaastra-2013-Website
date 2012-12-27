@@ -27,7 +27,7 @@ a.btn{text-decoration: none!important;margin: 0!important;}
 <form action="{{site_url}}controlroom/editteam/" method="POST">
     {% csrf_token %}
     <label for="id_team_name">Team name:</label> <input type="text" name="team_name" id="id_team_name" />
-    <input type="submit" value="Edit team">
+    <input type="submit" class="btn btn-large btn-primary" value="Edit team">
 </form><br>
 </div>
 </body>
