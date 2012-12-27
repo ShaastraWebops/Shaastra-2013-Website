@@ -23,7 +23,8 @@ VENUE_CHOICES = (
     (u'BT', u'Biotech Deptartment'),
     )
 
-BLOCK_CHOICES = ((u'BT',   u'BT Department'),
+BLOCK_CHOICES = ((u'BSB',  u'Building Sciences Block'),
+                 (u'BT',   u'BT Department'),
                  (u'CH',   u'Chemistry Department'),
                  (u'CLT',  u'Central Lecture Theatre Area'),
                  (u'CRC',  u'Class Room Complex'),
@@ -35,6 +36,7 @@ BLOCK_CHOICES = ((u'BT',   u'BT Department'),
                  (u'ICSR', u'IC & SR'),
                  (u'KV',   u'KV Grounds'),
                  (u'Lib',  u'Central Library'),
+                 (u'MSB',  u'Mechanical Sciences Block'),
                  (u'OAT',  u'Open Air Theatre'),
                  (u'RP',   u'Research Park'),
                  (u'SAC',  u'Student\'s Activity Center'),
