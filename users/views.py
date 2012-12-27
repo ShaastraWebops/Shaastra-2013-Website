@@ -320,6 +320,10 @@ def team_home(request, team_id = None):
             team_size_message = 'small'
         else:
             team_size_message = 'correct'
+        if hospi_override == True or request.user == team.leader:
+            giveDeleteMembersPermission = True
+        else:
+            giveDeleteMembersPermission = False
         return render_to_response('users/teams/team_home.html', locals(), context_instance = RequestContext(request))
     raise Http404
 
