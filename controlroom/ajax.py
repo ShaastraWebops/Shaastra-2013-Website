@@ -100,3 +100,13 @@ def send_participants(request,form):
     print msg
     dajax.alert(msg)
     return dajax.json
+
+@dajaxice_register
+def GenerateBill(request,s_id=''):
+    dajax = Dajax()
+    checkedin = IndividualCheckIn.objects.get(shaastra_ID=s_id)
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = \
+        'attachment; filename=Accomodation Bill.pdf'
+    pdf = canvas.Canvas(response, pagesize=A4)
+    

@@ -216,7 +216,7 @@ def CheckOut(request):
                     return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request)) 
                 else:
-                    values = {'check_out_date': datetime.now}
+                    values = {'check_out_date': datetime.now,'check_out_control_room':checkedin.check_in_control_room}
                     individual_form = IndividualForm(instance=checkedin,initial=values)
                     return render_to_response('controlroom/individual.html', locals(),
                                           context_instance=RequestContext(request))
@@ -260,6 +260,7 @@ def Register(request):
                 college_roll=data['college_roll'],
                 shaastra_id= ("SHA" + str(x)),
                 )
+            userprofile.save()
             msg = "Your Shaastra ID is " + shaastra_id
     return render_to_response('controlroom/register.html', locals(),
                               context_instance=RequestContext(request))
