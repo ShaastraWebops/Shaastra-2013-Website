@@ -134,3 +134,5 @@ class CreateTeamForm(forms.ModelForm):
         model = Team
         fields = ('name', 'event', 'leader_shaastra_ID')
         
+class TeamNameForm(forms.Form):
+    team_name = forms.CharField()

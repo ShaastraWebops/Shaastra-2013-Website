@@ -18,4 +18,5 @@ urlpatterns = patterns(
     url(r'^checkout/$', CheckOut),
     url(r'^register/$', Register),
     url(r'^createteam/$', CreateTeam),
+    url(r'^editteam/$', EditTeam),
     )

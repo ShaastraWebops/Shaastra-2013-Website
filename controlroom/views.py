@@ -25,6 +25,7 @@ def home(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
     checkedin=IndividualCheckIn.objects.all()
+    teamNameForm = TeamNameForm()
     return render_to_response('controlroom/home.html', locals(),
                               context_instance=RequestContext(request))
 
@@ -293,3 +294,21 @@ def CreateTeam(request):
             return HttpResponseRedirect('%suser/teams/%s/' % (settings.SITE_URL, team.id))
     return render_to_response('users/teams/create_team.html', locals(), context_instance = RequestContext(request))
 
+@login_required
+def EditTeam(request):
+    if request.user.get_profile().is_hospi is False:
+        return HttpResponseRedirect(settings.SITE_URL)
+        
+    form = TeamNameForm()
+    
+    if request.method == 'POST':
+        form = TeamNameForm(request.POST)
+        if form.is_valid():
+            try:
+                team = Team.objects.get(name = form.cleaned_data['team_name'])
+            except:
+                raise Http404('Team not found.')
+            return HttpResponseRedirect('%suser/teams/%s/' % (settings.SITE_URL, team.id))
+    
+    return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
+        

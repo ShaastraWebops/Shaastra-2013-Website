@@ -64,6 +64,7 @@
                             <td>
                                 <div id="member_username_div">
                                     {% if member == user %} You - {% endif %} {{ member.username }}
+                                    {% if member == team.leader %} (leader) {% endif %}
                                 </div>
                             </td>
 <!--                            </a>   -->

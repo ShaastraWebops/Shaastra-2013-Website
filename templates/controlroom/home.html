@@ -21,8 +21,14 @@ a.btn{text-decoration: none!important;margin: 0!important;}
 <a href="{{site_url}}controlroom/checkout/" id="checkout" class="btn btn-large btn-inverse">Check Out</a><br>
 <br>
 <h4>REGISTER</h4>
-<a href="{{site_url}}controlroom/register/" id="register" class="btn btn-large btn-primary">Create Shaastra ID</a>
-<!--a href="{{site_url}}controlroom/createteam/" id="createteam" class="btn btn-large btn-primary">Create Team</a--><br>
+<a href="{{site_url}}controlroom/register/" id="register" class="btn btn-large btn-primary">Create Shaastra ID</a><br/>
+<h4>TEAM EDITING</h4>
+<a href="{{site_url}}controlroom/createteam/" id="createteam" class="btn btn-large btn-primary">Create Team</a>
+<form action="{{site_url}}controlroom/editteam/" method="POST">
+    {% csrf_token %}
+    <label for="id_team_name">Team name:</label> <input type="text" name="team_name" id="id_team_name" />
+    <input type="submit" value="Edit team">
+</form><br>
 </div>
 </body>
 </html>
