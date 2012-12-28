@@ -121,7 +121,7 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
     
     y = paintParagraph(pdf, x, y, accountInstruction)
     
-    qmsInstruction = '<font size=14 alignment="center"><b>QMS Instructions</b></font><br/><br/>1. Please carry a printout or an e-copy of this form.<br/><br/>2. Every participant must register for Shaastra at the <b>QMS Desk (KV Grounds) or the Hospitality Control Rooms (Mahanadi for boys, Sharavati for girls)</b> after reaching IIT Madras.<br/><br/>3. Upon paying a sum of INR 100, the participant would receive a <b>Shaastra Passport</b> (non transferable)<br/><br/>4. The Shaastra Passport will be your official entry to Shaastra allowing you to register at the <b>Event Venue</b> and participate for events.<br/><br/>5. For more information, please drop us a mail at qms@shaastra.org'
+    qmsInstruction = '<para alignment="center"><font size=14><b>QMS Instructions</b></font></para><para><br/><br/>1. Please carry a printout or an e-copy of this form.<br/><br/>2. Every participant must register for Shaastra at the <b>QMS Desk (KV Grounds) or the Hospitality Control Rooms (Mahanadi for boys, Sharavati for girls)</b> after reaching IIT Madras.<br/><br/>3. Upon paying a sum of INR 100, the participant would receive a <b>Shaastra Passport</b> (non transferable)<br/><br/>4. The Shaastra Passport will be your official entry to Shaastra allowing you to register at the <b>Event Venue</b> and participate for events.<br/><br/>5. For more information, please drop us a mail at qms@shaastra.org</para>'
     
     y = paintParagraph(pdf, x, y, qmsInstruction)
 
