@@ -35,4 +35,6 @@ class RegistrationForm(forms.Form):
                 raise forms.ValidationError(u'Passwords do not match')
         return self.cleaned_data['confirm_password']
 
-
+class FileForm(forms.Form):
+    event_id = forms.IntegerField()
+    files = forms.FileField(required = True)

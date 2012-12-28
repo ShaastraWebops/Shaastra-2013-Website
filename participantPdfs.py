@@ -221,6 +221,7 @@ def generateParticipantPDF(user):
     
     if (not singularEventRegistrations) and (not userTeams):
         # The user is not registered for any event.
+        return None
         y -= cm * 0.5
         pdf.drawString(x, y, 'You are not registered for any events this Shaastra')
     
@@ -281,6 +282,63 @@ def mailParticipantPDFs(request):
 
     for participant in participants:
         pdf = generateParticipantPDF(participant)
+        if pdf is None:
+            continue
         mailPDF(participant, pdf)
     
-    return HttpResponse('Mails sent. Timestamp: %s' % str(datetime.datetime.now))
+    return HttpResponse('Mails sent. Timestamp: %s' % str(datetime.datetime.now()))
+    
+def savePDF(pdf, sID):
+
+    destination = open('/home/shaastra/hospi/participantPDFs/'+sID+'.pdf', 'wb+')
+    for chunk in pdf.chunks():
+        destination.write(chunk)
+    destination.close()
+    print 'File '+sID+'.pdf saved.'
+
+@login_required
+def generateParticipantPDFs(request):
+
+    if not request.user.is_superuser:
+        return HttpResponseForbidden('The participant mailer can only be accessed by superusers. You don\'t have enough permissions to continue.')
+        
+    participants = []
+    userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
+    participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(is_coord_of = None)
+    for profile in participantProfilesWithShaastraIds:
+        try:
+            u = profile.user
+        except:
+            continue
+        participants.append(u)
+
+    participants = [User.objects.get(id = 5787)] #TODO: Remove this line for finale
+
+    for participant in participants:
+        pdf = generateParticipantPDF(participant)
+        if pdf is None:
+            continue
+        savePDF(pdf, participant.get_profile().shaastra_id)
+    
+    return HttpResponse('PDFs generated. Timestamp: %s' % str(datetime.datetime.now()))
+
+def generatePDFs():
+
+    participants = []
+    userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
+    participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(is_coord_of = None)
+    for profile in participantProfilesWithShaastraIds:
+        try:
+            u = profile.user
+        except:
+            continue
+        participants.append(u)
+
+    participants = [User.objects.get(id = 1351)] #TODO: Remove this line for finale
+
+    for participant in participants:
+        pdf = generateParticipantPDF(participant)
+        if pdf is None:
+            continue
+        savePDF(pdf, participant.get_profile().shaastra_id)
+

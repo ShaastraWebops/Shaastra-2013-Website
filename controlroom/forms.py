@@ -62,7 +62,8 @@ class AddMultipleRoomsForm(forms.Form):
     rooms = forms.FileField(required = True)
     
 class ShaastraIDForm(forms.Form):
-    shaastraID = forms.CharField(help_text = 'Enter Shaastra ID of participant')
+    shaastraID = forms.CharField(required = False,help_text = 'Enter Shaastra ID')
+    email = forms.CharField(required = False,help_text = 'Enter Email ID')
 
 class IndividualForm(ModelForm):
     room = chosenforms.ChosenModelChoiceField(queryset=AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel'))

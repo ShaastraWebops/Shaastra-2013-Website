@@ -12,6 +12,7 @@ from django.core.cache import cache
 from django.contrib.sitemaps import ping_google
 from operator import attrgetter
 from datetime import datetime
+from controlroom.generate_bill import *
 
 @dajaxice_register
 def save_individual_checkin(request,form):
@@ -100,3 +101,14 @@ def send_participants(request,form):
     print msg
     dajax.alert(msg)
     return dajax.json
+
+@dajaxice_register
+def GenerateBill(request,s_id=''):
+    dajax = Dajax()
+    try:
+        pdf = generateParticipantPDF(s_id)
+        return HttpResponse(pdf)
+    except:
+        return dajax.json
+    
+
