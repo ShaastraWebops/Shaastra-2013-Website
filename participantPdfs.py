@@ -12,7 +12,7 @@ from reportlab.lib.units import cm
 from reportlab.lib import colors
 from reportlab.platypus import Table, TableStyle
 from reportlab.pdfbase.pdfmetrics import getFont, getAscentDescent
-from reportlab.platypus import Paragraph
+from reportlab.platypus import Paragraph, Image
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 try:
     from cStringIO import StringIO
