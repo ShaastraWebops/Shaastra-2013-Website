@@ -30,48 +30,6 @@ def PDFSetFont(pdf, font_name, font_size):
     (ascent, descent) = getAscentDescent(font_name, font_size)
     return ascent - descent  # Returns line height
 
-
-def initNewPDFPage(pdf, page_title, page_no, (pageWidth, pageHeight),):
-    """
-    Paints the headers on every new page of the PDF document.
-    Also returns the coordinates (x, y) where the last painting operation happened.
-    """
-
-    y = pageHeight
-
-    # Leave a margin of one cm at the top
-
-    y = pageHeight - cm
-
-    # Set font for 'SHAASTRA 2013'
-
-    lineheight = PDFSetFont(pdf, 'Times-Roman', 18)
-
-    # SHAASTRA 2013 in centre
-
-    pdf.drawCentredString(pageWidth / 2, y, 'SHAASTRA 2013')
-    y -= lineheight + cm
-
-    # Set font for Page Title
-
-    lineheight = PDFSetFont(pdf, 'Times-Roman', 16)
-
-    # Page Title in next line, centre aligned
-
-    pdf.drawCentredString(pageWidth / 2, y, page_title)
-
-    # Set font for Document Title
-
-    PDFSetFont(pdf, 'Times-Roman', 9)
-
-    # Page number in same line, right aligned
-
-    pdf.drawRightString(pageWidth - cm, y, '#%d' % page_no)
-
-    y -= lineheight + cm
-
-    return y
-    
 def paintParagraph(pdf, x, y, text):
 
     styles = getSampleStyleSheet()
@@ -99,25 +57,52 @@ def paintImage(pdf, x, y, im):
     
     im.drawOn(pdf, x, y - imHeight)
     
+    x -= imWidth + cm
     y -= imHeight + cm
     
-    return y
+    return (x, y)
 
+def initNewPDFPage(pdf, (pageWidth, pageHeight), shaastra_id, username):
+    """
+    Paints the headers on every new page of the PDF document.
+    Also returns the coordinates (x, y) where the last painting operation happened.
+    """
+
+    y = pageHeight
+
+    # Leave a margin of one cm at the top
+
+    y = pageHeight - inch
+
+    im = Image("~/hospi/participantPDFs/shaastralogo.jpg", width=3*inch, height=2*inch)
+    im.hAlign = 'LEFT'
+    
+    (x, t) = paintImage(pdf, x, y, im)
+
+    # Set font for Header
+    lineheight = PDFSetFont(pdf, 'Times-Bold', 12)
+
+    # Page number in same line, right aligned
+
+    pdf.drawRightString(pageWidth - cm, y, '%s' % shaastra_id)
+
+    y -= lineheight + cm
+    
+    lineheight = PDFSetFont(pdf, 'Times-Bold', 10)
+    
+    pdf.drawRightString(pageWidth - cm, y, '%s' % username)
+
+    return t-inch
     
 def printParticipantDetails(pdf, x, y, user, userProfile):
 
-    im = Image("~/hospi/participantPDFs/shaastralogo.jpg", width=2*inch, height=2*inch)
-    im.hAlign = 'LEFT'
-    
-    y = paintImage(pdf, x, y, im)
-
-    accountDetails =  'Username:     <b>' + user.username + '</b> (UID: ' + str(user.id) + ')<br/><br/>'
-    accountDetails += 'Shaastra ID:  <b>%s</b><br/><br/>' % userProfile.shaastra_id
-    accountDetails += 'Name:         <b>%s %s</b><br/><br/>' % (user.first_name, user.last_name)
+    #accountDetails =  'Username:     <b>' + user.username + '</b> (UID: ' + str(user.id) + ')<br/><br/>'
+    #accountDetails += 'Shaastra ID:  <b>%s</b><br/><br/>' % userProfile.shaastra_id
+    accountDetails =  'Name:         <b>%s %s</b><br/><br/>' % (user.first_name, user.last_name)
     accountDetails += 'Email:        <b>%s</b><br/><br/>' % user.email
     accountDetails += 'Mobile No:    <b>%s</b><br/><br/>' % userProfile.mobile_number
     accountDetails += 'College:      <b>%s</b><br/><br/>' % userProfile.college.name
-    accountDetails += 'College Roll: <b>%s</b><br/><br/>' % userProfile.college_roll
+    #accountDetails += 'College Roll: <b>%s</b><br/><br/>' % userProfile.college_roll
     accountDetails += 'City:         <b>%s</b><br/><br/>' % userProfile.college.city
     accountDetails += 'State:        <b>%s</b><br/><br/>' % userProfile.college.state
     accountDetails += 'Branch:       <b>%s</b><br/><br/>' % userProfile.branch
@@ -135,7 +120,7 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
     
     y = paintParagraph(pdf, x, y, accountInstruction)
     
-    qmsInstruction = '<center><h3><b>QMS Instructions</b></h3></center><br/><br/>1. Please carry a printout or an e-copy of this form.<br/><br/>2. Every participant must register for Shaastra at the <b>QMS Desk (KV Grounds) or the Hospitality Control Rooms (Mahanadi for boys, Sharavati for girls)</b> after reaching IIT Madras.<br/><br/>3. Upon paying a sum of INR 100, the participant would receive a <b>Shaastra Passport</b> (non transferable)<br/><br/>4. The Shaastra Passport will be your official entry to Shaastra allowing you to register at the <b>Event Venue</b> and participate for events.<br/><br/>5. For more information, please drop us a mail at qms@shaastra.org'
+    qmsInstruction = '<font size=14 align="center"><b>QMS Instructions</b></font><br/><br/>1. Please carry a printout or an e-copy of this form.<br/><br/>2. Every participant must register for Shaastra at the <b>QMS Desk (KV Grounds) or the Hospitality Control Rooms (Mahanadi for boys, Sharavati for girls)</b> after reaching IIT Madras.<br/><br/>3. Upon paying a sum of INR 100, the participant would receive a <b>Shaastra Passport</b> (non transferable)<br/><br/>4. The Shaastra Passport will be your official entry to Shaastra allowing you to register at the <b>Event Venue</b> and participate for events.<br/><br/>5. For more information, please drop us a mail at qms@shaastra.org'
     
     y = paintParagraph(pdf, x, y, qmsInstruction)
 
@@ -208,7 +193,7 @@ def generateParticipantPDF(user):
 
     # Paint the headers and get the coordinates
 
-    y = initNewPDFPage(pdf, page_title, pageNo, A4)
+    y = initNewPDFPage(pdf, A4, userProfile.shaastra_id, userProfile.user.username)
 
     # Setting x to be a cm from the left edge
 
@@ -233,7 +218,7 @@ def generateParticipantPDF(user):
         pdf.showPage()
         pageNo += 1
         page_title = 'PARTICIPATION DETAILS'
-        y = initNewPDFPage(pdf, page_title, pageNo, A4)
+        y = initNewPDFPage((pdf, A4, userProfile.shaastra_id, userProfile.user.username)
         
         printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, userTeams)
     
