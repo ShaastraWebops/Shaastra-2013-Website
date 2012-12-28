@@ -111,9 +111,13 @@ def individual(request):
         form = ShaastraIDForm(request.POST)
         if form.is_valid():
             inputs = form.cleaned_data
-            participant = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+            if inputs['shaastraID']:
+                participant = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+            else:
+                usr = User.objects.get(email = inputs['email'])
+                participant = UserProfile.objects.get(user = usr)
             try:
-                checkedin = IndividualCheckIn.objects.get(shaastra_ID=inputs['shaastraID'])
+                checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
                 msg = "This participant is already checked-in!"
                 return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request)) 
@@ -141,9 +145,13 @@ def team(request):
         if form.is_valid():
             inputs = form.cleaned_data
             try:
-                leader = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+                try:
+                    leader = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+                except:
+                    usr = User.objects.get(email = inputs['email'])
+                    leader = UserProfile.objects.get(user = usr)
             except:
-                msg = "This shaastra ID does not exist"
+                msg = "This participant does not exist"
                 return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request)) 
             check = 0
@@ -209,15 +217,22 @@ def CheckOut(request):
         form = ShaastraIDForm(request.POST)
         if form.is_valid():
             inputs = form.cleaned_data
-            participant = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+            if inputs['shaastraID']:
+                participant = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+            else:
+                usr = User.objects.get(email = inputs['email'])
+                participant = UserProfile.objects.get(user = usr)
+            s_id = participant.shaastra_id
+            checkedin = IndividualCheckIn.objects.get(shaastra_ID=s_id)
+            print s_id
             try:
-                checkedin = IndividualCheckIn.objects.get(shaastra_ID=inputs['shaastraID'])
+                checkedin = IndividualCheckIn.objects.get(shaastra_ID=s_id)
                 if checkedin.check_out_date:
                     msg = "This participant is already checked-out!"
                     return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request)) 
                 else:
-                    values = {'check_out_date': datetime.now}
+                    values = {'check_out_date': datetime.now,'check_out_control_room':checkedin.check_in_control_room}
                     individual_form = IndividualForm(instance=checkedin,initial=values)
                     return render_to_response('controlroom/individual.html', locals(),
                                           context_instance=RequestContext(request))
@@ -261,6 +276,7 @@ def Register(request):
                 college_roll=data['college_roll'],
                 shaastra_id= ("SHA" + str(x)),
                 )
+            userprofile.save()
             msg = "Your Shaastra ID is " + shaastra_id
     return render_to_response('controlroom/register.html', locals(),
                               context_instance=RequestContext(request))

@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>Shaastra 2013 Control Room</title>
+</head>
+</html>
+    <h4><p>{{msg}}</p></h4>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                {{ form.as_table }}
+        <input type="submit" value="Upload"/></td>
+        </form>
+</body>
+</html>
