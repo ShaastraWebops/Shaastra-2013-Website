@@ -116,7 +116,7 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
     pdf.drawString(x, y, 'Age: %d' % userProfile.age)
     y -= lineheight + (LINESPACE)
     
-    accountDetails = 'Username: <b>' + user.username + '</b> (UID: ' + user.id + ')<br/>'
+    accountDetails = 'Username: <b>' + user.username + '</b> (UID: ' + str(user.id) + ')<br/>'
     accountDetails += 'Shaastra ID: <b>%s</b><br/>' % userProfile.shaastra_id
     accountDetails += 'Name: %s <b>%s</b><br/>' % (user.first_name, user.last_name)
     accountDetails += 'Email: <b>%s</b><br/>' % user.email
