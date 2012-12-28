@@ -81,19 +81,21 @@ def initNewPDFPage(pdf, (pageWidth, pageHeight), shaastra_id, username):
     (x, t) = paintImage(pdf, x, y, im)
 
     # Set font for Header
-    lineheight = PDFSetFont(pdf, 'Times-Bold', 16)
+    lineheight = PDFSetFont(pdf, 'Times-Bold', 20)
 
     # Page number in same line, right aligned
+    
+    y = pageHeight-2*cm
 
-    pdf.drawRightString(pageWidth - cm, y, '%s' % shaastra_id)
+    pdf.drawRightString(pageWidth - cm*1.5, y, '%s' % shaastra_id)
 
     y -= lineheight + cm
     
-    lineheight = PDFSetFont(pdf, 'Times-Bold', 14)
+    lineheight = PDFSetFont(pdf, 'Times-Roman', 18)
     
-    pdf.drawRightString(pageWidth - cm, y, '%s' % username)
+    pdf.drawRightString(pageWidth - cm*1.5, y, '%s' % username)
 
-    return t-cm
+    return t
     
 def printParticipantDetails(pdf, x, y, user, userProfile):
 
@@ -121,7 +123,11 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
     
     y = paintParagraph(pdf, x, y, accountInstruction)
     
-    qmsInstruction = '<para alignment="center"><font size=14><b>QMS Instructions</b></font></para><para alignment="left"><br/><br/>1. Please carry a printout or an e-copy of this form.<br/><br/>2. Every participant must register for Shaastra at the <b>QMS Desk (KV Grounds) or the Hospitality Control Rooms (Mahanadi for boys, Sharavati for girls)</b> after reaching IIT Madras.<br/><br/>3. Upon paying a sum of INR 100, the participant would receive a <b>Shaastra Passport</b> (non transferable)<br/><br/>4. The Shaastra Passport will be your official entry to Shaastra allowing you to register at the <b>Event Venue</b> and participate for events.<br/><br/>5. For more information, please drop us a mail at qms@shaastra.org</para>'
+    qmsInstruction = '<para alignment="center"><font size=14><b>QMS Instructions</b></font>'
+    
+    y = paintParagraph(pdf, x, y, qmsInstruction)
+    
+    qmsInstruction = '</para><para alignment="left"><br/><br/>1. Please carry a printout or an e-copy of this form.<br/><br/>2. Every participant must register for Shaastra at the <b>QMS Desk (KV Grounds) or the Hospitality Control Rooms (Mahanadi for boys, Sharavati for girls)</b> after reaching IIT Madras.<br/><br/>3. Upon paying a sum of INR 100, the participant would receive a <b>Shaastra Passport</b> (non transferable)<br/><br/>4. The Shaastra Passport will be your official entry to Shaastra allowing you to register at the <b>Event Venue</b> and participate for events.<br/><br/>5. For more information, please drop us a mail at qms@shaastra.org</para>'
     
     y = paintParagraph(pdf, x, y, qmsInstruction)
 
