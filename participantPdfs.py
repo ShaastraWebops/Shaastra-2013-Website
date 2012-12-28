@@ -95,41 +95,43 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
 
     lineheight = PDFSetFont(pdf, 'Times-Roman', 12)
     
-    pdf.drawString(x, y, 'Username: %s (UID: %d)' % (user.username, user.id))
+    LINESPACE = 0.5 * cm
     
-    y -= lineheight + (cm * 0.8)
+    pdf.drawString(x, y, 'Username: <b>%s</b> (UID: %d)' % (user.username, user.id))
+    
+    y -= lineheight + (LINESPACE)
     
     pdf.drawString(x, y, 'Shaastra ID: %s' % userProfile.shaastra_id)
     
-    y -= lineheight + (cm * 0.8)
+    y -= lineheight + (LINESPACE)
     
     pdf.drawString(x, y, 'Name: %s %s' % (user.first_name, user.last_name))
     
-    y -= lineheight + (cm * 0.8)
+    y -= lineheight + (LINESPACE)
     
     pdf.drawString(x, y, 'Email: %s' % user.email)
     
-    y -= lineheight + (cm * 0.8)
+    y -= lineheight + (LINESPACE)
     
     pdf.drawString(x, y, 'Mobile No: %s' % userProfile.mobile_number)
     
-    y -= lineheight + (cm * 0.8)
+    y -= lineheight + (LINESPACE)
     
     pdf.drawString(x, y, 'College: %s' % userProfile.college.name)
     
-    y -= lineheight + (cm * 0.8)
+    y -= lineheight + (LINESPACE)
     
     pdf.drawString(x, y, 'Branch: %s' % userProfile.branch)
     
-    y -= lineheight + (cm * 0.8)
+    y -= lineheight + (LINESPACE)
     
     pdf.drawString(x, y, 'Gender: %s' % 'Male' if userProfile.gender == 'M' else 'Female')
     
-    y -= lineheight + (cm * 0.8)
+    y -= lineheight + (LINESPACE)
     
     pdf.drawString(x, y, 'Age: %d' % userProfile.age)
     
-    y -= lineheight + (cm * 0.8)
+    y -= lineheight + (LINESPACE)
 
     accountInstruction = 'Attention: <b>If you have not created an account on the Shaastra website</b>, an account has been created for you. Both your username and password are the local part of your email address. E.g. if your email is \'example@domain.com\', both your username and password will be \'example\' (without the quotes). <b>Please do update your profile on the Shaastra website to avoid any inconvenience later.</b>'
     
