@@ -73,6 +73,7 @@ def initNewPDFPage(pdf, (pageWidth, pageHeight), shaastra_id, username):
     # Leave a margin of one cm at the top
 
     y = pageHeight - inch
+    x = inch
 
     im = Image("/home/shaastra/hospi/participantPDFs/shaastralogo.jpg", width=2*inch, height=2*inch)
     im.hAlign = 'LEFT'
