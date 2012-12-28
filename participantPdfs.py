@@ -155,18 +155,24 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
     
 def printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, userTeams):
 
+    lineheight = PDFSetFont(pdf, 'Times-Bold', 16)
+
+    pdf.drawString(x, y, 'PARTICIPATION DETAILS')
+
+    y -= lineheight + cm
+
     # Construct the table data
     
     sNo = 1
     
-    tableData = [ ['Serial No', 'Event Name', 'Team Name', 'Team ID'] ]
+    tableData = [ ['Serial No', 'Event Name', 'Team Name', 'Team ID', 'Team Leader'] ]
     
     for eventRegistration in singularEventRegistrations:
         tableData.append([sNo, eventRegistration.event.title, '', ''])
         sNo += 1
         
     for team in userTeams:
-        tableData.append([sNo, team.event.title, team.name, team.id])
+        tableData.append([sNo, team.event.title, team.name, team.id, team.leader.get_profile().shaastra_id])
         sNo += 1
         
     t = Table(tableData, repeatRows=1)
@@ -188,12 +194,6 @@ def printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, 
     
     t.drawOn(pdf, x, y - tableHeight)
     
-def printQMSInstructions(pdf, x, y):
-    
-    text = 'This is the QMS instructions. Please do not forget to load the qms instructions before sending this out to the recipients. This is the first paragraph. I hope you enjoyed reading this PDF. Please do not forget to read it till the very end.<br/><br/>This PDF is designed to let you know what exactly you have to do. It gives you details about you, which we hope you know better than us. It also contains some details that we hope that you now know. Please do keep this PDF for reference. It contains some very important identification numbers about you.<br/><br/>If you have any problems, do contact our QMS Team.<br/><br/><b>Shaastra 2013!</b>!!'''
-    
-    y = paintParagraph(pdf, x, y, text)
-
 def generateParticipantPDF(user):
 
     userProfile = UserProfile.objects.get(user = user)
@@ -213,10 +213,6 @@ def generateParticipantPDF(user):
     # Get the width and height of the page.
 
     (A4Width, A4Height) = A4
-
-    # Page number
-
-    pageNo = 1
 
     # Paint the headers and get the coordinates
 
@@ -244,8 +240,6 @@ def generateParticipantPDF(user):
     
     else:
         pdf.showPage()
-        pageNo += 1
-        page_title = 'PARTICIPATION DETAILS'
         y = initNewPDFPage(pdf, A4, userProfile.shaastra_id, userProfile.user.username)
         
         printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, userTeams)
