@@ -106,7 +106,7 @@ def paintImage(pdf, x, y, im):
     
 def printParticipantDetails(pdf, x, y, user, userProfile):
 
-    im = Image("~/hospi/participantPDFs/shaastralogo.jpg", width=2*inch, height=2*inch)
+    im = Image("/home/shaastra/hospi/participantPDFs/shaastralogo.jpg", width=2*inch, height=2*inch)
     im.hAlign = 'LEFT'
     
     y = paintImage(pdf, x, y, im)
