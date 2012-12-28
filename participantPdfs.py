@@ -157,7 +157,9 @@ def printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, 
 
     lineheight = PDFSetFont(pdf, 'Times-Bold', 16)
 
-    pdf.drawCentredString(x, y, 'PARTICIPATION DETAILS')
+    (A4Width, A4Height) = A4
+
+    pdf.drawCentredString(A4Width/2, y, 'PARTICIPATION DETAILS')
 
     y -= lineheight + cm
 
