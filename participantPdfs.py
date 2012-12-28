@@ -318,7 +318,7 @@ def generatePDFs():
     participants = []
     numPDFsGenerated = 0
     userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
-    participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).exclude(user__is_superuser = False)
+    participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(user__is_superuser = False)
     for profile in participantProfilesWithShaastraIds:
         try:
             u = profile.user
