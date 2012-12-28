@@ -101,16 +101,25 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
 
     #accountDetails =  'Username:     <b>' + user.username + '</b> (UID: ' + str(user.id) + ')<br/><br/>'
     #accountDetails += 'Shaastra ID:  <b>%s</b><br/><br/>' % userProfile.shaastra_id
-    accountDetails =  'Name:         <b>%s %s</b><br/><br/>' % (user.first_name, user.last_name)
-    accountDetails += 'Email:        <b>%s</b><br/><br/>' % user.email
-    accountDetails += 'Mobile No:    <b>%s</b><br/><br/>' % userProfile.mobile_number
-    accountDetails += 'College:      <b>%s</b><br/><br/>' % userProfile.college.name
+    accountDetails = ''
+    if user.first_name and user.last_name:
+        accountDetails +=  'Name:         <b>%s %s</b><br/><br/>' % (user.first_name, user.last_name)
+    else:
+        accountDetails +=  'Name:         <br/><br/>'
+    accountDetails += 'Email:        <b>%s</b><br/><br/>' % user.email if user.email else ''
+    accountDetails += 'Mobile No:    <b>%s</b><br/><br/>' % userProfile.mobile_number if userProfile.mobile_number else ''
+    accountDetails += 'College:      <b>%s</b><br/><br/>' % userProfile.college.name if userProfile.college.name else ''
     #accountDetails += 'College Roll: <b>%s</b><br/><br/>' % userProfile.college_roll
-    accountDetails += 'City:         <b>%s</b><br/><br/>' % userProfile.college.city
-    accountDetails += 'State:        <b>%s</b><br/><br/>' % userProfile.college.state
-    accountDetails += 'Branch:       <b>%s</b><br/><br/>' % userProfile.branch
-    accountDetails += 'Gender:       <b>%s</b><br/><br/>' % 'Male' if userProfile.gender == 'M' else 'Female'
-    accountDetails += 'Age:          <b>%d</b><br/><br/>' % userProfile.age
+    accountDetails += 'City:         <b>%s</b><br/><br/>' % userProfile.college.city if userProfile.college.city else ''
+    accountDetails += 'State:        <b>%s</b><br/><br/>' % userProfile.college.state if userProfile.college.state else ''
+    accountDetails += 'Branch:       <b>%s</b><br/><br/>' % userProfile.branch if userProfile.branch else ''
+    if userProfile.gender == 'M':
+        accountDetails += 'Gender:       <b>%s</b><br/><br/>' % 'Male'
+    elif userProfile.gender == 'F':
+        accountDetails += 'Gender:       <b>%s</b><br/><br/>' % 'Female'
+    else:
+        accountDetails += 'Gender:       <b>%s</b><br/><br/>' % ''
+    accountDetails += 'Age:          <b>%s</b><br/><br/>' % str(userProfile.age) if userProfile.age else ''
 
     if userProfile.want_accomodation:
         accountDetails += '<br/><b>Accomodation requested</b><br/><br/>'
