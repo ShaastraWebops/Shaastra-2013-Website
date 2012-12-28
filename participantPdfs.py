@@ -210,6 +210,7 @@ def generateParticipantPDF(user):
     
     if (not singularEventRegistrations) and (not userTeams):
         # The user is not registered for any event.
+        buffer.close()
         return None
         y -= cm * 0.5
         pdf.drawString(x, y, 'You are not registered for any events this Shaastra')
@@ -218,7 +219,7 @@ def generateParticipantPDF(user):
         pdf.showPage()
         pageNo += 1
         page_title = 'PARTICIPATION DETAILS'
-        y = initNewPDFPage((pdf, A4, userProfile.shaastra_id, userProfile.user.username)
+        y = initNewPDFPage(pdf, A4, userProfile.shaastra_id, userProfile.user.username)
         
         printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, userTeams)
     
