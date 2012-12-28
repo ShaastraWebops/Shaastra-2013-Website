@@ -87,10 +87,11 @@ def landing(request):
     return render_to_response('landing.html',locals(),context_instance = RequestContext(request))
 
 def create(request):
-    form = FileForm()
+    form = FileForm()    
     if request.method == 'POST':
         form = FileForm(request.POST, request.FILES)   
         if form.is_valid():
+            evt = Event.objects.get(id = form.cleaned_data['event_id'])
             line_number = 0
             for line in form.cleaned_data['files']:
                 line = line.replace('\n', '').replace('\r', '')
@@ -99,6 +100,12 @@ def create(request):
                 line_number += 1
                 try:
                     new = User.objects.get(email = line)
+                    if not evt.team_event:
+                        try:
+                            event = EventSingularRegistration.objects.get(user = new, event = evt)
+                        except:
+                            event = EventSingularRegistration(user = new, event = evt)
+                            event.save()
                 except:
                     new = User(
                                 username = line.split('@')[0].lower(),
@@ -110,6 +117,9 @@ def create(request):
                     new_profile = UserProfile(user = new,
                                    shaastra_id = ("SHA" + str(x)))
                     new_profile.save()
+                    if not evt.team_event:
+                        event = EventSingularRegistration(user = new, event = evt)
+                        event.save()
                     msg = "Account created"
     return render_to_response('create_accounts.html', locals(),
                               context_instance=RequestContext(request))

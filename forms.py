@@ -36,4 +36,5 @@ class RegistrationForm(forms.Form):
         return self.cleaned_data['confirm_password']
 
 class FileForm(forms.Form):
+    event_id = forms.IntegerField()
     files = forms.FileField(required = True)

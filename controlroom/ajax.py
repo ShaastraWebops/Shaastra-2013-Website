@@ -12,6 +12,7 @@ from django.core.cache import cache
 from django.contrib.sitemaps import ping_google
 from operator import attrgetter
 from datetime import datetime
+from controlroom.generate_bill import *
 
 @dajaxice_register
 def save_individual_checkin(request,form):
@@ -104,9 +105,10 @@ def send_participants(request,form):
 @dajaxice_register
 def GenerateBill(request,s_id=''):
     dajax = Dajax()
-    checkedin = IndividualCheckIn.objects.get(shaastra_ID=s_id)
-    response = HttpResponse(mimetype='application/pdf')
-    response['Content-Disposition'] = \
-        'attachment; filename=Accomodation Bill.pdf'
-    pdf = canvas.Canvas(response, pagesize=A4)
+    try:
+        pdf = generateParticipantPDF(s_id)
+        return HttpResponse(pdf)
+    except:
+        return dajax.json
     
+
