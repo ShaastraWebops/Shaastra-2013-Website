@@ -89,48 +89,55 @@ def paintParagraph(pdf, x, y, text):
     y -= paraHeight + cm
     
     return y
+
+def paintImage(pdf, x, y, im):
+
+    (A4Width, A4Height) = A4
+    availableWidth = A4Width - 2 * cm  # Leaving margins of 1 cm on both sides
+    availableHeight = y
+    (imWidth, imHeight) = im.wrap(availableWidth, availableHeight)  # find required space
     
+    im.drawOn(pdf, x, y - imHeight)
+    
+    y -= imHeight + cm
+    
+    return y
+
     
 def printParticipantDetails(pdf, x, y, user, userProfile):
 
-    lineheight = PDFSetFont(pdf, 'Times-Roman', 12)
+    im = Image("~/hospi/participantPDFs/shaastralogo.jpg", width=2*inch, height=2*inch)
+    im.hAlign = 'LEFT'
     
-    LINESPACE = 0.5 * cm
-    
-    pdf.drawString(x, y, 'Username: <b>%s</b> (UID: %d)' % (user.username, user.id))
-    y -= lineheight + (LINESPACE)
-    pdf.drawString(x, y, 'Shaastra ID: %s' % userProfile.shaastra_id)
-    y -= lineheight + (LINESPACE)
-    pdf.drawString(x, y, 'Name: %s %s' % (user.first_name, user.last_name))
-    y -= lineheight + (LINESPACE)
-    pdf.drawString(x, y, 'Email: %s' % user.email)
-    y -= lineheight + (LINESPACE)
-    pdf.drawString(x, y, 'Mobile No: %s' % userProfile.mobile_number)
-    y -= lineheight + (LINESPACE)
-    pdf.drawString(x, y, 'College: %s' % userProfile.college.name)
-    y -= lineheight + (LINESPACE)
-    pdf.drawString(x, y, 'Branch: %s' % userProfile.branch)
-    y -= lineheight + (LINESPACE)
-    pdf.drawString(x, y, 'Gender: %s' % 'Male' if userProfile.gender == 'M' else 'Female')
-    y -= lineheight + (LINESPACE)
-    pdf.drawString(x, y, 'Age: %d' % userProfile.age)
-    y -= lineheight + (LINESPACE)
-    
-    accountDetails = 'Username: <b>' + user.username + '</b> (UID: ' + str(user.id) + ')<br/>'
-    accountDetails += 'Shaastra ID: <b>%s</b><br/>' % userProfile.shaastra_id
-    accountDetails += 'Name: %s <b>%s</b><br/>' % (user.first_name, user.last_name)
-    accountDetails += 'Email: <b>%s</b><br/>' % user.email
-    accountDetails += 'Mobile No: <b>%s</b><br/>' % userProfile.mobile_number
-    accountDetails += 'College: <b>%s</b><br/>' % userProfile.college.name
-    accountDetails += 'Branch: <b>%s</b><br/>' % userProfile.branch
-    accountDetails += 'Gender: <b>%s</b><br/>' % 'Male' if userProfile.gender == 'M' else 'Female'
-    accountDetails += 'Age: <b>%d</b><br/>' % userProfile.age
+    y = paintImage(pdf, x, y, im)
+
+    accountDetails =  'Username:     <b>' + user.username + '</b> (UID: ' + str(user.id) + ')<br/><br/>'
+    accountDetails += 'Shaastra ID:  <b>%s</b><br/><br/>' % userProfile.shaastra_id
+    accountDetails += 'Name:         <b>%s %s</b><br/><br/>' % (user.first_name, user.last_name)
+    accountDetails += 'Email:        <b>%s</b><br/><br/>' % user.email
+    accountDetails += 'Mobile No:    <b>%s</b><br/><br/>' % userProfile.mobile_number
+    accountDetails += 'College:      <b>%s</b><br/><br/>' % userProfile.college.name
+    accountDetails += 'College Roll: <b>%s</b><br/><br/>' % userProfile.college_roll
+    accountDetails += 'City:         <b>%s</b><br/><br/>' % userProfile.college.city
+    accountDetails += 'State:        <b>%s</b><br/><br/>' % userProfile.college.state
+    accountDetails += 'Branch:       <b>%s</b><br/><br/>' % userProfile.branch
+    accountDetails += 'Gender:       <b>%s</b><br/><br/>' % 'Male' if userProfile.gender == 'M' else 'Female'
+    accountDetails += 'Age:          <b>%d</b><br/><br/>' % userProfile.age
+
+    if userProfile.want_accomodation:
+        accountDetails += '<br/><b>Accomodation requested</b><br/><br/>'
+    else:
+        accountDetails += '<br/><b>Accomodation not requested</b><br/><br/>'
     
     y = paintParagraph(pdf, x, y, accountDetails)
 
     accountInstruction = 'Attention: <b>If you have not created an account on the Shaastra website</b>, an account has been created for you. Both your username and password are the local part of your email address. E.g. if your email is \'example@domain.com\', both your username and password will be \'example\' (without the quotes). <b>Please do update your profile on the Shaastra website to avoid any inconvenience later.</b>'
     
     y = paintParagraph(pdf, x, y, accountInstruction)
+    
+    qmsInstruction = '<center><h3><b>QMS Instructions</b></h3></center><br/><br/>1. Please carry a printout or an e-copy of this form.<br/><br/>2. Every participant must register for Shaastra at the <b>QMS Desk (KV Grounds) or the Hospitality Control Rooms (Mahanadi for boys, Sharavati for girls)</b> after reaching IIT Madras.<br/><br/>3. Upon paying a sum of INR 100, the participant would receive a <b>Shaastra Passport</b> (non transferable)<br/><br/>4. The Shaastra Passport will be your official entry to Shaastra allowing you to register at the <b>Event Venue</b> and participate for events.<br/><br/>5. For more information, please drop us a mail at qms@shaastra.org'
+    
+    y = paintParagraph(pdf, x, y, qmsInstruction)
 
     return y
     
@@ -229,13 +236,6 @@ def generateParticipantPDF(user):
         y = initNewPDFPage(pdf, page_title, pageNo, A4)
         
         printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, userTeams)
-    
-    pdf.showPage()
-    pageNo += 1
-    page_title = 'QMS INSTRUCTIONS'
-    y = initNewPDFPage(pdf, page_title, pageNo, A4)
-    
-    printQMSInstructions(pdf, x, y)
     
     pdf.showPage()
     pdf.save()
