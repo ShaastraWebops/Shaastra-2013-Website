@@ -287,13 +287,14 @@ def ajax_login_link(request):
                          
 ### Views for teams:
 
-def get_authentic_team(request = None, team_id = None):
+def get_authentic_team(request = None, team_id = None, hospi_override = False):
     if team_id is None or request is None:
         return None
     try:
         team = Team.objects.get(pk = int(team_id))
         try:
-            team.members.get(pk = request.user.id)
+            if not hospi_override:
+                team.members.get(pk = request.user.id)
             return team
         # Non-members fail the test
         except User.DoesNotExist:
@@ -304,7 +305,10 @@ def get_authentic_team(request = None, team_id = None):
 
 @login_required
 def team_home(request, team_id = None):
-    team = get_authentic_team(request, team_id)
+    hospi_override = False
+    if request.user.get_profile().is_hospi:
+        hospi_override = True
+    team = get_authentic_team(request, team_id, hospi_override)
     if team is not None:
         add_member_form = AddMemberForm()
         change_leader_form = ChangeLeaderForm()
@@ -316,6 +320,10 @@ def team_home(request, team_id = None):
             team_size_message = 'small'
         else:
             team_size_message = 'correct'
+        if hospi_override == True or request.user == team.leader:
+            giveLeaderAccess = True
+        else:
+            giveLeaderAccess = False
         return render_to_response('users/teams/team_home.html', locals(), context_instance = RequestContext(request))
     raise Http404
 
@@ -369,12 +377,15 @@ def join_team(request):
 
 @login_required
 def add_member(request, team_id = None):
-    team = get_authentic_team(request, team_id)
+    hospi_override = False
+    if request.user.get_profile().is_hospi:
+        hospi_override = True
+    team = get_authentic_team(request, team_id, hospi_override)
     if team is not None:
         event = team.event
         team_size = team.members.count()
         if team_size == event.team_size_max:
-            raise Http404('Your team is already of the maximum permitted size. You cannot add more people to the team without removing someone.')
+            raise Http404('This team is already of the maximum permitted size. You cannot add more people to the team without removing someone.')
         add_member_form = AddMemberForm()
         change_leader_form = ChangeLeaderForm()
 
@@ -389,7 +400,7 @@ def add_member(request, team_id = None):
             user = request.user
             add_member_form = AddMemberForm(request.POST)
             if add_member_form.is_valid():
-                if user != team.leader:
+                if user != team.leader and hospi_override == False:
                     return render_to_response('users/teams/you_arent_leader.html', locals(), context_instance = RequestContext(request))
                 member = User.objects.get(username = add_member_form.cleaned_data['member'])
                 '''
@@ -399,9 +410,18 @@ def add_member(request, team_id = None):
                 except Event.DoesNotExist:
                     member.get_profile().registered.add(team.event)
                 '''
-                team.members.add(member)
-                return HttpResponseRedirect('%suser/teams/%s/' % (settings.SITE_URL, team.id))
-            else:
+                try:
+                    Team.objects.get(members__pk = member.id, event = team.event)
+                except Team.DoesNotExist:
+                    team.members.add(member) # The user is not part of the team. Add.
+                    return HttpResponseRedirect('%suser/teams/%s/' % (settings.SITE_URL, team.id))
+                else:
+                    return render_to_response('users/teams/already_part_of_a_team.html', 
+                                              { 'user' : request.POST['member'], }, 
+                                              context_instance = RequestContext(request)
+                                             )
+                
+            else: # If add_member_form is not valid
                 try:
                     if add_member_form['member'].errors != []:
                         return render_to_response(
@@ -416,7 +436,10 @@ def add_member(request, team_id = None):
 
 @login_required
 def change_team_leader(request, team_id = None):
-    team = get_authentic_team(request, team_id)
+    hospi_override = False
+    if request.user.get_profile().is_hospi:
+        hospi_override = True
+    team = get_authentic_team(request, team_id, hospi_override)
     if team is not None:
         change_leader_form = ChangeLeaderForm()
         add_member_form = AddMemberForm()
@@ -424,7 +447,7 @@ def change_team_leader(request, team_id = None):
             user = request.user
             change_leader_form = ChangeLeaderForm(request.POST)
             if change_leader_form.is_valid():
-                if user != team.leader:
+                if user != team.leader and hospi_override == False:
                     return render_to_response('users/teams/you_arent_leader.html', locals(), context_instance = RequestContext(request))
                 new_leader = team.members.get(username = change_leader_form.cleaned_data['new_leader'])
                 team.leader = new_leader
@@ -447,7 +470,10 @@ def drop_out(request, team_id = None):
 
 @login_required
 def remove_member(request, team_id = None):
-    team = get_authentic_team(request, team_id)
+    hospi_override = False
+    if request.user.get_profile().is_hospi:
+        hospi_override = True
+    team = get_authentic_team(request, team_id, hospi_override)
     if team is not None:
         change_leader_form = ChangeLeaderForm()            # it is the same form essentially :P
         add_member_form = AddMemberForm()
@@ -456,9 +482,11 @@ def remove_member(request, team_id = None):
             change_leader_form = ChangeLeaderForm(request.POST)
             if change_leader_form.is_valid():
                 team = Team.objects.get(pk = change_leader_form.cleaned_data['team_id'])
-                if user != team.leader:
+                if user != team.leader and hospi_override == False:
                     return render_to_response('users/teams/you_arent_leader.html', locals(), context_instance = RequestContext(request))
                 new_leader = team.members.get(username = change_leader_form.cleaned_data['new_leader'])           
+                if new_leader == team.leader:
+                    return render_to_response('users/teams/you_are_leader.html', locals(), context_instance = RequestContext(request))
                 team.members.remove(new_leader)                                                # yes i know, it looks bad. but what the hell. i'm lazy.
                 return HttpResponseRedirect('%suser/teams/%s/' % (settings.SITE_URL, team.id))
         return render_to_response('users/teams/team_home.html', locals(), context_instance = RequestContext(request))
@@ -466,15 +494,20 @@ def remove_member(request, team_id = None):
 
 @login_required
 def dissolve_team(request, team_id = None):
-    team = get_authentic_team(request, team_id)
+    hospi_override = False
+    if request.user.get_profile().is_hospi:
+        hospi_override = True
+    team = get_authentic_team(request, team_id, hospi_override)
     if team is not None:
         if team.members.all().count() > 1:
             return render_to_response('users/teams/remove_members_first.html', locals(), context_instance = RequestContext(request))
         else:
-            if team.leader != request.user:
+            if team.leader != request.user and hospi_override == False:
                 return render_to_response('users/teams/you_arent_leader.html', locals(), context_instance = RequestContext(request))
             team.members.clear()
             team.delete()
+            if hospi_override:
+                return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
             return HttpResponseRedirect('%sevents/' % settings.SITE_URL)
     raise Http404
 

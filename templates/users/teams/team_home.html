@@ -51,10 +51,8 @@
             <p>Click to remove a member (you can't remove yourself this way)</p>
         {% endif %}
         <table id="msg">
-            <tr><td>You ({{request.user.username}})</td></tr>
             {% for member in team.members.all %}
-                {% if member != user %}
-                    {% if team.leader == user %}
+                    {% if giveLeaderAccess %}
 <!--                            <script type="text/javascript">
                                 function submit_form_{{ member.id }}()
                                 {
@@ -65,11 +63,13 @@
                         <tr>
                             <td>
                                 <div id="member_username_div">
-                                    {{ member.username }}
+                                    {% if member == user %} You - {% endif %} {{ member.username }}
+                                    {% if member == team.leader %} (leader) {% endif %}
                                 </div>
                             </td>
 <!--                            </a>   -->
                             <td>
+                            {% if member != user %}
                                 <form name="remove_{{ member.id }}" action="{{ site_url }}user/teams/{{ team.id }}/remove_member/" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="new_leader" value="{{ member.username }}" />
@@ -81,6 +81,7 @@
                                         <span></span>
                                      </div>
                                 </form>
+                            {% endif %}
                             </td>
                         </tr>
                     {% else %}
@@ -92,14 +93,13 @@
                             </td>
                         </tr>
                     {% endif %}
-                {% endif %}
             {% endfor %}
         </table>
     </div>
     
     <br /><br /><br />
     
-    {% if team.leader == user %}
+    {% if giveLeaderAccess %}
         <div id="add_member_form">
             <p><h3>Add a member:</h3></a>
             <form name="add_member" action="{{ site_url }}user/teams/{{ team.id }}/add_member/" method="POST">
@@ -132,7 +132,7 @@
         <a href="javascript:submit_dropout_form()">Leave this team</a><br /><br />
     {% endif %}
 
-    {% if team.leader == user %}
+    {% if giveLeaderAccess %}
         <div id="change_leader_form">
         <h3>Change the team leader</h3>
             <form action="{{ site_url }}user/teams/{{ team.id }}/change_leader/" method="POST">
@@ -154,6 +154,10 @@
             <a class="btn btn-large btn-danger" href="{{ site_url }}user/teams/{{ team.id }}/dissolve/">Dissolve this team</a>
         </div>
         <br /><br />
-    {% endif %}   
+    {% endif %}
+    
+    {% if hospi_override %}
+        <a class="btn btn-large btn-primary" href="{{ site_url }}controlroom/home/">Controlroom Home</a>
+    {% endif %}
 
 {% endblock %}
