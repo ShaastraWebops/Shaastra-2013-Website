@@ -316,6 +316,7 @@ def generateParticipantPDFs(request):
 def generatePDFs():
 
     participants = []
+    numPDFsGenerated = 0
     userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
     participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(is_coord_of = None)
     for profile in participantProfilesWithShaastraIds:
@@ -325,11 +326,14 @@ def generatePDFs():
             continue
         participants.append(u)
 
-    participants = [User.objects.get(id = 1351)] #TODO: Remove this line for finale
+    #participants = [User.objects.get(id = 1351)] #TODO: Remove this line for finale
 
     for participant in participants:
         pdf = generateParticipantPDF(participant)
         if pdf is None:
             continue
         savePDF(pdf, participant.get_profile().shaastra_id)
+        numPDFsGenerated += 1
+        
+    print '\n\nPDFs generated: %d' % numPDFsGenerated
 
