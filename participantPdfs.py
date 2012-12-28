@@ -108,10 +108,19 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
         accountDetails +=  'Name:         <br/><br/>'
     accountDetails += 'Email:        <b>%s</b><br/><br/>' % user.email if user.email else ''
     accountDetails += 'Mobile No:    <b>%s</b><br/><br/>' % userProfile.mobile_number if userProfile.mobile_number else ''
-    accountDetails += 'College:      <b>%s</b><br/><br/>' % userProfile.college.name if (userProfile.college and userProfile.college.name) else ''
+    try:
+        accountDetails += 'College:      <b>%s</b><br/><br/>' % userProfile.college.name
+    except:
+        accountDetails += 'College:      <b>%s</b><br/><br/>' % ''
     #accountDetails += 'College Roll: <b>%s</b><br/><br/>' % userProfile.college_roll
-    accountDetails += 'City:         <b>%s</b><br/><br/>' % userProfile.college.city if (userProfile.college and userProfile.college.city) else ''
-    accountDetails += 'State:        <b>%s</b><br/><br/>' % userProfile.college.state if (userProfile.college and userProfile.college.state) else ''
+    try:
+        accountDetails += 'City:         <b>%s</b><br/><br/>' % userProfile.college.city
+    except:
+        accountDetails += 'City:         <b>%s</b><br/><br/>' % ''
+    try:
+        accountDetails += 'State:        <b>%s</b><br/><br/>' % userProfile.college.state
+    except:
+        accountDetails += 'State:        <b>%s</b><br/><br/>' % ''
     accountDetails += 'Branch:       <b>%s</b><br/><br/>' % userProfile.branch if userProfile.branch else ''
     if userProfile.gender == 'M':
         accountDetails += 'Gender:       <b>%s</b><br/><br/>' % 'Male'
