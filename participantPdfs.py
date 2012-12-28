@@ -291,8 +291,7 @@ def mailParticipantPDFs(request):
 def savePDF(pdf, sID):
 
     destination = open('/home/shaastra/hospi/participantPDFs/'+sID+'.pdf', 'wb+')
-    for chunk in pdf.chunks():
-        destination.write(chunk)
+    destination.write(pdf)
     destination.close()
     print 'File '+sID+'.pdf saved.'
 
