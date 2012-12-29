@@ -107,20 +107,23 @@ def create(request):
                             event = EventSingularRegistration(user = new, event = evt)
                             event.save()
                 except:
-                    new = User(
-                                username = line.split('@')[0].lower(),
-                                email = line
-                                )
-                    new.set_password(line.split('@')[0].lower())
-                    new.save()   
-                    x = 1300000 + new.id 
-                    new_profile = UserProfile(user = new,
-                                   shaastra_id = ("SHA" + str(x)))
-                    new_profile.save()
-                    if not evt.team_event:
-                        event = EventSingularRegistration(user = new, event = evt)
-                        event.save()
-                    msg = "Account created"
+                    try:
+                        new = User.objects.get(username = line.split('@')[0].lower())
+                    except:
+                        new = User(
+                                    username = line.split('@')[0].lower(),
+                                    email = line
+                                    )
+                        new.set_password(line.split('@')[0].lower())
+                        new.save()   
+                        x = 1300000 + new.id 
+                        new_profile = UserProfile(user = new,
+                                       shaastra_id = ("SHA" + str(x)))
+                        new_profile.save()
+                        if not evt.team_event:
+                            event = EventSingularRegistration(user = new, event = evt)
+                            event.save()
+                        msg = "Account created"
     return render_to_response('create_accounts.html', locals(),
                               context_instance=RequestContext(request))
 
