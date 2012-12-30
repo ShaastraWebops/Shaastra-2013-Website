@@ -276,7 +276,7 @@ def mailPDF(user, pdf):
     msg.content_subtype = "html"
     msg.attach('%s-registration-details.pdf' % user.username, pdf, 'application/pdf')
     msg.send()
-    print 'Mail sent to %s' % user.email
+    print 'Mail sent to %s' % email
     
 @login_required
 def mailParticipantPDFs(request):
