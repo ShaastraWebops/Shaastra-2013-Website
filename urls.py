@@ -36,7 +36,6 @@ urlpatterns = patterns(
     url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX,
         include('dajaxice.urls')),
     url(r'^superuser/', include(superuser.site.urls)),
-    url(r'^mailppdfs/$', 'views.mailParticipantPDFs'),
     )
 
 urlpatterns += patterns('', url(r'^media/(?P<path>.*)$',

@@ -280,66 +280,12 @@ def mailPDF(user, pdf):
     #msg.send()
     print 'Mail sent to %s' % email
     
-@login_required
-def mailParticipantPDFs(request):
-
-    if not request.user.is_superuser:
-        return HttpResponseForbidden('The participant mailer can only be accessed by superusers. You don\'t have enough permissions to continue.')
-    
-    participants = []
-    userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
-    participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(is_coord_of = None)
-    for profile in participantProfilesWithShaastraIds:
-        try:
-            u = profile.user
-        except:
-            continue
-        participants.append(u)
-        
-    participantsMailed = []
-    
-    participants = [User.objects.get(id = 5787)] #TODO: Remove this line for finale
-
-    for participant in participants:
-        pdf = generateParticipantPDF(participant)
-        if pdf is None:
-            continue
-        mailPDF(participant, pdf)
-    
-    return HttpResponse('Mails sent. Timestamp: %s' % str(datetime.datetime.now()))
-    
 def savePDF(pdf, user):
 
     destination = open('/home/shaastra/hospi/participantPDFs/'+user.get_profile().shaastra_id+'-registration-details.pdf', 'wb+')
     destination.write(pdf)
     destination.close()
     print 'File '+user.get_profile().shaastra_id+'-registration-details.pdf saved.'
-
-@login_required
-def generateParticipantPDFs(request):
-
-    if not request.user.is_superuser:
-        return HttpResponseForbidden('The participant mailer can only be accessed by superusers. You don\'t have enough permissions to continue.')
-        
-    participants = []
-    userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
-    participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(is_coord_of = None)
-    for profile in participantProfilesWithShaastraIds:
-        try:
-            u = profile.user
-        except:
-            continue
-        participants.append(u)
-
-    participants = [User.objects.get(id = 5787)] #TODO: Remove this line for finale
-
-    for participant in participants:
-        pdf = generateParticipantPDF(participant)
-        if pdf is None:
-            continue
-        savePDF(pdf, participant.get_profile().shaastra_id)
-    
-    return HttpResponse('PDFs generated. Timestamp: %s' % str(datetime.datetime.now()))
 
 def generatePDFs():
 
@@ -370,3 +316,5 @@ def generatePDFs():
         
     print '\n\nPDFs generated: %d' % numPDFsGenerated
     print '\n\nPDFs mailed: %d' % numPDFsMailed
+
+generatePDFs()

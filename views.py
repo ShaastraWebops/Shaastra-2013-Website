@@ -9,7 +9,6 @@ from events.views import home as events_home
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from forms import *
-from participantPdfs import *
 
 def home(request):
     fragment = request.GET.get('_escaped_fragment_','')
