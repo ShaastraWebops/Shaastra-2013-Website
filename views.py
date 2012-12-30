@@ -144,21 +144,15 @@ def create_team(request):
                 try:
                     user = User.objects.get(email = member_email)
                 except User.DoesNotExist:
-                    user = User(
-                                username = member_email.split('@')[0].lower(),
-                                email = member_email
-                                )
-                    user.set_password(line.split('@')[0].lower())
-                    user.save()   
-                    x = 1300000 + user.id 
-                    new_profile = UserProfile(user = user,
-                                   shaastra_id = ("SHA" + str(x)))
+                    user = User(username = member_email.split('@')[0].lower(), email = member_email)
+                    user.set_password(member_email.split('@')[0].lower())
+                    user.save()
+                    x = 1300000 + user.id
+                    new_profile = UserProfile(user = user, shaastra_id = ("SHA" + str(x)))
                     new_profile.save()
                 if not team:
                     team = Team(name = team_name, event = evt, leader = user)
                     team.save()
-                else:
+                elif user not in team[0].members.all():
                     team[0].members.add(user)
     return render_to_response('create_accounts.html', locals(), context_instance=RequestContext(request))
-
-
