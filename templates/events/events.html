@@ -42,9 +42,9 @@
   <div id="updates">
     <div id="textbox2">
       <h3>Announcements</h3>
-        {% if event.begin_registration %}
+      <!--  {% if event.begin_registration %}
           <a href="{{site_url}}events/{{event.id}}/register/" id="rgnlink">Registrations are now open. Click to register.</a><br>
-        {% endif %}
+        {% endif %}-->
         {% for a in announcements %}
 	      {% if a.event == event and a.expired == 0 %}
 	        <p style="font-size:16px;" class="announcetext"><b>{{a.subject}}</b> - {{a.description|safe}}<br></p>
