@@ -297,6 +297,8 @@ def savePDF(pdf, user):
     
 def generatePDFs():
 
+    return ('Comment this line to send the Participant PDFs.')
+
     participants = []
     numPDFsGenerated = 0
     numPDFsMailed = 0
@@ -312,6 +314,8 @@ def generatePDFs():
     #participants = [User.objects.get(id = 1351)] #TODO: Remove this line for finale
 
     for participant in participants:
+        #if participant.id < 7071:
+        #    continue
         log(participant.id)
         pdf = generateParticipantPDF(participant)
         if pdf is None:
