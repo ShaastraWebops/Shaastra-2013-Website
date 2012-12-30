@@ -264,8 +264,10 @@ def mailPDF(user, pdf):
         message += user.first_name.title()
     elif user.last_name:
         message += user.last_name.title()
-    else:
+    elif user.username:
         message += user.username
+    else:
+        message += 'participant'
     
     message += ',<br/><br/>The attached PDF contains important information regarding your registration at Shaastra 2013.'
     message += ' Please bring <b>two printed copies</b> of this PDF with you. For any queries, please contact the QMS Team at qms@shaastra.org.<br/><br/>Team Shaastra 2013<br/>'
@@ -343,6 +345,7 @@ def generatePDFs():
 
     participants = []
     numPDFsGenerated = 0
+    numPDFsMailed = 0
     userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
     participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(user__is_superuser = False)
     for profile in participantProfilesWithShaastraIds:
@@ -360,8 +363,10 @@ def generatePDFs():
         if pdf is None:
             continue
         savePDF(pdf, participant)
-        mailPDF(participant, pdf)
+        if participant.email:
+            mailPDF(participant, pdf)
+            numPDFsMailed += 1
         numPDFsGenerated += 1
         
     print '\n\nPDFs generated: %d' % numPDFsGenerated
-
+    print '\n\nPDFs mailed: %d' % numPDFsMailed
