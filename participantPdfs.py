@@ -254,6 +254,13 @@ def generateParticipantPDF(user):
 
     return response
     
+def log(msg):
+
+    destination = open('/home/shaastra/hospi/participantPDFs/log.txt', 'a')
+    destination.write(msg)
+    destination.close()
+    print msg
+
 def mailPDF(user, pdf):
 
     subject = '[IMPORTANT] Registration Details, Shaastra 2013'
@@ -278,15 +285,15 @@ def mailPDF(user, pdf):
     msg.content_subtype = "html"
     msg.attach('%s-registration-details.pdf' % user.get_profile().shaastra_id, pdf, 'application/pdf')
     #msg.send()
-    print 'Mail sent to %s' % email
+    log('Mail sent to %s' % email)
     
 def savePDF(pdf, user):
 
     destination = open('/home/shaastra/hospi/participantPDFs/'+user.get_profile().shaastra_id+'-registration-details.pdf', 'wb+')
     destination.write(pdf)
     destination.close()
-    print 'File '+user.get_profile().shaastra_id+'-registration-details.pdf saved.'
-
+    log('File '+user.get_profile().shaastra_id+'-registration-details.pdf saved.')
+    
 def generatePDFs():
 
     participants = []
@@ -304,7 +311,7 @@ def generatePDFs():
     #participants = [User.objects.get(id = 1351)] #TODO: Remove this line for finale
 
     for participant in participants:
-        print participant.id
+        log(participant.id)
         pdf = generateParticipantPDF(participant)
         if pdf is None:
             continue
@@ -314,7 +321,5 @@ def generatePDFs():
             numPDFsMailed += 1
         numPDFsGenerated += 1
         
-    print '\n\nPDFs generated: %d' % numPDFsGenerated
-    print '\n\nPDFs mailed: %d' % numPDFsMailed
-
-generatePDFs()
+    log('\n\nPDFs generated: %d' % numPDFsGenerated)
+    log('\n\nPDFs mailed: %d' % numPDFsMailed)
