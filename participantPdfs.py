@@ -258,6 +258,7 @@ def log(msg):
 
     destination = open('/home/shaastra/hospi/participantPDFs/log.txt', 'a')
     destination.write(str(msg))
+    destination.write('\n')
     destination.close()
     print msg
 
@@ -284,7 +285,7 @@ def mailPDF(user, pdf):
     msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , [email,])
     msg.content_subtype = "html"
     msg.attach('%s-registration-details.pdf' % user.get_profile().shaastra_id, pdf, 'application/pdf')
-    #msg.send()
+    msg.send()
     log('Mail sent to %s' % email)
     
 def savePDF(pdf, user):
