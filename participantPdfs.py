@@ -270,12 +270,12 @@ def mailPDF(user, pdf):
     message += ',<br/><br/>The attached PDF contains important information regarding your registration at Shaastra 2013.'
     message += ' Please bring <b>two printed copies</b> of this PDF with you. For any queries, please contact the QMS Team at qms@shaastra.org.<br/><br/>Team Shaastra 2013<br/>'
     email = user.email
-    email = 'swopstesting@gmail.com' #TODO: Remove this line for finale
+    #email = 'swopstesting@gmail.com' #TODO: Remove this line for finale
 
     msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , [email,])
     msg.content_subtype = "html"
     msg.attach('%s-registration-details.pdf' % user.username, pdf, 'application/pdf')
-    msg.send()
+    #msg.send()
     print 'Mail sent to %s' % email
     
 @login_required
@@ -352,7 +352,7 @@ def generatePDFs():
             continue
         participants.append(u)
 
-    participants = [User.objects.get(id = 1351)] #TODO: Remove this line for finale
+    #participants = [User.objects.get(id = 1351)] #TODO: Remove this line for finale
 
     for participant in participants:
         print participant.id
