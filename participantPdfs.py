@@ -274,7 +274,7 @@ def mailPDF(user, pdf):
 
     msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , [email,])
     msg.content_subtype = "html"
-    msg.attach('%s-registration-details.pdf' % user.username, pdf, 'application/pdf')
+    msg.attach('%s-registration-details.pdf' % user.get_profile().shaastra_id, pdf, 'application/pdf')
     #msg.send()
     print 'Mail sent to %s' % email
     
@@ -308,10 +308,10 @@ def mailParticipantPDFs(request):
     
 def savePDF(pdf, user):
 
-    destination = open('/home/shaastra/hospi/participantPDFs/'+user.username+'-registration-details.pdf', 'wb+')
+    destination = open('/home/shaastra/hospi/participantPDFs/'+user.get_profile().shaastra_id+'-registration-details.pdf', 'wb+')
     destination.write(pdf)
     destination.close()
-    print 'File '+user.username+'-registration-details.pdf saved.'
+    print 'File '+user.get_profile().shaastra_id+'-registration-details.pdf saved.'
 
 @login_required
 def generateParticipantPDFs(request):
