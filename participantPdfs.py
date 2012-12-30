@@ -263,7 +263,7 @@ def mailPDF(user, pdf):
 
     msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , [email,])
     msg.content_subtype = "html"
-    msg.attach('PP#%s.pdf' % user.get_profile().shaastra_id, pdf, 'application/pdf')
+    msg.attach('%s.pdf' % user.get_profile().shaastra_id, pdf, 'application/pdf')
     msg.send()
     
 @login_required
@@ -340,7 +340,7 @@ def generatePDFs():
             continue
         participants.append(u)
 
-    #participants = [User.objects.get(id = 1351)] #TODO: Remove this line for finale
+    participants = [User.objects.get(id = 1351)] #TODO: Remove this line for finale
 
     for participant in participants:
         print participant.id
@@ -348,6 +348,7 @@ def generatePDFs():
         if pdf is None:
             continue
         savePDF(pdf, participant.get_profile().shaastra_id)
+        mailPDF(participant, pdf)
         numPDFsGenerated += 1
         
     print '\n\nPDFs generated: %d' % numPDFsGenerated
