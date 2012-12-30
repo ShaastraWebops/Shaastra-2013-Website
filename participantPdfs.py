@@ -256,15 +256,27 @@ def generateParticipantPDF(user):
     
 def mailPDF(user, pdf):
 
-    subject = 'Participation PDF'
-    message = 'Dear participant,<br/>Please find attached the PDF that contains important information. Please go through it and address any querries to the QMS Team.<br/>Shaastra 2013 Team.<br/>'
+    subject = '[IMPORTANT] Registration Details, Shaastra 2013'
+    message = 'Dear '
+    if user.first_name and user.last_name:
+        message += user.first_name + ' ' + user.last_name
+    elif user.first_name:
+        message += user.first_name
+    elif user.last_name:
+        message += user.last_name
+    else:
+        message += user.username
+    
+    message += ',<br/><br/>The attached PDF contains important information regarding your registration at Shaastra 2013.'
+    message += ' Please bring <b>two printed copies</b> of this PDF with you. For any queries, please contact the QMS Team at qms@shaastra.org.<br/><br/>Team Shaastra 2013<br/>'
     email = user.email
     email = 'swopstesting@gmail.com' #TODO: Remove this line for finale
 
     msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , [email,])
     msg.content_subtype = "html"
-    msg.attach('%s.pdf' % user.get_profile().shaastra_id, pdf, 'application/pdf')
+    msg.attach('%s-registration-details.pdf' % user.username, pdf, 'application/pdf')
     msg.send()
+    print 'Mail sent to %s' % user.email
     
 @login_required
 def mailParticipantPDFs(request):
@@ -294,9 +306,9 @@ def mailParticipantPDFs(request):
     
     return HttpResponse('Mails sent. Timestamp: %s' % str(datetime.datetime.now()))
     
-def savePDF(pdf, sID):
+def savePDF(pdf, user):
 
-    destination = open('/home/shaastra/hospi/participantPDFs/'+sID+'.pdf', 'wb+')
+    destination = open('/home/shaastra/hospi/participantPDFs/'+user.username+'-registration-details.pdf', 'wb+')
     destination.write(pdf)
     destination.close()
     print 'File '+sID+'.pdf saved.'
@@ -347,7 +359,7 @@ def generatePDFs():
         pdf = generateParticipantPDF(participant)
         if pdf is None:
             continue
-        savePDF(pdf, participant.get_profile().shaastra_id)
+        savePDF(pdf, participant)
         mailPDF(participant, pdf)
         numPDFsGenerated += 1
         
