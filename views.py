@@ -128,6 +128,7 @@ def create(request):
                               context_instance=RequestContext(request))
 
 def create_team(request):
+    team_name = ''
     form = FileForm()    
     if request.method == 'POST':
         form = FileForm(request.POST, request.FILES)   
@@ -139,7 +140,9 @@ def create_team(request):
                 if line == '':
                     continue
                 line_number += 1
-                team_name, member_email = line.split('\t')
+                new_team_name, member_email = line.split('\t')
+                if not new_team_name == ' ':
+                    team_name = new_team_name
                 team = Team.objects.filter(name = team_name, event = evt)
                 try:
                     user = User.objects.get(email = member_email)
