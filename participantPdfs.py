@@ -257,7 +257,7 @@ def generateParticipantPDF(user):
 def log(msg):
 
     destination = open('/home/shaastra/hospi/participantPDFs/log.txt', 'a')
-    destination.write(msg)
+    destination.write(str(msg))
     destination.close()
     print msg
 
