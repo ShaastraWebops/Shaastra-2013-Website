@@ -259,11 +259,11 @@ def mailPDF(user, pdf):
     subject = '[IMPORTANT] Registration Details, Shaastra 2013'
     message = 'Dear '
     if user.first_name and user.last_name:
-        message += user.first_name + ' ' + user.last_name
+        message += user.first_name.title() + ' ' + user.last_name.title()
     elif user.first_name:
-        message += user.first_name
+        message += user.first_name.title()
     elif user.last_name:
-        message += user.last_name
+        message += user.last_name.title()
     else:
         message += user.username
     
