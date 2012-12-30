@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template.context import Context, RequestContext
 from django.shortcuts import render_to_response
 from django.conf import settings
-from users.models import UserProfile
+from users.models import UserProfile, Team
 from events.models import Event, EVENT_CATEGORIES, Tag, Update, Sponsor
 from django.template.defaultfilters import slugify
 from events.views import home as events_home
@@ -17,7 +17,7 @@ def home(request):
     if fragment == 'hospi':
         return render_to_response('ajax/hospi_home.html',locals(),context_instance = RequestContext(request))
     elif fragment == 'spons':
-	return render_to_response('ajax/spons_home.html',locals(),context_instance = RequestContext(request))
+        return render_to_response('ajax/spons_home.html',locals(),context_instance = RequestContext(request))
     elif splits[0] == 'events':
         return events_home(request)
     event_set=[]
@@ -48,10 +48,10 @@ def home(request):
     announcements = []
     for e in events:
       try:
-	data = {'event':e,'announcement':Update.objects.get(event = e, category = "Announcement"),}
-	announcements.append(data)
+        data = {'event':e,'announcement':Update.objects.get(event = e, category = "Announcement"),}
+        announcements.append(data)
       except:
-	pass
+        pass
     # end announcements code
     if request.user.is_authenticated():
         if request.user.is_superuser:
@@ -61,9 +61,9 @@ def home(request):
         elif request.user.get_profile().is_coord_of:
             return HttpResponseRedirect(settings.SITE_URL + 'coord/')
         else:
-    	    return render_to_response('index.html',locals(),context_instance = RequestContext(request))
+            return render_to_response('index.html',locals(),context_instance = RequestContext(request))
     else:
-    	return render_to_response('index.html',locals(),context_instance = RequestContext(request))
+        return render_to_response('index.html',locals(),context_instance = RequestContext(request))
 
 def hospi(request):
     return render_to_response('hospi/hospi_home.html',locals(),context_instance = RequestContext(request))
@@ -107,21 +107,55 @@ def create(request):
                             event = EventSingularRegistration(user = new, event = evt)
                             event.save()
                 except:
-                    new = User(
-                                username = line.split('@')[0].lower(),
-                                email = line
-                                )
-                    new.set_password(line.split('@')[0].lower())
-                    new.save()   
-                    x = 1300000 + new.id 
-                    new_profile = UserProfile(user = new,
-                                   shaastra_id = ("SHA" + str(x)))
-                    new_profile.save()
-                    if not evt.team_event:
-                        event = EventSingularRegistration(user = new, event = evt)
-                        event.save()
-                    msg = "Account created"
+                    try:
+                        new = User.objects.get(username = line.split('@')[0].lower())
+                    except:
+                        new = User(
+                                    username = line.split('@')[0].lower(),
+                                    email = line
+                                    )
+                        new.set_password(line.split('@')[0].lower())
+                        new.save()   
+                        x = 1300000 + new.id 
+                        new_profile = UserProfile(user = new,
+                                       shaastra_id = ("SHA" + str(x)))
+                        new_profile.save()
+                        if not evt.team_event:
+                            event = EventSingularRegistration(user = new, event = evt)
+                            event.save()
+                        msg = "Account created"
     return render_to_response('create_accounts.html', locals(),
                               context_instance=RequestContext(request))
 
-
+def create_team(request):
+    team_name = ''
+    form = FileForm()    
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)   
+        if form.is_valid():
+            evt = Event.objects.get(id = form.cleaned_data['event_id'])
+            line_number = 0
+            for line in form.cleaned_data['files']:
+                line = line.replace('\n','')
+                if line == '':
+                    continue
+                line_number += 1
+                new_team_name, member_email = line.split('\t')
+                if not new_team_name == ' ':
+                    team_name = new_team_name
+                team = Team.objects.filter(name = team_name, event = evt)
+                try:
+                    user = User.objects.get(email = member_email)
+                except User.DoesNotExist:
+                    user = User(username = member_email.split('@')[0].lower(), email = member_email)
+                    user.set_password(member_email.split('@')[0].lower())
+                    user.save()
+                    x = 1300000 + user.id
+                    new_profile = UserProfile(user = user, shaastra_id = ("SHA" + str(x)))
+                    new_profile.save()
+                if not team:
+                    team = Team(name = team_name, event = evt, leader = user)
+                    team.save()
+                elif user not in team[0].members.all():
+                    team[0].members.add(user)
+    return render_to_response('create_accounts.html', locals(), context_instance=RequestContext(request))

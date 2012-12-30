@@ -49,7 +49,7 @@ class VenueGroupAlias(models.Model):
         for venue in venueList:
             if venue.title[:len(venue.block)] == venue.block:
                 extraChars = 0
-                while venue.title[len(venue.block)+extraChars] == ' ':
+                while ((len(venue.block) + extraChars < len(venue.title))) and (venue.title[len(venue.block)+extraChars] == ' '):
                     extraChars += 1
                 disp_string += venue.title[len(venue.block)+extraChars:] + ', '
             else:
@@ -102,7 +102,7 @@ class SubEvent(models.Model):
         for venue in venueList:
             if venue.title[:len(venue.block)] == venue.block:
                 extraChars = 0
-                while venue.title[len(venue.block)+extraChars] == ' ':
+                while ((len(venue.block) + extraChars < len(venue.title))) and (venue.title[len(venue.block)+extraChars] == ' '):
                     extraChars += 1
                 disp_string += venue.title[len(venue.block)+extraChars:] + ', '
             else:
