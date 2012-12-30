@@ -60,10 +60,11 @@ NEW_SPONSOR_CHOICES = (
     ('Web Hosting Partner','Web Hosting Partner'),
     ('Online Media Partner','Online Media Partner'),
     ('Engineering & Technology Partner','Engineering & Technology Partner'),    
+    ('Green Partner', 'Green Partner'),
+    ('Student Opportunity Partner','Student Opportunity Partner'),
 #    ('Outreach Sponsor', 'Outreach Sponsor'),
 #    ('Apparel Sponsor', 'Apparel Sponsor'),
 #    ('Gift Sponsor', 'Gift Sponsor'),
-#    ('Green Partner', 'Green Partner'),
 #    ('Data Partner', 'Data Partner'),
 
 )
