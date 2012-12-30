@@ -311,7 +311,7 @@ def savePDF(pdf, user):
     destination = open('/home/shaastra/hospi/participantPDFs/'+user.username+'-registration-details.pdf', 'wb+')
     destination.write(pdf)
     destination.close()
-    print 'File '+sID+'.pdf saved.'
+    print 'File '+user.username+'-registration-details.pdf saved.'
 
 @login_required
 def generateParticipantPDFs(request):
