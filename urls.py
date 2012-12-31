@@ -19,8 +19,8 @@ superuser.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', 'views.home', name='home'),
-    url(r'^create_teams/', 'views.create_team', name='create_team'),
-    url(r'^create_accounts/', 'views.create', name='create'),
+    #url(r'^create_teams/', 'views.create_team', name='create_team'),
+    #url(r'^create_accounts/', 'views.create', name='create'),
     url(r'^spons', 'views.spons', name='spons'),
     url(r'^user/', include('users.urls')),
     url(r'^admin/', include('admin.urls')),
@@ -36,7 +36,6 @@ urlpatterns = patterns(
     url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX,
         include('dajaxice.urls')),
     url(r'^superuser/', include(superuser.site.urls)),
-    url(r'^mailppdfs/$', 'views.mailParticipantPDFs'),
     )
 
 urlpatterns += patterns('', url(r'^media/(?P<path>.*)$',

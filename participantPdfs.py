@@ -254,6 +254,14 @@ def generateParticipantPDF(user):
 
     return response
     
+def log(msg):
+
+    destination = open('/home/shaastra/hospi/participantPDFs/log.txt', 'a')
+    destination.write(str(msg))
+    destination.write('\n')
+    destination.close()
+    print msg
+
 def mailPDF(user, pdf):
 
     subject = '[IMPORTANT] Registration Details, Shaastra 2013'
@@ -264,85 +272,38 @@ def mailPDF(user, pdf):
         message += user.first_name.title()
     elif user.last_name:
         message += user.last_name.title()
-    else:
+    elif user.username:
         message += user.username
+    else:
+        message += 'participant'
     
-    message += ',<br/><br/>The attached PDF contains important information regarding your registration at Shaastra 2013.'
-    message += ' Please bring <b>two printed copies</b> of this PDF with you. For any queries, please contact the QMS Team at qms@shaastra.org.<br/><br/>Team Shaastra 2013<br/>'
+    message += ',<br/><br/>The attached PDF contains important information regarding your registration at Shaastra 2013.<br/><br/>'
+    message += 'If you have received a similar mail earlier, please <b>discard the <u>previous</u> mail and its attachment</b>. This mail contains an updated pdf.<br/><br/>'
+    message += ' Please bring <b>two printed copies</b> of this PDF with you.'
+    message += ' For any queries, please contact the QMS Team at qms@shaastra.org.<br/><br/>Team Shaastra 2013<br/>'
     email = user.email
     #email = 'swopstesting@gmail.com' #TODO: Remove this line for finale
 
     msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , [email,])
     msg.content_subtype = "html"
     msg.attach('%s-registration-details.pdf' % user.get_profile().shaastra_id, pdf, 'application/pdf')
-    #msg.send()
-    print 'Mail sent to %s' % email
-    
-@login_required
-def mailParticipantPDFs(request):
-
-    if not request.user.is_superuser:
-        return HttpResponseForbidden('The participant mailer can only be accessed by superusers. You don\'t have enough permissions to continue.')
-    
-    participants = []
-    userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
-    participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(is_coord_of = None)
-    for profile in participantProfilesWithShaastraIds:
-        try:
-            u = profile.user
-        except:
-            continue
-        participants.append(u)
-        
-    participantsMailed = []
-    
-    participants = [User.objects.get(id = 5787)] #TODO: Remove this line for finale
-
-    for participant in participants:
-        pdf = generateParticipantPDF(participant)
-        if pdf is None:
-            continue
-        mailPDF(participant, pdf)
-    
-    return HttpResponse('Mails sent. Timestamp: %s' % str(datetime.datetime.now()))
+    msg.send()
+    log('Mail sent to %s' % email)
     
 def savePDF(pdf, user):
 
     destination = open('/home/shaastra/hospi/participantPDFs/'+user.get_profile().shaastra_id+'-registration-details.pdf', 'wb+')
     destination.write(pdf)
     destination.close()
-    print 'File '+user.get_profile().shaastra_id+'-registration-details.pdf saved.'
-
-@login_required
-def generateParticipantPDFs(request):
-
-    if not request.user.is_superuser:
-        return HttpResponseForbidden('The participant mailer can only be accessed by superusers. You don\'t have enough permissions to continue.')
-        
-    participants = []
-    userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
-    participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(is_coord_of = None)
-    for profile in participantProfilesWithShaastraIds:
-        try:
-            u = profile.user
-        except:
-            continue
-        participants.append(u)
-
-    participants = [User.objects.get(id = 5787)] #TODO: Remove this line for finale
-
-    for participant in participants:
-        pdf = generateParticipantPDF(participant)
-        if pdf is None:
-            continue
-        savePDF(pdf, participant.get_profile().shaastra_id)
+    log('File '+user.get_profile().shaastra_id+'-registration-details.pdf saved.')
     
-    return HttpResponse('PDFs generated. Timestamp: %s' % str(datetime.datetime.now()))
-
 def generatePDFs():
+
+    return ('Comment this line to send the Participant PDFs.')
 
     participants = []
     numPDFsGenerated = 0
+    numPDFsMailed = 0
     userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
     participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(user__is_superuser = False)
     for profile in participantProfilesWithShaastraIds:
@@ -355,13 +316,59 @@ def generatePDFs():
     #participants = [User.objects.get(id = 1351)] #TODO: Remove this line for finale
 
     for participant in participants:
-        print participant.id
+        #if participant.id < 7071:
+        #    continue
+        log(participant.id)
         pdf = generateParticipantPDF(participant)
         if pdf is None:
             continue
         savePDF(pdf, participant)
-        mailPDF(participant, pdf)
+        if participant.email:
+            mailPDF(participant, pdf)
+            numPDFsMailed += 1
         numPDFsGenerated += 1
         
-    print '\n\nPDFs generated: %d' % numPDFsGenerated
+    log('\n\nPDFs generated: %d' % numPDFsGenerated)
+    log('\n\nPDFs mailed: %d' % numPDFsMailed)
+    
+def remainingPDFs():
+
+    log('\n\n**********  Now: %s  **********' % datetime.datetime.now())
+
+    fileNameList = ['/home/shaastra/hospi/participantPDFs/ssq.txt', '/home/shaastra/hospi/participantPDFs/rws.txt']
+    
+    for fileName in fileNameList:
+
+        participants = []
+        emails = []
+
+        fileObj = open(fileName, 'r')
+        log('\n\nOpened %s.' % fileName)
+        for line in fileObj:
+            t = line[:-1]  # -1 to remove the last \n character.
+            if t:
+                emails.append(t)
+        fileObj.close()
+        log('Closed %s.' % fileName)
+
+        emails = list(set(emails))  # To get rid of duplicates
+
+        for email in emails:
+            usersMatchingEmail = User.objects.filter(email = email)
+            if len(usersMatchingEmail) == 1:
+                participants.append(usersMatchingEmail[0])
+            elif len(usersMatchingEmail) < 1:
+                log('No users matching %s' % email)
+            else:
+                log('More than one users matching %s' % email)
+
+        for participant in participants:
+            log(participant.id)
+            pdf = generateParticipantPDF(participant)
+            if pdf is None:
+                continue
+            savePDF(pdf, participant)
+            if participant.email:
+                mailPDF(participant, pdf)
+                #break  #TODO: Remove this for the finale
 

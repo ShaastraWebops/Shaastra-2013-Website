@@ -9,7 +9,6 @@ from events.views import home as events_home
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from forms import *
-from participantPdfs import *
 
 def home(request):
     fragment = request.GET.get('_escaped_fragment_','')
@@ -149,10 +148,13 @@ def create_team(request):
                 except User.DoesNotExist:
                     user = User(username = member_email.split('@')[0].lower(), email = member_email)
                     user.set_password(member_email.split('@')[0].lower())
-                    user.save()
-                    x = 1300000 + user.id
-                    new_profile = UserProfile(user = user, shaastra_id = ("SHA" + str(x)))
-                    new_profile.save()
+                    try:
+                        user.save()
+                        x = 1300000 + user.id
+                        new_profile = UserProfile(user = user, shaastra_id = ("SHA" + str(x)))
+                        new_profile.save()
+                    except:
+                        user = User.objects.get(username = member_email.split('@')[0].lower())
                 if not team:
                     team = Team(name = team_name, event = evt, leader = user)
                     team.save()
