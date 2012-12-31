@@ -278,7 +278,7 @@ def mailPDF(user, pdf):
         message += 'participant'
     
     message += ',<br/><br/>The attached PDF contains important information regarding your registration at Shaastra 2013.<br/><br/>'
-    message += 'If you have already received a similar mail earlier, please <b>discard the <u>previous</u> mail</b>. This mail contains an updated pdf.<br/><br/>'
+    message += 'If you have received a similar mail earlier, please <b>discard the <u>previous</u> mail and its attachment</b>. This mail contains an updated pdf.<br/><br/>'
     message += ' Please bring <b>two printed copies</b> of this PDF with you.'
     message += ' For any queries, please contact the QMS Team at qms@shaastra.org.<br/><br/>Team Shaastra 2013<br/>'
     email = user.email
@@ -351,7 +351,7 @@ def remainingPDFs():
         fileObj.close()
         log('Closed %s.' % fileName)
 
-        emails = list(set(emails)  # To get rid of duplicates
+        emails = list(set(emails))  # To get rid of duplicates
 
         for email in emails:
             usersMatchingEmail = User.objects.filter(email = email)
@@ -370,4 +370,5 @@ def remainingPDFs():
             savePDF(pdf, participant)
             if participant.email:
                 mailPDF(participant, pdf)
+                #break  #TODO: Remove this for the finale
 
