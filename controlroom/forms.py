@@ -56,7 +56,7 @@ BRANCH_CHOICES = (
 class AddRoomForm(ModelForm):
     class Meta:
         model = AvailableRooms
-        exclude = ('already_checkedin',)
+        exclude = ('already_checkedin','mattresses',)
 
 class AddMultipleRoomsForm(forms.Form):
     rooms = forms.FileField(required = True)
@@ -69,7 +69,18 @@ class IndividualForm(ModelForm):
     room = chosenforms.ChosenModelChoiceField(queryset=AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel'))
     class Meta:
         model = IndividualCheckIn
-
+        fields = ('room',
+                  'duration_of_stay',
+                  'number_of_mattresses_given',
+                  'mattress_room',
+                  'shaastra_ID',
+                  'first_name',
+                  'last_name',
+                  'phone_no',
+                  'check_in_control_room',
+                  'check_out_control_room',
+                  'comments')        
+    
 class UserForm(ModelForm):
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)

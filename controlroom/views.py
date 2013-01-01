@@ -38,7 +38,7 @@ def AddRoom(request):
         if form.is_valid:
             form.save()
             msg = "Room Added"
-            return render_to_response('controlroom/AddRoomForm.html', locals(),
+            return render_to_response('controlroom/home.html', locals(),
                               context_instance=RequestContext(request))
         else:
             msg="Invalid Form"
