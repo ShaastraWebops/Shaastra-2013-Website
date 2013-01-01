@@ -39,7 +39,7 @@ def initNewPDFPage(pdf, page_title, page_no, (pageWidth, pageHeight),):
 
     # Set font for 'SHAASTRA 2013'
 
-    lineheight = PDFSetFont(pdf, 'Times-Roman', 18)
+    lineheight = PDFSetFont(pdf, 'Times-Roman', 12)
 
     # SHAASTRA 2013 in centre
 
@@ -147,3 +147,5 @@ def generateParticipantPDF(s_id):
     pdf.save()
     
     return response
+
+

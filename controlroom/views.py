@@ -18,7 +18,7 @@ from django.utils.translation import ugettext as _
 from controlroom.forms import *
 from django.contrib.sessions.models import Session
 from datetime                   import datetime
-
+from controlroom.generate_bill import *
 
 @login_required(login_url=settings.SITE_URL + 'user/login/')
 def home(request):
@@ -328,3 +328,9 @@ def EditTeam(request):
     
     return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
         
+def GenerateBill(request,pk):
+    profile = UserProfile.objects.get(id = pk)
+    s_id = profile.shaastra_id
+    pdf = generateParticipantPDF(s_id)
+    return HttpResponse(pdf)    
+

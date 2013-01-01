@@ -102,13 +102,4 @@ def send_participants(request,form):
     dajax.alert(msg)
     return dajax.json
 
-@dajaxice_register
-def GenerateBill(request,s_id=''):
-    dajax = Dajax()
-    try:
-        pdf = generateParticipantPDF(s_id)
-        return HttpResponse(pdf)
-    except:
-        return dajax.json
-    
 

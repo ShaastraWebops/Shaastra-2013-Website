@@ -44,11 +44,6 @@
     Dajaxice.controlroom.save_individual_checkout(Dajax.process,{'form':data,'shaastraid':id});
     return false;
     }
-    function generate_bill(id)
-    {
-    Dajaxice.controlroom.GenerateBill(Dajax.process,{'s_id':id});
-    return false;
-    }
     </script>
 </head>
 <body>
@@ -73,7 +68,7 @@
     {% endif %}
     {% endif %}
         <a class="btn btn-large btn-inverse" href='{{site_url}}controlroom/home/'>Home</a>
-        <a class="btn btn-large btn-inverse" onclick="generate_bill('{{participant.shaastra_id}}');" >Generate Bill</a>  
+        <a target ="_blank" class="btn btn-large btn-inverse" href='{{site_url}}controlroom/bill/{{participant.id}}');" >Generate Bill</a>  
        
     </div>
 

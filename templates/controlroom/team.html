@@ -99,12 +99,14 @@
     </tbody>
     </table>
     </div>
+    <label>Room</label>
     <select for="room" id="room" name="room">
       <option selected="selected" value="0">---------</option>
       {% for r in rooms %}
       <option value={{r.id}}>{{r}}</option>
       {% endfor %}
     </select><br>
+    <label>Check In Control Room</label>
     <select for="checkin" id="checkin" name="checkin">
       <option selected="selected" value="0">---------</option>
       {% for h in hostels %}
