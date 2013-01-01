@@ -59,6 +59,7 @@ def send_participants(request,form):
     mattresses = form['mattresses']
     msg = " "
     try:
+        room = AvailableRooms.objects.get(id=r)
         for u_id in form['sub_checklist']:
             profile = UserProfile.objects.get(id = u_id)
             s_id = profile.shaastra_id
@@ -78,7 +79,7 @@ def send_participants(request,form):
                                               comments = comments,
                                               )
                 new_guest.save()
-                room = AvailableRooms.objects.get(id = r)
+               # room = AvailableRooms.objects.get(id = r)
                 room.already_checkedin = room.already_checkedin + 1
         if room:
             room.mattresses = room.mattresses + int(mattresses)
