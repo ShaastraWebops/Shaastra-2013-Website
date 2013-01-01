@@ -113,7 +113,7 @@ def generateParticipantPDF(s_id):
     
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = \
-        'filename=Accomodation Bill.pdf'
+        'filename=AccomodationBill.pdf'
     
     # Create the PDF object, using the response object as its "file."
 

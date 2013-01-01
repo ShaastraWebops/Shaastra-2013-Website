@@ -332,5 +332,5 @@ def GenerateBill(request,pk):
     profile = UserProfile.objects.get(id = pk)
     s_id = profile.shaastra_id
     pdf = generateParticipantPDF(s_id)
-    return HttpResponse(pdf)    
+    return pdf
 
