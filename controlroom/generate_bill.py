@@ -65,8 +65,8 @@ def initNewPDFPage(pdf, page_title, page_no, (pageWidth, pageHeight),):
     y -= lineheight + cm
 
     return y
-    
-def paintParagraph(pdf, x, y, text):
+    """    
+    def paintParagraph(pdf, x, y, text):
 
     styles = getSampleStyleSheet()
     styles.add(ParagraphStyle(name = 'paraStyle', fontSize = 12))
@@ -83,31 +83,91 @@ def paintParagraph(pdf, x, y, text):
     y -= paraHeight + cm
     
     return y
-
-def printParticipantDetails(pdf, x, y, s_id):
-    try:
+    """
+def printParticipantDetails(pdf, x, y, s_id,team,n):
+    print n
+    if team == 0:
+        CD = 0
+        try:
+            checkedin = IndividualCheckIn.objects.get(shaastra_ID=s_id)  
+            profile = UserProfile.objects.get(shaastra_id = s_id)
+        except:
+            msg = "This participant has not been checked in!" 
+    else:
+        profile = UserProfile.objects.get(shaastra_id = s_id)
         checkedin = IndividualCheckIn.objects.get(shaastra_ID=s_id)  
-    except:
-        msg = "This participant has not been checked in!"  
+        leader = User.objects.get(id = profile.user_id)
+        
+    if checkedin.duration_of_stay<=3:
+        CD = 500
+    elif checkedin.duration_of_stay>3 and checkedin.duration_of_stay<=6:
+        CD = 1000
+    else:
+        CD=1500
     
     lineheight = PDFSetFont(pdf, 'Times-Roman', 12)
     
-    pdf.drawString(x, y, 'Shaastra ID: %s' % checkedin.shaastra_ID)
+    if team == 0:
+        pdf.drawString(x, y, 'Shaastra ID: %s' % checkedin.shaastra_ID)
+        y -= lineheight + (cm * 0.8)
+
+        pdf.drawString(x, y, 'Name: %s %s' % (checkedin.first_name, checkedin.last_name))
+        y -= lineheight + (cm * 0.8)
+    
+    else:
+        pdf.drawString(x, y, "Team Leader's Shaastra ID: %s" % profile.shaastra_id)    
+        y -= lineheight + (cm * 0.8)
+
+        pdf.drawString(x, y, "Team Leader's Name: %s %s" % (leader.first_name, leader.last_name))
+        y -= lineheight + (cm * 0.8)
+    
+    pdf.drawString(x, y, 'Mobile No: %s' % profile.mobile_number)
     
     y -= lineheight + (cm * 0.8)
-    
-    pdf.drawString(x, y, 'Name: %s %s' % (checkedin.first_name, checkedin.last_name))
-    
-    y -= lineheight + (cm * 0.8)
-    
-    
-    pdf.drawString(x, y, 'Mobile No: %s' % checkedin.phone_no)
+
+    pdf.drawString(x, y, 'College: %s' % profile.college)
     
     y -= lineheight + (cm * 0.8)
+
+    d = checkedin.duration_of_stay
+
     
+    pdf.drawString(x, y, 'Check In date & time: %s' % checkedin.check_in_date)
+    
+    y -= lineheight + (cm * 0.8)
+
+    pdf.drawString(x, y, 'No of days of stay: %s' % checkedin.duration_of_stay)
+    
+    y -= lineheight + (cm * 0.8)
+
+   
+    pdf.drawString(x, y, 'Caution Deposit: %s' % CD)
+    
+    y -= lineheight + (cm * 0.8)
+
+    if int(d)>2:
+        amount = CD + (320 + 160 *(int(d)-2))*n
+    else:
+        amount = CD +320*int(n)
+    pdf.drawString(x, y, 'Amount: %s' % amount)
+    
+    y -= lineheight + (cm * 0.8)
+
+    pdf.drawString(x, y, 'Mattress Room: %s' % checkedin.mattress_room)
+    
+    y -= lineheight + (cm * 0.8)
+
+    pdf.drawString(x, y, 'No of mattresses given: ' )
+    
+    y -= lineheight + (cm * 0.8)
+
+    pdf.drawString(x, y, "Coordinator's Signature:")
+    
+    y -= lineheight + (cm * 0.8)
+
     return y
 
-def generateParticipantPDF(s_id):
+def generateParticipantPDF(s_id,team,number=1):
     
     userProfile = UserProfile.objects.get(shaastra_id = s_id)
     
@@ -141,8 +201,8 @@ def generateParticipantPDF(s_id):
 
     # Print Participant Details in PDF
     
-    y = printParticipantDetails(pdf, x, y, userProfile.shaastra_id)
-        
+    y = printParticipantDetails(pdf, x, y, userProfile.shaastra_id,team,number)
+  
     pdf.showPage()
     pdf.save()
     

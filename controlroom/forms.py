@@ -137,3 +137,6 @@ class CreateTeamForm(forms.ModelForm):
         
 class TeamNameForm(forms.Form):
     team_name = forms.CharField()
+
+class TeamBillForm(forms.Form):
+    number_of_participants=forms.IntegerField()

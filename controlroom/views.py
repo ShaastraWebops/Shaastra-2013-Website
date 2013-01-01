@@ -20,7 +20,7 @@ from django.contrib.sessions.models import Session
 from datetime                   import datetime
 from controlroom.generate_bill import *
 
-@login_required(login_url=settings.SITE_URL + 'user/login/')
+@login_required
 def home(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
@@ -29,7 +29,7 @@ def home(request):
     return render_to_response('controlroom/home.html', locals(),
                               context_instance=RequestContext(request))
 
-@login_required(login_url=settings.SITE_URL + 'user/login/')
+@login_required
 def AddRoom(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
@@ -49,7 +49,7 @@ def AddRoom(request):
         return render_to_response('controlroom/AddRoomForm.html', locals(),
                               context_instance=RequestContext(request))
 
-@login_required(login_url=settings.SITE_URL + 'user/login/')
+@login_required
 def AddMultipleRooms(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
@@ -78,7 +78,7 @@ def AddMultipleRooms(request):
     return render_to_response('controlroom/AddMultipleRooms.html', locals(),
                               context_instance=RequestContext(request))
 
-@login_required(login_url=settings.SITE_URL + 'user/login/')
+@login_required
 def RoomMap(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
@@ -102,7 +102,7 @@ def RoomMap(request):
     return render_to_response('controlroom/RoomMap.html', locals(),
                               context_instance=RequestContext(request))
 
-@login_required(login_url=settings.SITE_URL + 'user/login/')
+@login_required
 def individual(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
@@ -119,7 +119,7 @@ def individual(request):
             try:
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
                 msg = "This participant is already checked-in!"
-                return render_to_response('controlroom/shaastraIDform.html', locals(),
+                return render_to_response('controlroom/individual.html', locals(),
                               context_instance=RequestContext(request)) 
             except:
                 individual_form = IndividualForm(initial = {'shaastra_ID' : participant.shaastra_id, 'first_name' : participant.user.first_name, 'last_name' : participant.user.last_name, 'phone_no' : participant.mobile_number, })
@@ -133,7 +133,7 @@ def individual(request):
         return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request))
 
-@login_required(login_url=settings.SITE_URL + 'user/login/')
+@login_required
 def team(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
@@ -194,7 +194,7 @@ def team(request):
         return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request))
 
-@login_required(login_url=settings.SITE_URL + 'user/login/')
+@login_required
 def TeamCheckIn(request,shaastraid = None):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
@@ -209,7 +209,7 @@ def TeamCheckIn(request,shaastraid = None):
         return render_to_response('controlroom/individual.html', locals(),
                               context_instance=RequestContext(request))
 
-@login_required(login_url=settings.SITE_URL + 'user/login/')
+@login_required
 def CheckOut(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
@@ -248,6 +248,7 @@ def CheckOut(request):
         return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request))
 
+@login_required
 def Register(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
@@ -327,10 +328,22 @@ def EditTeam(request):
             return HttpResponseRedirect('%suser/teams/%s/' % (settings.SITE_URL, team.id))
     
     return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
-        
-def GenerateBill(request,pk):
+
+@login_required        
+def GenerateBill(request,pk,team):
     profile = UserProfile.objects.get(id = pk)
-    s_id = profile.shaastra_id
-    pdf = generateParticipantPDF(s_id)
-    return pdf
+    s_id = profile.shaastra_id    
+    if int(team) == 0:
+        pdf = generateParticipantPDF(s_id,team)
+        return pdf
+    else:
+        form = TeamBillForm()
+        if request.method == 'POST':
+            form = TeamBillForm(request.POST)
+            if form.is_valid():
+                pdf = generateParticipantPDF(s_id,team,form.cleaned_data['number_of_participants'])
+                return pdf  
+        return render_to_response('controlroom/shaastraIDform.html', locals(),
+                              context_instance=RequestContext(request))
+    
 
