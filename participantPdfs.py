@@ -230,21 +230,21 @@ def generateParticipantPDF(user):
     
     # Print Event Participation Details in PDF
     
-    singularEventRegistrations = EventSingularRegistration.objects.filter(user = user)
-    userTeams = user.joined_teams.all()
+    #singularEventRegistrations = EventSingularRegistration.objects.filter(user = user)
+    #userTeams = user.joined_teams.all()
     
-    if (not singularEventRegistrations) and (not userTeams):
-        # The user is not registered for any event.
-        buffer.close()
-        return None
-        y -= cm * 0.5
-        pdf.drawString(x, y, 'You are not registered for any events this Shaastra')
+    #if (not singularEventRegistrations) and (not userTeams):
+    #    # The user is not registered for any event.
+    #    buffer.close()
+    #    return None
+    #    y -= cm * 0.5
+    #    pdf.drawString(x, y, 'You are not registered for any events this Shaastra')
     
-    else:
-        pdf.showPage()
-        y = initNewPDFPage(pdf, A4, userProfile.shaastra_id, userProfile.user.username)
+    #else:
+    #    pdf.showPage()
+    #    y = initNewPDFPage(pdf, A4, userProfile.shaastra_id, userProfile.user.username)
         
-        printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, userTeams)
+    #    printEventParticipationDetails(pdf, x, y, user, singularEventRegistrations, userTeams)
     
     pdf.showPage()
     pdf.save()
@@ -282,7 +282,7 @@ def mailPDF(user, pdf):
     message += ' Please bring <b>two printed copies</b> of this PDF with you.'
     message += ' For any queries, please contact the QMS Team at qms@shaastra.org.<br/><br/>Team Shaastra 2013<br/>'
     email = user.email
-    #email = 'swopstesting@gmail.com' #TODO: Remove this line for finale
+    email = 'swopstesting@gmail.com' #TODO: Remove this line for finale
 
     msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , [email,])
     msg.content_subtype = "html"
@@ -333,6 +333,8 @@ def generatePDFs():
     
 def remainingPDFs():
 
+    return ('Comment this line to send the Participant PDFs.')
+    
     log('\n\n**********  Now: %s  **********' % datetime.datetime.now())
 
     fileNameList = ['/home/shaastra/hospi/participantPDFs/ssq.txt', '/home/shaastra/hospi/participantPDFs/rws.txt']
@@ -371,4 +373,49 @@ def remainingPDFs():
             if participant.email:
                 mailPDF(participant, pdf)
                 #break  #TODO: Remove this for the finale
+
+def mailRoundTwo():
+    
+    #return ('Comment this line to send the Participant PDFs.')
+    
+    log('\n\n**********  Now: %s  **********' % datetime.datetime.now())
+
+    uids = []
+    
+    participants = []
+    userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
+    participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(user__is_superuser = False)
+    for profile in participantProfilesWithShaastraIds:
+        try:
+            u = profile.user
+        except:
+            continue
+        participants.append(u)
+
+    fileObj = open('/home/shaastra/hospi/participantPDFs/mailed.txt', 'r')
+    log('\n\nOpened %s.' % 'mailed.txt')
+    for line in fileObj:
+        t = line[:-1]  # -1 to remove the last \n character.
+        if t:
+            uids.append(t)
+    fileObj.close()
+    log('Closed %s.' % 'mailed.txt')
+
+    uids = list(set(uids))  # To get rid of duplicates
+    
+    for uid in uids:
+        participants = participants.exclude(pk = uid)
+        
+    if not participants:
+        log('No new participants. All participants have been mailed.')
+        
+    for participant in participants:
+        log(participant.id)
+        pdf = generateParticipantPDF(participant)
+        if pdf is None:
+            continue
+        savePDF(pdf, participant)
+        if participant.email:
+            mailPDF(participant, pdf)
+            break  #TODO: Remove this for the finale
 
