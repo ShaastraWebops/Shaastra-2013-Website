@@ -282,7 +282,7 @@ def mailPDF(user, pdf):
     message += ' Please bring <b>two printed copies</b> of this PDF with you.'
     message += ' For any queries, please contact the QMS Team at qms@shaastra.org.<br/><br/>Team Shaastra 2013<br/>'
     email = user.email
-    email = 'swopstesting@gmail.com' #TODO: Remove this line for finale
+    #email = 'swopstesting@gmail.com' #TODO: Remove this line for finale
 
     msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , [email,])
     msg.content_subtype = "html"
@@ -419,7 +419,7 @@ def mailRoundTwo():
         savePDF(pdf, participant)
         if participant.email:
             mailPDF(participant, pdf)
-            break  #TODO: Remove this for the finale
+            #break  #TODO: Remove this for the finale
             
 def checkData(**kwargs):
 
