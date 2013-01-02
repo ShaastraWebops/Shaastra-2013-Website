@@ -420,4 +420,45 @@ def mailRoundTwo():
         if participant.email:
             mailPDF(participant, pdf)
             break  #TODO: Remove this for the finale
+            
+def checkData(**kwargs):
+
+    for key in kwargs.keys():
+        if key[:len('UserProfile')] == 'UserProfile':
+            finalKey = key[len('UserProfile'):]
+            searchParams = {finalKey: kwargs[key]}
+            profiles = UserProfile.objects.filter(**searchParams)
+            users = []
+            for profile in profiles:
+                try:
+                    users.append(profile.user)
+                except:
+                    continue
+        else:
+            finalKey = key
+            searchParams = {finalKey: kwargs[key]}
+            users = User.objects.filter(**searchParams)
+        if len(users) == 0:
+            print 'No users found with the input data'
+            return None
+        else:
+            print 'Data found...\n'
+            for user in users:
+                string = user.username + ': ' + user.first_name + ' ' + user.last_name + ' (' + user.id + ')'
+                string += '\n' + user.email + '                '
+                try:
+                    f = open('/home/shaastra/hospi/participantPDFs/SHA'+str(1300000+user.pk)+'-registration-details.pdf', 'r')
+                except:
+                    string += 'NOT mailed'
+                    pass
+                else:
+                    f.close()
+                    string += 'Mailed\n'
+                print string
+
+            if len(users) == 1:
+                return users[0]
+                
+            else:
+                return users
 
