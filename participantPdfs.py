@@ -130,10 +130,10 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
         accountDetails += 'Gender:       <b>%s</b><br/><br/>' % ''
     accountDetails += 'Age:          <b>%s</b><br/><br/>' % str(userProfile.age) if userProfile.age else ''
 
-    if userProfile.want_accomodation:
-        accountDetails += '<br/><b>Accomodation requested</b><br/><br/>'
-    else:
-        accountDetails += '<br/><b>Accomodation not requested</b><br/><br/>'
+    #if userProfile.want_accomodation:
+    #    accountDetails += '<br/><b>Accomodation requested</b><br/><br/>'
+    #else:
+    #    accountDetails += '<br/><b>Accomodation not requested</b><br/><br/>'
     
     y = paintParagraph(pdf, x, y, accountDetails)
 
@@ -146,7 +146,7 @@ def printParticipantDetails(pdf, x, y, user, userProfile):
     y -= cm*0.7
     y = paintParagraph(pdf, x, y, qmsInstruction)
     
-    qmsInstruction = '</para><para alignment="left"><br/><br/>1. Please carry a printout or an e-copy of this form.<br/><br/>2. Every participant must register for Shaastra at the <b>QMS Desk (KV Grounds) or the Hospitality Control Rooms (Mahanadi for boys, Sharavati for girls)</b> after reaching IIT Madras.<br/><br/>3. Upon paying a sum of INR 100, the participant would receive a <b>Shaastra Passport</b> (non transferable)<br/><br/>4. The Shaastra Passport will be your official entry to Shaastra allowing you to register at the <b>Event Venue</b> and participate for events.<br/><br/>5. For more information, please drop us a mail at qms@shaastra.org</para>'
+    qmsInstruction = '</para><para alignment="left"><br/><br/>1. Every participant must bring a printed/e-copy of this form.<br/><br/>2. Every participant can collect his/her Shaastra Passport from the Registration (QMS) Desk (KV Grounds) or one of the Hospitality Control Rooms (Ganga Hostel for Boys and Sharavati Hostel for Girls)  on payment of INR 100.<br/><br/>3. The Shaastra Passport is NON TRANSFERABLE.<br/><br/>4. In case you lose your Shaastra Passport, you can collect a new one at the Registration Desk, on payment of INR 100. To collect the new passport, you need to show this form again.<br/><br/>5. The Shaastra Passport will be your official entry to Shaastra, and will be used to register you for Events, issuing certificates, accommodation and cash prizes.<br/><br/>6. For any queries, please drop us a mail on qms@shaastra.org. We will get back to you within 24 hours.<br/><br/>QMS Team</para>'
     
     y += cm*0.7
     y = paintParagraph(pdf, x, y, qmsInstruction)
