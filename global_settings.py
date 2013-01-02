@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'dajaxice',
     'dajax',
     'recaptcha',
+    'prizes',
 )
 
 # A sample logging configuration. The only tangible logging

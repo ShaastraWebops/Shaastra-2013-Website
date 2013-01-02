@@ -258,7 +258,7 @@ def Register(request):
         return HttpResponseRedirect(settings.SITE_URL)
     form = UserForm()
     if request.method == 'POST':
-        form = UserForm(request.POST,initial=values)
+        form = UserForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             new_user = User(first_name=data['first_name'],
@@ -278,7 +278,7 @@ def Register(request):
                 college=data['college'],
                 college_roll=data['college_roll'],
                 shaastra_id= ("SHA" + str(x)),
-                want_accommodation = True,
+                want_accomodation = True,
                 )
             userprofile.save()
             msg = "Your Shaastra ID is " + shaastra_id
