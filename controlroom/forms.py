@@ -62,6 +62,7 @@ class AddMultipleRoomsForm(forms.Form):
     rooms = forms.FileField(required = True)
     
 class ShaastraIDForm(forms.Form):
+    barcode = forms.CharField(required = False,help_text = 'Scan Barcode')
     shaastraID = forms.CharField(required = False,help_text = 'Enter Shaastra ID')
     email = forms.CharField(required = False,help_text = 'Enter Email ID')
 

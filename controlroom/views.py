@@ -113,6 +113,9 @@ def individual(request):
             inputs = form.cleaned_data
             if inputs['shaastraID']:
                 participant = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+            elif inputs['barcode']:
+                shaastra_id = BarcodeMap.objects.using('erp').get(barcode=inputs['barcode'])
+                participant = UserProfile.objects.get(shaastra_id=shaastra_id)
             else:
                 usr = User.objects.get(email = inputs['email'])
                 participant = UserProfile.objects.get(user = usr)
