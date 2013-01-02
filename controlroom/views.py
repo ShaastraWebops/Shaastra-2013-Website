@@ -253,17 +253,15 @@ def CheckOut(request):
 def Register(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
-    values = {'want_accomodation':True}
-    form = UserForm(initial=values)
+    form = UserForm()
     if request.method == 'POST':
-        values = {'want_accomodation':True}
         form = UserForm(request.POST,initial=values)
         if form.is_valid():
             data = form.cleaned_data
             new_user = User(first_name=data['first_name'],
                             last_name=data['last_name'],
                             username=data['username'], email=data['email'])
-            new_user.set_password(data['password'])
+            new_user.set_password('default')
             new_user.is_active = True
             new_user.save()
             x = 1300000 + new_user.id   
@@ -277,6 +275,7 @@ def Register(request):
                 college=data['college'],
                 college_roll=data['college_roll'],
                 shaastra_id= ("SHA" + str(x)),
+                want_accommodation = True,
                 )
             userprofile.save()
             msg = "Your Shaastra ID is " + shaastra_id
