@@ -471,3 +471,19 @@ def checkData(**kwargs):
             else:
                 return users
 
+def addLeadersToMembers():
+    teams = Team.objects.all()
+    for team in teams:
+        print team.name
+        try:
+            l = team.leader
+        except:
+            print 'Bad team. No leader.'
+            print '\n'
+            continue
+        if l not in team.members.all():
+            print 'Leader: ' + l.username
+            print str(team.members.all())
+            team.members.add(l)
+            print 'After adding: ' + str(team.members.all())
+            print '\n'
