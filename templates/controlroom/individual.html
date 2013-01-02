@@ -57,11 +57,11 @@
         {{ individual_form.as_table }}
     </table>
     </div>
-    {% if request.get_full_path == "/controlroom/individual/" %}
+    {% if request.get_full_path == "/2013/main/controlroom/individual/" %}
         <button class="btn btn-primary" onclick="checkin();" type ='button' value='Save'>Check In</button><br><hr>
         <a class="btn btn-large btn-inverse" href='{{site_url}}controlroom/individual/'>Back</a>  
     {% else %}
-    {% if request.get_full_path == "/controlroom/checkout/" %}
+    {% if request.get_full_path == "/2013/main/controlroom/checkout/" %}
         <button class="btn btn-primary" onclick="checkout('{{participant.shaastra_id}}');" type ='button' value='Save'>Check Out</button>
         <a class="btn btn-large btn-inverse" href='{{site_url}}controlroom/checkout/'>Back</a>     
     {% else %}
