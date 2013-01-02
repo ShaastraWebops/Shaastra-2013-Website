@@ -444,7 +444,7 @@ def checkData(**kwargs):
         else:
             print 'Data found...\n'
             for user in users:
-                string = user.username + ': ' + user.first_name + ' ' + user.last_name + ' (' + user.id + ')'
+                string = user.username + ': ' + user.first_name + ' ' + user.last_name + ' (' + str(user.id) + ')'
                 string += '\n' + user.email + '                '
                 try:
                     f = open('/home/shaastra/hospi/participantPDFs/SHA'+str(1300000+user.pk)+'-registration-details.pdf', 'r')
