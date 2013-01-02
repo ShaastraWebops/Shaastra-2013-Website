@@ -65,27 +65,66 @@ def initNewPDFPage(pdf, page_title, page_no, (pageWidth, pageHeight),):
     y -= lineheight + cm
 
     return y
-    """    
-    def paintParagraph(pdf, x, y, text):
 
-    styles = getSampleStyleSheet()
-    styles.add(ParagraphStyle(name = 'paraStyle', fontSize = 12))
+def generatetable(pdf, x, y, leader, team):
+
+    print team 
+
+    lineheight = PDFSetFont(pdf, 'Times-Bold', 16)
+
+    (A4Width, A4Height) = A4
+
+    pdf.drawCentredString(A4Width/2, y, 'TEAM ACCOMODATION DETAILS')
+
+    y -= lineheight + cm
+
+    # Construct the table data
     
-    p = Paragraph(text, styles['paraStyle'], None) # None for bullet type
 
+    
+    tableData = [ ['Shaastra ID', 'Room'] ]
+    
+    tm = Team.objects.filter(leader = leader)
+    for t in tm:
+        for m in t.members.all():
+            if int(team) == 1:
+                try:
+                    profile = UserProfile.objects.get(user = m,gender = 'M')
+                    checkin = IndividualCheckIn.objects.get(shaastra_ID = profile.shaastra_id)
+                    tableData.append([checkin.shaastra_ID, checkin.room])
+                except:
+                    pass
+            elif int(team) == 2:
+                print m
+                try:
+                    profile = UserProfile.objects.get(user = m,gender = 'F')
+                    checkin = IndividualCheckIn.objects.get(shaastra_ID = profile.shaastra_id)
+                    tableData.append([checkin.shaastra_ID, checkin.room])
+                except:
+                    pass    
+            
+        
+    t = Table(tableData, repeatRows=1)
+
+    # Set the table style
+
+    tableStyle = TableStyle([ ('FONTNAME', (0, 1), (-1, -1), 'Times-Roman'), # Font style for Table Data
+                              ('FONTNAME', (0, 0), (-1, 0), 'Times-Bold'), # Font style for Table Header
+                              ('FONTSIZE', (0, 0), (-1, -1), 12),
+                              ('ALIGN', (0, 0), (-1, -1), 'CENTRE'),
+                              ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                              ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                            ])
+    t.setStyle(tableStyle)
     (A4Width, A4Height) = A4
     availableWidth = A4Width - 2 * cm  # Leaving margins of 1 cm on both sides
     availableHeight = y
-    (paraWidth, paraHeight) = p.wrap(availableWidth, availableHeight)  # find required space
+    (tableWidth, tableHeight) = t.wrap(availableWidth, availableHeight)  # find required space
     
-    p.drawOn(pdf, x, y - paraHeight)
-    
-    y -= paraHeight + cm
-    
-    return y
-    """
+    t.drawOn(pdf, x, y - tableHeight)
+
 def printParticipantDetails(pdf, x, y, s_id,team,n):
-    print n
+    print team
     if team == 0:
         CD = 0
         try:
@@ -201,8 +240,11 @@ def generateParticipantPDF(s_id,team,number=1):
 
     # Print Participant Details in PDF
     
-    y = printParticipantDetails(pdf, x, y, userProfile.shaastra_id,team,number)
+    y = printParticipantDetails(pdf, x, y, userProfile.shaastra_id,int(team),number)
   
+    if not int(team) == 0:
+        generatetable(pdf,x,y,userProfile.user,team)
+
     pdf.showPage()
     pdf.save()
     
