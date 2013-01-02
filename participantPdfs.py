@@ -230,13 +230,13 @@ def generateParticipantPDF(user):
     
     # Print Event Participation Details in PDF
     
-    #singularEventRegistrations = EventSingularRegistration.objects.filter(user = user)
-    #userTeams = user.joined_teams.all()
+    singularEventRegistrations = EventSingularRegistration.objects.filter(user = user)
+    userTeams = user.joined_teams.all()
     
-    #if (not singularEventRegistrations) and (not userTeams):
-    #    # The user is not registered for any event.
-    #    buffer.close()
-    #    return None
+    if (not singularEventRegistrations) and (not userTeams):
+        # The user is not registered for any event.
+        buffer.close()
+        return None
     #    y -= cm * 0.5
     #    pdf.drawString(x, y, 'You are not registered for any events this Shaastra')
     
@@ -404,10 +404,12 @@ def mailRoundTwo():
     uids = list(set(uids))  # To get rid of duplicates
     
     for uid in uids:
-        participants = participants.exclude(pk = uid)
-        
-    if not participants:
-        log('No new participants. All participants have been mailed.')
+        try:
+            participants.remove(User.objects.get(pk=int(uid)))
+        except User.DoesNotExist:
+            continue
+        except ValueError:
+            continue
         
     for participant in participants:
         log(participant.id)
