@@ -16,6 +16,7 @@ urlpatterns = patterns(
     url(r'^roommap/$', RoomMap),
     url(r'^addmanyrooms/$', AddMultipleRooms),
     url(r'^checkin/(?P<shaastraid>[\w]+)/?$', TeamCheckIn),
+    url(r'^details/(?P<id>[\w]+)/?$', RoomDetails),
     url(r'^checkout/$', CheckOut),
     url(r'^register/$', Register),
     url(r'^createteam/$', CreateTeam),

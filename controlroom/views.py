@@ -118,6 +118,7 @@ def individual(request):
                 participant = UserProfile.objects.get(user = usr)
             try:
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
+                individual_form = IndividualForm(instance = checkedin)
                 msg = "This participant is already checked-in!"
                 return render_to_response('controlroom/individual.html', locals(),
                               context_instance=RequestContext(request)) 
@@ -346,4 +347,12 @@ def GenerateBill(request,pk,team):
         return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request))
     
-
+@login_required
+def RoomDetails(request,id):
+    room = AvailableRooms.objects.get(id = id)
+    try:
+        checkedin = IndividualCheckIn.objects.filter(room = room)
+    except:
+        msg = "Room is currently empty!"
+    return render_to_response('controlroom/RoomDetails.html', locals(),
+                              context_instance=RequestContext(request))

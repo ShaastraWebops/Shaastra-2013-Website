@@ -22,7 +22,7 @@ def save_individual_checkin(request,form):
         form = individual_form.save()
         room = AvailableRooms.objects.get(id = form.room_id)
         room.already_checkedin = room.already_checkedin + 1
-        room.mattresses = room.mattresses + form.number_of_mattresses_given
+        #room.mattresses = room.mattresses + form.number_of_mattresses_given
         room.save()
         msg = "Checked In Successfully!"
         dajax.alert(msg)
@@ -69,7 +69,6 @@ def send_participants(request,form):
             except:
                 new_guest = IndividualCheckIn(room = rm,
                                               duration_of_stay=duration,
-                                              number_of_mattresses_given=mattresses,
                                               mattress_room = form['mattroom'],
                                               shaastra_ID = profile.shaastra_id,
                                               first_name = profile.user.first_name,
@@ -98,7 +97,6 @@ def send_participants(request,form):
             profile = UserProfile.objects.get(shaastra_id = s_id)
             new_guest = IndividualCheckIn(room = rm,
                                           duration_of_stay=duration,
-                                          number_of_mattresses_given=mattresses,
                                           mattress_room = form['mattroom'],
                                           shaastra_ID = profile.shaastra_id,
                                           first_name = profile.user.first_name,
@@ -110,7 +108,7 @@ def send_participants(request,form):
             new_guest.save()
             room = AvailableRooms.objects.get(id = r)
             room.already_checkedin = room.already_checkedin + 1
-            room.mattresses = room.mattresses + new_guest.number_of_mattresses_given
+            room.mattresses = room.mattresses + int(mattresses)
             room.save()
             msg = "Checked In successfully!"
     dajax.alert(msg)

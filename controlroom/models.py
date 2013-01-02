@@ -34,7 +34,7 @@ class AvailableRooms(models.Model):
 class IndividualCheckIn(models.Model):
     room = models.ForeignKey(AvailableRooms)
     duration_of_stay = models.IntegerField()
-    number_of_mattresses_given = models.IntegerField()
+    number_of_mattresses_given = models.IntegerField(blank = True)
     mattress_room = models.CharField(max_length = 20)
     shaastra_ID = models.CharField(max_length = 20)
     first_name = models.CharField(max_length = 50)
