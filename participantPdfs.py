@@ -444,12 +444,21 @@ def checkData(**kwargs):
         else:
             print 'Data found...\n'
             for user in users:
-                string = user.username + ': ' + user.first_name + ' ' + user.last_name + ' (' + str(user.id) + ')'
-                string += '\n' + user.email + '                '
+                string = user.username + ': ' + user.first_name + ' ' + user.last_name + ' (' + str(user.id) + ')  -->  '
+                string += user.email
+                singularEventRegistrations = EventSingularRegistration.objects.filter(user = user)
+                userTeams = user.joined_teams.all()
+                string += '\n  Singular Events:' + str(singularEventRegiatrations)
+                string += '\n  Teams:' + str(userTeams)
+                string += '\n    '
                 try:
                     f = open('/home/shaastra/hospi/participantPDFs/SHA'+str(1300000+user.pk)+'-registration-details.pdf', 'r')
                 except:
-                    string += 'NOT mailed'
+                    
+                    if (not singularEventRegistrations) and (not userTeams):
+                        string += 'NO mail required'
+                    else:
+                        string += 'NOT mailed'                    
                     pass
                 else:
                     f.close()
