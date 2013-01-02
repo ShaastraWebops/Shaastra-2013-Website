@@ -448,7 +448,7 @@ def checkData(**kwargs):
                 string += user.email
                 singularEventRegistrations = EventSingularRegistration.objects.filter(user = user)
                 userTeams = user.joined_teams.all()
-                string += '\n  Singular Events:' + str(singularEventRegiatrations)
+                string += '\n  Singular Events:' + str(singularEventRegistrations)
                 string += '\n  Teams:' + str(userTeams)
                 string += '\n    '
                 try:
