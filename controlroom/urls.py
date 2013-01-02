@@ -21,4 +21,6 @@ urlpatterns = patterns(
     url(r'^register/$', Register),
     url(r'^createteam/$', CreateTeam),
     url(r'^editteam/$', EditTeam),
+    url(r'^editprofile/$', EditProfile),
+    url(r'^edituserprofile/(?P<shaastraid>[\w]+)/?$', EditUserProfile),
     )

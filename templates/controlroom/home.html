@@ -29,6 +29,13 @@ a.btn{text-decoration: none!important;margin: 0!important;}
     <label for="id_team_name">Team name:</label> <input type="text" name="team_name" id="id_team_name" />
     <input type="submit" class="btn btn-large btn-primary" value="Edit team">
 </form><br>
+<h4>USER PROFILE EDITING</h4>
+<form action="{{site_url}}controlroom/editprofile/" method="POST">
+    {% csrf_token %}
+    <label for="id_team_name">Shaastra ID:</label> <input type="text" name="shaastra_id" id="id_shaastra_id" />
+    <input type="submit" class="btn btn-large btn-primary" value="Search user...">
+</form><br>
+
 </div>
 </body>
 </html>

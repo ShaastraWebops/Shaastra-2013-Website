@@ -20,6 +20,7 @@ from django.contrib.sessions.models import Session
 from datetime                   import datetime
 from controlroom.generate_bill import *
 from prizes.models import BarcodeMap
+from users.forms import EditUserForm
 
 @login_required
 def home(request):
@@ -360,3 +361,38 @@ def RoomDetails(request,id):
         msg = "Room is currently empty!"
     return render_to_response('controlroom/RoomDetails.html', locals(),
                               context_instance=RequestContext(request))
+@login_required
+def EditProfile(request):
+    if request.user.get_profile().is_hospi is False:
+        return HttpResponseRedirect(settings.SITE_URL)
+    
+    if request.method == 'POST':
+        shaastraid = request.POST['shaastra_id']
+        return HttpResponseRedirect('%scontrolroom/edituserprofile/%s' % (settings.SITE_URL,shaastraid))
+    else:
+        return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
+@login_required
+def EditUserProfile(request,shaastraid):
+    if request.user.get_profile().is_hospi is False:
+        return HttpResponseRedirect(settings.SITE_URL)
+    
+    if request.method == 'POST':
+        userprofile = UserProfile.objects.get(shaastra_id = shaastraid)
+        user = userprofile.user
+        editProfileForm = EditUserForm(request.POST, instance = userprofile)
+        if editProfileForm.is_valid():
+            editProfileForm.save()
+            user.first_name = request.POST['first_name']
+            user.last_name = request.POST['last_name']
+            user.save()
+            return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
+        else:
+            return render_to_response('users/edit_profile.html', locals(),context_instance=RequestContext(request))
+    else:
+        userprofile = UserProfile.objects.get(shaastra_id = shaastraid)
+        user = userprofile.user
+        values = {'first_name': user.first_name,
+                  'last_name': user.last_name}
+        editProfileForm = EditUserForm(instance = userprofile, initial = values)
+        return render_to_response('users/edit_profile.html', locals(),context_instance=RequestContext(request))
+

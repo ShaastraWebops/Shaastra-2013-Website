@@ -19,7 +19,7 @@ class Participant(models.Model):
     college_roll = models.CharField(max_length=40, null=True)
     shaastra_id = models.CharField(max_length=30, blank=True)
     events = models.ManyToManyField(Event,
-            related_name='participants', null=True)
+            related_name='participant', null=True)
     
     def __str__(self):
         return self.shaastra_id
