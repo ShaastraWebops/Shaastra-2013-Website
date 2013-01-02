@@ -19,6 +19,7 @@ from controlroom.forms import *
 from django.contrib.sessions.models import Session
 from datetime                   import datetime
 from controlroom.generate_bill import *
+from prizes.models import BarcodeMap
 
 @login_required
 def home(request):
@@ -114,7 +115,8 @@ def individual(request):
             if inputs['shaastraID']:
                 participant = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
             elif inputs['barcode']:
-                shaastra_id = BarcodeMap.objects.using('erp').get(barcode=inputs['barcode'])
+                barcode = BarcodeMap.objects.using('erp').get(barcode=inputs['barcode'])
+                shaastra_id = barcode.shaastra_id
                 participant = UserProfile.objects.get(shaastra_id=shaastra_id)
             else:
                 usr = User.objects.get(email = inputs['email'])
