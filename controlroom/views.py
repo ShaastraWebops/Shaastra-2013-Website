@@ -499,7 +499,7 @@ def SiteCSVRegn(request):
                     newBarcode = BarcodeMap()
                     newBarcode.shaastra_id = newUserProfile.shaastra_id
                     newBarcode.barcode = recordDetails[BARCODE]
-                    newBarcode.save().using('erp')
+                    newBarcode.save(using = 'erp')
 
                     freshCreations.append((newUser.username, newUserProfile.shaastra_id, recordDetails[BARCODE]))
                     numCreations += 1
