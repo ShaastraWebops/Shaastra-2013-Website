@@ -17,7 +17,7 @@ from controlroom.models import *
 from django.utils.translation import ugettext as _
 from controlroom.forms import *
 from django.contrib.sessions.models import Session
-from datetime                   import datetime
+from datetime import datetime
 from controlroom.generate_bill import *
 from prizes.models import BarcodeMap, Participant
 from users.forms import EditUserForm
@@ -156,8 +156,8 @@ def team(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
     msg = "Enter Shaastra ID of Team leader"
-    rooms = AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel')
-    hostels = HOSTEL_CHOICES
+    rooms = AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel').order_by('room_no')
+    checkin = CONTROL_ROOM_CHOICES
     matt = MATTRESS_CHOICES
     if request.method == 'POST':
         form = ShaastraIDForm(request.POST)
@@ -325,8 +325,9 @@ def CheckOut(request):
                     return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request)) 
                 else:
-                    values = {'check_out_date': datetime.now,'check_out_control_room':checkedin.check_in_control_room}
-                    individual_form = IndividualForm(instance=checkedin,initial=values)
+                    values = {'check_out_date': datetime.now(),'check_out_control_room':checkedin.check_in_control_room}
+                    print datetime.now()
+                    individual_form = IndividualForm(initial=values,instance=checkedin)
                     return render_to_response('controlroom/individual.html', locals(),
                                           context_instance=RequestContext(request))
             except:
