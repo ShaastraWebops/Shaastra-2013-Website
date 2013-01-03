@@ -413,7 +413,7 @@ def mailRoundTwo():
         except ValueError:
             continue
         else:
-            log('Already mailed uid %d. Removing from mailing list.' % uid)
+            log('Already mailed uid %d. Removing from mailing list.' % int(uid))
         
     for participant in participants:
         log(participant.id)
