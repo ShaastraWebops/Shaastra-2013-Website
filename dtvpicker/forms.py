@@ -55,7 +55,8 @@ class SubEventForm(ModelForm):
             
                 # The events clash.
                 # Must tell user from when to when the venue is booked.
-                subEventDTVClashMsgs.append(u'%s is unavailable from %s to %s.' % (venue, 
+                subEventDTVClashMsgs.append(u'%s is booked by %s from %s to %s.' % (venue, 
+                                                                                   subevent.title,
                                                                                    subEvent.start_date_and_time, 
                                                                                    subEvent.end_date_and_time))
 
