@@ -64,7 +64,7 @@
     
     {% for m in checkedin_profiles %}
     <tr>
-        <td><input for ="sub_checklist" type="checkbox" name="sub_checklist" class="checkbox" value="{{m.id}}" /></td>
+        <td><input for ="sub_checklist" type="checkbox" name="sub_checklist" class="checkbox" value="{{m.shaastra_id}}" /></td>
         <td width ='120'>{{m.shaastra_ID}}</td>
         <td width ='120'>{{m.gender}}</td>
         <td width ='120'>{{m.first_name}}</td>
@@ -84,7 +84,7 @@
  
     {% for m in new_profiles %}
     <tr>
-        <td><input for = "sub_checklist" type="checkbox" name="sub_checklist" class="checkbox" value="{{m.id}}" /></td>
+        <td><input for = "sub_checklist" type="checkbox" name="sub_checklist" class="checkbox" value="{{m.shaastra_id}}" /></td>
         <td width ='120'>{{m.shaastra_id}}</td>
         <td width ='120'>{{m.gender}}</td>
         <td width ='120'>{{m.user.first_name}}</td>
