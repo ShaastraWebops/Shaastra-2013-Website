@@ -121,9 +121,9 @@ def individual(request):
                     return render_to_response('controlroom/shaastraIDform.html', locals(),
                                       context_instance=RequestContext(request))
             elif inputs['barcode']:
-                barcode = BarcodeMap.objects.using('erp').get(barcode=inputs['barcode'])
-                shaastra_id = barcode.shaastra_id
                 try:
+                    barcode = BarcodeMap.objects.using('erp').get(barcode=inputs['barcode'])
+                    shaastra_id = barcode.shaastra_id
                     participant = UserProfile.objects.get(shaastra_id=shaastra_id)
                 except:
                     msg = "The entered barcode does not correspond to an existing shaastra ID."
@@ -166,15 +166,29 @@ def team(request):
         form = ShaastraIDForm(request.POST)
         if form.is_valid():
             inputs = form.cleaned_data
-            try:
+            if inputs['shaastraID']:
                 try:
                     leader = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
                 except:
+                    msg = "This participant does not exist"
+                    return render_to_response('controlroom/shaastraIDform.html', locals(),
+                              context_instance=RequestContext(request)) 
+            elif inputs['barcode']:
+                try:
+                    barcode = BarcodeMap.objects.using('erp').get(barcode=inputs['barcode'])
+                    shaastra_id = barcode.shaastra_id
+                    leader = UserProfile.objects.get(shaastra_id=shaastra_id)
+                except:
+                    msg = "The entered barcode does not correspond to an existing shaastra ID."
+                    return render_to_response('controlroom/shaastraIDform.html', locals(),
+                                      context_instance=RequestContext(request))
+            else:
+                try:
                     usr = User.objects.get(email = inputs['email'])
                     leader = UserProfile.objects.get(user = usr)
-            except:
-                msg = "This participant does not exist"
-                return render_to_response('controlroom/shaastraIDform.html', locals(),
+                except:
+                    msg = "This participant does not exist"
+                    return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request)) 
             check = 0
             try:
@@ -386,9 +400,14 @@ def EditProfile(request):
         shaastraid = request.POST['shaastra_id']
         barcode = request.POST['barcode']
         if barcode :
-            barcode_obj = BarcodeMap.objects.using('erp').get(barcode=barcode)
-            shaastraid = barcode_obj.shaastra_id
-            return HttpResponseRedirect('%scontrolroom/edituserprofile/%s' % (settings.SITE_URL,shaastraid))
+            try:
+                barcode_obj = BarcodeMap.objects.using('erp').get(barcode=barcode)
+                shaastraid = barcode_obj.shaastra_id
+                return HttpResponseRedirect('%scontrolroom/edituserprofile/%s' % (settings.SITE_URL,shaastraid))
+            except:
+                msg = "Please enter a valid Shaastra ID or Barcode."
+            return render_to_response('controlroom/home.html', locals(),
+                              context_instance=RequestContext(request))
         elif shaastraid:
             return HttpResponseRedirect('%scontrolroom/edituserprofile/%s' % (settings.SITE_URL,shaastraid))
         else:
