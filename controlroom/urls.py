@@ -23,4 +23,5 @@ urlpatterns = patterns(
     url(r'^editteam/$', EditTeam),
     url(r'^editprofile/$', EditProfile),
     url(r'^edituserprofile/(?P<shaastraid>[\w]+)/?$', EditUserProfile),
+    url(r'^siteregncsv/?$', SiteCSVRegn),
     )
