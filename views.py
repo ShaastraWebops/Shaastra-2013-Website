@@ -59,6 +59,8 @@ def home(request):
             return HttpResponseRedirect(settings.SITE_URL + 'core/')
         elif request.user.get_profile().is_coord_of:
             return HttpResponseRedirect(settings.SITE_URL + 'coord/')
+        elif request.user.get_profile().is_hospi:
+            return HttpResponseRedirect(settings.SITE_URL + 'controlroom/home/')
         else:
             return render_to_response('index.html',locals(),context_instance = RequestContext(request))
     else:
