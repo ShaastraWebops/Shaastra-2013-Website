@@ -68,7 +68,7 @@ def AddMultipleRooms(request):
                 line_number += 1
                 rooms.append(line)
                 try:
-                    room = AvailableRooms.objects.get(room_no = line.split(',')[0])
+                    room = AvailableRooms.objects.get(room_no = line.split(',')[0],hostel =  line.split(',')[1])
                 except:
                     room = AvailableRooms(
                                 room_no = line.split(',')[0],
