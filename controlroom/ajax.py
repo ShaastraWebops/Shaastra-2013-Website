@@ -61,53 +61,19 @@ def send_participants(request,form,uid):
     comments = form['comments'] 
     duration = form['no_of_days']
     mattresses = form['mattresses']
+    u_ids = form['sub_checklist']
+    if not isinstance(u_ids, list):
+        u_ids = [u_ids]
     msg = " "
-    try:
-        room = AvailableRooms.objects.get(id = r)
-        for u_id in form['sub_checklist']:
-            profile = UserProfile.objects.get(id = u_id)
-            s_id = profile.shaastra_id
-            try:
-                checkedin = IndividualCheckIn.objects.get(shaastra_ID = s_id)
-                msg = msg + s_id + ','
-            except:
-                new_guest = IndividualCheckIn(room = rm,
-                                              gender = profile.gender,
-                                              duration_of_stay=duration,
-                                              mattress_room = form['mattroom'],
-                                              shaastra_ID = profile.shaastra_id,
-                                              first_name = profile.user.first_name,
-                                              last_name = profile.user.last_name,
-                                              phone_no = profile.mobile_number,
-                                              check_in_control_room = check_in,
-                                              comments = comments,
-                                              )
-                new_guest.save()
-                room.already_checkedin = room.already_checkedin + 1
-        if room:
-            room.mattresses = room.mattresses + int(mattresses)
-            room.save()
-        try:
-            matt = Mattresses.objects.get(team_leader_id = leader.shaastra_id)
-            matt.no_of_mattresses = matt.no_of_mattresses + int(mattresses)
-            matt.save()
-        except:
-            matt = Mattresses(team_leader_id = leader.shaastra_id,
-                              no_of_mattresses = int(mattresses))
-            matt.save()
-        if msg == " ":
-            msg = "All members checked in successfully!"
-        else:
-            msg = msg + " already checked in"
-    except:
-        u_id = form['sub_checklist']
+    room = AvailableRooms.objects.get(id = r)
+
+    for u_id in u_ids:
         profile = UserProfile.objects.get(id = u_id)
         s_id = profile.shaastra_id
         try:
             checkedin = IndividualCheckIn.objects.get(shaastra_ID = s_id)
-            msg = s_id + " is already checked in"
+            msg = msg + s_id + ','
         except:
-            profile = UserProfile.objects.get(shaastra_id = s_id)
             new_guest = IndividualCheckIn(room = rm,
                                           gender = profile.gender,
                                           duration_of_stay=duration,
@@ -120,20 +86,21 @@ def send_participants(request,form,uid):
                                           comments = comments,
                                           )
             new_guest.save()
-            try:
-                matt = Mattresses.objects.get(team_leader_id = leader.shaastra_id)
-                matt.no_of_mattresses = matt.no_of_mattresses + int(mattresses)
-                matt.save()
-            except:
-                matt = Mattresses(team_leader_id = leader.shaastra_id,
-                                  no_of_mattresses = int(mattresses))
-                matt.save()
-            room = AvailableRooms.objects.get(id = r)
             room.already_checkedin = room.already_checkedin + 1
-            room.mattresses = room.mattresses + int(mattresses)
-            room.save()
-            msg = "Checked In successfully!"
+    if room:
+        room.mattresses = room.mattresses + int(mattresses)
+        room.save()
+    try:
+        matt = Mattresses.objects.get(team_leader_id = leader.shaastra_id)
+        matt.no_of_mattresses = matt.no_of_mattresses + int(mattresses)
+        matt.save()
+    except:
+        matt = Mattresses(team_leader_id = leader.shaastra_id,
+                          no_of_mattresses = int(mattresses))
+        matt.save()
+    if msg == " ":
+        msg = "All members checked in successfully!"
+    else:
+        msg = msg + " already checked in"
     dajax.alert(msg)
     return dajax.json()
-
-
