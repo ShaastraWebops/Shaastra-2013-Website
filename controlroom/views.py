@@ -556,7 +556,7 @@ def SiteCSVRegn(request):
                     # Create the user's profile
                     newUserProfile = UserProfile()
                     newUserProfile.user = newUser
-                    newUserProfile.mobile_no = recordDetails[MOBILE]
+                    newUserProfile.mobile_number = recordDetails[MOBILE]
                     if recordDetails[GENDER].upper() == 'M' or recordDetails[GENDER].upper() == 'MALE':
                         newUserProfile.gender = 'M'
                     else:
@@ -578,13 +578,13 @@ def SiteCSVRegn(request):
                     newParticipant.gender = newUserProfile.gender
                     newParticipant.age = newUserProfile.age
                     newParticipant.branch = newUserProfile.branch
-                    newParticipant.mobile_number = newUserProfile.mobile_no
+                    newParticipant.mobile_number = newUserProfile.mobile_number
                     newParticipant.shaastra_id = newUserProfile.shaastra_id
                     newParticipant.save(using = 'erp')
 
                     # Map to barcode
                     newBarcode = BarcodeMap()
-                    newBarcode.shaastra_id = participant
+                    newBarcode.shaastra_id = newParticipant
                     newBarcode.barcode = recordDetails[BARCODE]
                     newBarcode.save(using = 'erp')
 
