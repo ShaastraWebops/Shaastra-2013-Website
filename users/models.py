@@ -78,7 +78,7 @@ class UserProfile(models.Model):
                               # No age limit now.
     branch = models.CharField(max_length=50, blank=True, null=True,
                               help_text='Your branch of study')
-    mobile_number = models.CharField(max_length=15, null=True,
+    mobile_number = models.CharField(max_length=15, blank=True, null=True,
             help_text='Please enter your current mobile number')
     college = models.ForeignKey(College, null=True, blank=True)
     college_roll = models.CharField(max_length=40, null=True)

@@ -85,22 +85,17 @@ def RoomMap(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
     alak = AvailableRooms.objects.filter(hostel='Alakananda').order_by('room_no')
-    brahms = AvailableRooms.objects.filter(hostel='Brahmaputra').order_by('room_no')
-    cauvery = AvailableRooms.objects.filter(hostel='Cauvery').order_by('room_no')
     ganga = AvailableRooms.objects.filter(hostel='Ganga').order_by('room_no')
-    godav = AvailableRooms.objects.filter(hostel='Godavari').order_by('room_no')
     jam = AvailableRooms.objects.filter(hostel='Jamuna').order_by('room_no')
-    krishna = AvailableRooms.objects.filter(hostel='Krishna').order_by('room_no')
     mahanadhi = AvailableRooms.objects.filter(hostel='Mahanadhi').order_by('room_no')
     mandak = AvailableRooms.objects.filter(hostel='Mandakini').order_by('room_no')
-    narmad = AvailableRooms.objects.filter(hostel='Narmada').order_by('room_no')
     pamba = AvailableRooms.objects.filter(hostel='Pamba').order_by('room_no')
-    saras = AvailableRooms.objects.filter(hostel='Saraswathi').order_by('room_no')
     sarayu = AvailableRooms.objects.filter(hostel='Sarayu').order_by('room_no')
     sharav = AvailableRooms.objects.filter(hostel='Sharavati').order_by('room_no')
     sindhu = AvailableRooms.objects.filter(hostel='Sindhu').order_by('room_no')
     tambi = AvailableRooms.objects.filter(hostel='Tamraparani').order_by('room_no')
-    tapti = AvailableRooms.objects.filter(hostel='Tapti').order_by('room_no')
+    sarayu_extn = AvailableRooms.objects.filter(hostel='Sarayu Extn').order_by('room_no')
+    c28 = AvailableRooms.objects.filter(hostel='C-2-8').order_by('room_no')
     return render_to_response('controlroom/RoomMap.html', locals(),
                               context_instance=RequestContext(request))
 
@@ -147,6 +142,7 @@ def team(request):
     msg = "Enter Shaastra ID of Team leader"
     rooms = AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel')
     hostels = HOSTEL_CHOICES
+    matt = MATTRESS_CHOICES
     if request.method == 'POST':
         form = ShaastraIDForm(request.POST)
         if form.is_valid():
@@ -201,6 +197,66 @@ def team(request):
         return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request))
 
+@login_required
+def IdForBill(request):
+    if request.user.get_profile().is_hospi is False:
+        return HttpResponseRedirect(settings.SITE_URL)
+    msg = "Enter Shaastra ID of Team leader"
+    rooms = AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel')
+    hostels = HOSTEL_CHOICES
+    if request.method == 'POST':
+        form = ShaastraIDForm(request.POST)
+        if form.is_valid():
+            inputs = form.cleaned_data
+            try:
+                try:
+                    leader = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+                except:
+                    usr = User.objects.get(email = inputs['email'])
+                    leader = UserProfile.objects.get(user = usr)
+            except:
+                msg = "This participant does not exist"
+                return render_to_response('controlroom/shaastraIDform.html', locals(),
+                              context_instance=RequestContext(request)) 
+            check = 0
+            try:
+                current_team = Team.objects.get(leader = leader.user)
+                check = 1
+            except:
+                current_team = Team.objects.filter(leader = leader.user)
+                check = 2
+            if not current_team:
+                msg = "This person is not a team leader"
+                return render_to_response('controlroom/shaastraIDform.html', locals(),
+                              context_instance=RequestContext(request)) 
+            checkedin_profiles = []
+            new_profiles = []
+            if check == 2:
+                for t in current_team:
+                    for m in t.members.all():
+                        profile = UserProfile.objects.get(user = m)
+                        try:
+                            checkedin = IndividualCheckIn.objects.get(shaastra_ID=profile.shaastra_id)
+                            checkedin_profiles.append(checkedin)
+                        except:
+                            new_profiles.append(profile)
+            else:
+                for m in current_team.members.all():
+                        profile = UserProfile.objects.get(user = m)
+                        try:
+                            checkedin = IndividualCheckIn.objects.get(shaastra_ID=profile.shaastra_id)
+                            checkedin_profiles.append(checkedin)
+                        except:
+                            new_profiles.append(profile)
+            return render_to_response('controlroom/idforbill.html', locals(),
+                                  context_instance=RequestContext(request))
+        else:
+            return render_to_response('controlroom/shaastraIDform.html', locals(),
+                              context_instance=RequestContext(request))
+    else:
+        form = ShaastraIDForm()
+        return render_to_response('controlroom/shaastraIDform.html', locals(),
+                              context_instance=RequestContext(request))    
 @login_required
 def TeamCheckIn(request,shaastraid = None):
     if request.user.get_profile().is_hospi is False:
@@ -336,22 +392,43 @@ def EditTeam(request):
     return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
 
 @login_required        
-def GenerateBill(request,pk,team):
+def GenerateBill(request,pk):
     profile = UserProfile.objects.get(id = pk)
     s_id = profile.shaastra_id    
-    if int(team) == 0:
-        pdf = generateParticipantPDF(s_id,team)
-        return pdf
-    else:
-        form = TeamBillForm()
-        if request.method == 'POST':
-            form = TeamBillForm(request.POST)
-            if form.is_valid():
-                pdf = generateParticipantPDF(s_id,team,form.cleaned_data['number_of_participants'])
-                return pdf  
-        return render_to_response('controlroom/shaastraIDform.html', locals(),
-                              context_instance=RequestContext(request))
-    
+#    if int(team) == 0:
+    pdf = generateParticipantPDF(s_id,0)
+    return pdf
+#    else:
+#        form = TeamBillForm()
+#        if request.method == 'POST':
+#            form = TeamBillForm(request.POST)
+#            if form.is_valid():
+#                pdf = generateParticipantPDF(s_id,team,form.cleaned_data['number_of_participants'])
+#                return pdf  
+#        return render_to_response('controlroom/shaastraIDform.html', locals(),
+#                              context_instance=RequestContext(request))
+
+@login_required        
+def TeamGenerateBill(request):  
+    if request.method == 'POST':
+        profile = UserProfile.objects.get(id = request.POST['leader_id'])
+        s_id = profile.shaastra_id  
+#        count = 0
+#        for s_id in request.POST['sub_checklist']
+#            count  = count +1
+#        assert False
+        a = []
+        for m in range(1,int(request.POST['counter'])+1):
+            try:
+                name = 'sub_checklist'+str(m)
+                a.append(request.POST[name])
+            except:
+                pass
+        pdf = generateParticipantPDF(s_id,1,a)
+        return pdf 
+    return render_to_response('controlroom/shaastraIDform.html', locals(),
+                              context_instance=RequestContext(request))    
+  
 @login_required
 def RoomDetails(request,id):
     room = AvailableRooms.objects.get(id = id)
@@ -371,6 +448,7 @@ def EditProfile(request):
         return HttpResponseRedirect('%scontrolroom/edituserprofile/%s' % (settings.SITE_URL,shaastraid))
     else:
         return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
+
 @login_required
 def EditUserProfile(request,shaastraid):
     if request.user.get_profile().is_hospi is False:
