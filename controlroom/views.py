@@ -19,7 +19,7 @@ from controlroom.forms import *
 from django.contrib.sessions.models import Session
 from datetime                   import datetime
 from controlroom.generate_bill import *
-from prizes.models import BarcodeMap
+from prizes.models import BarcodeMap, Participant
 from users.forms import EditUserForm
 
 @login_required
@@ -494,10 +494,20 @@ def SiteCSVRegn(request):
                     newUserProfile.branch = 'Others'
                     newUserProfile.want_accomodation = False
                     newUserProfile.save()
+                    
+                    #New participant
+                    newParticipant = Participant()
+                    newParticipant.name = newUser.first_name + ' ' + newUser.last_name
+                    newParticipant.gender = newUserProfile.gender
+                    newParticipant.age = newUserProfile.age
+                    newParticipant.branch = newUserProfile.branch
+                    newParticipant.mobile_number = newUserProfile.mobile_no
+                    newParticipant.shaastra_id = newUserProfile.shaastra_id
+                    newParticipant.save(using = 'erp')
 
                     # Map to barcode
                     newBarcode = BarcodeMap()
-                    newBarcode.shaastra_id = newUserProfile.shaastra_id
+                    newBarcode.shaastra_id = participant
                     newBarcode.barcode = recordDetails[BARCODE]
                     newBarcode.save(using = 'erp')
 
