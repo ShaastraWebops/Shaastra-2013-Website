@@ -114,14 +114,29 @@ def individual(request):
         if form.is_valid():
             inputs = form.cleaned_data
             if inputs['shaastraID']:
-                participant = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+                try:
+                    participant = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+                except:
+                    msg = "The entered Shaastra ID does not exist."
+                    return render_to_response('controlroom/shaastraIDform.html', locals(),
+                                      context_instance=RequestContext(request))
             elif inputs['barcode']:
                 barcode = BarcodeMap.objects.using('erp').get(barcode=inputs['barcode'])
                 shaastra_id = barcode.shaastra_id
-                participant = UserProfile.objects.get(shaastra_id=shaastra_id)
+                try:
+                    participant = UserProfile.objects.get(shaastra_id=shaastra_id)
+                except:
+                    msg = "The entered barcode does not correspond to an existing shaastra ID."
+                    return render_to_response('controlroom/shaastraIDform.html', locals(),
+                                      context_instance=RequestContext(request))
             else:
-                usr = User.objects.get(email = inputs['email'])
-                participant = UserProfile.objects.get(user = usr)
+                try:
+                    usr = User.objects.get(email = inputs['email'])
+                    participant = UserProfile.objects.get(user = usr)
+                except:
+                    msg = "The entered email ID does not correspond to an existing user."
+                    return render_to_response('controlroom/shaastraIDform.html', locals(),
+                                      context_instance=RequestContext(request))
             try:
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
                 individual_form = IndividualForm(instance = checkedin)
@@ -361,6 +376,7 @@ def RoomDetails(request,id):
         msg = "Room is currently empty!"
     return render_to_response('controlroom/RoomDetails.html', locals(),
                               context_instance=RequestContext(request))
+
 @login_required
 def EditProfile(request):
     if request.user.get_profile().is_hospi is False:
@@ -368,9 +384,20 @@ def EditProfile(request):
     
     if request.method == 'POST':
         shaastraid = request.POST['shaastra_id']
-        return HttpResponseRedirect('%scontrolroom/edituserprofile/%s' % (settings.SITE_URL,shaastraid))
+        barcode = request.POST['barcode']
+        if barcode :
+            barcode_obj = BarcodeMap.objects.using('erp').get(barcode=barcode)
+            shaastraid = barcode_obj.shaastra_id
+            return HttpResponseRedirect('%scontrolroom/edituserprofile/%s' % (settings.SITE_URL,shaastraid))
+        elif shaastraid:
+            return HttpResponseRedirect('%scontrolroom/edituserprofile/%s' % (settings.SITE_URL,shaastraid))
+        else:
+            msg = "Please enter a valid Shaastra ID or Barcode."
+            return render_to_response('controlroom/home.html', locals(),
+                              context_instance=RequestContext(request))
     else:
         return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
+
 @login_required
 def EditUserProfile(request,shaastraid):
     if request.user.get_profile().is_hospi is False:
