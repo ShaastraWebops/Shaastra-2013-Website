@@ -11,7 +11,9 @@ urlpatterns = patterns(
     url(r'^home/$', home),
     url(r'^individual/$', individual),
     url(r'^team/$', team),
-    url(r'^bill/(?P<pk>\d+)/(?P<team>\d+)/$', GenerateBill),
+    url(r'^idforbill/$', IdForBill),
+    url(r'^bill/(?P<pk>\d+)/$', GenerateBill),
+    url(r'^teambill/$', TeamGenerateBill),
     url(r'^addroom/$', AddRoom),
     url(r'^roommap/$', RoomMap),
     url(r'^addmanyrooms/$', AddMultipleRooms),
@@ -23,4 +25,5 @@ urlpatterns = patterns(
     url(r'^editteam/$', EditTeam),
     url(r'^editprofile/$', EditProfile),
     url(r'^edituserprofile/(?P<shaastraid>[\w]+)/?$', EditUserProfile),
+    url(r'^siteregncsv/?$', SiteCSVRegn),
     )

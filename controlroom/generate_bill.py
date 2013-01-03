@@ -66,9 +66,8 @@ def initNewPDFPage(pdf, page_title, page_no, (pageWidth, pageHeight),):
 
     return y
 
-def generatetable(pdf, x, y, leader, team):
+def generatetable(pdf, x, y, leader,s_ids):
 
-    print team 
 
     lineheight = PDFSetFont(pdf, 'Times-Bold', 16)
 
@@ -82,9 +81,10 @@ def generatetable(pdf, x, y, leader, team):
     
 
     
-    tableData = [ ['Shaastra ID', 'Room'] ]
+    tableData = [ ['Shaastra ID', 'Room', 'Name', 'Phone No'] ]
     
     tm = Team.objects.filter(leader = leader)
+    """
     for t in tm:
         for m in t.members.all():
             if int(team) == 1:
@@ -102,7 +102,10 @@ def generatetable(pdf, x, y, leader, team):
                     tableData.append([checkin.shaastra_ID, checkin.room])
                 except:
                     pass    
-            
+    """        
+    for s in s_ids:
+        checkin = IndividualCheckIn.objects.get(id = s)
+        tableData.append([checkin.shaastra_ID, checkin.room,(checkin.first_name+checkin.last_name),checkin.phone_no])    
         
     t = Table(tableData, repeatRows=1)
 
@@ -123,8 +126,14 @@ def generatetable(pdf, x, y, leader, team):
     
     t.drawOn(pdf, x, y - tableHeight)
 
-def printParticipantDetails(pdf, x, y, s_id,team,n):
-    print team
+def printParticipantDetails(pdf, x, y, s_id,team,number):
+    if not number:
+        n=1  
+    else:
+        n=0
+        for s in number:
+            n = n+1  
+    print n
     if team == 0:
         CD = 0
         try:
@@ -136,10 +145,11 @@ def printParticipantDetails(pdf, x, y, s_id,team,n):
         profile = UserProfile.objects.get(shaastra_id = s_id)
         checkedin = IndividualCheckIn.objects.get(shaastra_ID=s_id)  
         leader = User.objects.get(id = profile.user_id)
-        
-    if checkedin.duration_of_stay<=3:
+     
+       
+    if n<=3:
         CD = 500
-    elif checkedin.duration_of_stay>3 and checkedin.duration_of_stay<=6:
+    elif n>3 and n<=6:
         CD = 1000
     else:
         CD=1500
@@ -152,12 +162,23 @@ def printParticipantDetails(pdf, x, y, s_id,team,n):
 
         pdf.drawString(x, y, 'Name: %s %s' % (checkedin.first_name, checkedin.last_name))
         y -= lineheight + (cm * 0.8)
+
+        pdf.drawString(x, y, 'Mattresses: %s' % checkedin.number_of_mattresses_given)
+        y -= lineheight + (cm * 0.8)
+
+        pdf.drawString(x, y, 'Room Allotted: %s' % checkedin.room)
+        y -= lineheight + (cm * 0.8)
     
     else:
         pdf.drawString(x, y, "Team Leader's Shaastra ID: %s" % profile.shaastra_id)    
         y -= lineheight + (cm * 0.8)
 
         pdf.drawString(x, y, "Team Leader's Name: %s %s" % (leader.first_name, leader.last_name))
+        y -= lineheight + (cm * 0.8)
+    
+        matt = Mattresses.objects.get(team_leader_id = profile.shaastra_id)
+
+        pdf.drawString(x, y, 'Mattresses: %s' % matt.no_of_mattresses)
         y -= lineheight + (cm * 0.8)
     
     pdf.drawString(x, y, 'Mobile No: %s' % profile.mobile_number)
@@ -196,18 +217,15 @@ def printParticipantDetails(pdf, x, y, s_id,team,n):
     
     y -= lineheight + (cm * 0.8)
 
-    pdf.drawString(x, y, 'No of mattresses given: ' )
-    
-    y -= lineheight + (cm * 0.8)
-
     pdf.drawString(x, y, "Coordinator's Signature:")
     
     y -= lineheight + (cm * 0.8)
 
     return y
 
-def generateParticipantPDF(s_id,team,number=1):
+def generateParticipantPDF(s_id,team,number=[]):
     
+    print number
     userProfile = UserProfile.objects.get(shaastra_id = s_id)
     
     response = HttpResponse(mimetype='application/pdf')
@@ -243,7 +261,7 @@ def generateParticipantPDF(s_id,team,number=1):
     y = printParticipantDetails(pdf, x, y, userProfile.shaastra_id,int(team),number)
   
     if not int(team) == 0:
-        generatetable(pdf,x,y,userProfile.user,team)
+        generatetable(pdf,x,y,userProfile.user,number)
 
     pdf.showPage()
     pdf.save()

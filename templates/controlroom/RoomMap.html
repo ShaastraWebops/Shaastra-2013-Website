@@ -39,52 +39,6 @@ label{color: #333;font-size:12px;font-style: italic;}
     </tbody>
 </table>
 </div> 
-<a onclick="$('#Brahmaputra').toggle('fast');" class="name">Brahmaputra</a><br>
-<div id = "Brahmaputra" class="hostel"><label>Please  click again on the hostel to close this section</label>
-    <table id = "Hostel" class="table table-striped table-bordered table-condensed">
-    <thead>
-    <tr>
-        <th width='120'>Room No.</th>
-        <th width='120'>Max. Accomodation</th>
-        <th width='120'>Current Accomodation</th>
-        <th width='120'>Number of mattresses</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for a in brahms%}
-    <tr>
-        <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
-        <td width='120'>{{a.max_number}}</td>
-        <td width='120'>{{a.already_checkedin}}</td>
-        <td width='120'>{{a.mattresses}}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-</div> 
-<a onclick="$('#Cauvery').toggle('fast');" class="name">Cauvery</a><br>
-<div id = "Cauvery" class="hostel"><label>Please  click again on the hostel to close this section</label>
-    <table id = "Hostel" class="table table-striped table-bordered table-condensed">
-    <thead>
-    <tr>
-        <th width='120'>Room No.</th>
-        <th width='120'>Max. Accomodation</th>
-        <th width='120'>Current Accomodation</th>
-        <th width='120'>Number of mattresses</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for a in cauvery%}
-    <tr>
-        <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
-        <td width='120'>{{a.max_number}}</td>
-        <td width='120'>{{a.already_checkedin}}</td>
-        <td width='120'>{{a.mattresses}}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-</div> 
 <a onclick="$('#Ganga').toggle('fast');" class="name">Ganga</a><br>
 <div id = "Ganga" class="hostel"><label>Please  click again on the hostel to close this section</label>
     <table id = "Hostel" class="table table-striped table-bordered table-condensed">
@@ -108,29 +62,6 @@ label{color: #333;font-size:12px;font-style: italic;}
     </tbody>
 </table>
 </div> 
-<a onclick="$('#Godavari').toggle('fast');" class="name">Godavari</a><br> 
-<div id = "Godavari" class="hostel"><label>Please  click again on the hostel to close this section</label>
-    <table id = "Hostel" class="table table-striped table-bordered table-condensed">
-    <thead>
-    <tr>
-        <th width='120'>Room No.</th>
-        <th width='120'>Max. Accomodation</th>
-        <th width='120'>Current Accomodation</th>
-        <th width='120'>Number of mattresses</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for a in godav %}
-    <tr>
-        <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
-        <td width='120'>{{a.max_number}}</td>
-        <td width='120'>{{a.already_checkedin}}</td>
-        <td width='120'>{{a.mattresses}}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-</div>
 <a onclick="$('#Jamuna').toggle('fast');" class="name">Jamuna</a><br>
 <div id = "Jamuna" class="hostel"><label>Please  click again on the hostel to close this section</label>
     <table id = "Hostel" class="table table-striped table-bordered table-condensed">
@@ -154,29 +85,6 @@ label{color: #333;font-size:12px;font-style: italic;}
     </tbody>
 </table>
 </div> 
-<a onclick="$('#Krishna').toggle('fast');" class="name">Krishna</a><br> 
-<div id = "Krishna" class="hostel"><label>Please  click again on the hostel to close this section</label>
-    <table id = "Hostel" class="table table-striped table-bordered table-condensed">
-    <thead>
-    <tr>
-        <th width='120'>Room No.</th>
-        <th width='120'>Max. Accomodation</th>
-        <th width='120'>Current Accomodation</th>
-        <th width='120'>Number of mattresses</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for a in krishna %}
-    <tr>
-        <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
-        <td width='120'>{{a.max_number}}</td>
-        <td width='120'>{{a.already_checkedin}}</td>
-        <td width='120'>{{a.mattresses}}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-</div>
 <a onclick="$('#Mahanadhi').toggle('fast');" class="name">Mahanadhi</a><br>
 <div id = "Mahanadhi" class="hostel"><label>Please  click again on the hostel to close this section</label>
     <table id = "Hostel" class="table table-striped table-bordered table-condensed">
@@ -223,29 +131,6 @@ label{color: #333;font-size:12px;font-style: italic;}
     </tbody>
 </table>
 </div> 
-<a onclick="$('#Narmada').toggle('fast');" class="name">Narmada</a><br> 
-<div id = "Narmada" class="hostel"><label>Please  click again on the hostel to close this section</label>
-    <table id = "Hostel" class="table table-striped table-bordered table-condensed">
-    <thead>
-    <tr>
-        <th width='120'>Room No.</th>
-        <th width='120'>Max. Accomodation</th>
-        <th width='120'>Current Accomodation</th>
-        <th width='120'>Number of mattresses</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for a in narmad%}
-    <tr>
-        <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
-        <td width='120'>{{a.max_number}}</td>
-        <td width='120'>{{a.already_checkedin}}</td>
-        <td width='120'>{{a.mattresses}}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-</div>
 <a onclick="$('#Pampa').toggle('fast');" class="name">Pampa</a><br> 
 <div id = "Pampa" class="hostel"><label>Please  click again on the hostel to close this section</label>
     <table id = "Hostel" class="table table-striped table-bordered table-condensed">
@@ -269,74 +154,6 @@ label{color: #333;font-size:12px;font-style: italic;}
     </tbody>
 </table>
 </div>
-<a onclick="$('#Saraswathi').toggle('fast');" class="name">Saraswathi</a><br>
-<div id = "Saraswathi" class="hostel"><label>Please  click again on the hostel to close this section</label>
-    <table id = "Hostel" class="table table-striped table-bordered table-condensed">
-    <thead>
-    <tr>
-        <th width='120'>Room No.</th>
-        <th width='120'>Max. Accomodation</th>
-        <th width='120'>Current Accomodation</th>
-        <th width='120'>Number of mattresses</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for a in saras%}
-    <tr>
-        <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
-        <td width='120'>{{a.max_number}}</td>
-        <td width='120'>{{a.already_checkedin}}</td>
-        <td width='120'>{{a.mattresses}}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-</div> 
-<a onclick="$('#Sarayu').toggle('fast');" class="name">Sarayu</a><br> 
-<div id = "Sarayu" class="hostel"><label>Please  click again on the hostel to close this section</label>
-    <table id = "Hostel" class="table table-striped table-bordered table-condensed">
-    <thead>
-    <tr>
-        <th width='120'>Room No.</th>
-        <th width='120'>Max. Accomodation</th>
-        <th width='120'>Current Accomodation</th>
-        <th width='120'>Number of mattresses</th>
-    </thead>
-    <tbody>
-    {% for a in sarayu%}
-    <tr>
-        <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
-        <td width='120'>{{a.max_number}}</td>
-        <td width='120'>{{a.already_checkedin}}</td>
-        <td width='120'>{{a.mattresses}}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-</div>
-<a onclick="$('#Sharavati').toggle('fast');" class="name">Sharavati</a><br>
-<div id = "Sharavati" class="hostel"><label>Please  click again on the hostel to close this section</label>
-    <table id = "Hostel" class="table table-striped table-bordered table-condensed">
-    <thead>
-    <tr>
-        <th width='120'>Room No.</th>
-        <th width='120'>Max. Accomodation</th>
-        <th width='120'>Current Accomodation</th>
-        <th width='120'>Number of mattresses</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for a in sharav%}
-    <tr>
-        <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
-        <td width='120'>{{a.max_number}}</td>
-        <td width='120'>{{a.already_checkedin}}</td>
-        <td width='120'>{{a.mattresses}}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-</div> 
 <a onclick="$('#Sindhu').toggle('fast');" class="name">Sindhu</a><br>
 <div id = "Sindhu" class="hostel"><label>Please  click again on the hostel to close this section</label>
     <table id = "Hostel" class="table table-striped table-bordered table-condensed">
@@ -383,8 +200,8 @@ label{color: #333;font-size:12px;font-style: italic;}
     </tbody>
 </table>
 </div>
-<a onclick="$('#Tapti').toggle('fast');" class="name">Tapti</a><br> 
-<div id = "Tapti" class="hostel"><label>Please  click again on the hostel to close this section</label>
+<a onclick="$('#Sarayu_Extn').toggle('fast');" class="name">Sarayu Extn</a><br> 
+<div id = "Sarayu_Extn" class="hostel"><label>Please  click again on the hostel to close this section</label>
     <table id = "Hostel" class="table table-striped table-bordered table-condensed">
     <thead>
     <tr>
@@ -395,7 +212,7 @@ label{color: #333;font-size:12px;font-style: italic;}
     </tr>
     </thead>
     <tbody>
-    {% for a in tapti %}
+    {% for a in sarayu_extn%}
     <tr>
         <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
         <td width='120'>{{a.max_number}}</td>
@@ -406,6 +223,73 @@ label{color: #333;font-size:12px;font-style: italic;}
     </tbody>
 </table>
 </div>
+<a onclick="$('#C28').toggle('fast');" class="name">C-2-8</a><br> 
+<div id = "C28" class="hostel"><label>Please  click again on the hostel to close this section</label>
+    <table id = "Hostel" class="table table-striped table-bordered table-condensed">
+    <thead>
+    <tr>
+        <th width='120'>Room No.</th>
+        <th width='120'>Max. Accomodation</th>
+        <th width='120'>Current Accomodation</th>
+        <th width='120'>Number of mattresses</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for a in c28%}
+    <tr>
+        <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
+        <td width='120'>{{a.max_number}}</td>
+        <td width='120'>{{a.already_checkedin}}</td>
+        <td width='120'>{{a.mattresses}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 </div>
+<a onclick="$('#Sarayu').toggle('fast');" class="name">Sarayu</a><br> 
+<div id = "Sarayu" class="hostel"><label>Please  click again on the hostel to close this section</label>
+    <table id = "Hostel" class="table table-striped table-bordered table-condensed">
+    <thead>
+    <tr>
+        <th width='120'>Room No.</th>
+        <th width='120'>Max. Accomodation</th>
+        <th width='120'>Current Accomodation</th>
+        <th width='120'>Number of mattresses</th>
+    </thead>
+    <tbody>
+    {% for a in sarayu%}
+    <tr>
+        <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
+        <td width='120'>{{a.max_number}}</td>
+        <td width='120'>{{a.already_checkedin}}</td>
+        <td width='120'>{{a.mattresses}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+<a onclick="$('#Sharavati').toggle('fast');" class="name">Sharavati</a><br>
+<div id = "Sharavati" class="hostel"><label>Please  click again on the hostel to close this section</label>
+    <table id = "Hostel" class="table table-striped table-bordered table-condensed">
+    <thead>
+    <tr>
+        <th width='120'>Room No.</th>
+        <th width='120'>Max. Accomodation</th>
+        <th width='120'>Current Accomodation</th>
+        <th width='120'>Number of mattresses</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for a in sharav%}
+    <tr>
+        <td width='120'><a target = "_blank" href="{{site_url}}controlroom/details/{{a.id}}">{{a.room_no}}</a></td>
+        <td width='120'>{{a.max_number}}</td>
+        <td width='120'>{{a.already_checkedin}}</td>
+        <td width='120'>{{a.mattresses}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div> 
 </body>
 </html>

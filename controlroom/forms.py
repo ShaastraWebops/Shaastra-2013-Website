@@ -61,6 +61,9 @@ class AddRoomForm(ModelForm):
 class AddMultipleRoomsForm(forms.Form):
     rooms = forms.FileField(required = True)
     
+class SiteCSVRegnForm(forms.Form):
+    new_registrations_file = forms.FileField(required = True)
+    
 class ShaastraIDForm(forms.Form):
     barcode = forms.CharField(required = False,help_text = 'Scan Barcode')
     shaastraID = forms.CharField(required = False,help_text = 'Enter Shaastra ID')
