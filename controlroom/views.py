@@ -512,6 +512,7 @@ def SiteCSVRegn(request):
             alreadyCreated = []
             noEmail = []
             freshCreations = []
+            badBarcode = []
             numLines = 0
             numCreations = 0
             for line in form.cleaned_data['new_registrations_file']:
@@ -521,6 +522,9 @@ def SiteCSVRegn(request):
                     continue
                 recordDetails = line.split(',')
                 (BARCODE, USERNAME, FIRSTNAME, LASTNAME, EMAIL, MOBILE, GENDER, AGE, COLLEGE) = range(9)
+                if len(recordDetails[BARCODE]) != 5:
+                    badBarcode.append(line)
+                    continue
                 try:
                     user = User.objects.get(username = recordDetails[USERNAME])
                 except User.DoesNotExist:
@@ -608,6 +612,10 @@ def SiteCSVRegn(request):
             if noEmail:
                 finalstats += '<br/>The following records were not created (no email present).<br/>'
                 for line in noEmail:
+                    finalstats += line + '<br/>'
+            if badBarcode:
+                finalstats += '<br/>The following records were not created (bad barcode - should be 5 digits).<br/>'
+                for line in badBarcode:
                     finalstats += line + '<br/>'
                 
             msg = finalstats
