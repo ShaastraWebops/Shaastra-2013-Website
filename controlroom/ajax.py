@@ -22,7 +22,7 @@ def save_individual_checkin(request,form):
         form = individual_form.save()
         room = AvailableRooms.objects.get(id = form.room_id)
         room.already_checkedin = room.already_checkedin + 1
-        #room.mattresses = room.mattresses + form.number_of_mattresses_given
+        room.mattresses = room.mattresses + form.number_of_mattresses_given
         room.save()
         msg = "Checked In Successfully!"
         dajax.alert(msg)
@@ -40,6 +40,7 @@ def save_individual_checkout(request,form,shaastraid):
         form = individual_form.save()
         room = AvailableRooms.objects.get(id = form.room_id)
         room.already_checkedin = room.already_checkedin - 1
+        room.mattresses = room.mattresses + form.number_of_mattresses_given
         room.save()
         msg = "Checked Out Successfully!"
         dajax.alert(msg)
@@ -49,10 +50,13 @@ def save_individual_checkout(request,form,shaastraid):
     return dajax.json()
 
 @dajaxice_register
-def send_participants(request,form):
+def send_participants(request,form,uid):
     dajax = Dajax()
     r = form['room']
     rm = AvailableRooms.objects.get(id=r)
+    print uid
+    leader = UserProfile.objects.get(id = uid)
+    print leader
     check_in = form['checkin']
     comments = form['comments'] 
     duration = form['no_of_days']
@@ -68,6 +72,7 @@ def send_participants(request,form):
                 msg = msg + s_id + ','
             except:
                 new_guest = IndividualCheckIn(room = rm,
+                                              gender = profile.gender,
                                               duration_of_stay=duration,
                                               mattress_room = form['mattroom'],
                                               shaastra_ID = profile.shaastra_id,
@@ -82,6 +87,14 @@ def send_participants(request,form):
         if room:
             room.mattresses = room.mattresses + int(mattresses)
             room.save()
+        try:
+            matt = Mattresses.objects.get(team_leader_id = leader.shaastra_id)
+            matt.no_of_mattresses = matt.no_of_mattresses + int(mattresses)
+            matt.save()
+        except:
+            matt = Mattresses(team_leader_id = leader.shaastra_id,
+                              no_of_mattresses = int(mattresses))
+            matt.save()
         if msg == " ":
             msg = "All members checked in successfully!"
         else:
@@ -96,6 +109,7 @@ def send_participants(request,form):
         except:
             profile = UserProfile.objects.get(shaastra_id = s_id)
             new_guest = IndividualCheckIn(room = rm,
+                                          gender = profile.gender,
                                           duration_of_stay=duration,
                                           mattress_room = form['mattroom'],
                                           shaastra_ID = profile.shaastra_id,
@@ -106,12 +120,20 @@ def send_participants(request,form):
                                           comments = comments,
                                           )
             new_guest.save()
+            try:
+                matt = Mattresses.objects.get(team_leader_id = leader.shaastra_id)
+                matt.no_of_mattresses = matt.no_of_mattresses + int(mattresses)
+                matt.save()
+            except:
+                matt = Mattresses(team_leader_id = leader.shaastra_id,
+                                  no_of_mattresses = int(mattresses))
+                matt.save()
             room = AvailableRooms.objects.get(id = r)
             room.already_checkedin = room.already_checkedin + 1
             room.mattresses = room.mattresses + int(mattresses)
             room.save()
             msg = "Checked In successfully!"
-    dajax.alert(msg)
+    dajax.alert("Hello!")
     return dajax.json
 
 

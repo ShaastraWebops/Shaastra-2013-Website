@@ -21,7 +21,11 @@
     </table>
 
     <input type = "submit" value="Go!" class="btn btn-large btn-primary"><br><br>
+    {% if request.get_full_path == "/2013/main/controlroom/team/" %}
+    <a class="btn btn-large btn-danger" href='{{site_url}}controlroom/idforbill/'>Generate Bill</a>
+    {% endif %}
     <a class="btn btn-large btn-danger" href='{{site_url}}controlroom/home/'>Back</a>
+    
     </div>
 
 </body>
