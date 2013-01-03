@@ -70,7 +70,7 @@ class ShaastraIDForm(forms.Form):
     email = forms.CharField(required = False,help_text = 'Enter Email ID')
 
 class IndividualForm(ModelForm):
-    room = chosenforms.ChosenModelChoiceField(queryset=AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel'))
+    room = chosenforms.ChosenModelChoiceField(queryset=AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel').order_by('room_no'))
     class Meta:
         model = IndividualCheckIn
         fields = ('room',

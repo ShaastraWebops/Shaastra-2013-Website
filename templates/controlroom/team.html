@@ -117,7 +117,7 @@
     <label>Check In Control Room</label>
     <select for="checkin" id="checkin" name="checkin">
       <option selected="selected" value="0">---------</option>
-      {% for h in hostels %}
+      {% for h in checkin %}
       <option value={{h|cut:"("|cut:"'"|cut:","}}>{{h}}</option>
       {% endfor %}
     </select><br>
