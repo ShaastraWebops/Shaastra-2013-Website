@@ -61,15 +61,13 @@ def send_participants(request,form,uid):
     comments = form['comments'] 
     duration = form['no_of_days']
     mattresses = form['mattresses']
-    u_ids = form['sub_checklist']
-    if not isinstance(u_ids, list):
-        u_ids = [u_ids]
+    s_ids = form['sub_checklist']
+    if not isinstance(s_ids, list):
+        s_ids = [s_ids]
     msg = " "
     room = AvailableRooms.objects.get(id = r)
 
-    for u_id in u_ids:
-        profile = UserProfile.objects.get(id = u_id)
-        s_id = profile.shaastra_id
+    for s_id in s_ids:
         try:
             checkedin = IndividualCheckIn.objects.get(shaastra_ID = s_id)
             msg = msg + s_id + ','
