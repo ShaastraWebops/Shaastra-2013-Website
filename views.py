@@ -157,6 +157,7 @@ def create_team(request):
                         user = User.objects.get(username = member_email.split('@')[0].lower())
                 if not team:
                     team = Team(name = team_name, event = evt, leader = user)
+                    team.save()
                     team.members.add(user)
                     team.save()
                 elif user not in team[0].members.all():

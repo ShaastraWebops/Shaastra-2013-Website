@@ -133,7 +133,7 @@ def send_participants(request,form,uid):
             room.mattresses = room.mattresses + int(mattresses)
             room.save()
             msg = "Checked In successfully!"
-    dajax.alert("Hello!")
-    return dajax.json
+    dajax.alert(msg)
+    return dajax.json()
 
 

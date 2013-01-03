@@ -132,6 +132,7 @@ def individual(request):
                     msg = "The entered email ID does not correspond to an existing user."
                     return render_to_response('controlroom/shaastraIDform.html', locals(),
                                       context_instance=RequestContext(request))
+            college = participant.college
             try:
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
                 individual_form = IndividualForm(instance = checkedin)
