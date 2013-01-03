@@ -10,6 +10,7 @@ a.btn{text-decoration: none!important;margin: 0!important;}
 </head>
 <body>
 <div class="container">
+<h2>{{msg}}</h2>
 <a href="{{site_url}}user/logout/" class="btn btn-large btn-info" style="">Logout</a>
 <a href="{{site_url}}controlroom/addroom/" class="btn btn-large btn-info">Add Room</a>
 <a href="{{site_url}}controlroom/roommap/" class="btn btn-large btn-info">Room Map</a><br><br>
@@ -32,7 +33,8 @@ a.btn{text-decoration: none!important;margin: 0!important;}
 <h4>USER PROFILE EDITING</h4>
 <form action="{{site_url}}controlroom/editprofile/" method="POST">
     {% csrf_token %}
-    <label for="id_team_name">Shaastra ID:</label> <input type="text" name="shaastra_id" id="id_shaastra_id" />
+    <label for="id_shaastra_id">Shaastra ID:</label> <input type="text" name="shaastra_id" id="id_shaastra_id" />
+    <label for="id_barcode">Barcode:</label> <input type="text" name="barcode" id="id_barcode" />
     <input type="submit" class="btn btn-large btn-primary" value="Search user...">
 </form><br>
 
