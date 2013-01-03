@@ -467,14 +467,13 @@ def SiteCSVRegn(request):
                     newUserProfile.branch = 'Others'
                     newUserProfile.want_accomodation = False
                     newUserProfile.save()
+
                     # Map to barcode
-                    #TODO: Uncomment this to map to barcode.
-                    '''
                     newBarcode = BarcodeMap()
-                    newBarcode.shaastra_id = recordDetails[SHAASTRAID]
+                    newBarcode.shaastra_id = newUserProfile.shaastra_id
                     newBarcode.barcode = recordDetails[BARCODE]
-                    newBarcode.save()
-                    '''
+                    newBarcode.save().using('erp')
+
                     freshCreations.append((newUser.username, newUserProfile.shaastra_id, recordDetails[BARCODE]))
                     numCreations += 1
                 else:
@@ -484,7 +483,7 @@ def SiteCSVRegn(request):
             finalstats += 'Number of accounts created: %d<br/>' % numCreations
             if numCreations > 0:
                 finalstats += '<br/>The following accounts were created:'
-                finalstats += '<table><tr><th>Username</th><th>Shaastra ID</th><th>Barcode</th></tr>'
+                finalstats += '<table class="table table-striped table-bordered table-condensed"><tr><th>Username</th><th>Shaastra ID</th><th>Barcode</th></tr>'
                 for creationRecord in freshCreations:
                     finalstats += '<tr><td>'+creationRecord[0]+'</td><td>'+creationRecord[1]+'</td><td>'+creationRecord[2]+'</td></tr>'
                 finalstats += '</table>'
