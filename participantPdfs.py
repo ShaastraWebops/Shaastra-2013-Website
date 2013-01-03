@@ -287,9 +287,9 @@ def mailPDF(user, pdf):
     msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , [email,])
     msg.content_subtype = "html"
     msg.attach('%s-registration-details.pdf' % user.get_profile().shaastra_id, pdf, 'application/pdf')
-    #msg.send()  #TODO: Uncomment this line foe finale
-    #log('Mail sent to %s' % email)  #TODO: Uncomment this line for finale
-    log('NOT sent. Mail will go to %s' % email)  #TODO: Comment this line for finale
+    msg.send()  #TODO: Uncomment this line for finale
+    log('Mail sent to %s' % email)  #TODO: Uncomment this line for finale
+    #log('NOT sent. Mail will go to %s' % email)  #TODO: Comment this line for finale
     
 def savePDF(pdf, user):
 
