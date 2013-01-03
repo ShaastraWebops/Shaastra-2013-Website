@@ -379,15 +379,15 @@ def Register(request):
 def CreateTeam(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
-    
-    form = CreateTeamForm()
+    event = Event.objects.get(title='hospi')
+    form = CreateTeamForm(initial={'event':event})
     
     if request.method == 'POST':
         form = CreateTeamForm(request.POST)
         if form.is_valid():
             leader = UserProfile.objects.get(shaastra_id = form.cleaned_data['leader_shaastra_ID']).user
             try:
-                Team.objects.get(members__pk = leader.id, event = form.cleaned_data['event'])
+                Team.objects.get(members__pk = leader.id, event = event)
                 return render_to_response('users/teams/already_part_of_a_team.html', locals(), context_instance = RequestContext(request))
             except Team.DoesNotExist:
                 pass
