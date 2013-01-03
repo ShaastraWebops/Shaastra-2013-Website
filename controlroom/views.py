@@ -109,14 +109,29 @@ def individual(request):
         if form.is_valid():
             inputs = form.cleaned_data
             if inputs['shaastraID']:
-                participant = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+                try:
+                    participant = UserProfile.objects.get(shaastra_id=inputs['shaastraID'])
+                except:
+                    msg = "The entered Shaastra ID does not exist."
+                    return render_to_response('controlroom/shaastraIDform.html', locals(),
+                                      context_instance=RequestContext(request))
             elif inputs['barcode']:
                 barcode = BarcodeMap.objects.using('erp').get(barcode=inputs['barcode'])
                 shaastra_id = barcode.shaastra_id
-                participant = UserProfile.objects.get(shaastra_id=shaastra_id)
+                try:
+                    participant = UserProfile.objects.get(shaastra_id=shaastra_id)
+                except:
+                    msg = "The entered barcode does not correspond to an existing shaastra ID."
+                    return render_to_response('controlroom/shaastraIDform.html', locals(),
+                                      context_instance=RequestContext(request))
             else:
-                usr = User.objects.get(email = inputs['email'])
-                participant = UserProfile.objects.get(user = usr)
+                try:
+                    usr = User.objects.get(email = inputs['email'])
+                    participant = UserProfile.objects.get(user = usr)
+                except:
+                    msg = "The entered email ID does not correspond to an existing user."
+                    return render_to_response('controlroom/shaastraIDform.html', locals(),
+                                      context_instance=RequestContext(request))
             try:
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
                 individual_form = IndividualForm(instance = checkedin)
@@ -438,6 +453,7 @@ def RoomDetails(request,id):
         msg = "Room is currently empty!"
     return render_to_response('controlroom/RoomDetails.html', locals(),
                               context_instance=RequestContext(request))
+
 @login_required
 def EditProfile(request):
     if request.user.get_profile().is_hospi is False:
@@ -445,7 +461,17 @@ def EditProfile(request):
     
     if request.method == 'POST':
         shaastraid = request.POST['shaastra_id']
-        return HttpResponseRedirect('%scontrolroom/edituserprofile/%s' % (settings.SITE_URL,shaastraid))
+        barcode = request.POST['barcode']
+        if barcode :
+            barcode_obj = BarcodeMap.objects.using('erp').get(barcode=barcode)
+            shaastraid = barcode_obj.shaastra_id
+            return HttpResponseRedirect('%scontrolroom/edituserprofile/%s' % (settings.SITE_URL,shaastraid))
+        elif shaastraid:
+            return HttpResponseRedirect('%scontrolroom/edituserprofile/%s' % (settings.SITE_URL,shaastraid))
+        else:
+            msg = "Please enter a valid Shaastra ID or Barcode."
+            return render_to_response('controlroom/home.html', locals(),
+                              context_instance=RequestContext(request))
     else:
         return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
 
@@ -473,4 +499,109 @@ def EditUserProfile(request,shaastraid):
                   'last_name': user.last_name}
         editProfileForm = EditUserForm(instance = userprofile, initial = values)
         return render_to_response('users/edit_profile.html', locals(),context_instance=RequestContext(request))
+        
+@login_required
+def SiteCSVRegn(request):
+    if not request.user.get_profile().is_hospi:
+        return HttpResponseRedirect(settings.SITE_URL)
+    msg = ''
+    form = SiteCSVRegnForm()
+    if request.method == 'POST':
+        form = SiteCSVRegnForm(request.POST, request.FILES)   
+        if form.is_valid():
+            alreadyCreated = []
+            noEmail = []
+            freshCreations = []
+            numLines = 0
+            numCreations = 0
+            for line in form.cleaned_data['new_registrations_file']:
+                numLines += 1
+                line = line.replace('\n', '').replace('\r', '')
+                if line == '':
+                    continue
+                recordDetails = line.split(',')
+                (BARCODE, USERNAME, FIRSTNAME, LASTNAME, EMAIL, MOBILE, GENDER, AGE, COLLEGE) = range(9)
+                try:
+                    user = User.objects.get(username = recordDetails[USERNAME])
+                except User.DoesNotExist:
+                    # Create new user
+                    newUser = User()
+                    if not recordDetails[EMAIL]:
+                        noEmail.append(line)
+                        continue
+                    newUser.email = recordDetails[EMAIL]
+                    if recordDetails[USERNAME]:
+                        newUser.username = recordDetails[USERNAME]
+                    else:
+                        newUser.username = recordDetails[EMAIL].split('@')[0]
+                    if recordDetails[FIRSTNAME]:
+                        newUser.first_name = recordDetails[FIRSTNAME]
+                    else:
+                        newUser.first_name = recordDetails[EMAIL].split('@')[0]
+                    if recordDetails[LASTNAME]:
+                        newUser.last_name = recordDetails[LASTNAME]
+                    newUser.set_password('default')
+                    newUser.is_active = True
+                    newUser.save()
+                    # Get the college
+                    try:
+                        newCollege = College.objects.get(name = recordDetails[COLLEGE])
+                    except College.DoesNotExist:
+                        # Create the college
+                        newCollege = College()
+                        newCollege.name = recordDetails[COLLEGE]
+                        newCollege.city = 'Unknown'
+                        newCollege.state = 'Outside India'
+                        newCollege.save()
+                    # Create the user's profile
+                    newUserProfile = UserProfile()
+                    newUserProfile.user = newUser
+                    newUserProfile.mobile_no = recordDetails[MOBILE]
+                    if recordDetails[GENDER].upper() == 'M' or recordDetails[GENDER].upper() == 'MALE':
+                        newUserProfile.gender = 'M'
+                    else:
+                        newUserProfile.gender = 'F'
+                    if recordDetails[AGE]:
+                        newUserProfile.age = recordDetails[AGE]
+                    else:
+                        newUserProfile.age = 0
+                    newUserProfile.shaastra_id = 'SHA' + str(1300000 + newUser.id)
+                    newUserProfile.college = newCollege
+                    newUserProfile.college_roll = 'CollegeRoll'
+                    newUserProfile.branch = 'Others'
+                    newUserProfile.want_accomodation = False
+                    newUserProfile.save()
+
+                    # Map to barcode
+                    newBarcode = BarcodeMap()
+                    newBarcode.shaastra_id = newUserProfile.shaastra_id
+                    newBarcode.barcode = recordDetails[BARCODE]
+                    newBarcode.save(using = 'erp')
+
+                    freshCreations.append((newUser.username, newUserProfile.shaastra_id, recordDetails[BARCODE]))
+                    numCreations += 1
+                else:
+                    # Already exists
+                    alreadyCreated.append(line)
+            finalstats = ''
+            finalstats += 'Number of accounts created: %d<br/>' % numCreations
+            if numCreations > 0:
+                finalstats += '<br/>The following accounts were created:'
+                finalstats += '<table class="table table-striped table-bordered table-condensed"><tr><th>Username</th><th>Shaastra ID</th><th>Barcode</th></tr>'
+                for creationRecord in freshCreations:
+                    finalstats += '<tr><td>'+creationRecord[0]+'</td><td>'+creationRecord[1]+'</td><td>'+creationRecord[2]+'</td></tr>'
+                finalstats += '</table>'
+            if alreadyCreated:
+                finalstats += '<br/>The following records were not created (existing username used).<br/>'
+                for line in alreadyCreated:
+                    finalstats += line + '<br/>'
+            if noEmail:
+                finalstats += '<br/>The following records were not created (no email present).<br/>'
+                for line in noEmail:
+                    finalstats += line + '<br/>'
+                
+            msg = finalstats
+            
+    return render_to_response('controlroom/SiteCSVRegn.html', locals(),
+                              context_instance=RequestContext(request))
 
