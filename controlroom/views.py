@@ -269,9 +269,11 @@ def IdForBill(request):
                         profile = UserProfile.objects.get(user = m)
                         try:
                             checkedin = IndividualCheckIn.objects.get(shaastra_ID=profile.shaastra_id)
-                            checkedin_profiles.append(checkedin)
+                            if not checkedin in checkedin_profiles:
+                                checkedin_profiles.append(checkedin)
                         except:
-                            new_profiles.append(profile)
+                            if not profile in new_profiles:
+                                new_profiles.append(profile)
             else:
                 for m in current_team.members.all():
                         profile = UserProfile.objects.get(user = m)
