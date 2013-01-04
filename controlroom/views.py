@@ -525,17 +525,17 @@ def EditUserProfile(request,shaastraid):
             user.first_name = request.POST['first_name']
             user.last_name = request.POST['last_name']
             user.save()
-            new_user = User.objects.using('erp').get(username=user.username)
-            new_user.first_name = user.first_name
-            new_user.last_name = user.last_name
-            new_user.save()
+            #new_user = User.objects.using('erp').get(username=user.username)
+            #new_user.first_name = user.first_name
+            #new_user.last_name = user.last_name
+            #new_user.save()
             p = Participant.objects.using('erp').get(shaastra_id = user.get_profile().shaastra_id)
-            p.name=new_user.username
+            p.name=user.username
             p.gender=profile.gender
             p.age=profile.age
             p.branch=profile.branch
             p.mobile_number=profile.mobile_number
-            p.college=user.get_profile().college,
+            p.college=str(user.get_profile().college),
             p.college_roll=profile.college_roll
             p.shaastra_id= profile.shaastra_id
             p.save()
