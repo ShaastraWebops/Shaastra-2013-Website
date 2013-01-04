@@ -136,7 +136,7 @@ def individual(request):
             try:
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
                 individual_form = IndividualForm(instance = checkedin)
-                msg = "This participant is already checked-in!"
+                msg = "This participant is already checked-in into " + str(checkedin.room)
                 return render_to_response('controlroom/individual.html', locals(),
                               context_instance=RequestContext(request)) 
             except:
