@@ -491,3 +491,131 @@ def addLeadersToMembers():
             team.members.add(l)
             print 'After adding: ' + str(team.members.all())
             print '\n'
+            
+def createUser(fullname=None, email=None, mobile=None, college=None):
+
+    newUser = User()
+    newUser.email = email
+    newUser.username = email.split('@')[0]
+    newUser.first_name = fullname
+    newUser.set_password('default')
+    newUser.is_active = True
+    newUser.save()
+    # Get the college
+    try:
+        newCollege = College.objects.get(name = college)
+    except College.DoesNotExist:
+        newCollege = None
+    # Create the user's profile
+    newUserProfile = UserProfile()
+    newUserProfile.user = newUser
+    newUserProfile.mobile_number = mobile
+    newUserProfile.gender = 'F'
+    newUserProfile.age = 0
+    newUserProfile.shaastra_id = 'SHA' + str(1300000 + newUser.id)
+    if newCollege:
+        newUserProfile.college = newCollege
+    newUserProfile.branch = 'Others'
+    newUserProfile.want_accomodation = False
+    newUserProfile.save()
+    return newUser
+            
+def checkParticipationDetailsCSV(path, event_name):
+    try:
+        partFile = open(path, 'r')
+    except IOError:
+        print 'Could not open %s.' % path
+        return
+    print 'Read file opened.'
+    try:
+        outFile = open(path[:-4]+'_out.csv', 'w')
+    except IOError:
+        print 'Could not open write file %s.' % (path[:-3]+'out.csv')
+        return
+    print 'Out file opened.'
+    try:
+        e = Event.objects.get(title = event_name)
+    except Event.DoesNotExist:
+        print 'Event \'%s\' not found.' % event_name
+        return
+    print 'Event obtained.\n'
+
+    for line in partFile:
+        print 'Line read: %s' % line
+        line = line[:-1]  # -1 to remove the last \n character.
+        outLine = line
+        data = line.split(',')
+        if not data[0].isdigit():  # The first column in the CSV should be a serial number
+            print 'First entry not S.No. Continuing...\n'
+            continue
+        u = User.objects.filter(email=data[3])
+        if not u:
+            # User not found
+            print 'User not found. Creating...'
+            u = [createUser(college=data[1], fullname=data[2], email=data[3], mobile=data[4])]
+            outLine += ', user Created'
+        else:
+            # User found
+            print 'User found.'
+            outLine += ', user Found'
+        if len(u) == 1:
+            # one user found
+            # check registration for event
+            # if not registered, register
+            u = u[0]
+            regn = EventSingularRegistration.objects.filter(user = u).filter(event = e)
+            if not regn:
+                # The user is not registered
+                # go ahead and register
+                regn = EventSingularRegistration()
+                regn.user = u
+                regn.event = e
+                regn.save()
+                outLine += ', new regn'
+                
+            elif len(regn) == 1:
+                # User is registered
+                # Check if mailed
+                try:
+                    temp = open('/home/shaastra/hospi/participantPDFs/SHA'+str(1300000+u.pk)+'-registration-details.pdf', 'r')
+                except IOError:
+                    # PDF not found.
+                    # Not mailed.
+                    outLine += ', not mailed'
+                else:
+                    # PDF found
+                    # mailed
+                    outLine += ', Mailed'
+                    temp.close()
+                
+            else:
+                # More than one registrations found.
+                # Write this to file
+                outLine += ', >1 regn found'
+            
+        else:
+            # More than one user found.
+            # write this to file
+            outLine += ', >1 user found,'
+        outLine += '\n'
+        outFile.write(outLine)
+        
+    partFile.close()
+    outFile.close()
+    
+def cleanParticipationCSV(path):
+    f = open(path, 'r')
+    t = open(path[:-4]+'_mod.csv', 'w')
+    for l in f:
+        q = False
+        n = ''
+        for i in range(len(l)):
+            if l[i] == '\"':
+                if q is True: q = False
+                else: q = True
+            if l[i] == ',' and q is True: n += ''
+            elif l[i] == '\"': n += ''
+            else: n += l[i]
+        t.write(n)
+    f.close()
+    t.close()
