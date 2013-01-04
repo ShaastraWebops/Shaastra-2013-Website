@@ -360,9 +360,8 @@ def Register(request):
                             username=data['username'], email=data['email'])
             new_user.set_password('default')
             new_user.is_active = True
-            new_user.save(using='erp')
-            new_user.save(using='default')
-            x = 1300000 + 1#new_user.id
+            new_user.save()
+            x = 1300000 + new_user.id
             shaastra_id = ("SHA" + str(x))
             userprofile = UserProfile(
                 user=new_user,
@@ -522,10 +521,24 @@ def EditUserProfile(request,shaastraid):
         user = userprofile.user
         editProfileForm = EditUserForm(request.POST, instance = userprofile)
         if editProfileForm.is_valid():
-            editProfileForm.save()
+            profile = editProfileForm.save()
             user.first_name = request.POST['first_name']
             user.last_name = request.POST['last_name']
             user.save()
+            new_user = User.objects.using('erp').get(username=user.username)
+            new_user.first_name = user.first_name
+            new_user.last_name = user.last_name
+            new_user.save()
+            p = Participant.objects.using('erp').get(shaastra_id = user.get_profile().shaastra_id)
+            p.name=new_user.username
+            p.gender=profile.gender
+            p.age=profile.age
+            p.branch=profile.branch
+            p.mobile_number=profile.mobile_number
+            p.college=user.get_profile().college,
+            p.college_roll=profile.college_roll
+            p.shaastra_id= profile.shaastra_id
+            p.save()
             return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
         else:
             return render_to_response('users/edit_profile.html', locals(),context_instance=RequestContext(request))
