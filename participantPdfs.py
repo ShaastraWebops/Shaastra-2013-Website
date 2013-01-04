@@ -507,7 +507,7 @@ def createUser(fullname=None, email=None, mobile=None, college=None):
         # Get the college
         try:
             newCollege = College.objects.get(name = college)
-        except College.DoesNotExist:
+        except:
             newCollege = None
         # Create the user's profile
         newUserProfile = UserProfile()
