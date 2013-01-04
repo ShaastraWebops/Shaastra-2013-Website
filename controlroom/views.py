@@ -141,7 +141,12 @@ def individual(request):
                 individual_form = IndividualForm(initial=values,instance = checkedin)
                 #msg = msg + "3"
                 msg = "This participant is already checked-in into " + str(checkedin.room)
-                return render_to_response('controlroom/individual.html', locals(),context_instance=RequestContext(request)) 
+                checkintime = checkedin.check_in_date
+                checkouttime = checkedin.check_out_date
+                if checkouttime:
+                    msg = "This participant was checked-in into " + str(checkedin.room) + ". He has checked-out!"
+                return render_to_response('controlroom/individual.html', locals(),
+                              context_instance=RequestContext(request))
             except:
                 individual_form = IndividualForm(initial = {'shaastra_ID' : participant.shaastra_id, 'first_name' : participant.user.first_name, 'last_name' : participant.user.last_name, 'phone_no' : participant.mobile_number, })
                 return render_to_response('controlroom/individual.html', locals(),
@@ -608,15 +613,6 @@ def SiteCSVRegn(request):
                         newCollege = College()
                         newCollege.name = recordDetails[COLLEGE]
                         newCollege.city = 'Unknown'
-                        newCollege.state = 'Outside India'
-                        newCollege.save()
-                    # Create the user's profile
-                    newUserProfile = UserProfile()
-                    newUserProfile.user = newUser
-                    newUserProfile.mobile_number = recordDetails[MOBILE]
-                    if recordDetails[GENDER].upper() == 'M' or recordDetails[GENDER].upper() == 'MALE':
-                        newUserProfile.gender = 'M'
-                    else:
                         newUserProfile.gender = 'F'
                     if recordDetails[AGE]:
                         newUserProfile.age = recordDetails[AGE]
