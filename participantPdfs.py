@@ -495,7 +495,7 @@ def addLeadersToMembers():
 def createUser(fullname=None, email=None, mobile=None, college=None):
 
     try:
-        User.objects.get(username = email.split('@')[0])
+        newUser = User.objects.get(username = email.split('@')[0])
     except User.DoesNotExist:
         newUser = User()
         newUser.email = email
