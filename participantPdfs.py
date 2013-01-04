@@ -521,7 +521,7 @@ def createUser(fullname=None, email=None, mobile=None, college=None):
         newUserProfile.branch = 'Others'
         newUserProfile.want_accomodation = False
         newUserProfile.save()
-    return newUser
+    return newUser  #TODO Fix this
             
 def checkParticipationDetailsCSV(path, event_name):
     try:
@@ -556,7 +556,7 @@ def checkParticipationDetailsCSV(path, event_name):
             # User not found
             print 'Email not found. Trying to create...'
             u = [createUser(college=data[1], fullname=data[2], email=data[3], mobile=data[4])]
-            outLine += ', user Created'
+            outLine += ', user Created'  # TODO: Fix this.
         else:
             # User found
             print 'User found.'
@@ -622,3 +622,20 @@ def cleanParticipationCSV(path):
         t.write(n)
     f.close()
     t.close()
+    
+def cleanEmails():
+    for u in User.objects.all():
+        if u.email[-1] == ',':
+            print u.id
+            print u.email
+            u.email = u.email[:-1]
+            print u.email
+            try:
+                os.remove('/home/shaastra/hospi/participantPDFs/SHA'+str(1300000+u.id)+'-registration-details.pdf')
+            except OSError:
+                print 'PDF doesn\'t exist.'
+            else:
+                print 'PDF deleted.'
+            u.save()
+            print '\n'
+
