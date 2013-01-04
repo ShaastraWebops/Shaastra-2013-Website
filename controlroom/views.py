@@ -138,7 +138,7 @@ def individual(request):
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
                 #msg = msg + "2"
                 #values = {'room':checkedin.room,}
-                individual_form = IndividualForm(instance = checkedin)
+                individual_form = IndividualForm(room=checkedin.room,instance = checkedin)
                 #msg = msg + "3"
                 msg = "This participant is already checked-in into " + str(checkedin.room)
                 checkintime = checkedin.check_in_date

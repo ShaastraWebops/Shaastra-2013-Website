@@ -13,6 +13,8 @@ from controlroom.models import *
 from chosen import forms as chosenforms
 from chosen import widgets as chosenwidgets
 import settings
+from django.db.models import Q
+
 BRANCH_CHOICES = (
     ('Arts', 'Arts'),
     ('Accounting', 'Accounting'),
@@ -71,6 +73,14 @@ class ShaastraIDForm(forms.Form):
 
 class IndividualForm(ModelForm):
     room = chosenforms.ChosenModelChoiceField(queryset=AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel').order_by('room_no'))
+    def __init__(self, *args, **kwargs):
+        room = kwargs.pop('room', None)
+        super(IndividualForm, self).__init__(*args, **kwargs)
+
+        if room:
+            rooms =AvailableRooms.objects.filter(Q(already_checkedin__lt=F('max_number'))|Q(id=room.id)).order_by('hostel').order_by('room_no')
+            self.fields['room'].queryset = rooms
+
     class Meta:
         model = IndividualCheckIn
         fields = ('room',
