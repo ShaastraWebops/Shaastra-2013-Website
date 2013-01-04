@@ -360,8 +360,8 @@ def Register(request):
                             username=data['username'], email=data['email'])
             new_user.set_password('default')
             new_user.is_active = True
-            new_user.save()
             new_user.save(using='erp')
+            new_user.save(using='default')
             x = 1300000 + 1#new_user.id
             shaastra_id = ("SHA" + str(x))
             userprofile = UserProfile(
@@ -382,7 +382,7 @@ def Register(request):
                 age=data['age'],
                 branch=data['branch'],
                 mobile_number=data['mobile_number'],
-                college=data['college'],
+                college=new_user.get_profile().college,
                 college_roll=data['college_roll'],
                 shaastra_id= ("SHA" + str(x)),
                 )
