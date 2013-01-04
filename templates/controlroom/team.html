@@ -15,6 +15,25 @@
     <script language = 'JavaScript' type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" charset = "utf-8"></script>
     <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.dajax.core.js" charset = "utf-8"></script>
     <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
+    <script type="text/javascript" src="{{site_url}}static/js/chosen.jquery.js"></script>
+    <script type="text/javascript">
+        function load_room(){
+            html="<td><div id='selectroom'></div></td>";
+            $("table tr:eq(2)").append(html);
+            //html="<option value='{{checkedin.room.id}}' selected='selected'>Sindhu,1001</option>"
+            //$("#id_room").prepend(html);
+            $('.chzn-select').chosen();
+            } 
+            $(document).ready(function(){
+	            load_room();
+               $("#selectroom").click(function(){
+                    $(this).hide();
+                    
+                    
+               });
+            });
+    </script>
+    <link href="{{site_url}}static/css/chosen.css"  type="text/css" rel="stylesheet">    
     <script type="text/javascript" charset = "utf-8">
     function send_participants(id){
             $("#allot_room_button").attr("disabled","true");
@@ -109,7 +128,7 @@
     </table>
     </div>
     <label>Room</label>
-    <select for="room" id="room" name="room">
+    <select for="room" id="room" class="chzn-select" name="room">
       <option selected="selected" value="0">---------</option>
       {% for r in rooms %}
       <option value={{r.id}}>{{r}}</option>
