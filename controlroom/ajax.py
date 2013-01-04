@@ -17,15 +17,13 @@ from controlroom.generate_bill import *
 @dajaxice_register
 def save_individual_checkin(request,form):
     dajax =Dajax()
-    individual_form=IndividualForm(form)
-    if individual_form.is_valid():
-        form1 = individual_form.save(commit=False)
-        form1.check_out_date = None
-        print "blah"
-        try:
-            checkedin = IndividualCheckIn.objects.get(shaastra_ID = form1.shaastra_ID)
-            individual_form=IndividualForm(form,instance=checkedin)
-            rm = AvailableRooms.objects.get(id = checkedin.room_id)
+    try:
+        checkedin = IndividualCheckIn.objects.get(shaastra_ID = form['shaastra_ID'])
+        rm = checkedin.room
+        individual_form=IndividualForm(form,croom=checkedin.room,instance=checkedin)
+        if individual_form.is_valid():
+            form1 = individual_form.save(commit=False)
+            form1.check_out_date = None
             rm.already_checkedin = rm.already_checkedin - 1
             rm.mattresses = rm.mattresses - checkedin.number_of_mattresses_given 
             rm.save()
@@ -33,20 +31,23 @@ def save_individual_checkin(request,form):
             room.already_checkedin = room.already_checkedin + 1
             room.mattresses = room.mattresses + form1.number_of_mattresses_given 
             room.save()
-            form1 = individual_form.save(commit=False)
-            form1.check_out_date = None
             form1.save()
             msg = "Updated Successfully!"
-        except:
+        else:
+            msg = "Invalid Form1"
+    except:
+        individual_form=IndividualForm(form)
+        if individual_form.is_valid():
+            form1 = individual_form.save(commit=False)
+            form1.check_out_date = None
             room = AvailableRooms.objects.get(id = form1.room_id)
             room.already_checkedin = room.already_checkedin + 1
             room.mattresses = room.mattresses + form1.number_of_mattresses_given
             room.save()
             form1.save()
             msg = "Checked In Successfully!"
-            
-    else:
-        msg = "Invalid Form" 
+        else:
+            msg = "Invalid Form"            
     dajax.alert(msg)
     dajax.script("$('#checkin_button').show();")
     return dajax.json()

@@ -138,7 +138,7 @@ def individual(request):
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
                 #msg = msg + "2"
                 #values = {'room':checkedin.room,}
-                individual_form = IndividualForm(room=checkedin.room,instance = checkedin)
+                individual_form = IndividualForm(croom=checkedin.room,instance = checkedin)
                 #msg = msg + "3"
                 msg = "This participant is already checked-in into " + str(checkedin.room)
                 checkintime = checkedin.check_in_date
@@ -675,3 +675,47 @@ def SiteCSVRegn(request):
             
     return render_to_response('controlroom/SiteCSVRegn.html', locals(),
                               context_instance=RequestContext(request))
+
+@login_required
+def editallot(request):
+    if not request.user.get_profile().is_hospi:
+        return HttpResponseRedirect(settings.SITE_URL)
+    if request.method=='POST':
+        form = request.POST
+        #try:
+        checkedin = IndividualCheckIn.objects.get(shaastra_ID = form['shaastra_ID'])
+        rm = checkedin.room
+        individual_form=IndividualForm(form,croom=checkedin.room,instance=checkedin)
+        if individual_form.is_valid():
+            rm.already_checkedin = rm.already_checkedin - 1
+            rm.mattresses = rm.mattresses - checkedin.number_of_mattresses_given 
+            rm.save()
+            form1 = individual_form.save(commit=False)
+            form1.check_out_date = None
+            room = AvailableRooms.objects.get(id = form1.room_id)
+            room.already_checkedin = room.already_checkedin + 1
+            room.mattresses = room.mattresses + form1.number_of_mattresses_given 
+            room.save()
+            #assert False
+            form1.save()
+            msg = "Updated Successfully!"
+        else:
+            msg = "Invalid Form1"
+        '''
+        except:
+            individual_form=IndividualForm(form)
+            if individual_form.is_valid():
+                form1 = individual_form.save(commit=False)
+                form1.check_out_date = None
+                room = AvailableRooms.objects.get(id = form1.room_id)
+                room.already_checkedin = room.already_checkedin + 1
+                room.mattresses = room.mattresses + form1.number_of_mattresses_given
+                room.save()
+                form1.save()
+                msg = "Checked In Successfully!"
+            else:
+                msg = "Invalid Form"
+        '''
+    else:
+        msg = "GOBACK"
+    return render_to_response('controlroom/individual.html', locals(),context_instance=RequestContext(request))
