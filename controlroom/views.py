@@ -361,7 +361,8 @@ def Register(request):
             new_user.set_password('default')
             new_user.is_active = True
             new_user.save()
-            x = 1300000 + new_user.id   
+            new_user.save(using='erp')
+            x = 1300000 + 1#new_user.id
             shaastra_id = ("SHA" + str(x))
             userprofile = UserProfile(
                 user=new_user,
@@ -375,6 +376,17 @@ def Register(request):
                 want_accomodation = True,
                 )
             userprofile.save()
+            p = Participant(
+                name=new_user.username,
+                gender=data['gender'],
+                age=data['age'],
+                branch=data['branch'],
+                mobile_number=data['mobile_number'],
+                college=data['college'],
+                college_roll=data['college_roll'],
+                shaastra_id= ("SHA" + str(x)),
+                )
+            p.save(using='erp')
             msg = "Your Shaastra ID is " + shaastra_id
     return render_to_response('controlroom/register.html', locals(),
                               context_instance=RequestContext(request))
