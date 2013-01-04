@@ -134,11 +134,14 @@ def individual(request):
                                       context_instance=RequestContext(request))
             college = participant.college
             try:
+                #msg = "1"
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
-                individual_form = IndividualForm(instance = checkedin)
+                #msg = msg + "2"
+                values = {'room':checkedin.room,}
+                individual_form = IndividualForm(initial=values,instance = checkedin)
+                #msg = msg + "3"
                 msg = "This participant is already checked-in into " + str(checkedin.room)
-                return render_to_response('controlroom/individual.html', locals(),
-                              context_instance=RequestContext(request)) 
+                return render_to_response('controlroom/individual.html', locals(),context_instance=RequestContext(request)) 
             except:
                 individual_form = IndividualForm(initial = {'shaastra_ID' : participant.shaastra_id, 'first_name' : participant.user.first_name, 'last_name' : participant.user.last_name, 'phone_no' : participant.mobile_number, })
                 return render_to_response('controlroom/individual.html', locals(),
@@ -672,4 +675,3 @@ def SiteCSVRegn(request):
             
     return render_to_response('controlroom/SiteCSVRegn.html', locals(),
                               context_instance=RequestContext(request))
-
