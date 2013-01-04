@@ -617,6 +617,10 @@ def SiteCSVRegn(request):
                     if recordDetails[AGE]:
                         newUserProfile.age = recordDetails[AGE]
                     else:
+                        newUserProfile.gender = 'F'
+                    if recordDetails[AGE]:
+                        newUserProfile.age = recordDetails[AGE]
+                    else:
                         newUserProfile.age = 0
                     newUserProfile.shaastra_id = 'SHA' + str(1300000 + newUser.id)
                     newUserProfile.college = newCollege
