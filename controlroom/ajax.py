@@ -18,7 +18,6 @@ from controlroom.generate_bill import *
 def save_individual_checkin(request,form):
     dajax =Dajax()
     individual_form=IndividualForm(form)
-    print individual_form
     if individual_form.is_valid():
         form1 = individual_form.save(commit=False)
         form1.check_out_date = None
