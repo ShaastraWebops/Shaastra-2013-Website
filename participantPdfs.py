@@ -494,30 +494,33 @@ def addLeadersToMembers():
             
 def createUser(fullname=None, email=None, mobile=None, college=None):
 
-    newUser = User()
-    newUser.email = email
-    newUser.username = email.split('@')[0]
-    newUser.first_name = fullname
-    newUser.set_password('default')
-    newUser.is_active = True
-    newUser.save()
-    # Get the college
     try:
-        newCollege = College.objects.get(name = college)
-    except College.DoesNotExist:
-        newCollege = None
-    # Create the user's profile
-    newUserProfile = UserProfile()
-    newUserProfile.user = newUser
-    newUserProfile.mobile_number = mobile
-    newUserProfile.gender = 'F'
-    newUserProfile.age = 0
-    newUserProfile.shaastra_id = 'SHA' + str(1300000 + newUser.id)
-    if newCollege:
-        newUserProfile.college = newCollege
-    newUserProfile.branch = 'Others'
-    newUserProfile.want_accomodation = False
-    newUserProfile.save()
+        User.objects.get(username = email.split('@')[0])
+    except User.DoesNotExist:
+        newUser = User()
+        newUser.email = email
+        newUser.username = email.split('@')[0]
+        newUser.first_name = fullname
+        newUser.set_password('default')
+        newUser.is_active = True
+        newUser.save()
+        # Get the college
+        try:
+            newCollege = College.objects.get(name = college)
+        except College.DoesNotExist:
+            newCollege = None
+        # Create the user's profile
+        newUserProfile = UserProfile()
+        newUserProfile.user = newUser
+        newUserProfile.mobile_number = mobile
+        newUserProfile.gender = 'F'
+        newUserProfile.age = 0
+        newUserProfile.shaastra_id = 'SHA' + str(1300000 + newUser.id)
+        if newCollege:
+            newUserProfile.college = newCollege
+        newUserProfile.branch = 'Others'
+        newUserProfile.want_accomodation = False
+        newUserProfile.save()
     return newUser
             
 def checkParticipationDetailsCSV(path, event_name):
@@ -551,7 +554,7 @@ def checkParticipationDetailsCSV(path, event_name):
         u = User.objects.filter(email=data[3])
         if not u:
             # User not found
-            print 'User not found. Creating...'
+            print 'Email not found. Trying to create...'
             u = [createUser(college=data[1], fullname=data[2], email=data[3], mobile=data[4])]
             outLine += ', user Created'
         else:
