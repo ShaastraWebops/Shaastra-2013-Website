@@ -33,7 +33,7 @@ MATTRESS_CHOICES = (
     )
 
 class AvailableRooms(models.Model):
-    room_no = models.CharField(max_length = 20)
+    room_no = models.CharField(max_length=20)
     hostel = models.CharField(max_length = 20, choices = HOSTEL_CHOICES)
     max_number = models.IntegerField()
     mattresses = models.IntegerField(default=0)

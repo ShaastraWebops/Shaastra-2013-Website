@@ -17,7 +17,7 @@ from controlroom.models import *
 from django.utils.translation import ugettext as _
 from controlroom.forms import *
 from django.contrib.sessions.models import Session
-from datetime                   import datetime
+from datetime import datetime
 from controlroom.generate_bill import *
 from prizes.models import BarcodeMap, Participant
 from users.forms import EditUserForm
@@ -156,8 +156,8 @@ def team(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
     msg = "Enter Shaastra ID of Team leader"
-    rooms = AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel')
-    hostels = HOSTEL_CHOICES
+    rooms = AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel').order_by('room_no')
+    checkin = CONTROL_ROOM_CHOICES
     matt = MATTRESS_CHOICES
     if request.method == 'POST':
         form = ShaastraIDForm(request.POST)
@@ -206,9 +206,11 @@ def team(request):
                         profile = UserProfile.objects.get(user = m)
                         try:
                             checkedin = IndividualCheckIn.objects.get(shaastra_ID=profile.shaastra_id)
-                            checkedin_profiles.append(checkedin)
+                            if not checkedin in checkedin_profiles:
+                                checkedin_profiles.append(checkedin)
                         except:
-                            new_profiles.append(profile)
+                            if not profile in new_profiles:
+                                new_profiles.append(profile)
             else:
                 for m in current_team.members.all():
                         profile = UserProfile.objects.get(user = m)
@@ -267,9 +269,11 @@ def IdForBill(request):
                         profile = UserProfile.objects.get(user = m)
                         try:
                             checkedin = IndividualCheckIn.objects.get(shaastra_ID=profile.shaastra_id)
-                            checkedin_profiles.append(checkedin)
+                            if not checkedin in checkedin_profiles:
+                                checkedin_profiles.append(checkedin)
                         except:
-                            new_profiles.append(profile)
+                            if not profile in new_profiles:
+                                new_profiles.append(profile)
             else:
                 for m in current_team.members.all():
                         profile = UserProfile.objects.get(user = m)
@@ -325,8 +329,9 @@ def CheckOut(request):
                     return render_to_response('controlroom/shaastraIDform.html', locals(),
                               context_instance=RequestContext(request)) 
                 else:
-                    values = {'check_out_date': datetime.now,'check_out_control_room':checkedin.check_in_control_room}
-                    individual_form = IndividualForm(instance=checkedin,initial=values)
+                    values = {'check_out_date': datetime.now(),'check_out_control_room':checkedin.check_in_control_room}
+                    print datetime.now()
+                    individual_form = IndividualForm(initial=values,instance=checkedin)
                     return render_to_response('controlroom/individual.html', locals(),
                                           context_instance=RequestContext(request))
             except:
@@ -356,7 +361,7 @@ def Register(request):
             new_user.set_password('default')
             new_user.is_active = True
             new_user.save()
-            x = 1300000 + new_user.id   
+            x = 1300000 + new_user.id
             shaastra_id = ("SHA" + str(x))
             userprofile = UserProfile(
                 user=new_user,
@@ -370,6 +375,17 @@ def Register(request):
                 want_accomodation = True,
                 )
             userprofile.save()
+            p = Participant(
+                name=new_user.username,
+                gender=data['gender'],
+                age=data['age'],
+                branch=data['branch'],
+                mobile_number=data['mobile_number'],
+                college=new_user.get_profile().college,
+                college_roll=data['college_roll'],
+                shaastra_id= ("SHA" + str(x)),
+                )
+            p.save(using='erp')
             msg = "Your Shaastra ID is " + shaastra_id
     return render_to_response('controlroom/register.html', locals(),
                               context_instance=RequestContext(request))
@@ -378,15 +394,15 @@ def Register(request):
 def CreateTeam(request):
     if request.user.get_profile().is_hospi is False:
         return HttpResponseRedirect(settings.SITE_URL)
-    
-    form = CreateTeamForm()
+    event = Event.objects.get(title='hospi')
+    form = CreateTeamForm(initial={'event':event})
     
     if request.method == 'POST':
         form = CreateTeamForm(request.POST)
         if form.is_valid():
             leader = UserProfile.objects.get(shaastra_id = form.cleaned_data['leader_shaastra_ID']).user
             try:
-                Team.objects.get(members__pk = leader.id, event = form.cleaned_data['event'])
+                Team.objects.get(members__pk = leader.id, event = event)
                 return render_to_response('users/teams/already_part_of_a_team.html', locals(), context_instance = RequestContext(request))
             except Team.DoesNotExist:
                 pass
@@ -505,10 +521,24 @@ def EditUserProfile(request,shaastraid):
         user = userprofile.user
         editProfileForm = EditUserForm(request.POST, instance = userprofile)
         if editProfileForm.is_valid():
-            editProfileForm.save()
+            profile = editProfileForm.save()
             user.first_name = request.POST['first_name']
             user.last_name = request.POST['last_name']
             user.save()
+            new_user = User.objects.using('erp').get(username=user.username)
+            new_user.first_name = user.first_name
+            new_user.last_name = user.last_name
+            new_user.save()
+            p = Participant.objects.using('erp').get(shaastra_id = user.get_profile().shaastra_id)
+            p.name=new_user.username
+            p.gender=profile.gender
+            p.age=profile.age
+            p.branch=profile.branch
+            p.mobile_number=profile.mobile_number
+            p.college=user.get_profile().college,
+            p.college_roll=profile.college_roll
+            p.shaastra_id= profile.shaastra_id
+            p.save()
             return HttpResponseRedirect('%scontrolroom/home/' % settings.SITE_URL)
         else:
             return render_to_response('users/edit_profile.html', locals(),context_instance=RequestContext(request))

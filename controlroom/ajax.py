@@ -37,7 +37,9 @@ def save_individual_checkout(request,form,shaastraid):
     checkedin = IndividualCheckIn.objects.get(shaastra_ID=shaastraid)
     individual_form=IndividualForm(form, instance = checkedin)
     if individual_form.is_valid():
-        form = individual_form.save()
+        form = individual_form.save(commit=False)
+        form.check_out_date = datetime.now()
+        form.save()
         room = AvailableRooms.objects.get(id = form.room_id)
         room.already_checkedin = room.already_checkedin - 1
         room.mattresses = room.mattresses + form.number_of_mattresses_given
@@ -54,9 +56,7 @@ def send_participants(request,form,uid):
     dajax = Dajax()
     r = form['room']
     rm = AvailableRooms.objects.get(id=r)
-    print uid
     leader = UserProfile.objects.get(id = uid)
-    print leader
     check_in = form['checkin']
     comments = form['comments'] 
     duration = form['no_of_days']
@@ -72,6 +72,7 @@ def send_participants(request,form,uid):
             checkedin = IndividualCheckIn.objects.get(shaastra_ID = s_id)
             msg = msg + s_id + ','
         except:
+            profile = UserProfile.objects.get(shaastra_id = s_id)
             new_guest = IndividualCheckIn(room = rm,
                                           gender = profile.gender,
                                           duration_of_stay=duration,
@@ -101,4 +102,5 @@ def send_participants(request,form,uid):
     else:
         msg = msg + " already checked in"
     dajax.alert(msg)
+    #dajax.assign('#allot_room_button','disabled',false)
     return dajax.json()

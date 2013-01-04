@@ -11,21 +11,33 @@ a.btn{text-decoration: none!important;margin: 0!important;}
 <body>
 <div class="container">
 <h2>{{msg}}</h2>
-<a href="{{site_url}}user/logout/" class="btn btn-large btn-info" style="">Logout</a>
+<div class="row-fluid">
+<div class="span11">
 <a href="{{site_url}}controlroom/addroom/" class="btn btn-large btn-info">Add Room</a>
-<a href="{{site_url}}controlroom/roommap/" class="btn btn-large btn-info">Room Map</a><br><br>
+<a href="{{site_url}}controlroom/roommap/" class="btn btn-large btn-info">Room Map</a>
+</div>
+<div class="span1">
+<a href="{{site_url}}user/logout/" class="btn btn-large btn-info" style="">Logout</a><br>
+</div>
+</div>
+<br>
+<div class="row-fluid">
+<div class="span6">
 <h4>CHECK IN</h4>
 <a href="{{site_url}}controlroom/individual/" id="individual" class="btn btn-large btn-primary">Individual Registration</a> 
-<a href="{{site_url}}controlroom/team/" id="team" class="btn btn-large btn-primary">Team Registration</a><br>
-<br>
+<a href="{{site_url}}controlroom/team/" id="team" class="btn btn-large btn-primary">Team Registration</a>
+</div>
+<div class="span6">
 <h4>CHECK OUT</h4>
-<a href="{{site_url}}controlroom/checkout/" id="checkout" class="btn btn-large btn-inverse">Check Out</a><br>
+<a href="{{site_url}}controlroom/checkout/" id="checkout" class="btn btn-large btn-inverse">Check Out</a>
+</div>
+</div>
 <br>
 <h4>REGISTER</h4>
 <a href="{{site_url}}controlroom/register/" id="register" class="btn btn-large btn-primary">Create Shaastra ID</a>
-<a href="{{site_url}}controlroom/siteregncsv/" id="csvregister" class="btn btn-large btn-primary">Register Users Thru' CSV</a><br/>
+<a href="{{site_url}}controlroom/siteregncsv/" id="csvregister" class="btn btn-large btn-primary">Register Users Thru' CSV</a><br><br>
 <h4>TEAM EDITING</h4>
-<a href="{{site_url}}controlroom/createteam/" id="createteam" class="btn btn-large btn-primary">Create Team</a>
+<a href="{{site_url}}controlroom/createteam/" id="createteam" class="btn btn-large btn-primary">Create Team</a><br><br>
 <form action="{{site_url}}controlroom/editteam/" method="POST">
     {% csrf_token %}
     <label for="id_team_name">Team name:</label> <input type="text" name="team_name" id="id_team_name" />

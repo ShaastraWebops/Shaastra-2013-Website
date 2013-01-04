@@ -17,12 +17,13 @@
     <script language = 'JavaScript' type="text/javascript" src="{{site_url}}static/js/jquery.ba-serializeobject.min.js" charset = "utf-8"></script>
     <script type="text/javascript" charset = "utf-8">
     function send_participants(id){
+            $("#allot_room_button").attr("disabled","true");
             data = $('#Form').serializeObject();
             if(data.room=='0'){alert('Please select a room');return false;}
             if(data.checkin=='0'){alert('Please select a check-in control room');return false;}
             if(!data.sub_checklist){alert('Select a participant!');return false;}
             $(".bbq-item").prepend("Processing please wait..<br><img src='{{site_url}}static/img/loading.gif'>");
-            Dajaxice.controlroom.send_participants(Dajax.process,{'form':data,'uid':id})
+            Dajaxice.controlroom.send_participants(Dajax.process,{'form':data,'uid':id})            
             return false;
     }
     function toggleChecked(status){
@@ -35,6 +36,7 @@
 <body>
     <div class="container">
     <a class="btn btn-large btn-danger" href='{{site_url}}controlroom/home/'>Home</a>
+    <a class="btn btn-large btn-inverse" href='{{site_url}}controlroom/team');" >Back</a>
     <h2>Team Check In</h2><br>
     
     <div class="TeamCheckIn">
@@ -64,7 +66,7 @@
     
     {% for m in checkedin_profiles %}
     <tr>
-        <td><input for ="sub_checklist" type="checkbox" name="sub_checklist" class="checkbox" value="{{m.shaastra_id}}" /></td>
+        <td><input for ="sub_checklist" type="checkbox" name="sub_checklist" class="checkbox" value="{{m.shaastra_ID}}" /></td>
         <td width ='120'>{{m.shaastra_ID}}</td>
         <td width ='120'>{{m.gender}}</td>
         <td width ='120'>{{m.first_name}}</td>
@@ -116,7 +118,7 @@
     <label>Check In Control Room</label>
     <select for="checkin" id="checkin" name="checkin">
       <option selected="selected" value="0">---------</option>
-      {% for h in hostels %}
+      {% for h in checkin %}
       <option value={{h|cut:"("|cut:"'"|cut:","}}>{{h}}</option>
       {% endfor %}
     </select><br>
@@ -130,7 +132,7 @@
       {% endfor %}
     </select><br>
     <label>Comments</label><textarea for="comments" id="comments" name="comments"></textarea>
-    <input type="button" onclick="send_participants({{leader.id}});" value="Allot Room" class="btn btn-info"><br><br>
+    <input type="button" id="allot_room_button" onclick="send_participants({{leader.id}});" value="Allot Room" class="btn btn-info"><br><br>
     <!--<input type="button" onclick="generate_bill({{leader.id}});" value="Generate Bill" class="btn btn-info"><br><br>-->
     <!--<input type="submit" value = "Generate Bill">-->
     <!--<a target ="_blank" class="btn btn-large btn-inverse" href='{{site_url}}controlroom/bill/{{leader.id}}/1');" >Generate Bill for Boys</a>

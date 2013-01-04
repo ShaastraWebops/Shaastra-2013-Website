@@ -59,6 +59,8 @@ def home(request):
             return HttpResponseRedirect(settings.SITE_URL + 'core/')
         elif request.user.get_profile().is_coord_of:
             return HttpResponseRedirect(settings.SITE_URL + 'coord/')
+        elif request.user.get_profile().is_hospi :
+            return HttpResponseRedirect(settings.SITE_URL + 'controlroom/home')
         else:
             return render_to_response('index.html',locals(),context_instance = RequestContext(request))
     else:
@@ -163,3 +165,29 @@ def create_team(request):
                 elif user not in team[0].members.all():
                     team[0].members.add(user)
     return render_to_response('create_accounts.html', locals(), context_instance=RequestContext(request))
+
+def create_hospi_accounts(request):
+    userdetails = []
+    form = FileForm()    
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)   
+        if form.is_valid():
+            line_number = form.cleaned_data['event_id']
+            for line in form.cleaned_data['files']:
+                line = line.replace('\n', '').replace('\r', '')
+                if line == '':
+                    continue
+                line_number += 1
+                new = User(
+                            username = "dummy"+str(line_number),
+                            email = "dummy"+str(line_number)+"@dummymail.com"
+                            )
+                new.set_password("dummyhospi"+str(line_number))
+                new.save()   
+                new_profile = UserProfile(user = new,
+                                is_hospi = True)
+                new_profile.save()
+                userdetails.append(new)
+                msg = "Account created"
+    return render_to_response('create_accounts.html', locals(),
+                              context_instance=RequestContext(request))
