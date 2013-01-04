@@ -134,11 +134,19 @@ def individual(request):
                                       context_instance=RequestContext(request))
             college = participant.college
             try:
+                #msg = "1"
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
-                individual_form = IndividualForm(instance = checkedin)
-                msg = "This participant is already checked-in!"
+                #msg = msg + "2"
+                #values = {'room':checkedin.room,}
+                individual_form = IndividualForm(croom=checkedin.room,instance = checkedin)
+                #msg = msg + "3"
+                msg = "This participant is already checked-in into " + str(checkedin.room)
+                checkintime = checkedin.check_in_date
+                checkouttime = checkedin.check_out_date
+                if checkouttime:
+                    msg = "This participant was checked-in into " + str(checkedin.room) + ". He has checked-out!"
                 return render_to_response('controlroom/individual.html', locals(),
-                              context_instance=RequestContext(request)) 
+                              context_instance=RequestContext(request))
             except:
                 individual_form = IndividualForm(initial = {'shaastra_ID' : participant.shaastra_id, 'first_name' : participant.user.first_name, 'last_name' : participant.user.last_name, 'phone_no' : participant.mobile_number, })
                 return render_to_response('controlroom/individual.html', locals(),
@@ -525,17 +533,17 @@ def EditUserProfile(request,shaastraid):
             user.first_name = request.POST['first_name']
             user.last_name = request.POST['last_name']
             user.save()
-            new_user = User.objects.using('erp').get(username=user.username)
-            new_user.first_name = user.first_name
-            new_user.last_name = user.last_name
-            new_user.save()
+            #new_user = User.objects.using('erp').get(username=user.username)
+            #new_user.first_name = user.first_name
+            #new_user.last_name = user.last_name
+            #new_user.save()
             p = Participant.objects.using('erp').get(shaastra_id = user.get_profile().shaastra_id)
-            p.name=new_user.username
+            p.name=user.username
             p.gender=profile.gender
             p.age=profile.age
             p.branch=profile.branch
             p.mobile_number=profile.mobile_number
-            p.college=user.get_profile().college,
+            p.college=str(user.get_profile().college),
             p.college_roll=profile.college_roll
             p.shaastra_id= profile.shaastra_id
             p.save()
@@ -605,15 +613,6 @@ def SiteCSVRegn(request):
                         newCollege = College()
                         newCollege.name = recordDetails[COLLEGE]
                         newCollege.city = 'Unknown'
-                        newCollege.state = 'Outside India'
-                        newCollege.save()
-                    # Create the user's profile
-                    newUserProfile = UserProfile()
-                    newUserProfile.user = newUser
-                    newUserProfile.mobile_number = recordDetails[MOBILE]
-                    if recordDetails[GENDER].upper() == 'M' or recordDetails[GENDER].upper() == 'MALE':
-                        newUserProfile.gender = 'M'
-                    else:
                         newUserProfile.gender = 'F'
                     if recordDetails[AGE]:
                         newUserProfile.age = recordDetails[AGE]
@@ -673,3 +672,46 @@ def SiteCSVRegn(request):
     return render_to_response('controlroom/SiteCSVRegn.html', locals(),
                               context_instance=RequestContext(request))
 
+@login_required
+def editallot(request):
+    if not request.user.get_profile().is_hospi:
+        return HttpResponseRedirect(settings.SITE_URL)
+    if request.method=='POST':
+        form = request.POST
+        #try:
+        checkedin = IndividualCheckIn.objects.get(shaastra_ID = form['shaastra_ID'])
+        rm = checkedin.room
+        individual_form=IndividualForm(form,croom=checkedin.room,instance=checkedin)
+        if individual_form.is_valid():
+            rm.already_checkedin = rm.already_checkedin - 1
+            rm.mattresses = rm.mattresses - checkedin.number_of_mattresses_given 
+            rm.save()
+            form1 = individual_form.save(commit=False)
+            form1.check_out_date = None
+            room = AvailableRooms.objects.get(id = form1.room_id)
+            room.already_checkedin = room.already_checkedin + 1
+            room.mattresses = room.mattresses + form1.number_of_mattresses_given 
+            room.save()
+            #assert False
+            form1.save()
+            msg = "Updated Successfully!"
+        else:
+            msg = "Invalid Form1"
+        '''
+        except:
+            individual_form=IndividualForm(form)
+            if individual_form.is_valid():
+                form1 = individual_form.save(commit=False)
+                form1.check_out_date = None
+                room = AvailableRooms.objects.get(id = form1.room_id)
+                room.already_checkedin = room.already_checkedin + 1
+                room.mattresses = room.mattresses + form1.number_of_mattresses_given
+                room.save()
+                form1.save()
+                msg = "Checked In Successfully!"
+            else:
+                msg = "Invalid Form"
+        '''
+    else:
+        msg = "GOBACK"
+    return render_to_response('controlroom/individual.html', locals(),context_instance=RequestContext(request))
