@@ -34,7 +34,7 @@
     <script type="text/javascript" charset = "utf-8">
     function checkin()
     {
-        $("#checkin_button").attr("disabled","disabled");
+        $("#checkin_button").hide();
     data = $("#IndividualForm :input").serializeObject();
     Dajaxice.controlroom.save_individual_checkin(Dajax.process,{'form':data});
     alert("Processing please wait...");
@@ -42,7 +42,7 @@
     }
     function checkout(id)
     {
-        $("#checkout_button").attr("disabled","disabled");
+        $("#checkout_button").hide();
     data = $("#IndividualForm :input").serializeObject();
     Dajaxice.controlroom.save_individual_checkout(Dajax.process,{'form':data,'shaastraid':id});
     alert("Processing please wait...");
@@ -60,14 +60,21 @@
     <table id = "IndividualForm" class="table table-striped table-bordered table-condensed">
         {{ individual_form.as_table }}
         <tr>
-            <th><label for="id_college">College:</label></th><td><label id="id_college">{{college}}</label></td></tr>
+            <th><label for="id_college">College:</label></th><td><label id="id_college">{{college}}</label></td>
+        </tr>
+        <!--<tr>
+            <th><label for="id_checkin_time">Check Out Time:</label></th><td><label id="id_checkin_time">{{checkintime}}</label></td>
+        </tr>
+        <tr>
+            <th><label for="id_checkout_time">Check Out Time:</label></th><td><label id="id_checkout_time">{{checkouttime}}</label></td>
+        </tr>-->
     </table>
     </div>
-    {% if request.get_full_path == "/2013/main/controlroom/individual/" %}
+    {% if request.get_full_path == "/controlroom/individual/" %}
         <button class="btn btn-primary" id="checkin_button" onclick="checkin();" type ='button' value='Save'>Check In</button><br><hr>
         <a class="btn btn-large btn-inverse" href='{{site_url}}controlroom/individual/'>Back</a>  
     {% else %}
-    {% if request.get_full_path == "/2013/main/controlroom/checkout/" %}
+    {% if request.get_full_path == "/controlroom/checkout/" %}
         <button class="btn btn-primary" id="checkout_button"  onclick="checkout('{{participant.shaastra_id}}');" type ='button' value='Save'>Check Out</button>
         <a class="btn btn-large btn-inverse" href='{{site_url}}controlroom/checkout/'>Back</a>     
     {% else %}

@@ -137,6 +137,10 @@ def individual(request):
                 checkedin = IndividualCheckIn.objects.get(shaastra_ID=participant.shaastra_id)
                 individual_form = IndividualForm(instance = checkedin)
                 msg = "This participant is already checked-in into " + str(checkedin.room)
+                checkintime = checkedin.check_in_date
+                checkouttime = checkedin.check_out_date
+                if checkouttime:
+                    msg = "This participant was checked-in into " + str(checkedin.room) + ". He has checked-out!"
                 return render_to_response('controlroom/individual.html', locals(),
                               context_instance=RequestContext(request)) 
             except:
