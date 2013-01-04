@@ -102,4 +102,5 @@ def send_participants(request,form,uid):
     else:
         msg = msg + " already checked in"
     dajax.alert(msg)
+    dajax.assign('#allot_room_button','disabled','false')
     return dajax.json()

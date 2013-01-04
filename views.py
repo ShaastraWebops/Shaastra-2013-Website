@@ -172,21 +172,21 @@ def create_hospi_accounts(request):
     if request.method == 'POST':
         form = FileForm(request.POST, request.FILES)   
         if form.is_valid():
-            line_number = 0
+            line_number = form.cleaned_data['event_id']
             for line in form.cleaned_data['files']:
                 line = line.replace('\n', '').replace('\r', '')
                 if line == '':
                     continue
                 line_number += 1
                 new = User(
-                            username = "dummyhospi"+line_number,
-                            email = line
+                            username = "dummy"+str(line_number),
+                            email = "dummy"+str(line_number)+"@dummymail.com"
                             )
-                new.set_password("dummyhospi"+line_number)
-                #new.save()   
+                new.set_password("dummyhospi"+str(line_number))
+                new.save()   
                 new_profile = UserProfile(user = new,
                                 is_hospi = True)
-                #new_profile.save()
+                new_profile.save()
                 userdetails.append(new)
                 msg = "Account created"
     return render_to_response('create_accounts.html', locals(),
