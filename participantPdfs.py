@@ -625,7 +625,7 @@ def cleanParticipationCSV(path):
     
 def cleanEmails():
     for u in User.objects.all():
-        if u.email[-1] == ',':
+        if u.email and u.email[-1] == ',':
             print u.id
             print u.email
             u.email = u.email[:-1]
