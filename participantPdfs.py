@@ -298,23 +298,23 @@ def savePDF(pdf, user):
     destination.close()
     log('File '+user.get_profile().shaastra_id+'-registration-details.pdf saved.')
     
-def generatePDFs():
+def generatePDFs(uid):
 
-    return ('Comment this line to send the Participant PDFs.')
+    #return ('Comment this line to send the Participant PDFs.')
 
-    participants = []
-    numPDFsGenerated = 0
-    numPDFsMailed = 0
-    userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
-    participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(user__is_superuser = False)
-    for profile in participantProfilesWithShaastraIds:
-        try:
-            u = profile.user
-        except:
-            continue
-        participants.append(u)
+    #participants = []
+    #numPDFsGenerated = 0
+    #numPDFsMailed = 0
+    #userProfilesWithShaastraIds = UserProfile.objects.exclude(shaastra_id = '') #TODO Exclude non active users??
+    #participantProfilesWithShaastraIds = userProfilesWithShaastraIds.exclude(is_core = True).filter(user__is_superuser = False)
+    #for profile in participantProfilesWithShaastraIds:
+    #    try:
+    #        u = profile.user
+    #    except:
+    #        continue
+    #    participants.append(u)
 
-    #participants = [User.objects.get(id = 1351)] #TODO: Remove this line for finale
+    participants = [User.objects.get(id = uid)] #TODO: Remove this line for finale
 
     for participant in participants:
         #if participant.id < 7071:
@@ -326,11 +326,11 @@ def generatePDFs():
         savePDF(pdf, participant)
         if participant.email:
             mailPDF(participant, pdf)
-            numPDFsMailed += 1
-        numPDFsGenerated += 1
+    #        numPDFsMailed += 1
+    #    numPDFsGenerated += 1
         
-    log('\n\nPDFs generated: %d' % numPDFsGenerated)
-    log('\n\nPDFs mailed: %d' % numPDFsMailed)
+    #log('\n\nPDFs generated: %d' % numPDFsGenerated)
+    #log('\n\nPDFs mailed: %d' % numPDFsMailed)
     
 def remainingPDFs():
 
@@ -521,7 +521,7 @@ def createUser(fullname=None, email=None, mobile=None, college=None):
         newUserProfile.branch = 'Others'
         newUserProfile.want_accomodation = False
         newUserProfile.save()
-    return newUser  #TODO Fix this
+    return newUser
             
 def checkParticipationDetailsCSV(path, event_name):
     try:
@@ -556,7 +556,7 @@ def checkParticipationDetailsCSV(path, event_name):
             # User not found
             print 'Email not found. Trying to create...'
             u = [createUser(college=data[1], fullname=data[2], email=data[3], mobile=data[4])]
-            outLine += ', user Created'  # TODO: Fix this.
+            outLine += ', user Created'
         else:
             # User found
             print 'User found.'
