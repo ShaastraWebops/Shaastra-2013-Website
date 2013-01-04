@@ -25,8 +25,13 @@ def save_individual_checkin(request,form):
         try:
             checkedin = IndividualCheckIn.objects.get(shaastra_ID = form1.shaastra_ID)
             individual_form=IndividualForm(form,instance=checkedin)
+            rm = AvailableRooms.objects.get(id = checkedin.room_id)
+            rm.already_checkedin = rm.already_checkedin - 1
+            rm.mattresses = rm.mattresses - checkedin.number_of_mattresses_given 
+            rm.save()
             room = AvailableRooms.objects.get(id = form1.room_id)
-            room.mattresses = room.mattresses + form1.number_of_mattresses_given - checkedin.number_of_mattresses_given
+            room.already_checkedin = room.already_checkedin + 1
+            room.mattresses = room.mattresses + form1.number_of_mattresses_given 
             room.save()
             form1 = individual_form.save(commit=False)
             form1.check_out_date = None
@@ -59,9 +64,26 @@ def save_individual_checkin(request,form):
         room.save()
         msg = "Checked In Successfully!"
         dajax.alert(msg)
+        form = individual_form.save(commit = False)
+        #form.check_out_date = 'NULL'
+        try:
+            checkedin = IndividualCheckIn.objects.get(shaastra_ID = form.shaastra_ID)
+            form.save()
+            room = AvailableRooms.objects.get(id = form.room_id)
+            room.mattresses = room.mattresses + form.number_of_mattresses_given - checkedin.number_of_mattresses_given
+            room.save()
+            msg = "Updated Successfully!"
+        except:
+            form.save()
+            room = AvailableRooms.objects.get(id = form.room_id)
+            room.already_checkedin = room.already_checkedin + 1
+            room.mattresses = room.mattresses + form.number_of_mattresses_given
+            room.save()
+            msg = "Checked In Successfully!"
+         
     else:
         msg = "Invalid Form" 
-        dajax.alert(msg)
+    dajax.alert(msg)
     return dajax.json()
 '''
 @dajaxice_register
