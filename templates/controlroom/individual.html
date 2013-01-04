@@ -19,6 +19,8 @@
         function load_room(){
             html="<td><div id='selectroom'></div></td>";
             $("table tr:eq(2)").append(html);
+            html="<option value='{{checkedin.room.id}}' selected='selected'>Sindhu,1001</option>"
+            $("#id_room").prepend(html);
             $('.chzn-select').chosen();
             } 
             $(document).ready(function(){
