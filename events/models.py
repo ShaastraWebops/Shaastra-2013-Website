@@ -127,7 +127,7 @@ class EventSingularRegistration(models.Model):
     event = models.ForeignKey(Event)
     
     def __unicode__(self):
-        return '%s <- User: %s' % (event, user)
+        return '%s <- User: %s' % (self.event, self.user)
         
 '''
 class EventTeamRegistration(models.Model):
