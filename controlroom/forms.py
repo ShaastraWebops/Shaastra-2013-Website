@@ -74,7 +74,7 @@ class ShaastraIDForm(forms.Form):
 class IndividualForm(ModelForm):
     room = chosenforms.ChosenModelChoiceField(queryset=AvailableRooms.objects.filter(already_checkedin__lt=F('max_number')).order_by('hostel').order_by('room_no'))
     def __init__(self, *args, **kwargs):
-        room = kwargs.pop('room', None)
+        room = kwargs.pop('croom', None)
         super(IndividualForm, self).__init__(*args, **kwargs)
 
         if room:
