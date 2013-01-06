@@ -598,7 +598,7 @@ def SiteCSVRegn(request):
                     newUser.email = recordDetails[EMAIL]
                     if recordDetails[USERNAME]:
                         if usr:
-                            newUser.username = recordDetails[USERNAME]+'1'
+                            newUser.username = recordDetails[EMAIL].split('@')[0]
                         else:
                             newUser.username = recordDetails[USERNAME]    
                     else:
