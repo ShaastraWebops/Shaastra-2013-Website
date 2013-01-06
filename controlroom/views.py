@@ -584,14 +584,8 @@ def SiteCSVRegn(request):
                     badBarcode.append(line)
                     continue
                 try:
-                    try:
-                        user = User.objects.get(email = recordDetails[EMAIL])
-                        profile = UserProfile.objects.get(user = user)
-                    except:
-                        user = User.objects.filter(email = recordDetails[EMAIL])[0]
-                        profile = UserProfile.objects.get(user = user)
-                    else:
-                        pass
+                    user = User.objects.get(email = recordDetails[EMAIL])
+                    profile = UserProfile.objects.get(user = user)
                     if user and profile:
                         newParticipant = Participant.objects.get(shaastra_id = profile.shaastra_id)
                         try:
