@@ -629,7 +629,12 @@ def SiteCSVRegn(request):
                         try:
                             newCollege = College.objects.get(name = recordDetails[COLLEGE])
                         except:
-                            newCollege = College.objects.filter(name = recordDetails[COLLEGE])[0] 
+                            Colleges = College.objects.filter(name = recordDetails[COLLEGE])
+                            count =0
+                            for c in Colleges:
+                                if count = 0:
+                                    newCollege = c
+                                    count =1
                         else:
                             pass
                     except College.DoesNotExist:
