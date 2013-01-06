@@ -584,7 +584,16 @@ def SiteCSVRegn(request):
                     badBarcode.append(line)
                     continue
                 try:
-                    user = User.objects.get(username = recordDetails[USERNAME],email = recordDetails[EMAIL])
+                    user = User.objects.get(email = recordDetails[EMAIL])
+                    profile = UserProfile.objects.get(user = user)
+                    newParticipant = Participant.objects.get(shaastra_id = profile.shaastra_id)
+                    try:
+                        Barcodemap.objects.get(shaastra_id = newParticipant)
+                    except:
+                        newBarcode = BarcodeMap()
+                        newBarcode.shaastra_id = newParticipant
+                        newBarcode.barcode = recordDetails[BARCODE]
+                        newBarcode.save(using = 'erp')
                 except User.DoesNotExist:
                     # Create new user
                     newUser = User()
@@ -598,7 +607,7 @@ def SiteCSVRegn(request):
                     newUser.email = recordDetails[EMAIL]
                     if recordDetails[USERNAME]:
                         if usr:
-                            newUser.username = recordDetails[EMAIL].split('@')[0]
+                            newUser.username = recordDetails[EMAIL]+'__123'
                         else:
                             newUser.username = recordDetails[USERNAME]    
                     else:
@@ -670,7 +679,7 @@ def SiteCSVRegn(request):
                     finalstats += '<tr><td>'+creationRecord[0]+'</td><td>'+creationRecord[1]+'</td><td>'+creationRecord[2]+'</td></tr>'
                 finalstats += '</table>'
             if alreadyCreated:
-                finalstats += '<br/>The following records were not created (existing username used).<br/>'
+                finalstats += '<br/>The following records were not created (existing email used).<br/>'
                 for line in alreadyCreated:
                     finalstats += line + '<br/>'
             if noEmail:
