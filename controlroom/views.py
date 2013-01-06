@@ -584,7 +584,7 @@ def SiteCSVRegn(request):
                     badBarcode.append(line)
                     continue
                 try:
-                    user = User.objects.get(username = recordDetails[USERNAME],email = recordDetails[EMAIL])
+                    user = User.objects.get(username = recordDetails[USERNAME])
                     profile = UserProfile.objects.get(user = user)
                     if user and profile:
                         newParticipant = Participant.objects.get(shaastra_id = profile.shaastra_id)
@@ -673,7 +673,7 @@ def SiteCSVRegn(request):
                     finalstats += '<tr><td>'+creationRecord[0]+'</td><td>'+creationRecord[1]+'</td><td>'+creationRecord[2]+'</td></tr>'
                 finalstats += '</table>'
             if alreadyCreated:
-                finalstats += '<br/>The following records were not created (existing email used).<br/>'
+                finalstats += '<br/>The following records were not created (existing username used).<br/>'
                 for line in alreadyCreated:
                     finalstats += line + '<br/>'
             if noEmail:
