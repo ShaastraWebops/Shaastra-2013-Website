@@ -586,9 +586,10 @@ def SiteCSVRegn(request):
                 try:
                     try:
                         user = User.objects.get(email = recordDetails[EMAIL])
+                        profile = UserProfile.objects.get(user = user)
                     except:
                         user = User.objects.filter(email = recordDetails[EMAIL])[0]
-                    profile = UserProfile.objects.get(user = user)
+                        profile = UserProfile.objects.get(user = user)
                     newParticipant = Participant.objects.get(shaastra_id = profile.shaastra_id)
                     try:
                         Barcodemap.objects.get(shaastra_id = newParticipant)
