@@ -590,14 +590,17 @@ def SiteCSVRegn(request):
                     except:
                         user = User.objects.filter(email = recordDetails[EMAIL])[0]
                         profile = UserProfile.objects.get(user = user)
-                    newParticipant = Participant.objects.get(shaastra_id = profile.shaastra_id)
-                    try:
-                        Barcodemap.objects.get(shaastra_id = newParticipant)
-                    except:
-                        newBarcode = BarcodeMap()
-                        newBarcode.shaastra_id = newParticipant
-                        newBarcode.barcode = recordDetails[BARCODE]
-                        newBarcode.save(using = 'erp')
+                    else:
+                        pass
+                    if user and profile:
+                        newParticipant = Participant.objects.get(shaastra_id = profile.shaastra_id)
+                        try:
+                            Barcodemap.objects.get(shaastra_id = newParticipant)
+                        except:
+                            newBarcode = BarcodeMap()
+                            newBarcode.shaastra_id = newParticipant
+                            newBarcode.barcode = recordDetails[BARCODE]
+                            newBarcode.save(using = 'erp')
                 except User.DoesNotExist:
                     # Create new user
                     newUser = User()
