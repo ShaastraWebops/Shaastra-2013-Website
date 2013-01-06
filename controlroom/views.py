@@ -606,8 +606,9 @@ def SiteCSVRegn(request):
                     newUser.is_active = True
                     newUser.save()
                     # Get the college
+                    newUserProfile = UserProfile(user=newUser)
                     try:
-                        newCollege = College.objects.get(name = recordDetails[COLLEGE])
+                        newCollege = College.objects.filter(name = recordDetails[COLLEGE])[0]
                     except College.DoesNotExist:
                         # Create the college
                         newCollege = College()
