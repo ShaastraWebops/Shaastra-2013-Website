@@ -584,16 +584,23 @@ def SiteCSVRegn(request):
                     badBarcode.append(line)
                     continue
                 try:
-                    user = User.objects.get(username = recordDetails[USERNAME])
+                    user = User.objects.get(username = recordDetails[USERNAME],email = recordDetails[EMAIL])
                 except User.DoesNotExist:
                     # Create new user
                     newUser = User()
+                    try:
+                        usr = User.objects.get(username = recordDetails[USERNAME])
+                    except:
+                        pass
                     if not recordDetails[EMAIL]:
                         noEmail.append(line)
                         continue
                     newUser.email = recordDetails[EMAIL]
                     if recordDetails[USERNAME]:
-                        newUser.username = recordDetails[USERNAME]
+                        if usr:
+                            newUser.username = recordDetails[USERNAME]+'1'
+                        else:
+                            newUser.username = recordDetails[USERNAME]    
                     else:
                         newUser.username = recordDetails[EMAIL].split('@')[0]
                     if recordDetails[FIRSTNAME]:
@@ -605,9 +612,10 @@ def SiteCSVRegn(request):
                     newUser.set_password('default')
                     newUser.is_active = True
                     newUser.save()
+                    newUserProfile = UserProfile(user=newUser)
                     # Get the college
                     try:
-                        newCollege = College.objects.get(name = recordDetails[COLLEGE])
+                        newCollege = College.objects.filter(name = recordDetails[COLLEGE])[0]
                     except College.DoesNotExist:
                         # Create the college
                         newCollege = College()
