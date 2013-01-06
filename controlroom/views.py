@@ -616,7 +616,10 @@ def SiteCSVRegn(request):
                     # Get the college
                     newUserProfile = UserProfile(user=newUser)
                     try:
-                        newCollege = College.objects.filter(name = recordDetails[COLLEGE])[0]
+                        try:
+                            newCollege = College.objects.get(name = recordDetails[COLLEGE])
+                        except:
+                            newCollege = College.objects.filter(name = recordDetails[COLLEGE])[0] 
                     except College.DoesNotExist:
                         # Create the college
                         newCollege = College()
