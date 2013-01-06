@@ -598,19 +598,12 @@ def SiteCSVRegn(request):
                 except User.DoesNotExist:
                     # Create new user
                     newUser = User()
-                    try:
-                        usr = User.objects.get(username = recordDetails[USERNAME])
-                    except:
-                        pass
                     if not recordDetails[EMAIL]:
                         noEmail.append(line)
                         continue
                     newUser.email = recordDetails[EMAIL]
                     if recordDetails[USERNAME]:
-                        if usr:
-                            newUser.username = recordDetails[EMAIL]+'__123'
-                        else:
-                            newUser.username = recordDetails[USERNAME]    
+                        newUser.username = recordDetails[USERNAME]    
                     else:
                         newUser.username = recordDetails[EMAIL].split('@')[0]
                     if recordDetails[FIRSTNAME]:
