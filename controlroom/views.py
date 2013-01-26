@@ -593,7 +593,7 @@ def SiteCSVRegn(request):
                         continue
                     newUser.email = recordDetails[EMAIL]
                     if recordDetails[USERNAME]:
-                        newUser.username = recordDetails[USERNAME]
+                        newUser.username = recordDetails[USERNAME]    
                     else:
                         newUser.username = recordDetails[EMAIL].split('@')[0]
                     if recordDetails[FIRSTNAME]:
@@ -605,14 +605,17 @@ def SiteCSVRegn(request):
                     newUser.set_password('default')
                     newUser.is_active = True
                     newUser.save()
+                    newUserProfile = UserProfile(user=newUser)
                     # Get the college
                     try:
                         newCollege = College.objects.get(name = recordDetails[COLLEGE])
                     except College.DoesNotExist:
                         # Create the college
-                        newCollege = College()
-                        newCollege.name = recordDetails[COLLEGE]
-                        newCollege.city = 'Unknown'
+                        if not newCollege:
+                            newCollege = College()
+                            newCollege.name = recordDetails[COLLEGE]
+                            newCollege.city = 'Unknown'
+                            newCollege.save()
                         newUserProfile.gender = 'F'
                     if recordDetails[AGE]:
                         newUserProfile.age = recordDetails[AGE]
