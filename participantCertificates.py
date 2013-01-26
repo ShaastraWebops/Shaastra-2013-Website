@@ -8,7 +8,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponseForbidden, HttpResponse
 
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
+from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.units import cm, inch
 from reportlab.lib import colors
 from reportlab.platypus import Table, TableStyle
@@ -59,13 +59,16 @@ def constructName(user):
         if user.first_name:
             name += user.first_name
         if user.last_name:
+            if len(name) > 0:
+                name += ' '
             name += user.last_name
+        name = name.title()
     else:
         log('User %s (%d) does not have a first/last name.' % (user.username, user.id))
         name += user.username
     return name    
 
-def generateParticipantPDF(user):
+def generateCertificate(user):
 
     userProfile = UserProfile.objects.get(user = user)
     
@@ -74,6 +77,7 @@ def generateParticipantPDF(user):
     buffer = StringIO()
     
     CS = (3508, 2480)  # Certificate [Page] Size
+    #CS = landscape(A4)
 
     # Create the PDF object, using the response object as its "file."
 
@@ -86,15 +90,15 @@ def generateParticipantPDF(user):
     y = pageHeight
     x = 0
     
-    im = Image("/home/shaastra/hospi/certis/certback.jpg", width=3*inch, height=2*inch)
+    im = Image("/home/shaastra/hospi/certis/certback_final.jpg")
     im.hAlign = 'LEFT'
     
     paintImage(pdf, x, y, im)
 
     # Set font for Participant Name
-    lineheight = PDFSetFont(pdf, 'Times-Bold', 20)
-    x = 20
-    y = 30
+    lineheight = PDFSetFont(pdf, 'Times-Bold', 105)
+    x = (43.8 + (65.54/2))*cm
+    y = 42.62*cm + lineheight
     name = constructName(user)
     pdf.drawCentredString(x, y, '%s' % name)
 
@@ -108,17 +112,17 @@ def generateParticipantPDF(user):
     
 def mailPDF(user, pdf):
 
-    subject = 'Shaastra 2013 Participation Certificate'
-    message += 'PFA Certificate.<br/><br/>Team Shaastra 2013<br/>'
+    subject = 'Participation Certificate (Corrected), Shaastra 2013'
+    message = 'PFA the <b>corrected</b> certificate. <br/><br/>Team Shaastra 2013<br/>'
     email = user.email
-    email = 'swopstesting@gmail.com' #TODO: Remove this line for finale
+    #email = 'swopstesting@gmail.com' #TODO: Remove this line for finale
 
     msg = EmailMultiAlternatives(subject, message, 'noreply@iitm.ac.in' , [email,])
     msg.content_subtype = "html"
     msg.attach('%s-certificate.pdf' % user.get_profile().shaastra_id, pdf, 'application/pdf')
-    #msg.send()  #TODO: Uncomment this line for finale
-    #log('Mail sent to %s' % email)  #TODO: Uncomment this line for finale
-    log('NOT sent. Mail will go to %s' % email)  #TODO: Comment this line for finale
+    msg.send()  #TODO: Uncomment this line for finale
+    log('Mail sent to %s' % email)  #TODO: Uncomment this line for finale
+    #log('NOT sent. Mail will go to %s' % email)  #TODO: Comment this line for finale
     
 def savePDF(pdf, user):
 
@@ -127,7 +131,7 @@ def savePDF(pdf, user):
     destination.close()
     log('File '+user.get_profile().shaastra_id+'-certificate.pdf saved.')
 
-def mailCerti():
+def cookAndServeCertis():
     
     #return ('Comment this line to send the Participant PDFs.')
     
@@ -169,14 +173,16 @@ def mailCerti():
             continue
         else:
             log('Already mailed uid %d. Removing from mailing list.' % int(uid))
-        
+
+    #participants = [User.objects.get(id=2199)]  # Comment this line for the finale
+
     for participant in participants:
         log(participant.id)
-        pdf = generateParticipantPDF(participant)
+        pdf = generateCertificate(participant)
         if pdf is None:
             continue
-        savePDF(pdf, participant)
         if participant.email:
             mailPDF(participant, pdf)
-            break  #TODO: Remove this for the finale
+            savePDF(pdf, participant)
+            #break  #TODO: Remove this for the finale
 
